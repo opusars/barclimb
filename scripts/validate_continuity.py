@@ -7,7 +7,8 @@ required=[
  'RECOVERY_START_HERE.md','AGENTS.md','docs/specs/SPEC_MANIFEST.json',
  'docs/project/PROJECT_STATE.json','docs/project/PROJECT_HANDOFF.md','docs/project/BUILD_HISTORY.md',
  'docs/project/DECISION_LOG.md','docs/project/TEST_LEDGER.md','docs/project/PROVIDER_STATUS.md',
- 'docs/project/CLIENT_PARITY.md','docs/project/RECOVERY_PLAYBOOK.md','docs/project/RELEASE_NOTES.md'
+ 'docs/project/CLIENT_PARITY.md','docs/project/SECURITY_ADVISORIES.md',
+ 'docs/project/RECOVERY_PLAYBOOK.md','docs/project/RELEASE_NOTES.md'
 ]
 for rel in required:
  p=ROOT/rel

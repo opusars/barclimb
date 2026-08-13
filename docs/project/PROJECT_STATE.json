@@ -5,7 +5,7 @@
   "active_launch_train": "A_FOUNDATION",
   "active_milestone": 1,
   "status": "IN_PROGRESS",
-  "latest_known_good_commit": "b16da3ce6ef56630d408b3d3ea010684764b1c52",
+  "latest_known_good_commit": "8ccbeff8afa0c59d759f2ffc877ca143ddea436c",
   "active_branch": "main",
   "database_migration_summary": "M1.1 created the Django framework foundation with only Django's built-in infrastructure apps; no BarClimb business models or application migrations exist.",
   "enabled_material_feature_flags": [],
@@ -26,7 +26,7 @@
     "adsense": "NOT_VERIFIED",
     "admob": "NOT_VERIFIED"
   },
-  "latest_test_summary": "M1.1 foundation checks pass: Django system check and 2 health/readiness tests; TypeScript lint/typecheck; 2 workspace smoke tests; Vite production build; iOS/Android Expo bundle exports; shared-package resolution; continuity validation. Expo package check is current; full local Expo Doctor is 16/17 because host Node 23 is unsupported, while CI targets Node 22.13.",
+  "latest_test_summary": "M1.1a correction passes on exact Node 24.19.0/npm 11.17.0 and Python 3.13.15: deterministic npm/Python installs; ReactDOM mount plus workspace tests; lint/format/typecheck/build/portable-package guards; Expo dependency check and Doctor 20/20; iOS/Android production JS exports; Django 5.2.17 system checks and 2 tests on SQLite plus PostgreSQL 14 migrations/readiness. CI targets Python 3.13.15 and PostgreSQL 17. Native simulator/device/store builds remain unverified.",
   "known_blockers": [],
   "high_risk_items": [
     "Execution breadth across web, iOS, Android, AI assessment quality, community moderation, and cross-platform commerce.",
@@ -35,5 +35,5 @@
     "Official NCBE scope/source changes must pass source-drift and revalidation workflow; future exam scopes remain provisional until governing materials exist."
   ],
   "exact_next_task": "Execute M1.2 — runtime and environment foundation: add the specification-required Celery/managed-KVS skeleton and local/review/staging runtime pipeline without implementing business tasks or later product features.",
-  "last_verified_at": "2026-08-13T13:38:22-07:00"
+  "last_verified_at": "2026-08-13T15:30:42-07:00"
 }

@@ -31,3 +31,18 @@
 - `npx expo install --check --json`: PASSED (`upToDate: true`).
 - `npm run doctor --workspace @barclimb/native`: 16/17 locally; network-enabled package metadata check remains affected by unsupported host Node 23.1. CI targets supported Node 22.13. No simulator/device build was claimed.
 - `npm audit --omit=dev`: 0 critical, 11 high, 7 moderate findings, all in the Expo/React Native toolchain graph; npm's offered fix incorrectly downgrades to Expo 53/React Native 0.72 and was not applied. Reassess with upstream SDK updates.
+
+## 2026-08-13 — M1.1a correction verification
+- Exact JavaScript runtime: Node 24.19.0 and npm 11.17.0 verified from the official Node distribution. Clean `npm ci`: PASSED; no unreviewed install scripts after pinned `esbuild@0.28.2` and `fsevents@2.3.3` review.
+- `npm ls react react-dom --all`: PASSED; every resolved instance is React 19.2.3 and ReactDOM 19.2.3 is deduped. Web production bundle inspection found only the `19.2.3` React patch marker.
+- `npm run check`: PASSED on Node 24.19.0/npm 11.17.0. Prettier, ESLint, all nine workspace typechecks, two web tests (including a real ReactDOM root-shell mount), one native smoke test, and Vite 7.3.6 production build passed.
+- `npm run portability`: PASSED for all seven shared packages. An ESLint stdin negative probe importing `node:fs` at a shared-package path failed as expected with `no-restricted-imports`.
+- `npx expo install --check`: PASSED; TypeScript 5.9.3 was explicitly skipped through `expo.install.exclude`, and all Expo SDK 57 dependencies were current.
+- `npm run doctor --workspace @barclimb/native`: PASSED 20/20 with network access on Node 24.19.0.
+- Expo SDK 57.0.12 production JS exports: PASSED for iOS (580 modules) and Android (578 modules). These are bundle exports, not simulator/device/store builds.
+- Clean Python 3.13.15 hash-lock install: PASSED from `requirements-dev.txt`; exact packages include Django 5.2.17. Both locks were generated with pip-tools 7.6.1 under Python 3.13.15 and matched the prior candidates byte-for-byte.
+- Python foundation checks: Ruff lint/format PASSED; Django SQLite system check PASSED; 2 health/readiness tests PASSED on Python 3.13.15/Django 5.2.17.
+- PostgreSQL smoke: PASSED against a temporary local PostgreSQL 14 cluster on port 55432. Django system check passed, all built-in auth/contenttypes/sessions migrations applied, and 2 health/readiness tests passed with `config.settings.postgres_test`. The cluster was stopped afterward. CI targets PostgreSQL 17.
+- `npm audit`: directly actionable Vite/Vitest findings were patched. `npm audit --omit=dev` retains 18 aggregate upstream Expo/React Native toolchain nodes (7 moderate, 11 high) rooted in `image-size` and `uuid`; reachability and mitigations are recorded in `SECURITY_ADVISORIES.md`.
+- `python3 scripts/validate_continuity.py`: PASSED after continuity reconciliation. `git diff --check`: PASSED. Controlling specifications and `SPEC_MANIFEST.json` were unchanged.
+- Native simulator/device/store build: NOT VERIFIED. Full Xcode is absent; Android SDK/adb and EAS are not configured.

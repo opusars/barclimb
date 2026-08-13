@@ -3,7 +3,6 @@
     "name": "BarClimb",
     "slug": "barclimb",
     "version": "0.1.0",
-    "orientation": "portrait",
     "userInterfaceStyle": "automatic",
     "ios": { "supportsTablet": true, "bundleIdentifier": "com.barclimb.app" },
     "android": { "package": "com.barclimb.app" }

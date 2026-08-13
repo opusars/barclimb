@@ -14,4 +14,8 @@ docs/project/   Continuity state and ledgers
 
 Web and native own their presentation code. Shared packages are limited to portable API helpers, types, schema boundaries, tokens, validation, analytics envelopes, and feature-flag shapes. They contain no client-authoritative learner, entitlement, or assessment logic.
 
+Portable packages compile against the ES2022 library only, with ambient runtime types disabled. ESLint rejects DOM/Node globals, Node built-ins, and React/React Native renderer imports in `packages/*`. Web and native receive separate lint environments. Package source remains directly consumable by the current bundlers; a compiled-output contract is deferred until a non-bundler consumer requires one.
+
+The native shell's destination buttons are an M1.1 proof surface, not completed navigation parity. Proper routing and universal/app-link handling remain later Milestone 1 native-foundation work before feature UI. Native orientation is intentionally unrestricted for future phone/tablet and PT/LRPT layouts.
+
 M1.1 creates infrastructure boundaries only. It does not implement business domains, authentication, learner state, assessment schemas, providers, or deployment.

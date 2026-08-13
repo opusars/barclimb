@@ -6,7 +6,7 @@ This repository must be sufficient to resume BarClimb with **zero chat history**
 2. Read `docs/specs/SPEC_MANIFEST.json` and the four controlling specs only as needed.
 3. Read `docs/project/PROJECT_STATE.json`.
 4. Read `docs/project/PROJECT_HANDOFF.md`.
-5. For context, consult `BUILD_HISTORY.md`, `DECISION_LOG.md`, `TEST_LEDGER.md`, `PROVIDER_STATUS.md`, and `CLIENT_PARITY.md`.
+5. For context, consult `BUILD_HISTORY.md`, `DECISION_LOG.md`, `TEST_LEDGER.md`, `PROVIDER_STATUS.md`, `CLIENT_PARITY.md`, and `SECURITY_ADVISORIES.md`.
 6. Follow `docs/project/RECOVERY_PLAYBOOK.md`.
 7. Continue from **Exact next task** in the handoff.
 

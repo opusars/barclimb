@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "spec_set_version": "barclimb-v1-pre-kickoff-integrated-views-models-ui-final-2026-08-13",
+  "authority": "These four Markdown specifications are the controlling BarClimb build contracts. Chat transcripts are not authoritative over this bundle.",
+  "supersedes": "Former standalone companion contracts and indexes are archive/provenance only.",
+  "specifications": [
+    {
+      "filename": "BARCLIMB_BUILD_CONSTITUTION.md",
+      "sha256": "b882d44ed8925393f633d3198c9757ece3c2e48f8c9c5fe5f7555c5a94bedd06"
+    },
+    {
+      "filename": "BARCLIMB_LEARNING_ASSESSMENT_SPEC.md",
+      "sha256": "211f064469d5efaf2f79acd125b3849f1ff38d6a25ba49695df940b57275b252"
+    },
+    {
+      "filename": "BARCLIMB_PRODUCT_EXPERIENCE_NETWORK_SPEC.md",
+      "sha256": "8c490a99dfd795eb4bebdf73e9bd9e736a064ce1473cec00fb3e35e7b2da0a23"
+    },
+    {
+      "filename": "BARCLIMB_NATIVE_PLATFORM_SPEC.md",
+      "sha256": "92ae46378e78ab87b51c573c24381b3700f92e631764b18bb5bf0acfc4d33c65"
+    }
+  ]
+}

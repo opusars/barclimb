@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "project": "BarClimb",
+  "product_phase": "PRE_REPOSITORY_KICKOFF",
+  "active_launch_train": "A_FOUNDATION",
+  "active_milestone": 1,
+  "status": "PRE_KICKOFF",
+  "latest_known_good_commit": null,
+  "active_branch": null,
+  "database_migration_summary": "No implementation repository has been initialized from this bootstrap yet.",
+  "enabled_material_feature_flags": [],
+  "clients": {
+    "web": "NOT_STARTED",
+    "ios": "NOT_STARTED",
+    "android": "NOT_STARTED"
+  },
+  "providers": {
+    "openai": "NOT_VERIFIED",
+    "stripe": "NOT_VERIFIED",
+    "apple": "NOT_VERIFIED",
+    "google_play": "NOT_VERIFIED",
+    "sendgrid": "NOT_VERIFIED",
+    "s3": "NOT_VERIFIED",
+    "heroku_postgres_kvs": "NOT_VERIFIED",
+    "sentry": "NOT_VERIFIED",
+    "adsense": "NOT_VERIFIED",
+    "admob": "NOT_VERIFIED"
+  },
+  "latest_test_summary": "Pre-build spec audit completed across Visitor, Free, and Plus journeys; application tests do not exist yet. Continuity validator must pass after this update.",
+  "known_blockers": [],
+  "high_risk_items": [
+    "Execution breadth across web, iOS, Android, AI assessment quality, community moderation, and cross-platform commerce.",
+    "Milestone 2 must prove automated official-scope and Rule Obligation completeness with primary/official authority and lawful multi-source reconciliation; Sourcebooks are optional enhanced reconciliation, not a launch dependency.",
+    "Cross-scenario projections, anonymous claim security, private public-page overlays, entitlement transitions, and cross-device orchestration require explicit integration/security tests before GA.",
+    "Official NCBE scope/source changes must pass source-drift and revalidation workflow; future exam scopes remain provisional until governing materials exist."
+  ],
+  "exact_next_task": "Initialize the clean BarClimb implementation repository; copy/commit this updated continuity package; run continuity validation; then execute Milestone 1 Multi-client foundation + continuity. Implement shared projection/domain contracts before feature-specific UI forks.",
+  "last_verified_at": "2026-08-13T12:10:00-07:00"
+}

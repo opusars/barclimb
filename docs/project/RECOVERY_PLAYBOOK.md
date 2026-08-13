@@ -2,7 +2,7 @@
 
 Use this when all prior chat context is unavailable.
 
-1. Run `python scripts/validate_continuity.py`. Stop if it fails.
+1. Run `python3 scripts/validate_continuity.py`. Stop if it fails. On systems that honor the executable Python 3 shebang, invoking `scripts/validate_continuity.py` directly is also valid.
 2. Read `docs/project/PROJECT_STATE.json` and `PROJECT_HANDOFF.md`.
 3. Read `docs/specs/SPEC_MANIFEST.json`; verify only its four specs are controlling.
 4. Read only spec sections relevant to the current milestone/task.

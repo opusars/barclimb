@@ -21,3 +21,10 @@
 - Added server-composed projections and explicit orchestration/domain models/endpoints.
 - Added security/idempotency/performance tests for anonymous claim, private overlays, cross-device state, entitlement transitions, Search privacy, and Plus ad suppression.
 - Synchronized all four controlling specs and continuity state.
+
+## 2026-08-13 — Repository kickoff continuity reconciliation
+- Reconciled project state and handoff with the existing `main` repository and committed baseline.
+- Standardized recovery validation documentation on `python3` while retaining the validator's portable Python 3 shebang.
+- Resolved stale onboarding language: v1 is national NextGen UBE only and does not collect or depend on jurisdiction in onboarding, recommendations, analytics, assessment generation, or readiness.
+- Rehashed the changed controlling Build Constitution and validated the continuity package.
+- Application implementation remains not started; Milestone 1 is next.

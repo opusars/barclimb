@@ -1,9 +1,9 @@
-# BarClimb Repository Continuity Bootstrap
+# BarClimb Repository Continuity Baseline
 
-Copy the contents of this directory into the root of the implementation repository **before Milestone 1 coding begins**. Then run:
+This committed repository baseline is the authoritative starting point for Milestone 1. Before beginning a material slice, run:
 
 ```bash
-python scripts/validate_continuity.py
+python3 scripts/validate_continuity.py
 ```
 
-Commit the baseline. Thereafter, repository state—not chat history—is the authoritative recovery source.
+The validator itself remains portable through its `#!/usr/bin/env python3` shebang. Repository state—not chat history—is the authoritative recovery source.

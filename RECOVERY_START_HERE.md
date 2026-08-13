@@ -2,7 +2,7 @@
 
 This repository must be sufficient to resume BarClimb with **zero chat history**.
 
-1. Run `python scripts/validate_continuity.py`.
+1. Run `python3 scripts/validate_continuity.py` (or execute the script directly on systems where its Python 3 shebang is honored).
 2. Read `docs/specs/SPEC_MANIFEST.json` and the four controlling specs only as needed.
 3. Read `docs/project/PROJECT_STATE.json`.
 4. Read `docs/project/PROJECT_HANDOFF.md`.

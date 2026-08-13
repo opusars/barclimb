@@ -112,9 +112,10 @@ Onboarding must be completable in under one minute.
 Required fields:
 
 - Exam program (default NextGen UBE)
-- Jurisdiction where useful
 - Expected exam date or “Not scheduled yet”
 - Experience level: Haven’t started / Studying / Previously took a bar exam
+
+V1 is national NextGen UBE only. Onboarding must not ask for jurisdiction, and jurisdiction must not affect v1 recommendations, analytics, assessment generation, or readiness. Any dormant jurisdiction field exists only for an explicitly specified future product version.
 
 Then the primary CTA is **Start Practicing**.
 

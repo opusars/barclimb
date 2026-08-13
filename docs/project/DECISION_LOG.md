@@ -2,7 +2,7 @@
 
 These are durable pre-build decisions. Supersede explicitly; do not silently delete.
 
-- **NextGen-first:** v1 is the national NextGen UBE product. Jurisdiction add-ons are dormant future components, not v1 UI.
+- **NextGen-first:** v1 is the national NextGen UBE product. Jurisdiction add-ons are dormant future components, not v1 UI. V1 onboarding does not ask for jurisdiction, and recommendations, analytics, assessment generation, and readiness must neither require nor depend on it.
 - **Assessment intelligence:** deterministic planning/specification precedes AI generation; raw first-pass AI is never learner-visible.
 - **Complete coverage:** official NCBE scope manifest, not question count, defines curriculum completeness.
 - **Schema-driven assessment UI:** AI composes only registered presentation/resource/response components.
@@ -24,3 +24,4 @@ These are durable pre-build decisions. Supersede explicitly; do not silently del
 - **Capability-driven surface parity (2026-08-13):** a versioned client surface capability manifest gates activation of Home, Search, Review, Repair, overlays, community, creator analytics, and account surfaces across required launch clients; plan names do not become scattered UI business logic.
 - **Provider-agnostic subscription domain (2026-08-13):** `billing.Subscription`/provider events are canonical across Stripe, Apple, and Google. Stripe-specific IDs/tables are implementation details, not the product subscription truth.
 - **Orchestration lifecycle hardening (2026-08-13):** StudySession, RepairPlan, entitlement, anonymous claim, review acceptance, and notifications have explicit lifecycle/idempotency/security obligations; safe-boundary entitlement changes cannot destroy accepted in-progress work.
+- **Repository kickoff complete (2026-08-13):** the committed `main` repository baseline is authoritative; Milestone 1 is the next implementation milestone, and future recovery must not repeat bootstrap copy/initialization steps.

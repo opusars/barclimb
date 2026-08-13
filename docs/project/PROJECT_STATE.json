@@ -1,13 +1,13 @@
 {
   "schema_version": 1,
   "project": "BarClimb",
-  "product_phase": "PRE_REPOSITORY_KICKOFF",
+  "product_phase": "MILESTONE_1_READY",
   "active_launch_train": "A_FOUNDATION",
   "active_milestone": 1,
-  "status": "PRE_KICKOFF",
-  "latest_known_good_commit": null,
-  "active_branch": null,
-  "database_migration_summary": "No implementation repository has been initialized from this bootstrap yet.",
+  "status": "READY_TO_BEGIN",
+  "latest_known_good_commit": "cc6feff1fc666e43b92b261f40f22d97e5270dc9",
+  "active_branch": "main",
+  "database_migration_summary": "Repository kickoff is complete. Application implementation and database migrations have not started.",
   "enabled_material_feature_flags": [],
   "clients": {
     "web": "NOT_STARTED",
@@ -26,7 +26,7 @@
     "adsense": "NOT_VERIFIED",
     "admob": "NOT_VERIFIED"
   },
-  "latest_test_summary": "Pre-build spec audit completed across Visitor, Free, and Plus journeys; application tests do not exist yet. Continuity validator must pass after this update.",
+  "latest_test_summary": "Repository continuity reconciliation validated with python3; controlling-spec hashes and required recovery files pass. No application test suite exists yet.",
   "known_blockers": [],
   "high_risk_items": [
     "Execution breadth across web, iOS, Android, AI assessment quality, community moderation, and cross-platform commerce.",
@@ -34,6 +34,6 @@
     "Cross-scenario projections, anonymous claim security, private public-page overlays, entitlement transitions, and cross-device orchestration require explicit integration/security tests before GA.",
     "Official NCBE scope/source changes must pass source-drift and revalidation workflow; future exam scopes remain provisional until governing materials exist."
   ],
-  "exact_next_task": "Initialize the clean BarClimb implementation repository; copy/commit this updated continuity package; run continuity validation; then execute Milestone 1 Multi-client foundation + continuity. Implement shared projection/domain contracts before feature-specific UI forks.",
-  "last_verified_at": "2026-08-13T12:10:00-07:00"
+  "exact_next_task": "Begin Milestone 1 — Multi-client foundation + continuity from the committed repository baseline. Re-run continuity validation before material work and establish shared projection/domain contracts before feature-specific UI forks.",
+  "last_verified_at": "2026-08-13T16:00:00-07:00"
 }

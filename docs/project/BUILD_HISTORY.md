@@ -28,3 +28,11 @@
 - Resolved stale onboarding language: v1 is national NextGen UBE only and does not collect or depend on jurisdiction in onboarding, recommendations, analytics, assessment generation, or readiness.
 - Rehashed the changed controlling Build Constitution and validated the continuity package.
 - Application implementation remains not started; Milestone 1 is next.
+
+## 2026-08-13 — M1.1 multi-client repository and toolchain foundation
+- Created npm-workspace monorepo boundaries for Django/DRF, React web, Expo native, and seven platform-neutral TypeScript packages.
+- Added environment-separated Django settings, a PostgreSQL production contract, health/readiness endpoints, and isolated SQLite foundation tests without business models.
+- Added minimal web and native proof shells; native remains React Native, not a WebView.
+- Added pinned Python/npm dependencies, shared format/lint/typecheck/test/build commands, setup documentation, and foundation CI.
+- Selected Expo SDK 55 because current SDK 57 requires TypeScript 6, conflicting with the controlling TypeScript 5.x kickoff baseline.
+- Verified backend tests, web build, shared-package resolution, and iOS/Android Expo bundle exports. Milestone 1 remains in progress.

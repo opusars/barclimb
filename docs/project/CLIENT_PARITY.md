@@ -2,8 +2,11 @@
 
 Status values: NOT_STARTED / PARTIAL / VERIFIED / INTENTIONAL_DIFFERENCE.
 
+M1.1 establishes proof shells only. `PARTIAL` below does not assert feature parity.
+
 | Capability | Web | iOS | Android | Notes |
 |---|---|---|---|---|
+| Client shell/toolchain | PARTIAL | PARTIAL | PARTIAL | Web builds; iOS/Android bundle exports pass; no simulator/device verification |
 | Auth/account | NOT_STARTED | NOT_STARTED | NOT_STARTED | username-first identity |
 | MCQ interaction | NOT_STARTED | NOT_STARTED | NOT_STARTED | highlight/strike/review required |
 | IQS | NOT_STARTED | NOT_STARTED | NOT_STARTED | schema-driven |

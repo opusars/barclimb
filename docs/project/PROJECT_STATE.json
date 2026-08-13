@@ -1,18 +1,18 @@
 {
   "schema_version": 1,
   "project": "BarClimb",
-  "product_phase": "MILESTONE_1_READY",
+  "product_phase": "MILESTONE_1_IN_PROGRESS",
   "active_launch_train": "A_FOUNDATION",
   "active_milestone": 1,
-  "status": "READY_TO_BEGIN",
-  "latest_known_good_commit": "cc6feff1fc666e43b92b261f40f22d97e5270dc9",
+  "status": "IN_PROGRESS",
+  "latest_known_good_commit": "b16da3ce6ef56630d408b3d3ea010684764b1c52",
   "active_branch": "main",
-  "database_migration_summary": "Repository kickoff is complete. Application implementation and database migrations have not started.",
+  "database_migration_summary": "M1.1 created the Django framework foundation with only Django's built-in infrastructure apps; no BarClimb business models or application migrations exist.",
   "enabled_material_feature_flags": [],
   "clients": {
-    "web": "NOT_STARTED",
-    "ios": "NOT_STARTED",
-    "android": "NOT_STARTED"
+    "web": "PARTIAL",
+    "ios": "PARTIAL",
+    "android": "PARTIAL"
   },
   "providers": {
     "openai": "NOT_VERIFIED",
@@ -26,7 +26,7 @@
     "adsense": "NOT_VERIFIED",
     "admob": "NOT_VERIFIED"
   },
-  "latest_test_summary": "Repository continuity reconciliation validated with python3; controlling-spec hashes and required recovery files pass. No application test suite exists yet.",
+  "latest_test_summary": "M1.1 foundation checks pass: Django system check and 2 health/readiness tests; TypeScript lint/typecheck; 2 workspace smoke tests; Vite production build; iOS/Android Expo bundle exports; shared-package resolution; continuity validation. Expo package check is current; full local Expo Doctor is 16/17 because host Node 23 is unsupported, while CI targets Node 22.13.",
   "known_blockers": [],
   "high_risk_items": [
     "Execution breadth across web, iOS, Android, AI assessment quality, community moderation, and cross-platform commerce.",
@@ -34,6 +34,6 @@
     "Cross-scenario projections, anonymous claim security, private public-page overlays, entitlement transitions, and cross-device orchestration require explicit integration/security tests before GA.",
     "Official NCBE scope/source changes must pass source-drift and revalidation workflow; future exam scopes remain provisional until governing materials exist."
   ],
-  "exact_next_task": "Begin Milestone 1 — Multi-client foundation + continuity from the committed repository baseline. Re-run continuity validation before material work and establish shared projection/domain contracts before feature-specific UI forks.",
-  "last_verified_at": "2026-08-13T16:00:00-07:00"
+  "exact_next_task": "Execute M1.2 — runtime and environment foundation: add the specification-required Celery/managed-KVS skeleton and local/review/staging runtime pipeline without implementing business tasks or later product features.",
+  "last_verified_at": "2026-08-13T13:38:22-07:00"
 }

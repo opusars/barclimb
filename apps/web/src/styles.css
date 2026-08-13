@@ -1,0 +1,35 @@
+:root {
+  font-family: Inter, system-ui, sans-serif;
+  color: #172033;
+  background: #f7f9fc;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+}
+main {
+  max-width: 72rem;
+  margin: 0 auto;
+}
+header {
+  padding-block: 1rem;
+}
+.shell {
+  margin-top: 12vh;
+  max-width: 44rem;
+  border-left: 0.3rem solid;
+  padding: 1.5rem;
+  background: white;
+  border-radius: 0.75rem;
+}
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+h1 {
+  line-height: 1.15;
+}

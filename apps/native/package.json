@@ -1,0 +1,24 @@
+{
+  "name": "@barclimb/native",
+  "private": true,
+  "version": "0.1.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "expo start",
+    "typecheck": "tsc --noEmit --pretty false",
+    "test": "vitest run",
+    "doctor": "expo-doctor"
+  },
+  "dependencies": {
+    "@barclimb/design-tokens": "0.1.0",
+    "expo": "55.0.28",
+    "react": "19.2.0",
+    "react-native": "0.83.10"
+  },
+  "devDependencies": {
+    "@types/react": "19.2.10",
+    "expo-doctor": "1.17.11",
+    "typescript": "5.9.2",
+    "vitest": "3.2.4"
+  }
+}

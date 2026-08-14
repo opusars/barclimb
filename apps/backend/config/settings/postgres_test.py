@@ -15,3 +15,4 @@ DATABASES = {
         ssl_require=False,
     )
 }
+READINESS_REQUIRE_KVS = True

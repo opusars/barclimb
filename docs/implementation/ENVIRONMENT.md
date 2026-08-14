@@ -1,63 +1,84 @@
-# M1.1 Environment and Setup
+# M1.2 Runtime and Environment Contract
 
 ## Runtime baseline
 
-- Python 3.13.15 for production/development parity; Django 5.2.17 LTS and DRF 3.16.1.
-- Node 24.19.0 LTS; its bundled npm 11.17.0.
-- React and ReactDOM 19.2.3 for web, resolved as one runtime.
-- Expo SDK 57.0.12 with React 19.2.3 and React Native 0.86.2. TypeScript remains on the controlling 5.x line at 5.9.3; Expo's supported dependency exclusion prevents `expo install --fix` from replacing it with the template-recommended TypeScript 6 line.
-- PostgreSQL is required for real local, staging, and production environments.
-- SQLite in-memory is permitted only for the isolated foundation unit tests in M1.1. Database-sensitive integration tests must use PostgreSQL when introduced.
+- Python 3.13.15, Django 5.2.17, DRF 3.16.1, Celery 5.6.3.
+- Node 24.19.0/npm 11.17.0; web/native versions remain as documented in `ARCHITECTURE.md`.
+- PostgreSQL is the canonical durable datastore in every real environment.
+- A Redis/Valkey-compatible service is the ephemeral KVS, Celery broker, and Django cache.
 
-## Setup
+The application does not use a Celery result backend. Tasks ignore return values by default; durable task outcomes must eventually be written idempotently to PostgreSQL domain records. Global late acknowledgement, reject-on-worker-loss, and implicit autoretry are disabled. A future business task must define its own deterministic idempotency key, bounded retry/backoff policy, and transaction boundary.
+
+KVS may support queue coordination, caching, rate limiting, ephemeral locks, and explicitly short-lived orchestration state. It must never be the only store for learner evidence, submitted answers, grades, assessment/curriculum/publication truth, subscription/entitlement truth, or any other authoritative durable business record.
+
+## Environment contract
+
+| Environment | Settings                                  | Lifetime and provider posture                                                                                                |
+| ----------- | ----------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| Local       | `config.settings.local`                   | Developer-owned; PostgreSQL + KVS; provider-independent; no production secrets.                                              |
+| Test/CI     | `config.settings.test` or `postgres_test` | Deterministic eager Celery; PostgreSQL path in CI; real KVS connectivity in integration CI; no providers/network.            |
+| Review      | `config.settings.review`                  | Disposable production-like app; state may disappear; provider stubs/test modes only.                                         |
+| Staging     | `config.settings.staging`                 | Persistent near-production topology; future home of real non-production provider integrations. Never production credentials. |
+| Production  | `config.settings.production`              | Explicit fail-closed config; secure cookies/proxy; no development defaults.                                                  |
+
+`APP_ENV` must be exactly `local`, `test`, `review`, `staging`, or `production`. Deployed settings reject an environment mismatch. Review/staging/production require a 50+ character `DJANGO_SECRET_KEY`, PostgreSQL `DATABASE_URL`, Redis/Valkey-compatible `REDIS_URL`, HTTPS `PUBLIC_BASE_URL`, nonempty `ALLOWED_HOSTS`, nonempty HTTPS `CSRF_TRUSTED_ORIGINS`, and `DJANGO_DEBUG=false`. Staging/production database URLs enable TLS. Review apps are equally fail-closed but disposable.
+
+Safe variable names and examples are in `.env.example`. `VITE_API_BASE_URL` and `EXPO_PUBLIC_API_BASE_URL` are public build-time client configuration, never secret storage. No provider variables are added until their integration slice.
+
+## Clean-checkout local workflow
+
+Install exact runtimes, then:
 
 ```bash
 cp .env.example .env
-pyenv install 3.13.15 # omit when already installed
-pyenv local 3.13.15
 python -m venv .venv
 . .venv/bin/activate
-nvm install 24.19.0 # omit when already installed
-nvm use
 python -m pip install --require-hashes -r apps/backend/requirements-dev.txt
 npm ci
 ```
 
-`.python-version`, `.nvmrc`, root `engines`, `packageManager`, and CI encode the same baseline. `pyenv`/`nvm` are the documented cross-platform version-manager path; equivalent managers may be used if they select the exact versions.
-
-## Python dependency locking
-
-`requirements.in` and `requirements-dev.in` are the small, human-maintained inputs. `requirements.txt` and `requirements-dev.txt` are complete, hash-verified locks generated with pip-tools. To update deliberately under Python 3.13.15:
+Run PostgreSQL and Redis/Valkey using local package-manager services or standalone processes. Create the `barclimb` database and verify the KVS:
 
 ```bash
-python -m pip install pip-tools==7.6.1
-cd apps/backend
-python -m piptools compile --generate-hashes --strip-extras --resolver=backtracking --output-file=requirements.txt requirements.in
-python -m piptools compile --generate-hashes --strip-extras --resolver=backtracking --output-file=requirements-dev.txt requirements-dev.in
+createdb barclimb
+redis-cli -u redis://localhost:6379/0 ping
 ```
 
-Review both generated diffs and install with `--require-hashes`. Add future dependencies to the `.in` files, never directly to the lock outputs.
-
-Create the local PostgreSQL database described by `DATABASE_URL`, then run:
+Load `.env` with a trusted environment loader or export its values, then use separate terminals:
 
 ```bash
-cd apps/backend
-python manage.py migrate
-python manage.py runserver
+cd apps/backend && python manage.py migrate && python manage.py runserver
+cd apps/backend && celery -A config worker --loglevel=INFO
+npm run web:dev
+npm run native:start
 ```
 
-From the repository root, `npm run web:dev` starts the web shell and `npm run native:start` starts Expo.
+Docker is not required. Native PostgreSQL/KVS services keep the foundation simple; teams may use containers if their ports and URLs satisfy the same contract.
 
-## Checks
+## Process and dependency health
+
+The root `Procfile` defines:
+
+- `web`: Gunicorn WSGI server;
+- `worker`: Celery worker;
+- `release`: deployment checks followed by safe Django migrations using the environment's explicit `DJANGO_SETTINGS_MODULE`.
+
+No beat process exists because M1.2 has no scheduled business work. A future scheduler requires a documented need.
+
+`GET /api/v1/health/` is process liveness and touches no dependencies. `GET /api/v1/ready/` verifies PostgreSQL and, where required, a KVS read/write round trip. Neither endpoint depends on future OpenAI, email, ads, community, or other optional providers. KVS is required because both web cache/runtime coordination and the worker broker depend on it; the endpoint reports dependency categories but never URLs or credentials.
+
+Logs are one-line JSON with timestamp, level, logger, message, `APP_ENV`, and Heroku `DYNO`/local process identity. Do not log configuration values, secrets, learner responses, or business payloads. Sentry remains unverified and unimplemented.
+
+## Verification
 
 ```bash
 python3 scripts/validate_continuity.py
-cd apps/backend && ruff check . && python manage.py check --settings=config.settings.test && pytest
+cd apps/backend && ruff check . && ruff format --check .
+cd apps/backend && python manage.py check --settings=config.settings.test && pytest
 npm run check
 npm run portability
-npm run doctor --workspace @barclimb/native
 ```
 
-CI also runs migrations, system checks, health, and readiness tests against PostgreSQL. The default local test settings retain in-memory SQLite only for fast framework-foundation tests; use `config.settings.postgres_test` with `DATABASE_URL` for database-sensitive work.
+CI runs backend checks/migrations/tests against PostgreSQL and a real Redis-compatible service, starts a solo Celery worker, publishes the infrastructure-only smoke task, and confirms execution from worker logs. The smoke task is intentionally not a stable application API.
 
-Never commit `.env`, credentials, signing material, or provider secrets.
+Never commit `.env`, credentials, signing material, database dumps, KVS snapshots, or provider secrets.

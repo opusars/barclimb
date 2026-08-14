@@ -46,3 +46,13 @@
 - `npm audit`: directly actionable Vite/Vitest findings were patched. `npm audit --omit=dev` retains 18 aggregate upstream Expo/React Native toolchain nodes (7 moderate, 11 high) rooted in `image-size` and `uuid`; reachability and mitigations are recorded in `SECURITY_ADVISORIES.md`.
 - `python3 scripts/validate_continuity.py`: PASSED after continuity reconciliation. `git diff --check`: PASSED. Controlling specifications and `SPEC_MANIFEST.json` were unchanged.
 - Native simulator/device/store build: NOT VERIFIED. Full Xcode is absent; Android SDK/adb and EAS are not configured.
+
+## 2026-08-13 — M1.2 runtime/environment verification
+- Clean Python 3.13.15 `pip --require-hashes` install from regenerated pip-tools 7.6.1 locks: PASSED; Celery 5.6.3 and Redis client 6.4.0 resolved.
+- Ruff lint/format, Django test-settings system check, and 9 SQLite deterministic tests: PASSED. Coverage includes malformed environment values, HTTPS-origin validation, missing production configuration, eager Celery discovery/execution, and required-KVS readiness failure.
+- Temporary PostgreSQL 14 + Redis 7.2 integration: migrations PASSED; 9 tests PASSED through `config.settings.postgres_test`; readiness reported database/KVS round trips healthy.
+- Live Celery 5.6.3 solo worker against Redis 7.2: PASSED. Worker loaded Django configuration, reported `results: disabled`, discovered only `infrastructure.smoke`, and executed the published task successfully.
+- `npm run check`: PASSED; Prettier, ESLint, all workspace typechecks, 3 Vitest tests, and Vite production build passed.
+- `npm run portability`: PASSED for all seven shared packages.
+- `python3 scripts/validate_continuity.py`: PASSED. `git diff --check`: PASSED. Four controlling specs and manifest remained unchanged.
+- CI workflow now includes PostgreSQL 17, Redis 7.2, backend integration tests, and live worker smoke; GitHub Actions result pending branch push.

@@ -29,8 +29,20 @@ jobs:
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
+      redis:
+        image: redis:7.2-alpine
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
     env:
+      APP_ENV: test
       DATABASE_URL: postgresql://postgres:postgres@localhost:5432/barclimb
+      DJANGO_SETTINGS_MODULE: config.settings.postgres_test
+      REDIS_URL: redis://localhost:6379/0
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -47,6 +59,29 @@ jobs:
         run: python manage.py migrate --settings=config.settings.postgres_test --noinput
       - working-directory: apps/backend
         run: pytest --ds=config.settings.postgres_test
+      - working-directory: apps/backend
+        run: |
+          celery -A config worker --pool=solo --loglevel=INFO > /tmp/celery-worker.log 2>&1 &
+          worker_pid=$!
+          trap 'kill "$worker_pid" 2>/dev/null || true' EXIT
+          for attempt in {1..20}; do
+            celery -A config inspect ping --timeout=1 && break
+            if [ "$attempt" -eq 20 ]; then
+              cat /tmp/celery-worker.log
+              exit 1
+            fi
+            sleep 1
+          done
+          celery -A config call infrastructure.smoke
+          for attempt in {1..20}; do
+            grep -q "Task infrastructure.smoke.*succeeded" /tmp/celery-worker.log && break
+            if [ "$attempt" -eq 20 ]; then
+              cat /tmp/celery-worker.log
+              exit 1
+            fi
+            sleep 1
+          done
+          cat /tmp/celery-worker.log
 
   typescript:
     runs-on: ubuntu-latest

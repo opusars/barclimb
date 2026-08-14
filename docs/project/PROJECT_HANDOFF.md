@@ -1,7 +1,7 @@
 # BarClimb Project Handoff
 
 ## Current state
-Milestone 1 is in progress. M1.1/M1.1a established and corrected the multi-client repository/toolchain foundation: a minimal Django/DRF backend, React web shell, Expo React Native shell, enforceably portable TypeScript packages, deterministic locks, repeatable checks, and PostgreSQL-backed foundation CI. No BarClimb business domain, authentication, provider integration, or deployment behavior has been implemented.
+Milestone 1 is in progress. M1.1/M1.1a established and corrected the multi-client repository/toolchain foundation. M1.2 adds the asynchronous runtime/environment contract: Celery, Redis/Valkey-compatible cache/broker configuration, explicit local/test/review/staging/production settings, dependency-aware readiness, Heroku process definitions, structured logs, and PostgreSQL+KVS+worker CI proof. No BarClimb business domain, authentication, provider integration, or actual deployment has been implemented.
 
 ## Authoritative contracts
 See `../specs/SPEC_MANIFEST.json`. Four Markdown specs control the build.
@@ -26,6 +26,13 @@ See `../specs/SPEC_MANIFEST.json`. Four Markdown specs control the build.
 - Node 24.19.0/npm 11.17.0 and Python 3.13.15 are aligned in version files, package metadata, CI, and setup documentation.
 - Forced portrait orientation removed. Proper native routing/deep links remain later Milestone 1 foundation work.
 
+## Completed in M1.2
+- Celery 5.6.3 Django integration with Redis/Valkey-compatible environment-driven broker/cache configuration, no result backend, deterministic eager tests, explicit conservative delivery defaults, and one non-contractual infrastructure smoke task.
+- Explicit local/test/review/staging/production settings; fail-closed deployed secrets/URL/host/origin validation; safe public client API-base configuration; no provider credentials.
+- Dependency-free liveness and PostgreSQL/KVS readiness with safe dependency labels, plus structured process/environment logs that exclude configuration and business payloads.
+- Heroku `web`, `worker`, and release-check/migration process definitions. No beat scheduler was added.
+- Local PostgreSQL 14 + Redis 7.2 + live worker proof; CI now models PostgreSQL 17 + Redis 7.2 and live worker execution. No Heroku deployment or managed provider has been verified.
+
 ## Tests actually run
 - `python3 scripts/validate_continuity.py` passes against the committed repository baseline and controlling-spec manifest.
 - Clean hash-verified Python lock installation passes on exact Python 3.13.15; Django 5.2.17 system check and 2 health/readiness tests pass on isolated SQLite and on a temporary local PostgreSQL 14 cluster after applying all built-in migrations. CI uses Python 3.13.15 and PostgreSQL 17.
@@ -35,13 +42,13 @@ See `../specs/SPEC_MANIFEST.json`. Four Markdown specs control the build.
 - Remaining npm audit findings are upstream Expo/React Native build/config-tool paths documented in `SECURITY_ADVISORIES.md`; no forced downgrade was applied.
 
 ## Providers actually verified
-None yet in an implementation environment. Do not infer provider readiness from product specs.
+None yet in a managed implementation environment. Local PostgreSQL 14 and Redis 7.2 were exercised as runtime dependencies, but Heroku/Postgres/KVS remains `NOT_VERIFIED`; do not infer managed-provider readiness from local or CI service proof.
 
 ## Known risks
 Execution breadth remains the principal engineering risk. Curriculum completeness depends on automated official-scope/rule compilation, authority provenance, lawful multi-source reconciliation, subject certification, and strict inventory gates. NCBE Sourcebooks are optional enhanced reconciliation when lawfully available; do not make purchase/access a build or launch dependency.
 
 ## Exact next task
-Execute **M1.2 — runtime and environment foundation**: add the specification-required Celery/managed-KVS skeleton and local/review/staging runtime pipeline. Keep business tasks, authentication, providers, and later product features out of that slice.
+Execute a bounded **M1.3 — identity and authentication foundation** slice: email + username + password account behavior, email verification/reset contracts, secure browser session/CSRF behavior, and the native credential-storage architecture. Keep curriculum, assessment, learner intelligence, billing, community, and other later domains out of that slice.
 
 ## Resume commands
 ```bash
@@ -52,6 +59,8 @@ npm run portability
 npm run doctor --workspace @barclimb/native
 ```
 Use Python 3.13.15, Node 24.19.0, and npm 11.17.0 for baseline parity. Install Python requirements with `--require-hashes`. See `../implementation/ENVIRONMENT.md` for setup and the PostgreSQL smoke path. Expo Doctor requires network access for all checks.
+
+For real runtime acceptance, also run PostgreSQL and Redis/Valkey, select `config.settings.postgres_test`, and execute the worker smoke documented in `../implementation/ENVIRONMENT.md`. Review/staging/production are contracts only; no Heroku app or managed add-on has been verified.
 
 ## Final integration note
 Before feature UI implementation, establish the canonical provider-agnostic billing domain, server projection schemas, orchestration models/state machines, and client-surface capability manifest. These prevent Visitor/Free/Plus and Web/iOS/Android from diverging.

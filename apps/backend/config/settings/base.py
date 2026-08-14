@@ -3,10 +3,20 @@ from pathlib import Path
 
 import dj_database_url
 
+from config.environment import boolean, csv, environment, url
+
 BASE_DIR = Path(__file__).resolve().parents[2]
+APP_ENV = environment()
 SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "")
-DEBUG = False
-ALLOWED_HOSTS = [host for host in os.environ.get("DJANGO_ALLOWED_HOSTS", "").split(",") if host]
+DEBUG = boolean("DJANGO_DEBUG", default=False)
+ALLOWED_HOSTS = csv("ALLOWED_HOSTS")
+CSRF_TRUSTED_ORIGINS = csv("CSRF_TRUSTED_ORIGINS")
+PUBLIC_BASE_URL = os.environ.get("PUBLIC_BASE_URL", "")
+REDIS_URL = url(
+    "REDIS_URL",
+    default="redis://localhost:6379/0",
+    schemes={"redis", "rediss"},
+)
 INSTALLED_APPS = [
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -36,6 +46,30 @@ DATABASES = {
         ssl_require=False,
     )
 }
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.redis.RedisCache",
+        "LOCATION": REDIS_URL,
+        "KEY_PREFIX": f"barclimb:{APP_ENV.value}",
+        "OPTIONS": {"socket_connect_timeout": 2, "socket_timeout": 2},
+    }
+}
+READINESS_REQUIRE_KVS = boolean("READINESS_REQUIRE_KVS", default=True)
+CELERY_BROKER_URL = REDIS_URL
+CELERY_RESULT_BACKEND = None
+CELERY_TASK_IGNORE_RESULT = True
+CELERY_TASK_STORE_EAGER_RESULT = False
+CELERY_TASK_ALWAYS_EAGER = False
+CELERY_TASK_EAGER_PROPAGATES = True
+CELERY_TASK_ACKS_LATE = False
+CELERY_TASK_REJECT_ON_WORKER_LOST = False
+CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
+CELERY_BROKER_TRANSPORT_OPTIONS = {"visibility_timeout": 3600}
+CELERY_WORKER_HIJACK_ROOT_LOGGER = False
+CELERY_TASK_SERIALIZER = "json"
+CELERY_ACCEPT_CONTENT = ["json"]
+CELERY_RESULT_SERIALIZER = "json"
+CELERY_TIMEZONE = "UTC"
 LANGUAGE_CODE = "en-us"
 TIME_ZONE = "UTC"
 USE_I18N = True
@@ -43,3 +77,10 @@ USE_TZ = True
 STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 REST_FRAMEWORK = {"DEFAULT_RENDERER_CLASSES": ["rest_framework.renderers.JSONRenderer"]}
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {"structured": {"()": "config.logging.StructuredFormatter"}},
+    "handlers": {"console": {"class": "logging.StreamHandler", "formatter": "structured"}},
+    "root": {"handlers": ["console"], "level": os.environ.get("LOG_LEVEL", "INFO")},
+}

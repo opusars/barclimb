@@ -5,8 +5,8 @@
   "active_launch_train": "A_FOUNDATION",
   "active_milestone": 1,
   "status": "IN_PROGRESS",
-  "latest_known_good_commit": "8ccbeff8afa0c59d759f2ffc877ca143ddea436c",
-  "active_branch": "main",
+  "latest_known_good_commit": "b0d15605a372c676d19dde9900eebbe49f1cdfe6",
+  "active_branch": "m1-2-runtime-environment-foundation",
   "database_migration_summary": "M1.1 created the Django framework foundation with only Django's built-in infrastructure apps; no BarClimb business models or application migrations exist.",
   "enabled_material_feature_flags": [],
   "clients": {
@@ -26,7 +26,7 @@
     "adsense": "NOT_VERIFIED",
     "admob": "NOT_VERIFIED"
   },
-  "latest_test_summary": "M1.1a correction passes on exact Node 24.19.0/npm 11.17.0 and Python 3.13.15: deterministic npm/Python installs; ReactDOM mount plus workspace tests; lint/format/typecheck/build/portable-package guards; Expo dependency check and Doctor 20/20; iOS/Android production JS exports; Django 5.2.17 system checks and 2 tests on SQLite plus PostgreSQL 14 migrations/readiness. CI targets Python 3.13.15 and PostgreSQL 17. Native simulator/device/store builds remain unverified.",
+  "latest_test_summary": "M1.2 passes on Python 3.13.15/Django 5.2.17/Celery 5.6.3: clean hash-locked install; Ruff/system checks; 9 deterministic tests on SQLite and PostgreSQL 14 with real Redis 7.2 readiness; live Celery worker discovery and smoke-task execution with results disabled; existing npm check/portability and continuity validation. CI now targets PostgreSQL 17 plus Redis 7.2 and performs the worker smoke. Heroku deployment/managed-provider verification and native simulator/device/store builds remain unverified.",
   "known_blockers": [],
   "high_risk_items": [
     "Execution breadth across web, iOS, Android, AI assessment quality, community moderation, and cross-platform commerce.",
@@ -34,6 +34,6 @@
     "Cross-scenario projections, anonymous claim security, private public-page overlays, entitlement transitions, and cross-device orchestration require explicit integration/security tests before GA.",
     "Official NCBE scope/source changes must pass source-drift and revalidation workflow; future exam scopes remain provisional until governing materials exist."
   ],
-  "exact_next_task": "Execute M1.2 — runtime and environment foundation: add the specification-required Celery/managed-KVS skeleton and local/review/staging runtime pipeline without implementing business tasks or later product features.",
-  "last_verified_at": "2026-08-13T15:30:42-07:00"
+  "exact_next_task": "Execute a bounded M1.3 identity and authentication foundation slice: email + username + password accounts, verification/reset contracts, secure browser session/CSRF and native credential-storage architecture, without beginning curriculum, assessments, billing, or other later product domains.",
+  "last_verified_at": "2026-08-13T17:00:00-07:00"
 }

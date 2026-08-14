@@ -46,3 +46,11 @@
 - Enforced per-surface lint globals and ES2022-only portable shared-package boundaries, including an automated negative guard.
 - Removed the tracked `.DS_Store` and redundant continuity workflow; the single foundation workflow still validates continuity.
 - Patched directly actionable Vite/Vitest advisories and documented remaining upstream Expo/Metro/Xcode toolchain reachability. No application business feature was introduced.
+
+## 2026-08-13 — M1.2 runtime and environment foundation
+- Integrated Celery 5.6.3 with Django through an environment-driven Redis/Valkey-compatible broker and explicit no-result-backend behavior.
+- Added only the non-contractual `infrastructure.smoke` task to prove discovery and worker execution; no business tasks or models were created.
+- Formalized local/test/review/staging/production configuration, fail-closed deployed validation, safe `.env.example` values, and structured process/environment logs.
+- Extended readiness to check PostgreSQL and required KVS connectivity while keeping liveness dependency-free and optional future providers outside readiness.
+- Added Heroku `web`, `worker`, and safe `release` process types; no scheduler, deployment, or managed provider was introduced.
+- Extended CI for PostgreSQL 17, Redis 7.2, deterministic eager tests, and a real Celery worker smoke while preserving Web/Native/shared-package checks.

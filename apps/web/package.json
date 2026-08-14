@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "@barclimb/design-tokens": "0.1.0",
+    "@barclimb/api-client": "0.1.0",
+    "@barclimb/domain-types": "0.1.0",
     "react": "19.2.3",
     "react-dom": "19.2.3"
   },

@@ -10,8 +10,11 @@
     "doctor": "expo-doctor"
   },
   "dependencies": {
+    "@barclimb/api-client": "0.1.0",
     "@barclimb/design-tokens": "0.1.0",
+    "@barclimb/domain-types": "0.1.0",
     "expo": "57.0.12",
+    "expo-secure-store": "~57.0.1",
     "react": "19.2.3",
     "react-native": "0.86.2"
   },

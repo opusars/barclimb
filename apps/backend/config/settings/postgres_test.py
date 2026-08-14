@@ -15,4 +15,12 @@ DATABASES = {
         ssl_require=False,
     )
 }
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.redis.RedisCache",
+        "LOCATION": REDIS_URL,  # noqa: F405
+        "KEY_PREFIX": "barclimb:test",
+        "OPTIONS": {"socket_connect_timeout": 2, "socket_timeout": 2},
+    }
+}
 READINESS_REQUIRE_KVS = True

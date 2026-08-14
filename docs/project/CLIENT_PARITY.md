@@ -8,7 +8,7 @@ M1.1 establishes proof shells only. `PARTIAL` below does not assert feature pari
 |---|---|---|---|---|
 | Client shell/toolchain | PARTIAL | PARTIAL | PARTIAL | Web ReactDOM mount/build passes; Expo 57 iOS/Android JS exports pass; no simulator/device/store-build verification |
 | Native navigation/deep links | N/A | NOT_STARTED | NOT_STARTED | Current shell buttons simulate destinations in local state; routing/universal/app links remain later M1 work |
-| Auth/account | NOT_STARTED | NOT_STARTED | NOT_STARTED | username-first identity |
+| Auth/account | PARTIAL | PARTIAL | PARTIAL | One email-login/username-public identity; Web session+CSRF and native opaque session+SecureStore implemented; native device builds/deep-linked completion and real email delivery unverified |
 | MCQ interaction | NOT_STARTED | NOT_STARTED | NOT_STARTED | highlight/strike/review required |
 | IQS | NOT_STARTED | NOT_STARTED | NOT_STARTED | schema-driven |
 | PT/LRPT | NOT_STARTED | NOT_STARTED | NOT_STARTED | long-form editor/recovery critical |

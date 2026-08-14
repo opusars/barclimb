@@ -28,6 +28,7 @@ Set all values explicitly:
 - `READINESS_REQUIRE_KVS=true`
 - `LOG_LEVEL`
 - web/native public API base variables at client build time as applicable
+- production-grade provider-neutral Django `EMAIL_BACKEND` and `DEFAULT_FROM_EMAIL` before transactional-email verification
 
 Do not add provider credentials before the corresponding integration slice. Deployed settings fail closed on missing/malformed mandatory runtime values and reject mismatched `APP_ENV`.
 
@@ -40,3 +41,5 @@ Do not add provider credentials before the corresponding integration slice. Depl
 - Review-app data is disposable. Staging database/object retention and backup procedures must be defined and tested before provider-backed feature verification. Production backup/recovery remains a launch gate.
 
 Deployment, custom domains, SSL, pipelines, add-ons, scaling, backups, rollback drills, and provider connectivity are all explicitly unverified in M1.2.
+
+M1.3 adds secure-cookie/HSTS enforcement and the identity schema but does not verify a deployed email provider, Heroku runtime, universal/app links, or native device keychain behavior. Console email is local-only and must not be used as production delivery.

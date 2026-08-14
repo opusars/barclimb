@@ -4,7 +4,13 @@
     "slug": "barclimb",
     "version": "0.1.0",
     "userInterfaceStyle": "automatic",
-    "ios": { "supportsTablet": true, "bundleIdentifier": "com.barclimb.app" },
-    "android": { "package": "com.barclimb.app" }
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.barclimb.app"
+    },
+    "android": {
+      "package": "com.barclimb.app"
+    },
+    "plugins": ["expo-secure-store"]
   }
 }

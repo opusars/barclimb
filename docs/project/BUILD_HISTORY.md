@@ -54,3 +54,10 @@
 - Extended readiness to check PostgreSQL and required KVS connectivity while keeping liveness dependency-free and optional future providers outside readiness.
 - Added Heroku `web`, `worker`, and safe `release` process types; no scheduler, deployment, or managed provider was introduced.
 - Extended CI for PostgreSQL 17, Redis 7.2, deterministic eager tests, and a real Celery worker smoke while preserving Web/Native/shared-package checks.
+
+## 2026-08-13 — M1.3 identity and authentication foundation
+- Established the minimal custom Django user before business migrations: normalized private email login, normalized unique future-public username, and Django password handling only.
+- Added same-origin Web session/CSRF signup, login/logout, session lookup, verification, password reset, secure production transport/cookie settings, and authenticated-self contract.
+- Added server-revocable/expiring opaque native sessions, digest-only PostgreSQL persistence, Expo SecureStore restoration/removal, and shared iOS/Android auth shell flows.
+- Added purpose-bound, expiring, rotating, single-use email action tokens behind provider-neutral Django delivery; no email provider was verified.
+- Added KVS auth throttles, owner/staff authorization primitives, security-negative tests, and foundation auth surfaces without learner/profile/entitlement/product work.

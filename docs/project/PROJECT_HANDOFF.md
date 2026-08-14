@@ -1,7 +1,7 @@
 # BarClimb Project Handoff
 
 ## Current state
-Milestone 1 is in progress. M1.1/M1.1a established and corrected the multi-client repository/toolchain foundation. M1.2 adds the asynchronous runtime/environment contract: Celery, Redis/Valkey-compatible cache/broker configuration, explicit local/test/review/staging/production settings, dependency-aware readiness, Heroku process definitions, structured logs, and PostgreSQL+KVS+worker CI proof. No BarClimb business domain, authentication, provider integration, or actual deployment has been implemented.
+Milestone 1 is in progress. M1.1/M1.1a established and corrected the multi-client repository/toolchain foundation; M1.2 added the asynchronous runtime/environment contract. M1.3 establishes the single minimal account identity, secure Web session/CSRF flows, provider-neutral verification/reset, revocable native sessions, Expo SecureStore persistence, auth throttles, and authorization primitives. No learner profile, onboarding, entitlement, curriculum, assessment, billing, provider verification, or deployment has been implemented.
 
 ## Authoritative contracts
 See `../specs/SPEC_MANIFEST.json`. Four Markdown specs control the build.
@@ -33,7 +33,15 @@ See `../specs/SPEC_MANIFEST.json`. Four Markdown specs control the build.
 - Heroku `web`, `worker`, and release-check/migration process definitions. No beat scheduler was added.
 - Local PostgreSQL 14 + Redis 7.2 + live worker proof; CI now models PostgreSQL 17 + Redis 7.2 and live worker execution. No Heroku deployment or managed provider has been verified.
 
+## Completed in M1.3
+- Minimal custom Django `accounts.User` before business migrations: private normalized email login, normalized future-public username, Django password framework, no jurisdiction/profile/business state.
+- Same-origin Web session authentication with explicit CSRF on every mutation, session rotation/logout, authenticated `/me`, verification, reset, secure-cookie/HSTS production settings, and no JWT/CORS expansion.
+- Native opaque 30-day server sessions with digest-only PostgreSQL storage, server-side expiry/revocation, Expo SecureStore device-only persistence, startup restoration validation, and logout/reset cleanup.
+- One-hour hashed/purpose-bound/rotating/single-use verification/reset actions and provider-neutral Django delivery. Console/in-memory delivery only was tested; SendGrid remains unverified.
+- Hashed IP/identity KVS rate counters, reusable authenticated/admin/owner permissions, shared contracts, and scoped Web/iOS/Android auth screens.
+
 ## Tests actually run
+- M1.3 local security/lifecycle suite: Ruff and Django checks PASSED; 25 Pytest tests PASSED on the available Python 3.11 SQLite path. `npm run check` and portability PASSED with four Web/native Vitest tests and production Web build; Expo dependency check, Doctor 20/20, and iOS/Android JS exports PASSED. Hosted exact-runtime PostgreSQL 17/Redis 7.2/Celery and Node 24 acceptance also PASSED on the pushed branch.
 - `python3 scripts/validate_continuity.py` passes against the committed repository baseline and controlling-spec manifest.
 - Clean hash-verified Python lock installation passes on exact Python 3.13.15; Django 5.2.17 system check and 2 health/readiness tests pass on isolated SQLite and on a temporary local PostgreSQL 14 cluster after applying all built-in migrations. CI uses Python 3.13.15 and PostgreSQL 17.
 - Clean `npm ci`, ESLint, Prettier, all TypeScript workspace typechecks, three Vitest tests (including the ReactDOM mount), the portability gate, and the Vite production build pass on exact Node 24.19.0/npm 11.17.0.
@@ -48,7 +56,7 @@ None yet in a managed implementation environment. Local PostgreSQL 14 and Redis 
 Execution breadth remains the principal engineering risk. Curriculum completeness depends on automated official-scope/rule compilation, authority provenance, lawful multi-source reconciliation, subject certification, and strict inventory gates. NCBE Sourcebooks are optional enhanced reconciliation when lawfully available; do not make purchase/access a build or launch dependency.
 
 ## Exact next task
-Execute a bounded **M1.3 — identity and authentication foundation** slice: email + username + password account behavior, email verification/reset contracts, secure browser session/CSRF behavior, and the native credential-storage architecture. Keep curriculum, assessment, learner intelligence, billing, community, and other later domains out of that slice.
+After M1.3 review/acceptance, define the next bounded Milestone 1 foundation slice from the controlling acceptance order. Do not begin learner onboarding/profile, curriculum, assessment, entitlement/billing, or other product domains from this handoff alone.
 
 ## Resume commands
 ```bash

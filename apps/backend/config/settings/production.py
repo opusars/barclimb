@@ -35,3 +35,14 @@ CELERY_BROKER_URL = REDIS_URL
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
+SECURE_SSL_REDIRECT = True
+SECURE_HSTS_SECONDS = 31536000
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
+EMAIL_BACKEND = required("EMAIL_BACKEND")  # noqa: F405
+DEFAULT_FROM_EMAIL = required("DEFAULT_FROM_EMAIL")  # noqa: F405
+if EMAIL_BACKEND in {
+    "django.core.mail.backends.console.EmailBackend",
+    "django.core.mail.backends.locmem.EmailBackend",
+}:
+    raise ImproperlyConfigured("production requires a production-grade email backend")

@@ -4,6 +4,8 @@ No implementation-environment provider has yet been verified. Secret values must
 
 M1.2 verified local PostgreSQL 14 and Redis 7.2 behavior and adds equivalent PostgreSQL 17/Redis 7.2 CI services. These are dependency/runtime proofs, not verification of a Heroku app, Heroku Postgres plan, or managed KVS add-on; the provider status therefore remains unchanged.
 
+M1.3 exercises Django console/in-memory email delivery behind a provider-neutral boundary. This does not verify SendGrid or any other transactional-email provider, so provider statuses remain unchanged.
+
 | Provider | Intended role | Current status | Real nonprod verification | Launch relevance |
 |---|---|---|---|---|
 | OpenAI | generation/grading/compiler | NOT_VERIFIED | none | critical by assessment milestone |

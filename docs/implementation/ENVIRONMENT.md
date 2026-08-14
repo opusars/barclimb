@@ -23,7 +23,9 @@ KVS may support queue coordination, caching, rate limiting, ephemeral locks, and
 
 `APP_ENV` must be exactly `local`, `test`, `review`, `staging`, or `production`. Deployed settings reject an environment mismatch. Review/staging/production require a 50+ character `DJANGO_SECRET_KEY`, PostgreSQL `DATABASE_URL`, Redis/Valkey-compatible `REDIS_URL`, HTTPS `PUBLIC_BASE_URL`, nonempty `ALLOWED_HOSTS`, nonempty HTTPS `CSRF_TRUSTED_ORIGINS`, and `DJANGO_DEBUG=false`. Staging/production database URLs enable TLS. Review apps are equally fail-closed but disposable.
 
-Safe variable names and examples are in `.env.example`. `VITE_API_BASE_URL` and `EXPO_PUBLIC_API_BASE_URL` are public build-time client configuration, never secret storage. No provider variables are added until their integration slice.
+Safe variable names and examples are in `.env.example`. `VITE_API_BASE_URL` supplies only the local Vite `/api` proxy target; deployed Web remains same-origin. `EXPO_PUBLIC_API_BASE_URL` is public native build-time configuration. Neither value is secret storage. Email settings select Django's provider-neutral delivery boundary but do not verify a provider or add provider credentials.
+
+Local identity email uses Django's console backend and tests/review apps use in-memory delivery. Staging/production fail closed unless `EMAIL_BACKEND` names a non-console/non-memory Django backend and `DEFAULT_FROM_EMAIL` is explicit; this selects a provider-neutral boundary without verifying any provider. Native clients require an origin-valued `EXPO_PUBLIC_API_BASE_URL` (a trailing `/api/v1` is tolerated and normalized); only the opaque native session secret is placed in Expo SecureStore.
 
 ## Clean-checkout local workflow
 

@@ -5,9 +5,9 @@
   "active_launch_train": "A_FOUNDATION",
   "active_milestone": 1,
   "status": "IN_PROGRESS",
-  "latest_known_good_commit": "b0d15605a372c676d19dde9900eebbe49f1cdfe6",
-  "active_branch": "m1-2-runtime-environment-foundation",
-  "database_migration_summary": "M1.1 created the Django framework foundation with only Django's built-in infrastructure apps; no BarClimb business models or application migrations exist.",
+  "latest_known_good_commit": "48ac725041ad61d9ff6dad96e7925859cd2ce2f7",
+  "active_branch": "m1-3-identity-auth-foundation",
+  "database_migration_summary": "M1.3 establishes the minimal custom accounts.User before business migrations, plus durable hashed email-action tokens and revocable native-session records. No learner, entitlement, curriculum, assessment, billing, or other business model exists.",
   "enabled_material_feature_flags": [],
   "clients": {
     "web": "PARTIAL",
@@ -26,7 +26,7 @@
     "adsense": "NOT_VERIFIED",
     "admob": "NOT_VERIFIED"
   },
-  "latest_test_summary": "M1.2 passes on Python 3.13.15/Django 5.2.17/Celery 5.6.3: clean hash-locked install; Ruff/system checks; 9 deterministic tests on SQLite and PostgreSQL 14 with real Redis 7.2 readiness; live Celery worker discovery and smoke-task execution with results disabled; existing npm check/portability and continuity validation. CI now targets PostgreSQL 17 plus Redis 7.2 and performs the worker smoke. Heroku deployment/managed-provider verification and native simulator/device/store builds remain unverified.",
+  "latest_test_summary": "M1.3 passes 25 Django/Pytest security and lifecycle tests, system/migration checks, npm check/portability, continuity/diff checks, Expo Doctor/dependency checks, and iOS/Android JS exports. Hosted CI passes on exact Python 3.13/PostgreSQL 17/Redis 7.2/Celery and Node 24. Real email delivery, Heroku, native device keychain/simulator/store builds, and universal/app links remain unverified.",
   "known_blockers": [],
   "high_risk_items": [
     "Execution breadth across web, iOS, Android, AI assessment quality, community moderation, and cross-platform commerce.",
@@ -34,6 +34,6 @@
     "Cross-scenario projections, anonymous claim security, private public-page overlays, entitlement transitions, and cross-device orchestration require explicit integration/security tests before GA.",
     "Official NCBE scope/source changes must pass source-drift and revalidation workflow; future exam scopes remain provisional until governing materials exist."
   ],
-  "exact_next_task": "Execute a bounded M1.3 identity and authentication foundation slice: email + username + password accounts, verification/reset contracts, secure browser session/CSRF and native credential-storage architecture, without beginning curriculum, assessments, billing, or other later product domains.",
-  "last_verified_at": "2026-08-13T17:00:00-07:00"
+  "exact_next_task": "After M1.3 review and acceptance, select the next bounded Milestone 1 foundation slice from the controlling acceptance order; do not begin product-domain work from continuity alone.",
+  "last_verified_at": "2026-08-13T18:00:00-07:00"
 }

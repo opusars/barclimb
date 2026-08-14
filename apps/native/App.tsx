@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import {
   ActivityIndicator,
   Pressable,
@@ -13,7 +13,14 @@ import * as SecureStore from "expo-secure-store";
 import { authPaths } from "@barclimb/api-client";
 import type { AuthenticatedUser } from "@barclimb/domain-types";
 import { colors, spacing } from "@barclimb/design-tokens";
-import { createNativeSessionStore } from "./src/authSession";
+import {
+  createNativeSessionStore,
+  NativeCredentialRejected,
+  type NativeSessionRestoreResult,
+  persistNativeSession,
+  revokeAndClearNativeSession,
+  restoreNativeSession,
+} from "./src/authSession";
 
 const API_BASE_URL = (
   process.env.EXPO_PUBLIC_API_BASE_URL ?? "http://localhost:8000"
@@ -21,6 +28,38 @@ const API_BASE_URL = (
   .replace(/\/api\/v1\/?$/, "")
   .replace(/\/$/, "");
 type Mode = "login" | "signup" | "forgot";
+
+type NativeAuthResponse = {
+  detail?: string;
+  token?: string;
+  user?: AuthenticatedUser;
+};
+
+async function authenticatedUser(credential: string) {
+  let response: Response;
+  try {
+    response = await fetch(`${API_BASE_URL}${authPaths.me}`, {
+      headers: { Authorization: `Bearer ${credential}` },
+    });
+  } catch {
+    throw new Error("session validation unavailable");
+  }
+  if (response.status === 401 || response.status === 403)
+    throw new NativeCredentialRejected("invalid native credential");
+  if (!response.ok) throw new Error("session validation unavailable");
+  return (await response.json()) as AuthenticatedUser;
+}
+
+async function revokeServerSession(credential: string) {
+  const response = await fetch(
+    `${API_BASE_URL}${authPaths.nativeSessionRevoke}`,
+    {
+      method: "POST",
+      headers: { Authorization: `Bearer ${credential}` },
+    },
+  );
+  return response.ok || response.status === 401 || response.status === 403;
+}
 
 export default function App() {
   const store = useMemo(
@@ -40,29 +79,52 @@ export default function App() {
   const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState("");
 
-  async function authenticatedUser(credential: string) {
-    const response = await fetch(`${API_BASE_URL}${authPaths.me}`, {
-      headers: { Authorization: `Bearer ${credential}` },
-    });
-    if (!response.ok)
-      throw new Error("Your session has expired. Please log in again.");
-    return (await response.json()) as AuthenticatedUser;
-  }
+  const applyRestoredSession = useCallback(
+    (restored: NativeSessionRestoreResult<AuthenticatedUser>) => {
+      if (restored.status === "valid") {
+        setUser(restored.user);
+        setToken(restored.token);
+        setMessage("");
+      } else if (restored.status === "transient") {
+        setUser(null);
+        setToken(restored.token);
+        setMessage("Your saved session is preserved. Reconnect and try again.");
+      } else {
+        setUser(null);
+        setToken(null);
+        if (restored.status === "invalid") {
+          setMessage("Your session has expired. Please log in again.");
+        } else if (restored.status === "invalid_clear_failed") {
+          setMessage(
+            "Your session is no longer valid, but secure storage could not remove it. Try again.",
+          );
+        } else if (restored.status === "storage_read_failed") {
+          setMessage(
+            "Secure storage is unavailable. Restart the app and try again.",
+          );
+        } else {
+          setMessage("");
+        }
+      }
+      setLoading(false);
+    },
+    [],
+  );
+
+  const restoreSession = useCallback(async () => {
+    setLoading(true);
+    applyRestoredSession(await restoreNativeSession(store, authenticatedUser));
+  }, [applyRestoredSession, store]);
 
   useEffect(() => {
-    store.restore().then(async (saved) => {
-      if (!saved) return setLoading(false);
-      try {
-        setUser(await authenticatedUser(saved));
-        setToken(saved);
-      } catch {
-        await store.clear();
-        setMessage("Your session has expired. Please log in again.");
-      } finally {
-        setLoading(false);
-      }
+    let mounted = true;
+    void restoreNativeSession(store, authenticatedUser).then((restored) => {
+      if (mounted) applyRestoredSession(restored);
     });
-  }, [store]);
+    return () => {
+      mounted = false;
+    };
+  }, [applyRestoredSession, store]);
 
   async function submit() {
     setLoading(true);
@@ -85,12 +147,36 @@ export default function App() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
-      const data = await response.json();
+      let data: NativeAuthResponse = {};
+      try {
+        data = await response.json();
+      } catch {
+        data = {};
+      }
       if (!response.ok) throw new Error(data.detail ?? "Unable to continue.");
       if (mode === "forgot") {
-        setMessage(data.detail);
+        setMessage(
+          data.detail ?? "If that account exists, a reset link is on its way.",
+        );
       } else {
-        await store.save(data.token);
+        if (!data.token || !data.user)
+          throw new Error("The authentication response was incomplete.");
+        const persisted = await persistNativeSession(
+          store,
+          data.token,
+          revokeServerSession,
+        );
+        if (persisted.status !== "saved") {
+          setMessage(
+            persisted.status === "save_failed_revoked"
+              ? "Secure storage could not save this session. The server session was revoked."
+              : "Secure storage could not save this session, and server revocation is unavailable. Try again after reconnecting.",
+          );
+          setToken(null);
+          setUser(null);
+          setPassword("");
+          return;
+        }
         setToken(data.token);
         setUser(data.user);
         setPassword("");
@@ -105,25 +191,22 @@ export default function App() {
   }
 
   async function logout() {
-    if (token) {
-      try {
-        const response = await fetch(
-          `${API_BASE_URL}${authPaths.nativeSessionRevoke}`,
-          {
-            method: "POST",
-            headers: { Authorization: `Bearer ${token}` },
-          },
-        );
-        if (!response.ok && response.status !== 401 && response.status !== 403)
-          throw new Error("Unable to revoke session");
-      } catch {
-        setMessage("Connect to the internet to sign out securely.");
-        return;
-      }
+    const result = await revokeAndClearNativeSession(
+      store,
+      token,
+      revokeServerSession,
+    );
+    if (result.status === "revocation_unavailable") {
+      setMessage("Connect to the internet to sign out securely.");
+      return;
     }
-    await store.clear();
     setToken(null);
     setUser(null);
+    setMessage(
+      result.status === "local_clear_failed_after_revocation"
+        ? "Signed out on the server, but secure storage could not remove the local credential. Try again."
+        : "",
+    );
   }
 
   if (loading)
@@ -223,6 +306,15 @@ export default function App() {
               <Text accessibilityRole="alert" style={styles.message}>
                 {message}
               </Text>
+            ) : null}
+            {token ? (
+              <Pressable
+                accessibilityRole="button"
+                style={styles.secondaryButton}
+                onPress={restoreSession}
+              >
+                <Text style={styles.modeLink}>Retry saved session</Text>
+              </Pressable>
             ) : null}
             <Pressable
               accessibilityRole="button"
@@ -327,6 +419,7 @@ const styles = StyleSheet.create({
     marginTop: spacing[3],
   },
   buttonText: { color: "white", fontWeight: "800" },
+  secondaryButton: { alignItems: "center", padding: spacing[3] },
   message: { color: "#8b2e2e", lineHeight: 20 },
   modeRow: {
     flexDirection: "row",

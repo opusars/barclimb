@@ -10,6 +10,8 @@ Object.assign(globalThis, { IS_REACT_ACT_ENVIRONMENT: true });
 describe("web shell", () => {
   afterEach(() => {
     document.body.replaceChildren();
+    window.history.replaceState(null, "", "/");
+    vi.unstubAllGlobals();
   });
 
   it("mounts through ReactDOM with one compatible React runtime", async () => {
@@ -36,6 +38,37 @@ describe("web shell", () => {
     await act(async () => {
       root.unmount();
     });
-    vi.unstubAllGlobals();
   });
+
+  it.each([
+    ["/reset-password", "Choose a new password"],
+    ["/verify-email", "Verify your email"],
+  ])(
+    "consumes an action credential from the fragment and cleans %s",
+    async (path, title) => {
+      window.history.replaceState(null, "", `${path}#token=fragment-secret`);
+      vi.stubGlobal(
+        "fetch",
+        vi.fn().mockResolvedValue({
+          ok: true,
+          status: 200,
+          json: () => Promise.resolve({ authenticated: false, user: null }),
+        }),
+      );
+      const container = document.createElement("div");
+      document.body.append(container);
+      const root = createRoot(container);
+
+      await act(async () => {
+        root.render(<App />);
+      });
+
+      expect(container.textContent).toContain(title);
+      expect(window.location.pathname).toBe(path);
+      expect(window.location.hash).toBe("");
+      expect(window.location.search).toBe("");
+
+      await act(async () => root.unmount());
+    },
+  );
 });

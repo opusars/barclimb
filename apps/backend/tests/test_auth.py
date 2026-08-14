@@ -1,5 +1,5 @@
-import re
 from types import SimpleNamespace
+from urllib.parse import parse_qs, urlsplit
 
 import pytest
 from django.contrib.auth import authenticate
@@ -26,7 +26,10 @@ def user(db):
 
 
 def token_from_email() -> str:
-    return re.search(r"token=([^\s]+)", mail.outbox[-1].body).group(1)
+    url = next(part for part in mail.outbox[-1].body.split() if part.startswith("http"))
+    parsed = urlsplit(url)
+    assert "token" not in parse_qs(parsed.query)
+    return parse_qs(parsed.fragment)["token"][0]
 
 
 def csrf_client():
@@ -52,13 +55,18 @@ def test_user_identity_normalization_hashing_and_rules():
 
 
 @pytest.mark.django_db
-def test_signup_requires_csrf_and_creates_rotated_session():
+def test_signup_requires_csrf_and_creates_rotated_session(
+    django_capture_on_commit_callbacks,
+):
     insecure = APIClient(enforce_csrf_checks=True)
     payload = {"email": "new@example.com", "username": "new_climber", "password": PASSWORD}
     assert insecure.post("/api/v1/auth/signup/", payload, format="json").status_code == 403
     client, csrf = csrf_client()
     old_key = client.session.session_key
-    response = client.post("/api/v1/auth/signup/", payload, format="json", HTTP_X_CSRFTOKEN=csrf)
+    with django_capture_on_commit_callbacks(execute=True):
+        response = client.post(
+            "/api/v1/auth/signup/", payload, format="json", HTTP_X_CSRFTOKEN=csrf
+        )
     assert response.status_code == 201
     assert response.json()["username"] == "new_climber"
     assert client.session.session_key != old_key
@@ -89,24 +97,31 @@ def test_web_login_session_rotation_csrf_and_logout_invalidation(user):
 
 
 @pytest.mark.django_db
-def test_verification_token_is_hashed_rotated_expiring_and_single_use(user):
+def test_verification_token_is_hashed_rotated_expiring_and_single_use(
+    user, django_capture_on_commit_callbacks
+):
     client, csrf = csrf_client()
-    client.post(
-        "/api/v1/auth/verification/request/",
-        {"email": user.email},
-        format="json",
-        HTTP_X_CSRFTOKEN=csrf,
-    )
+    with django_capture_on_commit_callbacks(execute=True):
+        client.post(
+            "/api/v1/auth/verification/request/",
+            {"email": user.email},
+            format="json",
+            HTTP_X_CSRFTOKEN=csrf,
+        )
     first = token_from_email()
-    client.post(
-        "/api/v1/auth/verification/request/",
-        {"email": user.email},
-        format="json",
-        HTTP_X_CSRFTOKEN=csrf,
-    )
+    with django_capture_on_commit_callbacks(execute=True):
+        client.post(
+            "/api/v1/auth/verification/request/",
+            {"email": user.email},
+            format="json",
+            HTTP_X_CSRFTOKEN=csrf,
+        )
     second = token_from_email()
     assert first != second
     assert not EmailActionToken.objects.filter(token_hash=first).exists()
+    assert EmailActionToken.objects.filter(
+        token_hash=hash_secret(first), used_at__isnull=False
+    ).exists()
     assert (
         client.post(
             "/api/v1/auth/verification/confirm/",
@@ -166,16 +181,19 @@ def test_expired_token_and_wrong_purpose_are_rejected(user):
 
 
 @pytest.mark.django_db
-def test_password_reset_is_non_enumerating_single_use_and_revokes_sessions(user):
+def test_password_reset_is_non_enumerating_single_use_and_revokes_sessions(
+    user, django_capture_on_commit_callbacks
+):
     native, _ = NativeSession.issue(user)
     client = APIClient()
     client, csrf = csrf_client()
-    existing = client.post(
-        "/api/v1/auth/password-reset/request/",
-        {"email": user.email},
-        format="json",
-        HTTP_X_CSRFTOKEN=csrf,
-    )
+    with django_capture_on_commit_callbacks(execute=True):
+        existing = client.post(
+            "/api/v1/auth/password-reset/request/",
+            {"email": user.email},
+            format="json",
+            HTTP_X_CSRFTOKEN=csrf,
+        )
     raw = token_from_email()
     assert (
         client.post(
@@ -260,13 +278,20 @@ def test_expired_native_session_is_rejected(user):
 
 
 @pytest.mark.django_db
-def test_native_signup_uses_same_identity_and_issues_secure_session():
+def test_native_signup_uses_same_identity_and_issues_secure_session(
+    django_capture_on_commit_callbacks,
+):
     client = APIClient()
-    response = client.post(
-        "/api/v1/auth/native/signup/",
-        {"email": "native@example.com", "username": "native_climber", "password": PASSWORD},
-        format="json",
-    )
+    with django_capture_on_commit_callbacks(execute=True):
+        response = client.post(
+            "/api/v1/auth/native/signup/",
+            {
+                "email": "native@example.com",
+                "username": "native_climber",
+                "password": PASSWORD,
+            },
+            format="json",
+        )
     assert response.status_code == 201
     assert response.json()["user"]["username"] == "native_climber"
     assert NativeSession.objects.filter(token_hash=hash_secret(response.json()["token"])).exists()

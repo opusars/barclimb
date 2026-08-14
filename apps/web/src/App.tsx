@@ -4,6 +4,21 @@ import type { AuthenticatedUser } from "@barclimb/domain-types";
 
 type Mode = "login" | "signup" | "forgot" | "reset" | "verify";
 
+export function consumeActionTokenFromFragment() {
+  const isActionRoute =
+    window.location.pathname.includes("reset-password") ||
+    window.location.pathname.includes("verify-email");
+  if (!isActionRoute) return "";
+  const fragment = new URLSearchParams(window.location.hash.replace(/^#/, ""));
+  const token = fragment.get("token") ?? "";
+  window.history.replaceState(
+    window.history.state,
+    "",
+    window.location.pathname,
+  );
+  return token;
+}
+
 async function csrfToken() {
   const response = await fetch(authPaths.csrf, { credentials: "same-origin" });
   return ((await response.json()) as { csrf_token: string }).csrf_token;
@@ -20,20 +35,29 @@ async function request(path: string, body?: Record<string, string>) {
     headers,
     body: body ? JSON.stringify(body) : undefined,
   });
-  const data = response.status === 204 ? null : await response.json();
+  let data = null;
+  if (response.status !== 204) {
+    try {
+      data = await response.json();
+    } catch {
+      data = null;
+    }
+  }
   if (!response.ok)
     throw new Error(data?.detail ?? "Please check the form and try again.");
   return data;
 }
 
 export function App() {
-  const query = new URLSearchParams(window.location.search);
   const initialMode: Mode = window.location.pathname.includes("reset-password")
     ? "reset"
     : window.location.pathname.includes("verify-email")
       ? "verify"
       : "login";
   const [mode, setMode] = useState<Mode>(initialMode);
+  const [actionToken, setActionToken] = useState(
+    consumeActionTokenFromFragment,
+  );
   const [user, setUser] = useState<AuthenticatedUser | null>(null);
   const [message, setMessage] = useState("");
   const [busy, setBusy] = useState(false);
@@ -57,16 +81,18 @@ export function App() {
         setMessage(data.detail);
       } else if (mode === "reset") {
         const data = await request(authPaths.passwordResetConfirm, {
-          token: query.get("token") ?? "",
+          token: actionToken,
           new_password: String(values.password),
         });
         setMessage(data.detail);
+        setActionToken("");
         setMode("login");
       } else if (mode === "verify") {
         const data = await request(authPaths.verificationConfirm, {
-          token: query.get("token") ?? "",
+          token: actionToken,
         });
         setMessage(data.detail);
+        setActionToken("");
         request(authPaths.me)
           .then(setUser)
           .catch(() => undefined);

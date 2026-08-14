@@ -5,9 +5,9 @@
   "active_launch_train": "A_FOUNDATION",
   "active_milestone": 1,
   "status": "IN_PROGRESS",
-  "latest_known_good_commit": "48ac725041ad61d9ff6dad96e7925859cd2ce2f7",
+  "latest_known_good_commit": "573cd6005a7cef13319e2b41a0474c70105ff108",
   "active_branch": "m1-3-identity-auth-foundation",
-  "database_migration_summary": "M1.3 establishes the minimal custom accounts.User before business migrations, plus durable hashed email-action tokens and revocable native-session records. No learner, entitlement, curriculum, assessment, billing, or other business model exists.",
+  "database_migration_summary": "M1.3a retains the minimal accounts.User and adds an authentication generation, native-session generation snapshots, deterministic digest-only email-action derivation metadata, and the durable provider-neutral AuthEmailDelivery outbox. No learner, entitlement, curriculum, assessment, billing, or other business model exists.",
   "enabled_material_feature_flags": [],
   "clients": {
     "web": "PARTIAL",
@@ -26,7 +26,7 @@
     "adsense": "NOT_VERIFIED",
     "admob": "NOT_VERIFIED"
   },
-  "latest_test_summary": "M1.3 passes 25 Django/Pytest security and lifecycle tests, system/migration checks, npm check/portability, continuity/diff checks, Expo Doctor/dependency checks, and iOS/Android JS exports. Hosted CI passes on exact Python 3.13/PostgreSQL 17/Redis 7.2/Celery and Node 24. Real email delivery, Heroku, native device keychain/simulator/store builds, and universal/app links remain unverified.",
+  "latest_test_summary": "M1.3a passes 48 SQLite security tests (four PostgreSQL-only skips), the complete 52-test local PostgreSQL 14 + Redis 7.2 suite including all concurrency cases, Ruff/system/migration checks, npm full check/build and portability with 17 Vitest tests, Expo Doctor 20/20, iOS/Android JS exports, continuity/diff checks, and hosted Foundation CI on Python 3.13/PostgreSQL 17/Redis 7.2 and Node 24. Real provider email, Heroku proxy behavior, native device keychain/simulator/store builds, and universal/app links remain unverified.",
   "known_blockers": [],
   "high_risk_items": [
     "Execution breadth across web, iOS, Android, AI assessment quality, community moderation, and cross-platform commerce.",
@@ -34,6 +34,6 @@
     "Cross-scenario projections, anonymous claim security, private public-page overlays, entitlement transitions, and cross-device orchestration require explicit integration/security tests before GA.",
     "Official NCBE scope/source changes must pass source-drift and revalidation workflow; future exam scopes remain provisional until governing materials exist."
   ],
-  "exact_next_task": "After M1.3 review and acceptance, select the next bounded Milestone 1 foundation slice from the controlling acceptance order; do not begin product-domain work from continuity alone.",
-  "last_verified_at": "2026-08-13T18:00:00-07:00"
+  "exact_next_task": "Review and accept the focused M1.3a authentication hardening commit and its GitHub Actions result; do not merge or begin M1.4 from continuity alone. After acceptance, define the next bounded Milestone 1 foundation slice without entering product domains.",
+  "last_verified_at": "2026-08-13T18:55:57-07:00"
 }

@@ -7,7 +7,7 @@
 - PostgreSQL is the canonical durable datastore in every real environment.
 - A Redis/Valkey-compatible service is the ephemeral KVS, Celery broker, and Django cache.
 
-The application does not use a Celery result backend. Tasks ignore return values by default; durable task outcomes must eventually be written idempotently to PostgreSQL domain records. Global late acknowledgement, reject-on-worker-loss, and implicit autoretry are disabled. A future business task must define its own deterministic idempotency key, bounded retry/backoff policy, and transaction boundary.
+The application does not use a Celery result backend. Tasks ignore return values by default; durable task outcomes are written idempotently to PostgreSQL domain records. Global late acknowledgement, reject-on-worker-loss, and implicit autoretry are disabled. M1.3a's authentication-email outbox is the first business task implementation: delivery UUID idempotency, explicit PostgreSQL state/lease, bounded retries/backoff, and on-commit publication. Future business tasks must define the same boundaries for their own domains.
 
 KVS may support queue coordination, caching, rate limiting, ephemeral locks, and explicitly short-lived orchestration state. It must never be the only store for learner evidence, submitted answers, grades, assessment/curriculum/publication truth, subscription/entitlement truth, or any other authoritative durable business record.
 
@@ -21,9 +21,9 @@ KVS may support queue coordination, caching, rate limiting, ephemeral locks, and
 | Staging     | `config.settings.staging`                 | Persistent near-production topology; future home of real non-production provider integrations. Never production credentials. |
 | Production  | `config.settings.production`              | Explicit fail-closed config; secure cookies/proxy; no development defaults.                                                  |
 
-`APP_ENV` must be exactly `local`, `test`, `review`, `staging`, or `production`. Deployed settings reject an environment mismatch. Review/staging/production require a 50+ character `DJANGO_SECRET_KEY`, PostgreSQL `DATABASE_URL`, Redis/Valkey-compatible `REDIS_URL`, HTTPS `PUBLIC_BASE_URL`, nonempty `ALLOWED_HOSTS`, nonempty HTTPS `CSRF_TRUSTED_ORIGINS`, and `DJANGO_DEBUG=false`. Staging/production database URLs enable TLS. Review apps are equally fail-closed but disposable.
+`APP_ENV` must be exactly `local`, `test`, `review`, `staging`, or `production`. Deployed settings reject an environment mismatch. Review/staging/production require a 50+ character `DJANGO_SECRET_KEY`, PostgreSQL `DATABASE_URL`, Redis/Valkey-compatible `REDIS_URL`, HTTPS `PUBLIC_BASE_URL`, nonempty `ALLOWED_HOSTS`, nonempty HTTPS `CSRF_TRUSTED_ORIGINS`, and `DJANGO_DEBUG=false`. All three deployed environments force HTTPS and secure cookies behind `SECURE_PROXY_SSL_HEADER`; staging/production database URLs enable TLS. Review apps are equally fail-closed but disposable.
 
-Safe variable names and examples are in `.env.example`. `VITE_API_BASE_URL` supplies only the local Vite `/api` proxy target; deployed Web remains same-origin. `EXPO_PUBLIC_API_BASE_URL` is public native build-time configuration. Neither value is secret storage. Email settings select Django's provider-neutral delivery boundary but do not verify a provider or add provider credentials.
+Safe variable names and examples are in `.env.example`. `PUBLIC_BASE_URL` means the public/canonical Web origin used in verification/reset completion links; it must never be set to the backend-only origin. Local uses `http://localhost:5173`. `VITE_API_BASE_URL` is the API origin used only as the local Vite `/api` proxy target; deployed Web remains same-origin. `EXPO_PUBLIC_API_BASE_URL` is the public native API origin at build time. None of these public origins is secret storage. Email settings select Django's provider-neutral delivery boundary but do not verify a provider or add provider credentials.
 
 Local identity email uses Django's console backend and tests/review apps use in-memory delivery. Staging/production fail closed unless `EMAIL_BACKEND` names a non-console/non-memory Django backend and `DEFAULT_FROM_EMAIL` is explicit; this selects a provider-neutral boundary without verifying any provider. Native clients require an origin-valued `EXPO_PUBLIC_API_BASE_URL` (a trailing `/api/v1` is tolerated and normalized); only the opaque native session secret is placed in Expo SecureStore.
 
@@ -63,11 +63,12 @@ The root `Procfile` defines:
 
 - `web`: Gunicorn WSGI server;
 - `worker`: Celery worker;
+- `beat`: Celery beat, currently only the one-minute durable authentication-email outbox recovery sweep;
 - `release`: deployment checks followed by safe Django migrations using the environment's explicit `DJANGO_SETTINGS_MODULE`.
 
-No beat process exists because M1.2 has no scheduled business work. A future scheduler requires a documented need.
+M1.3a introduces the first documented scheduled need. Beat publishes only the credential-free outbox recovery task; the sweep reads due PostgreSQL delivery IDs and republishes them. It is required whenever authentication email is enabled. `python manage.py replay_auth_email_outbox` is the bounded manual incident-recovery command.
 
-`GET /api/v1/health/` is process liveness and touches no dependencies. `GET /api/v1/ready/` verifies PostgreSQL and, where required, a KVS read/write round trip. Neither endpoint depends on future OpenAI, email, ads, community, or other optional providers. KVS is required because both web cache/runtime coordination and the worker broker depend on it; the endpoint reports dependency categories but never URLs or credentials.
+`GET /api/v1/health/` is process liveness and touches no dependencies. `GET /api/v1/ready/` verifies PostgreSQL and, where required, a KVS read/write round trip. Neither endpoint depends on future OpenAI, email, ads, community, or other optional providers. KVS is required because web rate limiting/runtime coordination and the worker broker depend on it; authentication fails closed with a generic 503 if the KVS counter is unavailable. PostgreSQL remains identity/session/outbox authority. Readiness reports dependency categories but never URLs or credentials.
 
 Logs are one-line JSON with timestamp, level, logger, message, `APP_ENV`, and Heroku `DYNO`/local process identity. Do not log configuration values, secrets, learner responses, or business payloads. Sentry remains unverified and unimplemented.
 

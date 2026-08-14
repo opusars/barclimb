@@ -13,7 +13,7 @@ from rest_framework.views import APIView
 
 from .authentication import NativeSessionAuthentication
 from .models import EmailActionToken, NativeSession, User
-from .rate_limits import enforce_rate_limit
+from .rate_limits import client_ip, enforce_rate_limit
 from .serializers import (
     CredentialsSerializer,
     EmailSerializer,
@@ -22,7 +22,11 @@ from .serializers import (
     TokenSerializer,
     UserSerializer,
 )
-from .tasks import enqueue_password_reset, enqueue_verification
+from .services import (
+    issue_native_session_after_revalidation,
+    queue_password_reset,
+    queue_verification,
+)
 
 
 class AuthAPIView(APIView):
@@ -35,7 +39,7 @@ class AuthAPIView(APIView):
 
 
 def _ip(request) -> str:
-    return request.META.get("REMOTE_ADDR", "unknown")
+    return client_ip(request)
 
 
 def _limit_ip(request, operation: str) -> None:
@@ -74,9 +78,9 @@ class SignupView(AuthAPIView):
         try:
             with transaction.atomic():
                 user = serializer.save()
+                queue_verification(user)
         except IntegrityError as error:
             raise ValidationError("Email or username is unavailable.") from error
-        enqueue_verification(user.id)
         login(request, user)
         return Response(UserSerializer(user).data, status=status.HTTP_201_CREATED)
 
@@ -140,7 +144,7 @@ class VerificationRequestView(AuthAPIView):
         email = serializer.validated_data["email"]
         _limit_identity("verification_resend", email)
         user = User.objects.filter(email=email, is_email_verified=False).first()
-        enqueue_verification(user.id if user else None)
+        queue_verification(user)
         return Response({"detail": "If verification is available, an email has been sent."})
 
 
@@ -175,7 +179,7 @@ class PasswordResetRequestView(AuthAPIView):
         email = serializer.validated_data["email"]
         _limit_identity("password_reset", email)
         user = User.objects.filter(email=email, is_active=True).first()
-        enqueue_password_reset(user.id if user else None)
+        queue_password_reset(user)
         return Response({"detail": "If the account exists, a reset email has been sent."})
 
 
@@ -200,7 +204,8 @@ class PasswordResetConfirmView(AuthAPIView):
             except DjangoValidationError as error:
                 raise ValidationError({"new_password": list(error.messages)}) from error
             token.user.set_password(serializer.validated_data["new_password"])
-            token.user.save(update_fields=["password"])
+            token.user.auth_generation += 1
+            token.user.save(update_fields=["password", "auth_generation"])
             NativeSession.objects.filter(user=token.user, revoked_at__isnull=True).update(
                 revoked_at=token.used_at
             )
@@ -222,7 +227,15 @@ class NativeLoginView(AuthAPIView):
                 {"detail": "Email or password is incorrect."},
                 status=status.HTTP_400_BAD_REQUEST,
             )
-        session, raw = NativeSession.issue(user)
+        issued = issue_native_session_after_revalidation(
+            user, serializer.validated_data["password"]
+        )
+        if issued is None:
+            return Response(
+                {"detail": "Email or password is incorrect."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        session, raw, user = issued
         return Response(
             {
                 "token": raw,
@@ -245,9 +258,9 @@ class NativeSignupView(AuthAPIView):
             with transaction.atomic():
                 user = serializer.save()
                 session, raw = NativeSession.issue(user)
+                queue_verification(user)
         except IntegrityError as error:
             raise ValidationError("Email or username is unavailable.") from error
-        enqueue_verification(user.id)
         return Response(
             {"token": raw, "expires_at": session.expires_at, "user": UserSerializer(user).data},
             status=status.HTTP_201_CREATED,
@@ -265,7 +278,7 @@ class NativePasswordResetRequestView(AuthAPIView):
         email = serializer.validated_data["email"]
         _limit_identity("password_reset", email)
         user = User.objects.filter(email=email, is_active=True).first()
-        enqueue_password_reset(user.id if user else None)
+        queue_password_reset(user)
         return Response({"detail": "If the account exists, a reset email has been sent."})
 
 

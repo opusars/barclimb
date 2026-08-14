@@ -31,6 +31,8 @@ DATABASES = {"default": dj_database_url.parse(DATABASE_URL, conn_max_age=0, ssl_
 CACHES["default"]["LOCATION"] = REDIS_URL  # noqa: F405
 CELERY_BROKER_URL = REDIS_URL
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+TRUST_HEROKU_ROUTER_IP = True
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
+SECURE_SSL_REDIRECT = True
 EMAIL_BACKEND = "django.core.mail.backends.locmem.EmailBackend"

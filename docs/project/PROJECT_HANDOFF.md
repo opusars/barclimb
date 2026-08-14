@@ -1,7 +1,7 @@
 # BarClimb Project Handoff
 
 ## Current state
-Milestone 1 is in progress. M1.1/M1.1a established and corrected the multi-client repository/toolchain foundation; M1.2 added the asynchronous runtime/environment contract. M1.3 establishes the single minimal account identity, secure Web session/CSRF flows, provider-neutral verification/reset, revocable native sessions, Expo SecureStore persistence, auth throttles, and authorization primitives. No learner profile, onboarding, entitlement, curriculum, assessment, billing, provider verification, or deployment has been implemented.
+Milestone 1 is in progress. M1.1/M1.1a established and corrected the multi-client repository/toolchain foundation; M1.2 added the asynchronous runtime/environment contract; M1.3 established the single minimal account identity and cross-client authentication; M1.3a hardens its credential transport, reset concurrency, proxy/HTTPS boundary, durable email delivery, and native recovery states. No learner profile, onboarding, entitlement, curriculum, assessment, billing, provider verification, or deployment has been implemented.
 
 ## Authoritative contracts
 See `../specs/SPEC_MANIFEST.json`. Four Markdown specs control the build.
@@ -30,7 +30,7 @@ See `../specs/SPEC_MANIFEST.json`. Four Markdown specs control the build.
 - Celery 5.6.3 Django integration with Redis/Valkey-compatible environment-driven broker/cache configuration, no result backend, deterministic eager tests, explicit conservative delivery defaults, and one non-contractual infrastructure smoke task.
 - Explicit local/test/review/staging/production settings; fail-closed deployed secrets/URL/host/origin validation; safe public client API-base configuration; no provider credentials.
 - Dependency-free liveness and PostgreSQL/KVS readiness with safe dependency labels, plus structured process/environment logs that exclude configuration and business payloads.
-- Heroku `web`, `worker`, and release-check/migration process definitions. No beat scheduler was added.
+- Heroku `web`, `worker`, and release-check/migration process definitions. M1.2 added no speculative scheduler; M1.3a later adds beat for durable authentication-email recovery.
 - Local PostgreSQL 14 + Redis 7.2 + live worker proof; CI now models PostgreSQL 17 + Redis 7.2 and live worker execution. No Heroku deployment or managed provider has been verified.
 
 ## Completed in M1.3
@@ -40,7 +40,16 @@ See `../specs/SPEC_MANIFEST.json`. Four Markdown specs control the build.
 - One-hour hashed/purpose-bound/rotating/single-use verification/reset actions and provider-neutral Django delivery. Console/in-memory delivery only was tested; SendGrid remains unverified.
 - Hashed IP/identity KVS rate counters, reusable authenticated/admin/owner permissions, shared contracts, and scoped Web/iOS/Android auth screens.
 
+## Completed in M1.3a
+- Reset/verification links target the canonical Web origin and place credentials only in URL fragments. Web immediately removes fragment/query text with `replaceState` and submits credentials only in CSRF-protected POST bodies.
+- Native issuance and password reset serialize on the user row; password/auth-security generation invalidates every pre-reset native credential, while Django's authentication hash invalidates Web sessions.
+- Review/staging/production force HTTPS. Heroku client identity is the canonicalized rightmost router-appended forwarded address, with `REMOTE_ADDR` fallback; auth throttling fails closed with generic 503 when KVS is unavailable.
+- `AuthEmailDelivery` is a durable PostgreSQL outbox with UUID idempotency, leases, bounded retries/backoff, terminal state, on-commit credential-free publication, one-minute beat recovery, and manual incident replay. Raw action credentials are derived only in worker memory and never stored plaintext or sent to Celery metadata/results/logs.
+- Native restore distinguishes valid, authoritatively invalid, transient/offline/5xx, SecureStore read failure, and invalid-delete failure. Save and logout flows report server-revocation and local-deletion outcomes separately.
+- M1.3a also makes Bearer scheme parsing case-insensitive and Web non-JSON errors safe. It adds no product domain or provider integration.
+
 ## Tests actually run
+- M1.3a hardening: 48 SQLite security/lifecycle tests pass with four PostgreSQL-only skips; the complete 52-test PostgreSQL 14 + Redis 7.2 suite passes, including reset-vs-issuance in both lock orders, token consume-vs-reissue, and duplicate signup. Ruff/system/migration checks, npm full check/build and portability with 17 Vitest tests, Expo Doctor 20/20, iOS/Android production JS exports, continuity validation, and diff checks pass. Hosted Foundation CI also passes the exact-runtime continuity, backend/PostgreSQL/Redis/Celery, and TypeScript/Expo jobs.
 - M1.3 local security/lifecycle suite: Ruff and Django checks PASSED; 25 Pytest tests PASSED on the available Python 3.11 SQLite path. `npm run check` and portability PASSED with four Web/native Vitest tests and production Web build; Expo dependency check, Doctor 20/20, and iOS/Android JS exports PASSED. Hosted exact-runtime PostgreSQL 17/Redis 7.2/Celery and Node 24 acceptance also PASSED on the pushed branch.
 - `python3 scripts/validate_continuity.py` passes against the committed repository baseline and controlling-spec manifest.
 - Clean hash-verified Python lock installation passes on exact Python 3.13.15; Django 5.2.17 system check and 2 health/readiness tests pass on isolated SQLite and on a temporary local PostgreSQL 14 cluster after applying all built-in migrations. CI uses Python 3.13.15 and PostgreSQL 17.
@@ -56,7 +65,7 @@ None yet in a managed implementation environment. Local PostgreSQL 14 and Redis 
 Execution breadth remains the principal engineering risk. Curriculum completeness depends on automated official-scope/rule compilation, authority provenance, lawful multi-source reconciliation, subject certification, and strict inventory gates. NCBE Sourcebooks are optional enhanced reconciliation when lawfully available; do not make purchase/access a build or launch dependency.
 
 ## Exact next task
-After M1.3 review/acceptance, define the next bounded Milestone 1 foundation slice from the controlling acceptance order. Do not begin learner onboarding/profile, curriculum, assessment, entitlement/billing, or other product domains from this handoff alone.
+Review and accept M1.3a and its branch CI. Do not merge or begin M1.4 from continuity alone. After acceptance, define the next bounded Milestone 1 slice from the remaining foundation gate; do not begin learner onboarding/profile, curriculum, assessment, entitlement/billing, or other product domains.
 
 ## Resume commands
 ```bash
@@ -68,7 +77,7 @@ npm run doctor --workspace @barclimb/native
 ```
 Use Python 3.13.15, Node 24.19.0, and npm 11.17.0 for baseline parity. Install Python requirements with `--require-hashes`. See `../implementation/ENVIRONMENT.md` for setup and the PostgreSQL smoke path. Expo Doctor requires network access for all checks.
 
-For real runtime acceptance, also run PostgreSQL and Redis/Valkey, select `config.settings.postgres_test`, and execute the worker smoke documented in `../implementation/ENVIRONMENT.md`. Review/staging/production are contracts only; no Heroku app or managed add-on has been verified.
+For real runtime acceptance, also run PostgreSQL and Redis/Valkey, select `config.settings.postgres_test`, execute the PostgreSQL concurrency suite, and execute worker/beat discovery documented in `../implementation/ENVIRONMENT.md`. Review/staging/production are contracts only; no Heroku app or managed add-on has been verified.
 
 ## Final integration note
 Before feature UI implementation, establish the canonical provider-agnostic billing domain, server projection schemas, orchestration models/state machines, and client-surface capability manifest. These prevent Visitor/Free/Plus and Web/iOS/Android from diverging.

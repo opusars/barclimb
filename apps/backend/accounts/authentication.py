@@ -13,7 +13,7 @@ class NativeSessionAuthentication(BaseAuthentication):
         if not header:
             return None
         parts = header.split()
-        if len(parts) != 2 or parts[0] != self.keyword:
+        if len(parts) != 2 or parts[0].lower() != self.keyword.lower():
             raise AuthenticationFailed("Invalid native session credential")
         try:
             session = NativeSession.objects.select_related("user").get(

@@ -1,11 +1,31 @@
 import os
 import subprocess
 import sys
+from pathlib import Path
 
 import pytest
 from django.core.exceptions import ImproperlyConfigured
 
 from config.environment import AppEnvironment, boolean, environment, origin_csv, url
+
+BACKEND_DIR = Path(__file__).resolve().parents[1]
+
+
+def deployed_environment_values(name: str):
+    return {
+        "PATH": os.environ["PATH"],
+        "PYTHONPATH": str(BACKEND_DIR),
+        "APP_ENV": name,
+        "DJANGO_SETTINGS_MODULE": f"config.settings.{name}",
+        "DJANGO_SECRET_KEY": "x" * 60,
+        "DATABASE_URL": "postgresql://user:pass@db.example.test/barclimb",
+        "REDIS_URL": "rediss://kvs.example.test:6380/0",
+        "PUBLIC_BASE_URL": f"https://web-{name}.example.test",
+        "ALLOWED_HOSTS": f"api-{name}.example.test",
+        "CSRF_TRUSTED_ORIGINS": f"https://api-{name}.example.test",
+        "EMAIL_BACKEND": "django.core.mail.backends.smtp.EmailBackend",
+        "DEFAULT_FROM_EMAIL": "BarClimb <no-reply@barclimb.example.test>",
+    }
 
 
 def test_environment_rejects_unknown_value(monkeypatch):
@@ -35,7 +55,7 @@ def test_deployed_origins_require_https(monkeypatch):
 def test_production_configuration_fails_closed_without_required_values():
     env = {
         "PATH": os.environ["PATH"],
-        "PYTHONPATH": os.getcwd(),
+        "PYTHONPATH": str(BACKEND_DIR),
         "APP_ENV": AppEnvironment.PRODUCTION.value,
         "DJANGO_SETTINGS_MODULE": "config.settings.production",
     }
@@ -54,7 +74,7 @@ def test_production_configuration_fails_closed_without_required_values():
 def test_production_cookie_and_transport_security_configuration():
     env = {
         "PATH": os.environ["PATH"],
-        "PYTHONPATH": os.getcwd(),
+        "PYTHONPATH": str(BACKEND_DIR),
         "APP_ENV": AppEnvironment.PRODUCTION.value,
         "DJANGO_SETTINGS_MODULE": "config.settings.production",
         "DJANGO_SECRET_KEY": "x" * 60,
@@ -81,7 +101,7 @@ def test_production_cookie_and_transport_security_configuration():
 def test_production_rejects_local_only_email_delivery():
     env = {
         "PATH": os.environ["PATH"],
-        "PYTHONPATH": os.getcwd(),
+        "PYTHONPATH": str(BACKEND_DIR),
         "APP_ENV": AppEnvironment.PRODUCTION.value,
         "DJANGO_SETTINGS_MODULE": "config.settings.production",
         "DJANGO_SECRET_KEY": "x" * 60,
@@ -102,3 +122,24 @@ def test_production_rejects_local_only_email_delivery():
     )
     assert result.returncode != 0
     assert "production requires a production-grade email backend" in result.stderr
+
+
+@pytest.mark.parametrize("name", ["review", "staging", "production"])
+def test_each_deployed_environment_uses_web_origin_and_https_proxy_contract(name):
+    env = deployed_environment_values(name)
+    script = (
+        "import django; django.setup(); "
+        "from django.conf import settings; "
+        "from accounts.services import action_url; "
+        f"assert settings.PUBLIC_BASE_URL == 'https://web-{name}.example.test'; "
+        "assert settings.SECURE_SSL_REDIRECT; "
+        "assert settings.SECURE_PROXY_SSL_HEADER == ('HTTP_X_FORWARDED_PROTO', 'https'); "
+        "assert settings.SESSION_COOKIE_SECURE and settings.CSRF_COOKIE_SECURE; "
+        "assert settings.TRUST_HEROKU_ROUTER_IP; "
+        f"assert action_url('reset-password', 'secret') == "
+        f"'https://web-{name}.example.test/reset-password#token=secret'"
+    )
+    result = subprocess.run(
+        [sys.executable, "-c", script], capture_output=True, check=False, env=env, text=True
+    )
+    assert result.returncode == 0, result.stderr

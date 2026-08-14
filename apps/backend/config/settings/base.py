@@ -71,6 +71,12 @@ CELERY_TASK_SERIALIZER = "json"
 CELERY_ACCEPT_CONTENT = ["json"]
 CELERY_RESULT_SERIALIZER = "json"
 CELERY_TIMEZONE = "UTC"
+CELERY_BEAT_SCHEDULE = {
+    "recover-auth-email-outbox": {
+        "task": "identity.recover_auth_email_outbox",
+        "schedule": 60.0,
+    }
+}
 LANGUAGE_CODE = "en-us"
 TIME_ZONE = "UTC"
 USE_I18N = True
@@ -101,6 +107,11 @@ EMAIL_BACKEND = os.environ.get("EMAIL_BACKEND", "django.core.mail.backends.conso
 DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL", "BarClimb <no-reply@localhost>")
 AUTH_ACTION_TOKEN_TTL_SECONDS = 60 * 60
 NATIVE_SESSION_TTL_SECONDS = 60 * 60 * 24 * 30
+TRUST_HEROKU_ROUTER_IP = False
+AUTH_EMAIL_MAX_ATTEMPTS = 4
+AUTH_EMAIL_RETRY_BACKOFF_SECONDS = (30, 120, 600)
+AUTH_EMAIL_PROCESSING_LEASE_SECONDS = 5 * 60
+AUTH_EMAIL_PUBLISH_MAX_RETRIES = 3
 AUTH_RATE_LIMITS = {
     "login": (5, 300),
     "signup": (5, 3600),

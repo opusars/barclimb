@@ -61,3 +61,11 @@
 - Added server-revocable/expiring opaque native sessions, digest-only PostgreSQL persistence, Expo SecureStore restoration/removal, and shared iOS/Android auth shell flows.
 - Added purpose-bound, expiring, rotating, single-use email action tokens behind provider-neutral Django delivery; no email provider was verified.
 - Added KVS auth throttles, owner/staff authorization primitives, security-negative tests, and foundation auth surfaces without learner/profile/entitlement/product work.
+
+## 2026-08-13 — M1.3a authentication boundary hardening
+- Removed action credentials from router-visible paths/query strings by emitting canonical-Web fragment links and immediately cleaning Web history before CSRF-protected body submission.
+- Serialized native issuance/reset on the user row and bound native sessions to an authentication generation so every lock ordering rejects or invalidates old-password credentials; Web sessions continue to invalidate through Django's password hash.
+- Enforced HTTPS across review/staging/production and documented/tested the Heroku rightmost-forwarded-address trust contract, IPv4/IPv6 normalization, casing-resistant identity throttles, and generic fail-closed KVS behavior.
+- Added the PostgreSQL `AuthEmailDelivery` outbox with credential-free UUID task publication, deterministic digest-only retry credentials, leases, cancellation/terminal states, bounded retries/backoff, scheduled broker-recovery sweep, and manual replay command.
+- Hardened native restore/save/logout state handling for authoritative rejection, transient connectivity/5xx, and every SecureStore rejection path; added case-insensitive Bearer parsing and safe non-JSON Web auth errors.
+- Added focused SQLite/security and PostgreSQL row-lock race coverage without entering learner, entitlement, curriculum, assessment, billing, community, or provider-integration scope.

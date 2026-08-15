@@ -20,7 +20,7 @@ See `../specs/SPEC_MANIFEST.json`. Four Markdown specs control the build.
 - npm-workspace monorepo boundaries for `apps/backend`, `apps/web`, `apps/native`, and seven shared TypeScript packages.
 - Django 5.2.17/DRF 3.16 environment-separated settings with PostgreSQL as the real-environment contract, a PostgreSQL CI/test setting, and SQLite isolated to foundation tests.
 - Versioned `/api/v1/health/` and database-backed `/api/v1/ready/` endpoints with automated tests.
-- One deduped React/ReactDOM 19.2.3 web runtime with a real root-shell mount test, and Expo SDK 57.0.12/React Native 0.86.2 native proof shell. The native destination buttons remain simulated local state, not navigation parity.
+- One deduped React/ReactDOM 19.2.3 web runtime with a real root-shell mount test, and Expo SDK 57.0.13/React Native 0.86.2 native proof shell. The native destination buttons remain simulated local state, not navigation parity.
 - TypeScript remains on the controlling 5.x line at 5.9.3 through Expo's supported dependency-validation exclusion.
 - Hash-verified pip-tools production/development locks, npm 11 lock/install-script policy, per-surface lint environments, ES2022-only shared-package type environments, and an explicit portability gate.
 - Node 24.19.0/npm 11.17.0 and Python 3.13.15 are aligned in version files, package metadata, CI, and setup documentation.
@@ -48,6 +48,11 @@ See `../specs/SPEC_MANIFEST.json`. Four Markdown specs control the build.
 - Native restore distinguishes valid, authoritatively invalid, transient/offline/5xx, SecureStore read failure, and invalid-delete failure. Save and logout flows report server-revocation and local-deletion outcomes separately.
 - M1.3a also makes Bearer scheme parsing case-insensitive and Web non-JSON errors safe. It adds no product domain or provider integration.
 
+## Accepted-main dependency continuity correction
+- Expo's current SDK 57 compatibility metadata moved the recommended `expo` patch from 57.0.12 to 57.0.13 after M1.3a reached `main`, causing the CI-mode dependency gate to fail without an application-code change.
+- The native direct dependency now uses Expo's recommended `~57.0.13` range and the npm lock records the corresponding Expo-owned transitive patch set. React Native remains 0.86.2; TypeScript remains 5.9.3 and intentionally excluded from Expo dependency validation under the controlling TypeScript 5.x policy.
+- No route, navigation, authentication, deployment, provider, deep-link, EAS, or product behavior changed. M1.4 has not begun.
+
 ## Tests actually run
 - M1.3a hardening: 48 SQLite security/lifecycle tests pass with four PostgreSQL-only skips; the complete 52-test PostgreSQL 14 + Redis 7.2 suite passes, including reset-vs-issuance in both lock orders, token consume-vs-reissue, and duplicate signup. Ruff/system/migration checks, npm full check/build and portability with 17 Vitest tests, Expo Doctor 20/20, iOS/Android production JS exports, continuity validation, and diff checks pass. Hosted Foundation CI also passes the exact-runtime continuity, backend/PostgreSQL/Redis/Celery, and TypeScript/Expo jobs.
 - M1.3 local security/lifecycle suite: Ruff and Django checks PASSED; 25 Pytest tests PASSED on the available Python 3.11 SQLite path. `npm run check` and portability PASSED with four Web/native Vitest tests and production Web build; Expo dependency check, Doctor 20/20, and iOS/Android JS exports PASSED. Hosted exact-runtime PostgreSQL 17/Redis 7.2/Celery and Node 24 acceptance also PASSED on the pushed branch.
@@ -65,7 +70,7 @@ None yet in a managed implementation environment. Local PostgreSQL 14 and Redis 
 Execution breadth remains the principal engineering risk. Curriculum completeness depends on automated official-scope/rule compilation, authority provenance, lawful multi-source reconciliation, subject certification, and strict inventory gates. NCBE Sourcebooks are optional enhanced reconciliation when lawfully available; do not make purchase/access a build or launch dependency.
 
 ## Exact next task
-Review and accept M1.3a and its branch CI. Do not merge or begin M1.4 from continuity alone. After acceptance, define the next bounded Milestone 1 slice from the remaining foundation gate; do not begin learner onboarding/profile, curriculum, assessment, entitlement/billing, or other product domains.
+Confirm and accept hosted Foundation CI on the exact Expo 57.0.13 dependency-correction commit. Once that commit is green on `main`, M1.4 may begin on its separately named branch. Do not treat this maintenance correction as M1.4 work or begin learner onboarding/profile, curriculum, assessment, entitlement/billing, or other product domains.
 
 ## Resume commands
 ```bash

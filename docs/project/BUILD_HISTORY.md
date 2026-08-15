@@ -69,3 +69,8 @@
 - Added the PostgreSQL `AuthEmailDelivery` outbox with credential-free UUID task publication, deterministic digest-only retry credentials, leases, cancellation/terminal states, bounded retries/backoff, scheduled broker-recovery sweep, and manual replay command.
 - Hardened native restore/save/logout state handling for authoritative rejection, transient connectivity/5xx, and every SecureStore rejection path; added case-insensitive Bearer parsing and safe non-JSON Web auth errors.
 - Added focused SQLite/security and PostgreSQL row-lock race coverage without entering learner, entitlement, curriculum, assessment, billing, community, or provider-integration scope.
+
+## 2026-08-15 — Accepted-main Expo patch continuity correction
+- Updated the Expo SDK 57 direct dependency from 57.0.12 to the current Expo-recommended `~57.0.13` patch range after Expo compatibility metadata made the CI dependency check fail on unchanged accepted `main`.
+- Regenerated the npm lock with Expo's compatible transitive patch set. React Native remains 0.86.2 and TypeScript remains 5.9.3 under the existing Expo validation exclusion.
+- Re-ran dependency validation, Expo Doctor, all Web/native/shared checks, both production bundle exports, backend foundation/auth checks, audit review, and continuity checks. No application behavior or M1.4 functionality was introduced.

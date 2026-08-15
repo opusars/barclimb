@@ -8,7 +8,9 @@
       "distribution": "internal",
       "environment": "preview",
       "env": {
-        "EXPO_PUBLIC_APP_ENV": "staging"
+        "EXPO_PUBLIC_APP_ENV": "staging",
+        "EXPO_PUBLIC_API_BASE_URL": "https://barclimb-staging-6c9cb222a54d.herokuapp.com",
+        "EXPO_PUBLIC_WEB_BASE_URL": "https://barclimb-staging-6c9cb222a54d.herokuapp.com"
       },
       "ios": {
         "simulator": false

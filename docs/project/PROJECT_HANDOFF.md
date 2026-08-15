@@ -1,7 +1,7 @@
 # BarClimb Project Handoff
 
 ## Current state
-Milestone 1 is in progress. M1.1/M1.1a established and corrected the multi-client repository/toolchain foundation; M1.2 added the asynchronous runtime/environment contract; M1.3 established the single minimal account identity and cross-client authentication; M1.3a hardens its credential transport, reset concurrency, proxy/HTTPS boundary, durable email delivery, and native recovery states. No learner profile, onboarding, entitlement, curriculum, assessment, billing, provider verification, or deployment has been implemented.
+Milestone 1 and M1.4 are in progress on `m1-4-staging-auth-client-proof`. M1.1–M1.3a established the toolchain, runtime, minimal identity, and hardened authentication boundary. M1.4 now has persistent verified-nonproduction Heroku/PostgreSQL/KVS staging, deployed Web auth/routes/outbox processes, real native navigation scaffolding, and gated deep-link configuration. It is not complete because internal builds and actual iOS/Android authentication/SecureStore behavior remain blocked by missing EAS login, developer signing evidence, full Xcode, and Android SDK tooling. No learner profile, onboarding, entitlement, curriculum, assessment, billing, or later product domain has been implemented.
 
 ## Authoritative contracts
 See `../specs/SPEC_MANIFEST.json`. Four Markdown specs control the build.
@@ -20,7 +20,7 @@ See `../specs/SPEC_MANIFEST.json`. Four Markdown specs control the build.
 - npm-workspace monorepo boundaries for `apps/backend`, `apps/web`, `apps/native`, and seven shared TypeScript packages.
 - Django 5.2.17/DRF 3.16 environment-separated settings with PostgreSQL as the real-environment contract, a PostgreSQL CI/test setting, and SQLite isolated to foundation tests.
 - Versioned `/api/v1/health/` and database-backed `/api/v1/ready/` endpoints with automated tests.
-- One deduped React/ReactDOM 19.2.3 web runtime with a real root-shell mount test, and Expo SDK 57.0.13/React Native 0.86.2 native proof shell. The native destination buttons remain simulated local state, not navigation parity.
+- One deduped React/ReactDOM 19.2.3 web runtime with a real root-shell mount test, and Expo SDK 57.0.13/React Native 0.86.2 native foundation. M1.4 replaces simulated destination state with React Navigation.
 - TypeScript remains on the controlling 5.x line at 5.9.3 through Expo's supported dependency-validation exclusion.
 - Hash-verified pip-tools production/development locks, npm 11 lock/install-script policy, per-surface lint environments, ES2022-only shared-package type environments, and an explicit portability gate.
 - Node 24.19.0/npm 11.17.0 and Python 3.13.15 are aligned in version files, package metadata, CI, and setup documentation.
@@ -31,7 +31,7 @@ See `../specs/SPEC_MANIFEST.json`. Four Markdown specs control the build.
 - Explicit local/test/review/staging/production settings; fail-closed deployed secrets/URL/host/origin validation; safe public client API-base configuration; no provider credentials.
 - Dependency-free liveness and PostgreSQL/KVS readiness with safe dependency labels, plus structured process/environment logs that exclude configuration and business payloads.
 - Heroku `web`, `worker`, and release-check/migration process definitions. M1.2 added no speculative scheduler; M1.3a later adds beat for durable authentication-email recovery.
-- Local PostgreSQL 14 + Redis 7.2 + live worker proof; CI now models PostgreSQL 17 + Redis 7.2 and live worker execution. No Heroku deployment or managed provider has been verified.
+- Local PostgreSQL 14 + Redis 7.2 + live worker proof; CI models PostgreSQL 17 + Redis 7.2 and live worker execution. M1.4 later verifies the persistent Heroku topology and managed add-ons.
 
 ## Completed in M1.3
 - Minimal custom Django `accounts.User` before business migrations: private normalized email login, normalized future-public username, Django password framework, no jurisdiction/profile/business state.
@@ -51,7 +51,16 @@ See `../specs/SPEC_MANIFEST.json`. Four Markdown specs control the build.
 ## Accepted-main dependency continuity correction
 - Expo's current SDK 57 compatibility metadata moved the recommended `expo` patch from 57.0.12 to 57.0.13 after M1.3a reached `main`, causing the CI-mode dependency gate to fail without an application-code change.
 - The native direct dependency now uses Expo's recommended `~57.0.13` range and the npm lock records the corresponding Expo-owned transitive patch set. React Native remains 0.86.2; TypeScript remains 5.9.3 and intentionally excluded from Expo dependency validation under the controlling TypeScript 5.x policy.
-- No route, navigation, authentication, deployment, provider, deep-link, EAS, or product behavior changed. M1.4 has not begun.
+- That accepted-main maintenance correction changed no route, navigation, authentication, deployment, provider, deep-link, EAS, or product behavior; M1.4 had not begun at that historical commit.
+
+## Completed in M1.4 repository/deployed proof
+- Web auth uses stable React Router paths for signup, login, verification, reset request/completion, and the authenticated proof shell; Django serves direct/refresh entry and hashed assets on the same staging origin as `/api/v1`.
+- Native uses React Navigation auth and authenticated boundaries with navigation-only future placeholders. Local/staging/production API/Web origins and app identities are fail-closed; staging/production require HTTPS.
+- Canonical-link parsing removes query/fragment data from fallbacks. Universal/App Link configuration is gated; verification/reset remain Web-only and association endpoints stay unpublished until signing identities are verified.
+- Persistent `barclimb-staging` release v8 runs deployed commit `6bec558` with Essential-0 PostgreSQL `postgresql-aerodynamic-56880`, Mini KVS `redis-flat-93728`, and one Basic Web/worker/beat process each.
+- Deployed release/migrations, liveness/readiness, HTTPS redirect/forwarded protocol, direct routes, Web session auth, native bearer API issuance/revocation, rightmost-forwarded-IP throttling, beat recovery, worker delivery, and sanitized log evidence passed.
+- The production-rejected staging email sink proves outbox processing without delivery or SendGrid verification. Heroku/Postgres/KVS is `VERIFIED_NONPRODUCTION`; every other provider remains `NOT_VERIFIED`.
+- M1.4 remains incomplete: EAS is unauthenticated, Apple/Google project ownership is unverified, this host lacks full Xcode/simctl and Android SDK/adb/emulator, and no actual native/SecureStore runtime proof exists.
 
 ## Tests actually run
 - M1.3a hardening: 48 SQLite security/lifecycle tests pass with four PostgreSQL-only skips; the complete 52-test PostgreSQL 14 + Redis 7.2 suite passes, including reset-vs-issuance in both lock orders, token consume-vs-reissue, and duplicate signup. Ruff/system/migration checks, npm full check/build and portability with 17 Vitest tests, Expo Doctor 20/20, iOS/Android production JS exports, continuity validation, and diff checks pass. Hosted Foundation CI also passes the exact-runtime continuity, backend/PostgreSQL/Redis/Celery, and TypeScript/Expo jobs.
@@ -64,13 +73,13 @@ See `../specs/SPEC_MANIFEST.json`. Four Markdown specs control the build.
 - Remaining npm audit findings are upstream Expo/React Native build/config-tool paths documented in `SECURITY_ADVISORIES.md`; no forced downgrade was applied.
 
 ## Providers actually verified
-None yet in a managed implementation environment. Local PostgreSQL 14 and Redis 7.2 were exercised as runtime dependencies, but Heroku/Postgres/KVS remains `NOT_VERIFIED`; do not infer managed-provider readiness from local or CI service proof.
+Heroku app runtime, Essential-0 PostgreSQL, and Mini KVS are `VERIFIED_NONPRODUCTION` from persistent staging evidence. SendGrid, Apple, Google Play, and all other providers remain `NOT_VERIFIED`. The Heroku account reported delinquent payment and a 2026-08-18 suspension date; account standing requires human resolution.
 
 ## Known risks
 Execution breadth remains the principal engineering risk. Curriculum completeness depends on automated official-scope/rule compilation, authority provenance, lawful multi-source reconciliation, subject certification, and strict inventory gates. NCBE Sourcebooks are optional enhanced reconciliation when lawfully available; do not make purchase/access a build or launch dependency.
 
 ## Exact next task
-Confirm and accept hosted Foundation CI on the exact Expo 57.0.13 dependency-correction commit. Once that commit is green on `main`, M1.4 may begin on its separately named branch. Do not treat this maintenance correction as M1.4 work or begin learner onboarding/profile, curriculum, assessment, entitlement/billing, or other product domains.
+Complete M1.4 only: authenticate an authorized Expo/EAS account, verify Apple and Android project/signing/recovery ownership, produce both internal builds, exercise staging auth and SecureStore on actual iOS and Android runtimes, record the platform-specific evidence, and obtain green GitHub Actions on the final branch commit. Do not begin M1.5 or any product domain.
 
 ## Resume commands
 ```bash
@@ -82,7 +91,7 @@ npm run doctor --workspace @barclimb/native
 ```
 Use Python 3.13.15, Node 24.19.0, and npm 11.17.0 for baseline parity. Install Python requirements with `--require-hashes`. See `../implementation/ENVIRONMENT.md` for setup and the PostgreSQL smoke path. Expo Doctor requires network access for all checks.
 
-For real runtime acceptance, also run PostgreSQL and Redis/Valkey, select `config.settings.postgres_test`, execute the PostgreSQL concurrency suite, and execute worker/beat discovery documented in `../implementation/ENVIRONMENT.md`. Review/staging/production are contracts only; no Heroku app or managed add-on has been verified.
+For backend acceptance, also run PostgreSQL and Redis/Valkey, select `config.settings.postgres_test`, and execute the PostgreSQL concurrency and worker paths documented in `../implementation/ENVIRONMENT.md`. Staging is real and persistent; do not expose config values or test production there. Native acceptance still requires internal builds and actual platform runtimes.
 
 ## Final integration note
 Before feature UI implementation, establish the canonical provider-agnostic billing domain, server projection schemas, orchestration models/state machines, and client-surface capability manifest. These prevent Visitor/Free/Plus and Web/iOS/Android from diverging.

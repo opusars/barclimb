@@ -38,4 +38,14 @@ The Expo 57.0.13 correction changed Expo-owned patch-level paths but not the adv
 - **Native transient/SecureStore handling (MEDIUM, resolved):** only authoritative 401/403 validation removes a credential. Offline/5xx preserves it. Read/write/delete/revocation failures terminate loading and expose distinct recoverable states; logout does not claim secure completion before server revocation.
 - **Low-cost findings (resolved):** Bearer scheme parsing is case-insensitive and Web auth handles non-JSON errors without exposing parser failures.
 
-Still intentionally deferred: username rename policy, Terms acceptance, public-profile behavior, native session-management UI, refresh-token architecture, real SendGrid/provider idempotency verification, deployed Heroku header behavior, and real-device SecureStore/backup behavior. These are not silently treated as verified.
+Still intentionally deferred: username rename policy, Terms acceptance, public-profile behavior, native session-management UI, refresh-token architecture, real SendGrid/provider idempotency verification, and real-device SecureStore/backup behavior. These are not silently treated as verified.
+
+## M1.4 staging security evidence
+
+- Persistent Heroku staging forces HTTP-to-HTTPS redirect, recognizes Heroku forwarded HTTPS without a redirect loop, and serves Web/API same-origin with secure cookies. PostgreSQL and KVS readiness passed after explicitly applying Heroku's documented self-signed KVS TLS option; certificate verification remains the default elsewhere.
+- A deployed forged-forwarding test varied caller-prepended addresses across 11 unique native-login identities. Ten requests reached credential validation and the eleventh returned 429, confirming the router-appended rightmost address owns the shared source counter.
+- The staging-only email sink validates exactly one canonical HTTPS fragment-token action and logs only its safe route. Production rejects this backend. Deployed worker/beat/outbox evidence passed; SendGrid remains unverified.
+- A scan of 1,500 accessible staging application log lines found no fragment/query token, Authorization, Bearer, or password-shaped credential patterns. One controlled native API diagnostic displayed a generated bearer in local tool output (not Heroku logs); it was immediately revoked and a follow-up authenticated request returned 401.
+- Association files remain unpublished (404) until Apple/Android signing identifiers are verified. Credential-bearing verification/reset paths are excluded from association payloads even when enabled.
+
+Still intentionally unverified after M1.4 repository/deployment work: internal signed builds, Apple/Google project ownership, actual iOS/Android authentication, actual SecureStore/keychain/Keystore read-write-delete/restart/uninstall behavior, real OS Universal/App Link resolution, and SendGrid delivery.

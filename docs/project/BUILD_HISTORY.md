@@ -74,3 +74,12 @@
 - Updated the Expo SDK 57 direct dependency from 57.0.12 to the current Expo-recommended `~57.0.13` patch range after Expo compatibility metadata made the CI dependency check fail on unchanged accepted `main`.
 - Regenerated the npm lock with Expo's compatible transitive patch set. React Native remains 0.86.2 and TypeScript remains 5.9.3 under the existing Expo validation exclusion.
 - Re-ran dependency validation, Expo Doctor, all Web/native/shared checks, both production bundle exports, backend foundation/auth checks, audit review, and continuity checks. No application behavior or M1.4 functionality was introduced.
+
+## 2026-08-15 — M1.4 staging auth and client proof (in progress)
+- Replaced manual Web auth switching with stable React Router destinations and same-origin Django serving for direct/refresh requests; fragment credentials remain memory-only and are removed immediately.
+- Added React Navigation unauthenticated/authenticated boundaries, navigation-only future destination placeholders, fail-closed native/Web environment selection, distinct environment app IDs, and canonical-link parsing.
+- Added Universal/App Link association endpoints and Expo platform configuration, but deliberately kept published association disabled and excluded credential-bearing auth completion paths until real signing identities are verified.
+- Added a staging-only validating auth-email sink that production rejects, Heroku-compatible Web build/static collection, and explicit Heroku KVS self-signed TLS handling following provider guidance.
+- Provisioned persistent non-production `barclimb-staging`, Essential-0 PostgreSQL `postgresql-aerodynamic-56880`, and Mini KVS `redis-flat-93728`; deployed release v8 at commit `6bec558` with Web/worker/beat active.
+- Verified deployed migrations, HTTPS redirect/forwarded protocol, PostgreSQL/KVS readiness, direct Web routes, Web session authentication, native bearer issuance/revocation, spoof-resistant auth throttling, scheduled beat recovery, worker outbox delivery, and sanitized logs.
+- M1.4 remains incomplete: EAS is not authenticated, full Xcode and Android tooling are absent, internal builds are not produced, and actual iOS/Android auth/SecureStore behavior is not exercised.

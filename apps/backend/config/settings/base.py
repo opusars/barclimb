@@ -82,6 +82,12 @@ TIME_ZONE = "UTC"
 USE_I18N = True
 USE_TZ = True
 STATIC_URL = "static/"
+WEB_DIST_DIR = Path(os.environ.get("WEB_DIST_DIR", BASE_DIR.parent / "web" / "dist"))
+MOBILE_LINKS_ENABLED = boolean("MOBILE_LINKS_ENABLED", default=False)
+APPLE_TEAM_ID = os.environ.get("APPLE_TEAM_ID", "")
+IOS_BUNDLE_IDENTIFIER = os.environ.get("IOS_BUNDLE_IDENTIFIER", "")
+ANDROID_PACKAGE_NAME = os.environ.get("ANDROID_PACKAGE_NAME", "")
+ANDROID_SHA256_CERT_FINGERPRINTS = csv("ANDROID_SHA256_CERT_FINGERPRINTS")
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 AUTH_USER_MODEL = "accounts.User"
 AUTH_PASSWORD_VALIDATORS = [

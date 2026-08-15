@@ -1,6 +1,6 @@
-# M1.2 Deployment Foundation
+# M1.4 Staging Deployment Contract
 
-No environment has been deployed or provider-verified in M1.2. This document defines the contract a later Heroku pipeline must implement.
+M1.4 provisions the first persistent non-production Heroku staging topology. Evidence and current provider state belong in `docs/project/PROVIDER_STATUS.md` and `TEST_LEDGER.md`; this file defines its reproducible contract.
 
 ## Heroku pipeline shape
 
@@ -27,8 +27,10 @@ Set all values explicitly:
 - `PUBLIC_BASE_URL` (HTTPS canonical Web origin for completion links, not an API-only origin)
 - `READINESS_REQUIRE_KVS=true`
 - `LOG_LEVEL`
-- `VITE_API_BASE_URL` for the local Vite proxy and `EXPO_PUBLIC_API_BASE_URL` for native API calls at client build time, as applicable
-- production-grade provider-neutral Django `EMAIL_BACKEND` and `DEFAULT_FROM_EMAIL` before transactional-email verification
+- `VITE_APP_ENV`; deployed Web must not set an alternate `VITE_API_BASE_URL`
+- `EXPO_PUBLIC_APP_ENV`, `EXPO_PUBLIC_API_BASE_URL`, and `EXPO_PUBLIC_WEB_BASE_URL` for native builds
+- `MOBILE_LINKS_ENABLED=false` until real signing identifiers and association evidence exist
+- `EMAIL_BACKEND` and `DEFAULT_FROM_EMAIL`; staging may explicitly use the non-delivering `config.email_backends.StagingAuthEmailSink` with `ALLOW_STAGING_AUTH_EMAIL_SINK=true`, while production cannot
 
 Do not add provider credentials before the corresponding integration slice. Deployed settings fail closed on missing/malformed mandatory runtime values and reject mismatched `APP_ENV`.
 
@@ -41,6 +43,6 @@ Do not add provider credentials before the corresponding integration slice. Depl
 - Database migrations remain forward-safe; code rollback must not assume schema rollback.
 - Review-app data is disposable. Staging database/object retention and backup procedures must be defined and tested before provider-backed feature verification. Production backup/recovery remains a launch gate.
 
-Deployment, custom domains, SSL, pipelines, add-ons, scaling, backups, rollback drills, and provider connectivity are all explicitly unverified in M1.2.
+The root `requirements.txt` delegates to the hash-locked backend requirements for Heroku Python detection. Heroku buildpacks run Node before Python; `heroku-postbuild` creates the Web distribution consumed by Django. Staging uses a distinct app, database, KVS, secret, public origins, and app identifiers. It never receives production credentials.
 
-M1.3a adds HTTPS enforcement in every deployed auth environment, the explicit Heroku proxy/IP contract, and durable provider-neutral email delivery state. It does not verify a deployed email provider, Heroku runtime, universal/app links, or native device keychain behavior. Console email is local-only and must not be used as production delivery.
+Custom domains, production deployment, backups, rollback drills, and real email-provider delivery remain separate gates. Console email is local-only and the staging sink must never become production delivery.

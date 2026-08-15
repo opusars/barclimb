@@ -124,6 +124,44 @@ def test_production_rejects_local_only_email_delivery():
     assert "production requires a production-grade email backend" in result.stderr
 
 
+def test_staging_sink_requires_explicit_opt_in():
+    env = deployed_environment_values("staging")
+    env["EMAIL_BACKEND"] = "config.email_backends.StagingAuthEmailSink"
+    result = subprocess.run(
+        [sys.executable, "-c", "import django; django.setup()"],
+        capture_output=True,
+        check=False,
+        env=env,
+        text=True,
+    )
+    assert result.returncode != 0
+    assert "requires explicit opt-in" in result.stderr
+    env["ALLOW_STAGING_AUTH_EMAIL_SINK"] = "true"
+    accepted = subprocess.run(
+        [sys.executable, "-c", "import django; django.setup()"],
+        capture_output=True,
+        check=False,
+        env=env,
+        text=True,
+    )
+    assert accepted.returncode == 0, accepted.stderr
+
+
+def test_production_rejects_staging_email_sink():
+    env = deployed_environment_values("production")
+    env["EMAIL_BACKEND"] = "config.email_backends.StagingAuthEmailSink"
+    env["ALLOW_STAGING_AUTH_EMAIL_SINK"] = "true"
+    result = subprocess.run(
+        [sys.executable, "-c", "import django; django.setup()"],
+        capture_output=True,
+        check=False,
+        env=env,
+        text=True,
+    )
+    assert result.returncode != 0
+    assert "production requires a production-grade email backend" in result.stderr
+
+
 @pytest.mark.parametrize("name", ["review", "staging", "production"])
 def test_each_deployed_environment_uses_web_origin_and_https_proxy_contract(name):
     env = deployed_environment_values(name)

@@ -12,6 +12,10 @@
     "esbuild@0.28.2": true,
     "fsevents@2.3.3": true
   },
+  "overrides": {
+    "react-native-safe-area-context": "5.7.0",
+    "react-native-screens": "4.26.2"
+  },
   "workspaces": [
     "apps/web",
     "apps/native",
@@ -19,6 +23,7 @@
   ],
   "scripts": {
     "build": "npm run build --workspace @barclimb/web",
+    "heroku-postbuild": "npm run build",
     "check": "npm run format:check && npm run lint && npm run typecheck && npm test && npm run build",
     "continuity": "python3 scripts/validate_continuity.py",
     "format": "prettier --write package.json package-lock.json eslint.config.js tsconfig.base.json .github/workflows/ci.yml apps/web apps/native packages docs/implementation",

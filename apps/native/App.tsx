@@ -2,7 +2,6 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import {
   ActivityIndicator,
   Pressable,
-  SafeAreaView,
   ScrollView,
   StyleSheet,
   Text,
@@ -10,6 +9,11 @@ import {
   View,
 } from "react-native";
 import * as SecureStore from "expo-secure-store";
+import * as Linking from "expo-linking";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { authPaths } from "@barclimb/api-client";
 import type { AuthenticatedUser } from "@barclimb/domain-types";
 import { colors, spacing } from "@barclimb/design-tokens";
@@ -21,13 +25,22 @@ import {
   revokeAndClearNativeSession,
   restoreNativeSession,
 } from "./src/authSession";
+import { nativeEnvironment } from "./src/environment";
 
-const API_BASE_URL = (
-  process.env.EXPO_PUBLIC_API_BASE_URL ?? "http://localhost:8000"
-)
-  .replace(/\/api\/v1\/?$/, "")
-  .replace(/\/$/, "");
-type Mode = "login" | "signup" | "forgot";
+type AuthMode = "login" | "signup" | "forgot";
+type AuthStackParams = {
+  Login: undefined;
+  Signup: undefined;
+  ForgotPassword: undefined;
+};
+type AppTabParams = {
+  Home: undefined;
+  Practice: undefined;
+  Simulate: undefined;
+  Progress: undefined;
+};
+const AuthStack = createNativeStackNavigator<AuthStackParams>();
+const AppTabs = createBottomTabNavigator<AppTabParams>();
 
 type NativeAuthResponse = {
   detail?: string;
@@ -38,7 +51,7 @@ type NativeAuthResponse = {
 async function authenticatedUser(credential: string) {
   let response: Response;
   try {
-    response = await fetch(`${API_BASE_URL}${authPaths.me}`, {
+    response = await fetch(`${nativeEnvironment.apiBaseUrl}${authPaths.me}`, {
       headers: { Authorization: `Bearer ${credential}` },
     });
   } catch {
@@ -52,7 +65,7 @@ async function authenticatedUser(credential: string) {
 
 async function revokeServerSession(credential: string) {
   const response = await fetch(
-    `${API_BASE_URL}${authPaths.nativeSessionRevoke}`,
+    `${nativeEnvironment.apiBaseUrl}${authPaths.nativeSessionRevoke}`,
     {
       method: "POST",
       headers: { Authorization: `Bearer ${credential}` },
@@ -70,10 +83,6 @@ export default function App() {
       ),
     [],
   );
-  const [mode, setMode] = useState<Mode>("login");
-  const [email, setEmail] = useState("");
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
   const [user, setUser] = useState<AuthenticatedUser | null>(null);
   const [token, setToken] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
@@ -92,26 +101,24 @@ export default function App() {
       } else {
         setUser(null);
         setToken(null);
-        if (restored.status === "invalid") {
+        if (restored.status === "invalid")
           setMessage("Your session has expired. Please log in again.");
-        } else if (restored.status === "invalid_clear_failed") {
+        else if (restored.status === "invalid_clear_failed")
           setMessage(
             "Your session is no longer valid, but secure storage could not remove it. Try again.",
           );
-        } else if (restored.status === "storage_read_failed") {
+        else if (restored.status === "storage_read_failed")
           setMessage(
             "Secure storage is unavailable. Restart the app and try again.",
           );
-        } else {
-          setMessage("");
-        }
+        else setMessage("");
       }
       setLoading(false);
     },
     [],
   );
 
-  const restoreSession = useCallback(async () => {
+  const retrySavedSession = useCallback(async () => {
     setLoading(true);
     applyRestoredSession(await restoreNativeSession(store, authenticatedUser));
   }, [applyRestoredSession, store]);
@@ -126,68 +133,24 @@ export default function App() {
     };
   }, [applyRestoredSession, store]);
 
-  async function submit() {
-    setLoading(true);
-    setMessage("");
-    try {
-      const endpoint =
-        mode === "signup"
-          ? authPaths.nativeSignup
-          : mode === "forgot"
-            ? authPaths.nativePasswordResetRequest
-            : authPaths.nativeSession;
-      const payload =
-        mode === "signup"
-          ? { email, username, password }
-          : mode === "forgot"
-            ? { email }
-            : { email, password };
-      const response = await fetch(`${API_BASE_URL}${endpoint}`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
-      let data: NativeAuthResponse = {};
-      try {
-        data = await response.json();
-      } catch {
-        data = {};
-      }
-      if (!response.ok) throw new Error(data.detail ?? "Unable to continue.");
-      if (mode === "forgot") {
-        setMessage(
-          data.detail ?? "If that account exists, a reset link is on its way.",
-        );
-      } else {
-        if (!data.token || !data.user)
-          throw new Error("The authentication response was incomplete.");
-        const persisted = await persistNativeSession(
-          store,
-          data.token,
-          revokeServerSession,
-        );
-        if (persisted.status !== "saved") {
-          setMessage(
-            persisted.status === "save_failed_revoked"
-              ? "Secure storage could not save this session. The server session was revoked."
-              : "Secure storage could not save this session, and server revocation is unavailable. Try again after reconnecting.",
-          );
-          setToken(null);
-          setUser(null);
-          setPassword("");
-          return;
-        }
-        setToken(data.token);
-        setUser(data.user);
-        setPassword("");
-      }
-    } catch (error) {
+  async function authenticated(nextToken: string, nextUser: AuthenticatedUser) {
+    const persisted = await persistNativeSession(
+      store,
+      nextToken,
+      revokeServerSession,
+    );
+    if (persisted.status !== "saved") {
       setMessage(
-        error instanceof Error ? error.message : "Unable to continue.",
+        persisted.status === "save_failed_revoked"
+          ? "Secure storage could not save this session. The server session was revoked."
+          : "Secure storage could not save this session, and server revocation is unavailable. Try again after reconnecting.",
       );
-    } finally {
-      setLoading(false);
+      return false;
     }
+    setToken(nextToken);
+    setUser(nextUser);
+    setMessage("");
+    return true;
   }
 
   async function logout() {
@@ -209,149 +172,334 @@ export default function App() {
     );
   }
 
+  const linking = {
+    prefixes: [Linking.createURL("/"), nativeEnvironment.webBaseUrl],
+    config: {
+      screens: {
+        Home: "app",
+        Practice: "practice",
+        Simulate: "simulate",
+        Progress: "progress",
+      },
+    },
+  };
+
   if (loading)
     return (
-      <SafeAreaView style={styles.center}>
-        <ActivityIndicator color={colors.accent} />
-      </SafeAreaView>
+      <SafeAreaProvider>
+        <SafeAreaView style={styles.center}>
+          <ActivityIndicator color={colors.accent} />
+        </SafeAreaView>
+      </SafeAreaProvider>
     );
+  return (
+    <SafeAreaProvider>
+      <NavigationContainer linking={linking}>
+        {user ? (
+          <AppTabs.Navigator>
+            <AppTabs.Screen name="Home">
+              {() => (
+                <HomeScreen user={user} message={message} logout={logout} />
+              )}
+            </AppTabs.Screen>
+            <AppTabs.Screen name="Practice">
+              {() => <DeferredScreen title="Practice" />}
+            </AppTabs.Screen>
+            <AppTabs.Screen name="Simulate">
+              {() => <DeferredScreen title="Simulate" />}
+            </AppTabs.Screen>
+            <AppTabs.Screen name="Progress">
+              {() => <DeferredScreen title="Progress" />}
+            </AppTabs.Screen>
+          </AppTabs.Navigator>
+        ) : (
+          <AuthStack.Navigator>
+            <AuthStack.Screen name="Login">
+              {({ navigation }) => (
+                <AuthScreen
+                  mode="login"
+                  message={message}
+                  savedToken={token}
+                  onAuthenticated={authenticated}
+                  onRetry={retrySavedSession}
+                  onNavigate={(mode) =>
+                    navigation.navigate(
+                      mode === "signup" ? "Signup" : "ForgotPassword",
+                    )
+                  }
+                />
+              )}
+            </AuthStack.Screen>
+            <AuthStack.Screen name="Signup">
+              {({ navigation }) => (
+                <AuthScreen
+                  mode="signup"
+                  message={message}
+                  savedToken={token}
+                  onAuthenticated={authenticated}
+                  onRetry={retrySavedSession}
+                  onNavigate={() => navigation.navigate("Login")}
+                />
+              )}
+            </AuthStack.Screen>
+            <AuthStack.Screen name="ForgotPassword">
+              {({ navigation }) => (
+                <AuthScreen
+                  mode="forgot"
+                  message={message}
+                  savedToken={token}
+                  onAuthenticated={authenticated}
+                  onRetry={retrySavedSession}
+                  onNavigate={() => navigation.navigate("Login")}
+                />
+              )}
+            </AuthStack.Screen>
+          </AuthStack.Navigator>
+        )}
+      </NavigationContainer>
+    </SafeAreaProvider>
+  );
+}
+
+function AuthScreen(props: {
+  mode: AuthMode;
+  message: string;
+  savedToken: string | null;
+  onAuthenticated: (token: string, user: AuthenticatedUser) => Promise<boolean>;
+  onRetry: () => Promise<void>;
+  onNavigate: (mode: AuthMode) => void;
+}) {
+  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [localMessage, setLocalMessage] = useState("");
+
+  async function submit() {
+    setBusy(true);
+    setLocalMessage("");
+    try {
+      const endpoint =
+        props.mode === "signup"
+          ? authPaths.nativeSignup
+          : props.mode === "forgot"
+            ? authPaths.nativePasswordResetRequest
+            : authPaths.nativeSession;
+      const payload =
+        props.mode === "signup"
+          ? { email, username, password }
+          : props.mode === "forgot"
+            ? { email }
+            : { email, password };
+      const response = await fetch(
+        `${nativeEnvironment.apiBaseUrl}${endpoint}`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        },
+      );
+      let data: NativeAuthResponse = {};
+      try {
+        data = await response.json();
+      } catch {
+        data = {};
+      }
+      if (!response.ok) throw new Error(data.detail ?? "Unable to continue.");
+      if (props.mode === "forgot")
+        setLocalMessage(
+          data.detail ?? "If that account exists, a reset link is on its way.",
+        );
+      else {
+        if (!data.token || !data.user)
+          throw new Error("The authentication response was incomplete.");
+        if (await props.onAuthenticated(data.token, data.user)) setPassword("");
+      }
+    } catch (error) {
+      setLocalMessage(
+        error instanceof Error ? error.message : "Unable to continue.",
+      );
+    } finally {
+      setBusy(false);
+    }
+  }
+
   return (
     <SafeAreaView style={styles.safeArea}>
       <ScrollView
         contentContainerStyle={styles.content}
         keyboardShouldPersistTaps="handled"
       >
-        <View style={styles.brandRow}>
-          <View style={styles.mark}>
-            <Text style={styles.markText}>B</Text>
-          </View>
-          <Text style={styles.brand}>BarClimb</Text>
-        </View>
-        {user ? (
-          <View style={styles.card}>
-            <Text style={styles.eyebrow}>Identity foundation</Text>
-            <Text style={styles.title}>Welcome, {user.username}.</Text>
-            <Text style={styles.muted}>{user.email}</Text>
-            <Text style={styles.body}>
-              {user.is_email_verified
-                ? "Email verified"
-                : "Check your inbox to verify your email."}
+        <Brand />
+        <View style={styles.card}>
+          <Text style={styles.eyebrow}>Secure account</Text>
+          <Text style={styles.title}>
+            {props.mode === "signup"
+              ? "Create your account"
+              : props.mode === "forgot"
+                ? "Reset your password"
+                : "Welcome back"}
+          </Text>
+          <Text style={styles.body}>
+            One BarClimb identity follows you across every device.
+          </Text>
+          {props.mode === "signup" && (
+            <>
+              <Text style={styles.label}>Username</Text>
+              <TextInput
+                autoCapitalize="none"
+                autoComplete="username-new"
+                onChangeText={setUsername}
+                style={styles.input}
+                value={username}
+              />
+            </>
+          )}
+          <Text style={styles.label}>Email</Text>
+          <TextInput
+            autoCapitalize="none"
+            autoComplete="email"
+            keyboardType="email-address"
+            onChangeText={setEmail}
+            style={styles.input}
+            value={email}
+          />
+          {props.mode !== "forgot" && (
+            <>
+              <Text style={styles.label}>Password</Text>
+              <TextInput
+                autoCapitalize="none"
+                autoComplete={
+                  props.mode === "signup" ? "password-new" : "current-password"
+                }
+                onChangeText={setPassword}
+                secureTextEntry
+                style={styles.input}
+                value={password}
+              />
+            </>
+          )}
+          {(localMessage || props.message) && (
+            <Text accessibilityRole="alert" style={styles.message}>
+              {localMessage || props.message}
             </Text>
-            <Text style={styles.muted}>
-              The learning experience begins in a later milestone.
-            </Text>
-            {message ? (
-              <Text accessibilityRole="alert" style={styles.message}>
-                {message}
-              </Text>
-            ) : null}
-            <Pressable
-              accessibilityRole="button"
-              style={styles.button}
-              onPress={logout}
-            >
-              <Text style={styles.buttonText}>Sign out</Text>
+          )}
+          {props.savedToken && (
+            <Pressable style={styles.secondaryButton} onPress={props.onRetry}>
+              <Text style={styles.modeLink}>Retry saved session</Text>
             </Pressable>
-          </View>
-        ) : (
-          <View style={styles.card}>
-            <Text style={styles.eyebrow}>Secure account</Text>
-            <Text style={styles.title}>
-              {mode === "signup"
-                ? "Create your account"
-                : mode === "forgot"
-                  ? "Reset your password"
-                  : "Welcome back"}
-            </Text>
-            <Text style={styles.body}>
-              One BarClimb identity follows you across every device.
-            </Text>
-            {mode === "signup" ? (
-              <>
-                <Text style={styles.label}>Username</Text>
-                <TextInput
-                  autoCapitalize="none"
-                  autoComplete="username-new"
-                  onChangeText={setUsername}
-                  style={styles.input}
-                  value={username}
-                />
-              </>
-            ) : null}
-            <Text style={styles.label}>Email</Text>
-            <TextInput
-              autoCapitalize="none"
-              autoComplete="email"
-              keyboardType="email-address"
-              onChangeText={setEmail}
-              style={styles.input}
-              value={email}
-            />
-            {mode !== "forgot" ? (
-              <>
-                <Text style={styles.label}>Password</Text>
-                <TextInput
-                  autoCapitalize="none"
-                  autoComplete={
-                    mode === "signup" ? "password-new" : "current-password"
-                  }
-                  onChangeText={setPassword}
-                  secureTextEntry
-                  style={styles.input}
-                  value={password}
-                />
-              </>
-            ) : null}
-            {message ? (
-              <Text accessibilityRole="alert" style={styles.message}>
-                {message}
-              </Text>
-            ) : null}
-            {token ? (
-              <Pressable
-                accessibilityRole="button"
-                style={styles.secondaryButton}
-                onPress={restoreSession}
-              >
-                <Text style={styles.modeLink}>Retry saved session</Text>
-              </Pressable>
-            ) : null}
-            <Pressable
-              accessibilityRole="button"
-              style={styles.button}
-              onPress={submit}
-            >
-              <Text style={styles.buttonText}>
-                {mode === "signup"
+          )}
+          <Pressable
+            disabled={busy}
+            accessibilityRole="button"
+            style={styles.button}
+            onPress={submit}
+          >
+            <Text style={styles.buttonText}>
+              {busy
+                ? "Working…"
+                : props.mode === "signup"
                   ? "Create account"
-                  : mode === "forgot"
+                  : props.mode === "forgot"
                     ? "Send reset link"
                     : "Log in"}
-              </Text>
-            </Pressable>
-            <View style={styles.modeRow}>
-              {mode === "login" ? (
-                <>
-                  <Pressable onPress={() => setMode("forgot")}>
-                    <Text style={styles.modeLink}>Forgot password?</Text>
-                  </Pressable>
-                  <Pressable onPress={() => setMode("signup")}>
-                    <Text style={styles.modeLink}>Create account</Text>
-                  </Pressable>
-                </>
-              ) : (
-                <Pressable onPress={() => setMode("login")}>
-                  <Text style={styles.modeLink}>Back to login</Text>
-                </Pressable>
-              )}
-            </View>
-            <Text style={styles.footnote}>
-              Verification and reset links open securely on barclimb.com.
             </Text>
+          </Pressable>
+          <View style={styles.modeRow}>
+            {props.mode === "login" ? (
+              <>
+                <Pressable onPress={() => props.onNavigate("forgot")}>
+                  <Text style={styles.modeLink}>Forgot password?</Text>
+                </Pressable>
+                <Pressable onPress={() => props.onNavigate("signup")}>
+                  <Text style={styles.modeLink}>Create account</Text>
+                </Pressable>
+              </>
+            ) : (
+              <Pressable onPress={() => props.onNavigate("login")}>
+                <Text style={styles.modeLink}>Back to login</Text>
+              </Pressable>
+            )}
           </View>
-        )}
+          <Text style={styles.footnote}>
+            Credential-bearing verification and reset links complete securely on
+            the canonical Web origin.
+          </Text>
+        </View>
       </ScrollView>
     </SafeAreaView>
+  );
+}
+
+function HomeScreen({
+  user,
+  message,
+  logout,
+}: {
+  user: AuthenticatedUser;
+  message: string;
+  logout: () => Promise<void>;
+}) {
+  return (
+    <SafeAreaView style={styles.safeArea}>
+      <ScrollView contentContainerStyle={styles.content}>
+        <Brand />
+        <View style={styles.card}>
+          <Text style={styles.eyebrow}>My BarClimb</Text>
+          <Text style={styles.title}>Welcome, {user.username}.</Text>
+          <Text style={styles.muted}>{user.email}</Text>
+          <Text style={styles.body}>
+            {user.is_email_verified
+              ? "Email verified"
+              : "Check your inbox to verify your email."}
+          </Text>
+          <Text style={styles.muted}>
+            Learning surfaces are intentionally deferred beyond this milestone.
+          </Text>
+          {message && (
+            <Text accessibilityRole="alert" style={styles.message}>
+              {message}
+            </Text>
+          )}
+          <Pressable
+            accessibilityRole="button"
+            style={styles.button}
+            onPress={logout}
+          >
+            <Text style={styles.buttonText}>Sign out</Text>
+          </Pressable>
+        </View>
+      </ScrollView>
+    </SafeAreaView>
+  );
+}
+
+function DeferredScreen({ title }: { title: string }) {
+  return (
+    <SafeAreaView style={styles.safeArea}>
+      <View style={styles.content}>
+        <Brand />
+        <View style={styles.card}>
+          <Text style={styles.eyebrow}>Navigation proof</Text>
+          <Text style={styles.title}>{title}</Text>
+          <Text style={styles.muted}>
+            This destination is reserved; product behavior begins in a later
+            milestone.
+          </Text>
+        </View>
+      </View>
+    </SafeAreaView>
+  );
+}
+
+function Brand() {
+  return (
+    <View style={styles.brandRow}>
+      <View style={styles.mark}>
+        <Text style={styles.markText}>B</Text>
+      </View>
+      <Text style={styles.brand}>BarClimb</Text>
+    </View>
   );
 }
 

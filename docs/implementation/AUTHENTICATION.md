@@ -14,7 +14,7 @@ Review, staging, and production force HTTPS and use secure session/CSRF cookies,
 
 Every auth response is marked `Cache-Control: no-store`, including responses containing private email or a newly issued native credential.
 
-`PUBLIC_BASE_URL` is specifically the canonical public Web origin used for completion links; it is not the Django/API origin. Local is `http://localhost:5173`. `VITE_API_BASE_URL` supplies the local Vite `/api` proxy target and `EXPO_PUBLIC_API_BASE_URL` supplies the native API origin. Deployed Web still routes `/api` same-origin; no CORS middleware or wildcard is part of M1.3a.
+`PUBLIC_BASE_URL` is specifically the canonical public Web origin used for completion links. Local is `http://localhost:5173`; the M1.4 Heroku staging topology serves Web and API from the same HTTPS origin. `VITE_API_BASE_URL` supplies only the local Vite `/api` proxy target; deployed Web rejects an alternate API base. `EXPO_PUBLIC_API_BASE_URL` and `EXPO_PUBLIC_WEB_BASE_URL` are public native build inputs. No CORS middleware or wildcard is part of the contract.
 
 ## Native contract
 
@@ -34,6 +34,8 @@ Email completion links are `${PUBLIC_BASE_URL}/reset-password#token=…` or `/ve
 
 Workers lock and lease a delivery, derive its credential only in worker memory, and deliver the same message/token across bounded retries (30, 120, then 600 seconds; four attempts maximum). Duplicate tasks no-op while leased or after a terminal state. Rotation cancels older pending deliveries. A crash after provider acceptance but before `SENT` may resend the same action link after lease expiry; this is controlled at-least-once delivery, not token rotation. A later SendGrid adapter must use the delivery UUID as its provider idempotency key where supported. Terminal failure stays durable for operations without changing the generic HTTP response. No Celery result backend is used. SendGrid remains unconfigured/unverified, and secrets/message bodies do not enter task args, results, broker metadata, or ordinary logs.
 
+M1.4 adds `StagingAuthEmailSink`, an explicit non-production delivery mode. Staging accepts it only with `ALLOW_STAGING_AUTH_EMAIL_SINK=true`; production rejects it unconditionally. The sink validates one canonical HTTPS fragment-token link and records only its safe action path. It does not deliver, retain, or log the recipient, body, or credential, so it proves deployed outbox processing without representing SendGrid/provider verification.
+
 ## Authorization and abuse controls
 
 DRF authenticates the same `User` through native bearer or Django session. Reusable server-side primitives establish anonymous, authenticated, admin/staff, owner, and owner-or-staff boundaries. Free/Plus, sponsor, and moderation permissions intentionally wait for their owning domains; later clients may hide controls but the server must enforce every boundary.
@@ -44,4 +46,4 @@ Redis/compatible KVS counters limit auth operations by both source IP and normal
 
 - Browser: CSRF, signup, login/logout, session lookup, `/me`, verification request/confirm, reset request/confirm.
 - Native: signup, session issue/revoke, reset request; `/me`, verification confirmation, and final reset confirmation use the shared authenticated/link contracts.
-- Native verification/reset links intentionally open the same HTTPS Web completion flow so secrets are not claimed via an unverified deep-link association in M1.3.
+- Native verification/reset links intentionally open the same HTTPS Web completion flow. M1.4 Universal/App Link configuration includes only noncredential application paths; verification/reset remain excluded so a fragment credential cannot cross an unverified OS association boundary.

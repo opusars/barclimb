@@ -3,6 +3,7 @@ from django.core.exceptions import ImproperlyConfigured
 
 from config.environment import (
     AppEnvironment,
+    boolean,
     csv,
     origin_csv,
     required,
@@ -42,3 +43,14 @@ if EMAIL_BACKEND in {
     "django.core.mail.backends.locmem.EmailBackend",
 }:
     raise ImproperlyConfigured("staging requires a production-grade email backend")
+if EMAIL_BACKEND == "config.email_backends.StagingAuthEmailSink" and not boolean(
+    "ALLOW_STAGING_AUTH_EMAIL_SINK", default=False
+):
+    raise ImproperlyConfigured("the staging auth email sink requires explicit opt-in")
+if MOBILE_LINKS_ENABLED and (  # noqa: F405
+    not APPLE_TEAM_ID  # noqa: F405
+    or not IOS_BUNDLE_IDENTIFIER  # noqa: F405
+    or not ANDROID_PACKAGE_NAME  # noqa: F405
+    or not ANDROID_SHA256_CERT_FINGERPRINTS  # noqa: F405
+):
+    raise ImproperlyConfigured("mobile association identifiers are required when links are enabled")

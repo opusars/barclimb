@@ -16,7 +16,7 @@ Web and native own their presentation code. Shared packages are limited to porta
 
 Portable packages compile against the ES2022 library only, with ambient runtime types disabled. ESLint rejects DOM/Node globals, Node built-ins, and React/React Native renderer imports in `packages/*`. Web and native receive separate lint environments. Package source remains directly consumable by the current bundlers; a compiled-output contract is deferred until a non-bundler consumer requires one.
 
-The native shell's destination buttons are an M1.1 proof surface, not completed navigation parity. Proper routing and universal/app-link handling remain later Milestone 1 native-foundation work before feature UI. Native orientation is intentionally unrestricted for future phone/tablet and PT/LRPT layouts.
+M1.4 replaces the original native destination-button proof with React Navigation: an unauthenticated native-stack boundary and an authenticated bottom-tab shell. Practice, Simulate, and Progress are navigation-only placeholders; their product behavior remains out of scope. Canonical-link resolution is separated from navigation, and verified OS association data deliberately excludes credential-bearing verification/reset routes. Native orientation remains unrestricted for future phone/tablet and PT/LRPT layouts.
 
 M1.1 creates infrastructure boundaries only. It does not implement business domains, authentication, learner state, assessment schemas, providers, or deployment.
 
@@ -33,3 +33,9 @@ Local/test/review/staging/production settings share a typed environment contract
 The first application model is a deliberately minimal custom Django user shared by Web/iOS/Android. Email is private login authority; username is the future public identity; passwords remain exclusively in Django's password framework. Browser auth is same-origin Django session plus CSRF. Native auth is a revocable, expiring opaque credential stored with Expo SecureStore; PostgreSQL stores only its digest and lifecycle. See `AUTHENTICATION.md` for endpoints and security behavior.
 
 M1.3a hardens that boundary with user-row/authentication-generation serialization across native issuance and reset, query-free Web-fragment action handoff, a PostgreSQL authentication-email outbox, HTTPS/proxy trust in every deployed environment, and recoverable native SecureStore states. PostgreSQL is authoritative for users, session generations, action tokens, and delivery lifecycle; Redis supports hashed auth-rate counters and broker coordination only. Identity still contains no learner profile, jurisdiction, entitlement, curriculum, analytics, preferences, or community state. Free/Plus and future role semantics remain outside M1.3a.
+
+## M1.4 client and staging proof boundary
+
+The deployed Web client is built once and served by Django/Gunicorn from \`apps/web/dist\`; \`/api/v1\` remains same-origin. Browser routing owns stable signup, login, verification, reset-request, reset-completion, and authenticated-proof paths, and Django returns the same client entry document for direct requests or refreshes. Immutable hashed assets are cached independently from the noncached entry document.
+
+Native environment selection is fail-closed: local has isolated HTTP defaults, while staging/production require explicit HTTPS API and canonical Web origins. Environment-specific application IDs prevent a staging build from replacing production. Expo SDK 57's compatible \`react-native-safe-area-context\` and \`react-native-screens\` versions are root-overridden only to prevent npm workspace peer auto-installation from creating duplicate native modules.

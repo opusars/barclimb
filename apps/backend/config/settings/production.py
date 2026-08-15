@@ -45,5 +45,6 @@ DEFAULT_FROM_EMAIL = required("DEFAULT_FROM_EMAIL")  # noqa: F405
 if EMAIL_BACKEND in {
     "django.core.mail.backends.console.EmailBackend",
     "django.core.mail.backends.locmem.EmailBackend",
+    "config.email_backends.StagingAuthEmailSink",
 }:
     raise ImproperlyConfigured("production requires a production-grade email backend")

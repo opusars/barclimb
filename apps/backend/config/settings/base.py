@@ -1,7 +1,9 @@
 import os
+import ssl
 from pathlib import Path
 
 import dj_database_url
+from django.core.exceptions import ImproperlyConfigured
 
 from config.environment import boolean, csv, environment, url
 
@@ -17,6 +19,9 @@ REDIS_URL = url(
     default="redis://localhost:6379/0",
     schemes={"redis", "rediss"},
 )
+REDIS_TLS_ALLOW_SELF_SIGNED = boolean("REDIS_TLS_ALLOW_SELF_SIGNED", default=False)
+if REDIS_TLS_ALLOW_SELF_SIGNED and not REDIS_URL.startswith("rediss://"):
+    raise ImproperlyConfigured("REDIS_TLS_ALLOW_SELF_SIGNED requires a rediss:// endpoint")
 INSTALLED_APPS = [
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -52,11 +57,20 @@ CACHES = {
         "BACKEND": "django.core.cache.backends.redis.RedisCache",
         "LOCATION": REDIS_URL,
         "KEY_PREFIX": f"barclimb:{APP_ENV.value}",
-        "OPTIONS": {"socket_connect_timeout": 2, "socket_timeout": 2},
+        "OPTIONS": {
+            "socket_connect_timeout": 2,
+            "socket_timeout": 2,
+            **({"ssl_cert_reqs": None} if REDIS_TLS_ALLOW_SELF_SIGNED else {}),
+        },
     }
 }
 READINESS_REQUIRE_KVS = boolean("READINESS_REQUIRE_KVS", default=True)
 CELERY_BROKER_URL = REDIS_URL
+CELERY_BROKER_USE_SSL = (
+    {"ssl_cert_reqs": (ssl.CERT_NONE if REDIS_TLS_ALLOW_SELF_SIGNED else ssl.CERT_REQUIRED)}
+    if REDIS_URL.startswith("rediss://")
+    else None
+)
 CELERY_RESULT_BACKEND = None
 CELERY_TASK_IGNORE_RESULT = True
 CELERY_TASK_STORE_EAGER_RESULT = False

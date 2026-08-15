@@ -46,6 +46,25 @@ def test_kvs_url_accepts_redis_and_rediss(monkeypatch):
         assert url("REDIS_URL", schemes={"redis", "rediss"}) == value
 
 
+def test_staging_can_explicitly_apply_heroku_kvs_self_signed_tls_contract():
+    env = deployed_environment_values("staging")
+    env["REDIS_TLS_ALLOW_SELF_SIGNED"] = "true"
+    script = (
+        "import ssl; import django; django.setup(); "
+        "from django.conf import settings; "
+        "assert settings.CACHES['default']['OPTIONS']['ssl_cert_reqs'] is None; "
+        "assert settings.CELERY_BROKER_USE_SSL['ssl_cert_reqs'] == ssl.CERT_NONE"
+    )
+    result = subprocess.run(
+        [sys.executable, "-c", script],
+        capture_output=True,
+        check=False,
+        env=env,
+        text=True,
+    )
+    assert result.returncode == 0, result.stderr
+
+
 def test_deployed_origins_require_https(monkeypatch):
     monkeypatch.setenv("CSRF_TRUSTED_ORIGINS", "http://unsafe.example.test")
     with pytest.raises(ImproperlyConfigured, match="valid HTTPS origins"):

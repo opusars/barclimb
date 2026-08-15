@@ -27,6 +27,8 @@ Safe variable names and examples are in `.env.example`. `PUBLIC_BASE_URL` means 
 
 Local identity email uses Django's console backend and tests/review apps use in-memory delivery. Staging/production reject console/in-memory delivery. Staging alone may opt into the validating, non-delivering auth-email sink; production rejects it. Native clients require origin-valued API/Web inputs in deployed builds; only the opaque native session secret is placed in Expo SecureStore.
 
+TLS certificate verification is the default for a `rediss://` KVS. Heroku KVS currently uses a self-signed certificate chain; its staging app explicitly sets `REDIS_TLS_ALLOW_SELF_SIGNED=true` following Heroku's connection guidance. The flag is rejected for plaintext `redis://` and must not be copied to another provider without verifying that provider's certificate contract.
+
 ## Clean-checkout local workflow
 
 Install exact runtimes, then:

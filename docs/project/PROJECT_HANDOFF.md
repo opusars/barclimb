@@ -57,7 +57,7 @@ See `../specs/SPEC_MANIFEST.json`. Four Markdown specs control the build.
 - Web auth uses stable React Router paths for signup, login, verification, reset request/completion, and the authenticated proof shell; Django serves direct/refresh entry and hashed assets on the same staging origin as `/api/v1`.
 - Native uses React Navigation auth and authenticated boundaries with navigation-only future placeholders. Local/staging/production API/Web origins and app identities are fail-closed; staging/production require HTTPS.
 - Canonical-link parsing removes query/fragment data from fallbacks. Universal/App Link configuration is gated; verification/reset remain Web-only and association endpoints stay unpublished until signing identities are verified.
-- Persistent `barclimb-staging` release v8 runs deployed commit `6bec558` with Essential-0 PostgreSQL `postgresql-aerodynamic-56880`, Mini KVS `redis-flat-93728`, and one Basic Web/worker/beat process each.
+- Persistent `barclimb-staging` runs deployed commit `6bec558` with Essential-0 PostgreSQL `postgresql-aerodynamic-56880`, Mini KVS `redis-flat-93728`, and one Basic Web/worker/beat process each. The code deploy was release v8; credential rotation advanced the current configuration release to v12, after which all three processes and database/KVS readiness recovered.
 - Deployed release/migrations, liveness/readiness, HTTPS redirect/forwarded protocol, direct routes, Web session auth, native bearer API issuance/revocation, rightmost-forwarded-IP throttling, beat recovery, worker delivery, and sanitized log evidence passed.
 - The production-rejected staging email sink proves outbox processing without delivery or SendGrid verification. Heroku/Postgres/KVS is `VERIFIED_NONPRODUCTION`; every other provider remains `NOT_VERIFIED`.
 - M1.4 remains incomplete: EAS is unauthenticated, Apple/Google project ownership is unverified, this host lacks full Xcode/simctl and Android SDK/adb/emulator, and no actual native/SecureStore runtime proof exists.
@@ -79,7 +79,7 @@ Heroku app runtime, Essential-0 PostgreSQL, and Mini KVS are `VERIFIED_NONPRODUC
 Execution breadth remains the principal engineering risk. Curriculum completeness depends on automated official-scope/rule compilation, authority provenance, lawful multi-source reconciliation, subject certification, and strict inventory gates. NCBE Sourcebooks are optional enhanced reconciliation when lawfully available; do not make purchase/access a build or launch dependency.
 
 ## Exact next task
-Complete M1.4 only: authenticate an authorized Expo/EAS account, verify Apple and Android project/signing/recovery ownership, produce both internal builds, exercise staging auth and SecureStore on actual iOS and Android runtimes, and record the platform-specific evidence. GitHub Actions run `31895220658` is green on the evidence commit. Do not begin M1.5 or any product domain.
+Complete M1.4 only: authenticate an authorized Expo/EAS account, verify Apple and Android project/signing/recovery ownership, produce both internal builds, exercise staging auth and SecureStore on actual iOS and Android runtimes, and record the platform-specific evidence. GitHub Actions run `31895608020` is green on commit `0be3789`. Do not begin M1.5 or any product domain.
 
 ## Resume commands
 ```bash

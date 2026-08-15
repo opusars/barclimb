@@ -79,7 +79,7 @@ Heroku app runtime, Essential-0 PostgreSQL, and Mini KVS are `VERIFIED_NONPRODUC
 Execution breadth remains the principal engineering risk. Curriculum completeness depends on automated official-scope/rule compilation, authority provenance, lawful multi-source reconciliation, subject certification, and strict inventory gates. NCBE Sourcebooks are optional enhanced reconciliation when lawfully available; do not make purchase/access a build or launch dependency.
 
 ## Exact next task
-Complete M1.4 only: authenticate an authorized Expo/EAS account, verify Apple and Android project/signing/recovery ownership, produce both internal builds, exercise staging auth and SecureStore on actual iOS and Android runtimes, record the platform-specific evidence, and obtain green GitHub Actions on the final branch commit. Do not begin M1.5 or any product domain.
+Complete M1.4 only: authenticate an authorized Expo/EAS account, verify Apple and Android project/signing/recovery ownership, produce both internal builds, exercise staging auth and SecureStore on actual iOS and Android runtimes, and record the platform-specific evidence. GitHub Actions run `31895220658` is green on the evidence commit. Do not begin M1.5 or any product domain.
 
 ## Resume commands
 ```bash

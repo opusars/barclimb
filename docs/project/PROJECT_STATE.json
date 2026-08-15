@@ -5,7 +5,7 @@
   "active_launch_train": "A_FOUNDATION",
   "active_milestone": 1,
   "status": "IN_PROGRESS",
-  "latest_known_good_commit": "6bec5583659ac347a476bf6be3ea7eddd731ba1a",
+  "latest_known_good_commit": "68ef81a2d4ec7cdbfb4290c046c221ad9d0f2016",
   "active_branch": "m1-4-staging-auth-client-proof",
   "database_migration_summary": "M1.3a retains the minimal accounts.User and adds an authentication generation, native-session generation snapshots, deterministic digest-only email-action derivation metadata, and the durable provider-neutral AuthEmailDelivery outbox. No learner, entitlement, curriculum, assessment, billing, or other business model exists.",
   "enabled_material_feature_flags": [],
@@ -26,7 +26,7 @@
     "adsense": "NOT_VERIFIED",
     "admob": "NOT_VERIFIED"
   },
-  "latest_test_summary": "M1.4 repository automation passes through deployed commit 6bec558: 60 backend tests with four PostgreSQL-only skips, 27 Web/native Vitest tests, all workspace checks/portability, Expo compatibility, Expo Doctor 20/20, Web build, and iOS/Android JS exports. Heroku staging release/migrations, Web+worker+beat, HTTPS redirect, PostgreSQL/KVS readiness, direct Web routes, Web session auth, native bearer issuance/revocation, rightmost-forwarded-IP throttling, scheduled outbox recovery, safe sink delivery, and zero credential-pattern log matches are verified. GitHub Actions and native runtime/build evidence remain pending.",
+  "latest_test_summary": "M1.4 repository automation passes through green GitHub Actions run 31895220658 on commit 68ef81a: 64 PostgreSQL backend tests, 27 Web/native Vitest tests, live Celery, all workspace checks/portability, Expo compatibility, Expo Doctor 20/20, Web build, and iOS/Android JS exports. Heroku staging release/migrations, Web+worker+beat, HTTPS redirect, PostgreSQL/KVS readiness, direct Web routes, Web session auth, native bearer issuance/revocation, rightmost-forwarded-IP throttling, scheduled outbox recovery, safe sink delivery, and zero credential-pattern log matches are verified. Native runtime/build evidence remains pending.",
   "known_blockers": [
     "Expo/EAS is not authenticated, so internal iOS/Android builds cannot be created or assigned to verified developer projects.",
     "This host has only Apple Command Line Tools (no full Xcode/simctl) and no Android SDK/adb/emulator, so actual iOS/Android authentication and SecureStore runtime behavior cannot be exercised here.",
@@ -38,6 +38,6 @@
     "Cross-scenario projections, anonymous claim security, private public-page overlays, entitlement transitions, and cross-device orchestration require explicit integration/security tests before GA.",
     "Official NCBE scope/source changes must pass source-drift and revalidation workflow; future exam scopes remain provisional until governing materials exist."
   ],
-  "exact_next_task": "Complete M1.4 only: authenticate an authorized Expo/EAS account, verify Apple and Android project/signing ownership, produce both internal builds, exercise native staging authentication and SecureStore on actual iOS and Android runtimes, then record exact platform evidence and green GitHub Actions. Do not begin M1.5 or any product domain.",
+  "exact_next_task": "Complete M1.4 only: authenticate an authorized Expo/EAS account, verify Apple and Android project/signing ownership, produce both internal builds, and exercise native staging authentication and SecureStore on actual iOS and Android runtimes. Record exact platform evidence. Do not begin M1.5 or any product domain.",
   "last_verified_at": "2026-08-15T09:12:00-07:00"
 }

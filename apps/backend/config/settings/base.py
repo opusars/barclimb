@@ -82,6 +82,7 @@ TIME_ZONE = "UTC"
 USE_I18N = True
 USE_TZ = True
 STATIC_URL = "static/"
+STATIC_ROOT = BASE_DIR / "staticfiles"
 WEB_DIST_DIR = Path(os.environ.get("WEB_DIST_DIR", BASE_DIR.parent / "web" / "dist"))
 MOBILE_LINKS_ENABLED = boolean("MOBILE_LINKS_ENABLED", default=False)
 APPLE_TEAM_ID = os.environ.get("APPLE_TEAM_ID", "")

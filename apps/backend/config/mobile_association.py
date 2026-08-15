@@ -1,7 +1,16 @@
 from django.conf import settings
 from django.http import Http404, JsonResponse
 
-SUPPORTED_PATHS = ["/app/*", "/practice/*", "/simulate/*", "/progress/*"]
+SUPPORTED_PATHS = [
+    "/app/*",
+    "/practice/*",
+    "/simulate/*",
+    "/progress/*",
+    "/search/*",
+    "/history/*",
+    "/account/*",
+    "/privacy/*",
+]
 
 
 def apple_app_site_association(_request):

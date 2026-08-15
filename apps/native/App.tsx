@@ -10,7 +10,10 @@ import {
 } from "react-native";
 import * as SecureStore from "expo-secure-store";
 import * as Linking from "expo-linking";
-import { NavigationContainer } from "@react-navigation/native";
+import {
+  NavigationContainer,
+  type NavigatorScreenParams,
+} from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
@@ -39,8 +42,16 @@ type AppTabParams = {
   Simulate: undefined;
   Progress: undefined;
 };
+type AppStackParams = {
+  Tabs: NavigatorScreenParams<AppTabParams> | undefined;
+  Search: undefined;
+  History: undefined;
+  Account: undefined;
+  Privacy: undefined;
+};
 const AuthStack = createNativeStackNavigator<AuthStackParams>();
 const AppTabs = createBottomTabNavigator<AppTabParams>();
+const AppStack = createNativeStackNavigator<AppStackParams>();
 
 type NativeAuthResponse = {
   detail?: string;
@@ -176,10 +187,18 @@ export default function App() {
     prefixes: [Linking.createURL("/"), nativeEnvironment.webBaseUrl],
     config: {
       screens: {
-        Home: "app",
-        Practice: "practice",
-        Simulate: "simulate",
-        Progress: "progress",
+        Tabs: {
+          screens: {
+            Home: "app",
+            Practice: "practice",
+            Simulate: "simulate",
+            Progress: "progress",
+          },
+        },
+        Search: "search",
+        History: "history",
+        Account: "account",
+        Privacy: "privacy",
       },
     },
   };
@@ -194,24 +213,13 @@ export default function App() {
     );
   return (
     <SafeAreaProvider>
-      <NavigationContainer linking={linking}>
+      <NavigationContainer<AppStackParams> linking={linking}>
         {user ? (
-          <AppTabs.Navigator>
-            <AppTabs.Screen name="Home">
-              {() => (
-                <HomeScreen user={user} message={message} logout={logout} />
-              )}
-            </AppTabs.Screen>
-            <AppTabs.Screen name="Practice">
-              {() => <DeferredScreen title="Practice" />}
-            </AppTabs.Screen>
-            <AppTabs.Screen name="Simulate">
-              {() => <DeferredScreen title="Simulate" />}
-            </AppTabs.Screen>
-            <AppTabs.Screen name="Progress">
-              {() => <DeferredScreen title="Progress" />}
-            </AppTabs.Screen>
-          </AppTabs.Navigator>
+          <AuthenticatedNavigator
+            user={user}
+            message={message}
+            logout={logout}
+          />
         ) : (
           <AuthStack.Navigator>
             <AuthStack.Screen name="Login">
@@ -258,6 +266,53 @@ export default function App() {
         )}
       </NavigationContainer>
     </SafeAreaProvider>
+  );
+}
+
+function AuthenticatedNavigator({
+  user,
+  message,
+  logout,
+}: {
+  user: AuthenticatedUser;
+  message: string;
+  logout: () => Promise<void>;
+}) {
+  return (
+    <AppStack.Navigator>
+      <AppStack.Screen name="Tabs" options={{ headerShown: false }}>
+        {() => (
+          <AppTabs.Navigator>
+            <AppTabs.Screen name="Home">
+              {() => (
+                <HomeScreen user={user} message={message} logout={logout} />
+              )}
+            </AppTabs.Screen>
+            <AppTabs.Screen name="Practice">
+              {() => <DeferredScreen title="Practice" />}
+            </AppTabs.Screen>
+            <AppTabs.Screen name="Simulate">
+              {() => <DeferredScreen title="Simulate" />}
+            </AppTabs.Screen>
+            <AppTabs.Screen name="Progress">
+              {() => <DeferredScreen title="Progress" />}
+            </AppTabs.Screen>
+          </AppTabs.Navigator>
+        )}
+      </AppStack.Screen>
+      <AppStack.Screen name="Search">
+        {() => <DeferredScreen title="Search" />}
+      </AppStack.Screen>
+      <AppStack.Screen name="History">
+        {() => <DeferredScreen title="History" />}
+      </AppStack.Screen>
+      <AppStack.Screen name="Account">
+        {() => <DeferredScreen title="Account" />}
+      </AppStack.Screen>
+      <AppStack.Screen name="Privacy">
+        {() => <DeferredScreen title="Privacy" />}
+      </AppStack.Screen>
+    </AppStack.Navigator>
   );
 }
 

@@ -37,7 +37,16 @@ export default ({ config }: ConfigContext): ExpoConfig => {
     deployed,
   );
   const suffix = environment === "production" ? "" : `.${environment}`;
-  const supportedPaths = ["/app", "/practice", "/simulate", "/progress"];
+  const supportedPaths = [
+    "/app",
+    "/practice",
+    "/simulate",
+    "/progress",
+    "/search",
+    "/history",
+    "/account",
+    "/privacy",
+  ];
   return {
     ...config,
     ...base.expo,

@@ -3,6 +3,8 @@ export const nativeAppPaths = [
   "/practice",
   "/simulate",
   "/progress",
+  "/search",
+  "/history",
   "/account",
   "/privacy",
 ] as const;

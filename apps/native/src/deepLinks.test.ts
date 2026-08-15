@@ -9,6 +9,12 @@ describe("canonical link resolution", () => {
         "https://staging.barclimb.test",
       ),
     ).toEqual({ kind: "native", path: "/progress" });
+    expect(
+      resolveCanonicalLink(
+        "https://staging.barclimb.test/search",
+        "https://staging.barclimb.test",
+      ),
+    ).toEqual({ kind: "native", path: "/search" });
   });
 
   it("keeps fragment credentials in the Web completion boundary", () => {

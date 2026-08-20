@@ -1,7 +1,9 @@
 # BarClimb Project Handoff
 
 ## Current state
-Milestone 1 is in progress. M1.1/M1.1a established and corrected the multi-client repository/toolchain foundation; M1.2 added the asynchronous runtime/environment contract; M1.3 established the single minimal account identity and cross-client authentication; M1.3a hardens its credential transport, reset concurrency, proxy/HTTPS boundary, durable email delivery, and native recovery states. No learner profile, onboarding, entitlement, curriculum, assessment, billing, provider verification, or deployment has been implemented.
+Milestone 1 is in progress. M1.1/M1.1a established and corrected the multi-client repository/toolchain foundation; M1.2 added the asynchronous runtime/environment contract; M1.3 established the single minimal account identity and cross-client authentication; M1.3a hardens its credential transport, reset concurrency, proxy/HTTPS boundary, durable email delivery, and native recovery states. Accepted `main` has no learner profile, onboarding, entitlement, curriculum, assessment, billing, provider verification, or deployment.
+
+The controlling release sequence is now **Web GA → iOS Native GA → Android Native GA**, while architecture remains one first-class multi-client product from Milestone 1. The amendment occurred while M1.4 was already in progress on `m1-4-staging-auth-client-proof`. That implementation branch remains intentionally unmerged and was not modified here; after this specification branch is accepted into `main`, M1.4 must merge amended main and reconcile its implementation/continuity before continuing.
 
 ## Authoritative contracts
 See `../specs/SPEC_MANIFEST.json`. Four Markdown specs control the build.
@@ -51,9 +53,17 @@ See `../specs/SPEC_MANIFEST.json`. Four Markdown specs control the build.
 ## Accepted-main dependency continuity correction
 - Expo's current SDK 57 compatibility metadata moved the recommended `expo` patch from 57.0.12 to 57.0.13 after M1.3a reached `main`, causing the CI-mode dependency gate to fail without an application-code change.
 - The native direct dependency now uses Expo's recommended `~57.0.13` range and the npm lock records the corresponding Expo-owned transitive patch set. React Native remains 0.86.2; TypeScript remains 5.9.3 and intentionally excluded from Expo dependency validation under the controlling TypeScript 5.x policy.
-- No route, navigation, authentication, deployment, provider, deep-link, EAS, or product behavior changed. M1.4 has not begun.
+- No route, navigation, authentication, deployment, provider, deep-link, EAS, or product behavior changed at that historical accepted-main correction. M1.4 later began on its separate, still-unmerged branch.
+
+## Web-first release-strategy amendment
+- Web GA is the first commercial/revenue release; iOS Native GA and Android Native GA follow as independent platform gates.
+- Native public-store approval, production store purchase/restore, and public native release are not Web GA blockers merely because they are incomplete.
+- Native remains active architecture insurance from Milestone 1: M1.4 risk proof, portable schemas/state, canonical URLs/deep-link contracts, provider-neutral entitlement, shared identity/curriculum/assessment/evidence/publication truth, and explicit capability/parity ledgers remain mandatory.
+- The Web GA gate retains the anonymous SEO → substantive learning → Instant Practice → signup/claim, authenticated My BarClimb, and Plus ad-free/deeper-learning journeys.
+- M1.5 may not begin until M1.4 is completed or explicitly re-scoped under the amended controlling specifications.
 
 ## Tests actually run
+- Web-first amendment GitHub Actions run `32413722581`: continuity PASSED; backend/PostgreSQL/Redis/Celery PASSED; TypeScript clean install, full check, and portability PASSED. The TypeScript job then FAILED `npx expo install --check` because Expo's live SDK 57 metadata advanced the recommended Expo patch from accepted-main 57.0.13 to 57.0.15. Doctor/exports were skipped after that failure. This is external baseline dependency drift, not a specification-diff failure, and remains outside this specification-only branch.
 - M1.3a hardening: 48 SQLite security/lifecycle tests pass with four PostgreSQL-only skips; the complete 52-test PostgreSQL 14 + Redis 7.2 suite passes, including reset-vs-issuance in both lock orders, token consume-vs-reissue, and duplicate signup. Ruff/system/migration checks, npm full check/build and portability with 17 Vitest tests, Expo Doctor 20/20, iOS/Android production JS exports, continuity validation, and diff checks pass. Hosted Foundation CI also passes the exact-runtime continuity, backend/PostgreSQL/Redis/Celery, and TypeScript/Expo jobs.
 - M1.3 local security/lifecycle suite: Ruff and Django checks PASSED; 25 Pytest tests PASSED on the available Python 3.11 SQLite path. `npm run check` and portability PASSED with four Web/native Vitest tests and production Web build; Expo dependency check, Doctor 20/20, and iOS/Android JS exports PASSED. Hosted exact-runtime PostgreSQL 17/Redis 7.2/Celery and Node 24 acceptance also PASSED on the pushed branch.
 - `python3 scripts/validate_continuity.py` passes against the committed repository baseline and controlling-spec manifest.
@@ -64,13 +74,13 @@ See `../specs/SPEC_MANIFEST.json`. Four Markdown specs control the build.
 - Remaining npm audit findings are upstream Expo/React Native build/config-tool paths documented in `SECURITY_ADVISORIES.md`; no forced downgrade was applied.
 
 ## Providers actually verified
-None yet in a managed implementation environment. Local PostgreSQL 14 and Redis 7.2 were exercised as runtime dependencies, but Heroku/Postgres/KVS remains `NOT_VERIFIED`; do not infer managed-provider readiness from local or CI service proof.
+Accepted main has no managed provider verification. Local PostgreSQL 14 and Redis 7.2 were exercised as runtime dependencies, but Heroku/Postgres/KVS remains `NOT_VERIFIED` in this branch. The unmerged M1.4 branch contains later nonproduction deployment evidence that must be reconciled when amended main is brought forward; do not silently copy its status without preserving its evidence.
 
 ## Known risks
 Execution breadth remains the principal engineering risk. Curriculum completeness depends on automated official-scope/rule compilation, authority provenance, lawful multi-source reconciliation, subject certification, and strict inventory gates. NCBE Sourcebooks are optional enhanced reconciliation when lawfully available; do not make purchase/access a build or launch dependency.
 
 ## Exact next task
-Confirm and accept hosted Foundation CI on the exact Expo 57.0.13 dependency-correction commit. Once that commit is green on `main`, M1.4 may begin on its separately named branch. Do not treat this maintenance correction as M1.4 work or begin learner onboarding/profile, curriculum, assessment, entitlement/billing, or other product domains.
+Do not merge this branch while CI is red. First create a separate accepted-main dependency-only correction for Expo's current SDK 57-compatible patch, validate it, and merge that correction to `main`. Merge updated `origin/main` into `spec-web-first-release-strategy`, rerun CI, and merge the amendment only when green. Then update the existing published `m1-4-staging-auth-client-proof` branch by merging amended `origin/main` into it without rewriting branch history; keep the amended four specs/manifest and release strategy, preserve M1.4 implementation/evidence, reconcile continuity, and rerun all M1.4 gates. Complete or explicitly re-scope M1.4 before M1.5. Do not begin application/product implementation from this specification branch.
 
 ## Resume commands
 ```bash

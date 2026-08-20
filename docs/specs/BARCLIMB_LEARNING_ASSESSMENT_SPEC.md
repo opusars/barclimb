@@ -672,9 +672,9 @@ Codex may not satisfy this contract by implementing separate bespoke screens for
 
 ## 32. Native-client parity amendment
 
-The Assessment Presentation Schema and UI Capability Manifest are client-agnostic contracts consumed by Web, iOS, and Android. Web and React Native may use different concrete components, but every AVAILABLE assessment version must declare capabilities supported by every launch client on which it is eligible to run.
+The Assessment Presentation Schema and UI Capability Manifest are client-agnostic contracts consumed by Web, iOS, and Android. Web and React Native may use different concrete components. Assessment availability is evaluated against the capability manifest of the client/release train on which the version is eligible to run; the canonical AssessmentVersion itself is not forked by client.
 
-No assessment family may be marked launch-ready while its native renderer lacks required selection, elimination, highlighting, navigation, resource, editor, autosave, recovery, grading, challenge, or accessibility behavior.
+For **Web GA**, every required assessment family must satisfy the complete Web capability profile. A missing native concrete renderer does not block Web GA when the canonical schema/API/persistence contract is already native-compatible and the gap is explicitly tracked. For **Native GA**, that platform may not expose an assessment family until its renderer satisfies the required selection, elimination, highlighting, navigation, resource, editor, autosave, recovery, grading, challenge, and accessibility behaviors. No Web-only assessment schema may be introduced merely because native releases later.
 
 Public/community controls are outside the timed assessment workspace. Discussion, signals, and creator metrics appear only after submission/publication or on public pages and may never distract a learner during a timed simulation section.
 
@@ -1551,80 +1551,13 @@ A learner may publish an eligible focused-practice response only under the same 
 
 Codex must implement these three parts as one coherent learning system. No client may invent unsupported assessment UI; no assessment may become available without capability and legal validation; no public claim of complete NextGen coverage may be made without the official-scope completeness gates; and supplemental ethics practice must remain analytically isolated from NextGen readiness except where the official blueprint expressly permits transfer.
 
-# PART IV - CROSS-SCENARIO LEARNING DOMAIN INTEGRATION
+## 27. Web GA and Native GA assessment-release rules
 
-This part is authoritative where earlier sections leave newer study/orchestration behavior implicit.
+BarClimb releases commercially on Web before public native store releases. This changes **distribution timing only**, not assessment truth.
 
-## 27. One assessment truth across Visitor, Free, and Plus
-
-Anonymous Instant Practice, authenticated Free Practice, Plus Practice, and Simulation all consume immutable canonical `AssessmentVersion` objects through the same presentation/validation contracts. Access policy may differ; legal content, verified scope mapping, reliability, grading key/rubric version, and lifecycle truth do not.
-
-No “SEO question engine,” “free question engine,” or “Plus question engine” may exist as a separate legal-content system.
-
-## 28. Attempt ownership modes
-
-`learning.Attempt` must support an explicit ownership mode:
-- `ANONYMOUS_DISCOVERY` with opaque server/session ownership and expiration;
-- `AUTHENTICATED` with user ownership.
-
-Anonymous attempts may be graded for immediate feedback but do not update persistent LearnerState until an ownership-safe claim succeeds. Claim preserves original timestamps, AssessmentVersion, responses, grade, and provenance; it never regenerates the attempt as a new historical event.
-
-## 29. StudySession, Review, and Repair evidence rules
-
-StudySession, Review Queue, Suggested Review, and RepairPlan are **orchestration structures**, not evidence themselves.
-
-Only completed eligible assessment/rule-recall/application evidence can change learner state. Completing a session wrapper, accepting a suggestion, reading an explanation, or opening a repair step yields zero mastery credit.
-
-Repair diagnoses must identify the plausible deficit dimension (recall, recognition, application, fact discrimination, transfer, retention, writing/skill) and remain probabilistic until adequate evidence exists. UI language must not state a diagnosis as certain when confidence is insufficient.
-
-## 30. Session Impact contract
-
-A Session Impact summary is generated only from actual before/after learner-state deltas caused by newly finalized eligible evidence. It may report:
-- nodes newly assessed;
-- coverage expanded;
-- performance/confidence/retention changes;
-- successful delayed reassessment;
-- unresolved/insufficient-evidence areas.
-
-It may not manufacture celebratory increases merely because a learner spent time in the app.
-
-## 31. Evidence Completeness and stability
-
-Evidence Completeness is independent from Performance, Confidence, and Readiness. It measures whether the active blueprint has adequate breadth/format/skill/recency evidence to interpret the Readiness Index stably.
-
-Plus may expose deeper decomposition but may not receive a different mathematical truth. Free and Plus calculations use the same learner-model version.
-
-## 32. Historical pattern and writing-trajectory analytics
-
-Historical pattern analysis requires configured minimum evidence thresholds and traceable supporting attempts. It may identify repeated rule misses, format gaps, timing effects, transfer failures, or improvements only when statistically/educationally defensible.
-
-Writing trajectory compares compatible rubric dimensions across versioned rubrics. A mapping/compatibility layer is required before aggregating renamed/reweighted criteria; otherwise show separate periods rather than false longitudinal continuity.
-
-## 33. Search and public-page learning mappings
-
-Every public doctrine/rule/skill/ethics learning page and Search learning result used for personalization must map to canonical curriculum identifiers. Search synonyms/aliases never create competing learner-state nodes.
-
-Authenticated public-page overlays may show learner state/review/history for those identifiers but must not recompute learner metrics in the web client.
-
-## 34. Plus capability neutrality
-
-Plus may unlock higher-volume/fair-use practice, PT/LRPT, full simulation, richer analytics, advanced Ask contexts, repair/planning depth, and ad suppression. Plus must never:
-- change the correct answer;
-- change rubric scoring in the learner's favor;
-- alter mastery thresholds for the same model version;
-- create evidence from product engagement;
-- weight community signals as learning evidence.
-
-## 35. New learning-domain test vectors
-
-Add deterministic tests for:
-1. anonymous correct attempt → no LearnerState change before claim;
-2. successful claim → exactly-once evidence/state update;
-3. duplicate claim → idempotent/no duplicate evidence;
-4. StudySession completed with only reading/community actions → zero learner-state change;
-5. Review Queue add/dismiss → zero learner-state change;
-6. RepairPlan evidence distinguishes recall success from transfer failure;
-7. Free and Plus same responses → identical grade/evidence math;
-8. billing downgrade mid-accepted attempt → attempt can finish/recover under safe-boundary policy;
-9. writing trajectory refuses incompatible rubric aggregation;
-10. public-page private overlay shows canonical learner state without changing public page content.
+- Web GA must ship the full launch assessment/learning scope required by this specification.
+- iOS and Android consume the same immutable AssessmentVersions, GenerationSpecifications, RuleObligations, grading contracts, learner evidence, and simulation assemblies.
+- A client capability manifest determines whether a given version can be rendered on that client; a native gap never causes a duplicate “mobile version” of the assessment.
+- Web GA may proceed while native concrete components remain incomplete, provided no Web-only contract makes later parity structurally impossible and the gap is tracked in client parity.
+- Native GA requires full supported-family parity and device/runtime validation under the Native Platform Specification.
+- Coverage certification and Web GA “complete current published NextGen scope” claims are curriculum/inventory facts, not claims that every client has already reached public distribution.

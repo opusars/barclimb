@@ -12,16 +12,9 @@ BarClimb is not “done” when routes exist, tests happen to pass, or screens r
 
 ## 0.1 Contract precedence and integration rule
 
-The four authoritative specifications are one integrated contract:
+The four authoritative specifications under `docs/specs/` are one integrated contract. Where duplicated language conflicts, the more specific and later-amended requirement controls, provided it does not weaken security, privacy, assessment validity, learner-data integrity, curriculum completeness, store-policy compliance, or the multi-client invariants in §120. Codex must surface unresolved contradictions rather than choosing silently.
 
-1. `BARCLIMB_BUILD_CONSTITUTION.md`
-2. `BARCLIMB_LEARNING_ASSESSMENT_SPEC.md`
-3. `BARCLIMB_PRODUCT_EXPERIENCE_NETWORK_SPEC.md`
-4. `BARCLIMB_NATIVE_PLATFORM_SPEC.md`
-
-Where duplicated language conflicts, the **more specific and later-dated/amended requirement controls**, provided it does not weaken security, privacy, assessment validity, learner-data integrity, curriculum completeness, or store-policy compliance. Codex must surface unresolved contradictions before implementation rather than choosing silently.
-
-Cross-scenario behavior must be implemented through shared canonical domain models and server-authoritative projections; public, Free, and Plus experiences may differ in capability and personalization, but they may not maintain incompatible copies of learner, assessment, curriculum, entitlement, publication, or community truth.
+Public, Free, and Plus experiences may differ in capability and personalization, but they use shared canonical learner, assessment, curriculum, entitlement, publication, and community truth.
 
 The application must be capable of generating revenue at launch through three distinct mechanisms:
 
@@ -1374,7 +1367,7 @@ Index: checksum, status, effective dates.
 - node_type enum
 - canonical_name
 - short_name
-- jurisdiction nullable
+- jurisdiction nullable — future exam-scope extension only; national NextGen v1 content, assessment generation, analytics, and readiness do not depend on it
 - lifecycle_state
 - created_at
 
@@ -1851,8 +1844,6 @@ Prompt family stable identity and immutable versions.
 
 ### billing.Subscription
 
-Provider-agnostic subscription identity:
-
 - user FK
 - plan FK
 - purchase_source STRIPE/APPLE/GOOGLE
@@ -1879,8 +1870,6 @@ Uniqueness constraints must prevent one provider subscription/original transacti
 - effective_from/effective_until
 
 ### billing.ProviderEvent
-
-Normalized immutable event envelope for STRIPE/APPLE/GOOGLE:
 
 - provider
 - external_event_id unique within provider
@@ -2061,12 +2050,6 @@ Examples:
 - Stripe webhook: provider `event.id` unique
 - sponsor checkout fulfillment: `stripe_event:{event_id}` plus campaign state gate
 - email: `template:{key}:user:{id}:domain_event:{event_id}` when event-driven
-- anonymous attempt claim: `anon_claim:{anonymous_attempt_id}:user:{user_id}`
-- StudySession planning: `study_plan:{user_id}:{planner_version}:{input_watermark}` when deterministic for a request
-- Review suggestion acceptance: `review_suggestion:{suggestion_id}:user:{user_id}:accept`
-- RepairPlan adaptation: `repair:{plan_id}:evidence_watermark:{max_evidence_id}`
-- Apple/Google purchase lifecycle: provider transaction/purchase-token event identifier + account state gate
-- notification delivery: `notification:{notification_id}:channel:{channel}:destination:{destination_hash}`
 
 Retryable jobs use exponential backoff and bounded retries. A lost worker acknowledgement may never double-charge, duplicate publication, or pay twice for the same AI result.
 
@@ -2126,42 +2109,6 @@ CREATED
 
 Expired server deadline triggers automatic section/exam submission according to blueprint/session rules.
 
-## 63.1 StudySession lifecycle
-
-```text
-PLANNED → ACTIVE ↔ PAUSED → COMPLETED
-                     ↘ ABANDONED
-PLANNED/PAUSED/ACTIVE → DISMISSED when safe
-```
-
-Completed StudySession evidence is never rolled back by replanning. Replanning affects only future/uncompleted steps.
-
-## 63.2 RepairPlan lifecycle
-
-```text
-PLANNED → ACTIVE → ADAPTING → ACTIVE → COMPLETED
-             ↘ PAUSED             ↘ ABANDONED/DISMISSED
-```
-
-Adaptation events are append/audit records and may not rewrite historical grades.
-
-## 63.3 Subscription/entitlement lifecycle
-
-Provider events normalize to server-authoritative effective states such as:
-
-```text
-INACTIVE → ACTIVE ↔ GRACE/BILLING_RETRY → ACTIVE
-                         ↘ PAST_DUE → EXPIRED
-ACTIVE → CANCELED_PENDING_EXPIRY → EXPIRED
-ACTIVE/GRACE → REVOKED/REFUNDED when provider-verified
-```
-
-Effective capability transitions occur at documented safe boundaries and never delete learner work.
-
-## 63.4 Community moderation lifecycle
-
-Content may move through VISIBLE / LIMITED / HIDDEN_PENDING_REVIEW / REMOVED, with moderator actions and appeals auditable. User-account restrictions are separate from content state.
-
 ## 64. Publication lifecycle
 
 ```text
@@ -2200,46 +2147,20 @@ As defined in §42. Payment and activation are webhook-authoritative.
 
 ## 67. Permission principles
 
-Server-side permission/capability rules:
+| Capability | Anonymous | Free | Plus | Sponsor | Staff |
+|---|---:|---:|---:|---:|---:|
+| Read public pages | Yes | Yes | Yes | Yes | Yes |
+| Public trial MCQ | Limited | Yes | Yes | N/A | Yes |
+| Persistent practice | No | Quota | Expanded | No | Test/Admin |
+| Full advanced analytics | No | No | Yes | No | Support-limited |
+| View another learner response | No | No | No | No | Only authorized support/admin need |
+| Sponsor campaign create | No | No | No | Yes | Yes |
+| View learner intelligence for targeting | No | Own only | Own only | Never | Restricted support/admin |
+| Approve sponsor creative | No | No | No | No | Yes |
+| Publish/retire content | No | No | No | No | Yes |
+| View canonical answers before submission | No | No | No | No | Authorized staff/tests only |
 
-### Anonymous
-- may read canonical public pages, eligible public community content, and public profiles;
-- may use bounded Instant Practice/public trial inventory and bounded public Ask;
-- may not create persistent learner analytics until a valid claim after signup;
-- may not publish, comment, react, follow, bookmark, join Circles, or view private learner data;
-- may see eligible advertising.
-
-### Free learner
-- owns persistent learner analytics, History, baseline Progress, and configured Practice/IQS/PT access;
-- may read and, with consent/eligibility, publish own public response;
-- may comment/reply/react/follow/bookmark and join/create enabled Circles;
-- may use limited contextual Ask and configured previews of advanced analysis;
-- does not receive Full Simulation unless an explicit promotion/feature rule grants it;
-- may see eligible advertising.
-
-### Plus learner
-- has all ordinary learner/community permissions available to Free;
-- receives expanded/fair-use Practice, PT/LRPT, Full Simulation, advanced analysis/repair/planning, and expanded contextual Ask according to effective capabilities;
-- is globally ad/upsell-free while authenticated;
-- receives **no** advantage in scoring, mastery math, public ranking, reaction weight, reputation, moderation, or content distribution.
-
-### Sponsor
-- may manage authorized sponsor organization/campaign resources;
-- may read public pages/community like any public visitor;
-- may never access learner intelligence, private responses, social graph, readiness, or private targeting data.
-
-### Staff
-- access is role-scoped and least-privilege;
-- authorized staff may perform review/admin/test actions required by their role;
-- learner/private-content access is restricted to legitimate support/review/admin need and audited;
-- canonical answers before normal authorization state are limited to authorized staff/test systems.
-
-Across all roles:
-- eligible published learner responses are public according to publication state; private learner responses/history/readiness remain owner-private except audited authorized staff need;
-- canonical content publication/retirement and sponsor creative approval require staff authority;
-- all permissions are enforced server-side;
-- effective capability may narrow access further due to quota, content lifecycle, region/provider state, moderation restriction, billing grace/expiry, or feature flags;
-- clients never grant access merely because a control is visible.
+Support/admin access to learner content must be auditable and least-privilege.
 
 ---
 
@@ -2625,7 +2546,7 @@ Prohibited:
 - hiding already-earned grading results behind a surprise paywall
 - deceptive countdowns or false scarcity
 
-Upgrade UI must clearly compare Free and Plus and invoke the platform-appropriate purchase path: Stripe Checkout on web, StoreKit on iOS, and Google Play Billing on Android. Purchase-source details may differ, but Django remains authoritative for entitlement.
+Upgrade UI must clearly compare Free and Plus and invoke the platform-appropriate purchase path: Stripe Checkout on Web, StoreKit on iOS, and Google Play Billing on Android. Purchase-source details may differ, but Django remains authoritative for entitlement.
 
 ## 86. Conversion instrumentation
 
@@ -2843,20 +2764,10 @@ Server-managed feature flags required for at least:
 
 - PT generation
 - LRPT generation
-- anonymous Instant Practice
-- public Ask BarClimb
 - public publishing
-- community comments/reactions/follows
-- Study Circles
-- Study Sessions/My BarClimb orchestration version
-- Weakness Repair / Simulation Repair
-- advanced History patterns / writing trajectory
-- authenticated public-page private overlays
-- AdSense web
-- AdMob native
+- AdSense
 - direct ads
 - sponsor self-service
-- native client capability rollout where necessary
 - new learner-model version
 - new grading engine
 - new prompt versions
@@ -2893,15 +2804,6 @@ Code rollback must not assume database rollback is safe. Contract/migration chan
 - pause/extend/refund campaign
 - manage publication consent/removal
 - select active exam blueprint
-- inspect effective HomeProjection/recommendation rationale
-- inspect/manage StudySession/RepairPlan anomalies without falsifying learner evidence
-- configure Suggested Review/Study Session policy thresholds
-- inspect anonymous discovery claims and anti-replay anomalies
-- inspect search-index health and private-overlay cache headers
-- inspect effective entitlement/capability by account/purchase source
-- manage notification delivery/preferences troubleshooting
-- manage community moderation/reputation model versions
-- inspect Web/iOS/Android feature parity/flags
 
 ---
 
@@ -2909,26 +2811,34 @@ Code rollback must not assume database rollback is safe. Contract/migration chan
 
 ## 99. Required authoritative documents
 
-The **four controlling product specifications** committed under `docs/specs/` are:
+The four controlling product specifications committed under `docs/specs/` are:
 
 - `BARCLIMB_BUILD_CONSTITUTION.md`
 - `BARCLIMB_LEARNING_ASSESSMENT_SPEC.md`
 - `BARCLIMB_PRODUCT_EXPERIENCE_NETWORK_SPEC.md`
 - `BARCLIMB_NATIVE_PLATFORM_SPEC.md`
 
-The repository additionally maintains implementation-facing documents derived from, and subordinate to, those specs as the codebase emerges, including at minimum:
+The repository additionally maintains implementation-facing documents derived from, and subordinate to, those specs, including as they become applicable:
 
+- `PRODUCT_SPEC.md`
 - `ARCHITECTURE.md`
 - `DATA_MODEL.md`
-- `API_CONTRACT.md` / generated OpenAPI artifact
 - `CURRICULUM_GRAPH.md`
 - `LEARNER_MODEL.md`
 - `ASSESSMENT_ENGINE.md`
 - `AI_CONTRACTS.md`
+- `GRADING.md`
+- `API_CONTRACT.md`
+- `PUBLICATION_AND_SEO.md`
+- `ADVERTISING.md`
+- `DESIGN_SYSTEM.md`
+- `PRIVACY_ARCHITECTURE.md`
 - `SECURITY.md`
 - `TESTING.md`
 - `ENVIRONMENT.md`
 - `DEPLOYMENT.md`
+- `RELEASE_NOTES.md`
+- `PROJECT_HANDOFF.md`
 
 The chat-independent continuity package is mandatory:
 
@@ -2967,181 +2877,137 @@ Implementation docs may explain concrete code but may not silently override the 
 
 ---
 
-# PART XXIX — BUILD MILESTONES
+# PART XXIX — BUILD MILESTONES AND RELEASE TRAINS
 
-The ten acceptance milestones are organized into six launch trains. Work may proceed in parallel only when dependencies are satisfied and continuity records remain accurate. Native, community, coverage, and commerce are launch requirements, not post-launch roadmap items.
+## 101. Release strategy and terminology
 
-## 101. Milestone 1 — Multi-client foundation + continuity
+BarClimb uses a **Web-first commercial release strategy with first-class native architecture from the beginning**.
+
+- **Web GA** — the first public commercial release of BarClimb on `barclimb.com`, using the Django backend and React Web client. Web GA may occur before public App Store or Google Play availability.
+- **Native GA — iOS** — the first public App Store release of the iOS client after the native release gate passes.
+- **Native GA — Android** — the first public Google Play release of the Android client after the native release gate passes.
+- **Product architecture** — one server-authoritative BarClimb system shared by Web, iOS, and Android. Web-first release sequencing never authorizes a Web-only domain model, assessment engine, learner model, entitlement system, publication system, or URL taxonomy.
+
+Web GA is the first revenue milestone. Native development remains active throughout the build and must prove high-risk assumptions early enough that Web architecture cannot drift into a later native rewrite.
+
+A native store/account/signing delay is **not a Web GA blocker** when the documented native architecture, capability contracts, shared backend semantics, internal-build/deep-link foundations, and unresolved external dependencies are honestly recorded. Conversely, Web GA does not permit BarClimb to claim iOS or Android availability before the corresponding store release is actually available.
+
+## 102. Launch trains
+
+### Train A — Foundation and native-risk proof
+Milestones 1–2.
+
+### Train B — Complete learner loop
+Milestones 3–5.
+
+### Train C — Exam fidelity
+Milestone 6.
+
+### Train D — Trust and learning network
+Milestones 7–8.
+
+### Train E — Distribution and Web commerce
+Milestone 9.
+
+### Train F — Web GA hardening and native-release preparation
+Milestone 10.
+
+After Web GA, iOS and Android proceed through their separate Native GA gates under the Native Platform Specification. Native release work may overlap later Web milestones when it does not destabilize the Web GA critical path.
+
+## 103. Milestone 1 — Multi-client foundation + continuity
 
 Deliver:
 
 - repository continuity package and CI validator
 - Django/DRF/PostgreSQL foundation
-- Celery/managed KVS
-- local/review/staging Heroku pipeline
-- React web shell
+- React Web shell
 - React Native/Expo iOS and Android shells
-- shared TypeScript API/domain/schema/design-token packages
-- email + username + password auth; verification/reset
-- secure web session/CSRF and native credential storage
+- shared TypeScript contract packages
+- Celery/managed-KVS runtime foundation
+- auth/session/CSRF and native credential architecture
+- local/review/staging runtime topology
 - theme/design-system primitives
-- S3 abstraction, Sentry, privacy/consent skeleton
-- deep-link skeleton
-- Apple/Google developer-project setup
-- native technical-risk spikes: MCQ renderer, IQS resources, PT editor, offline/recovery, StoreKit/Play product query
+- S3 abstraction and Sentry/privacy skeletons at the appropriate foundation depth
+- deep-link/native-routing skeleton and internal-build risk proof
+- Apple/Google project prerequisites begun early enough to expose external blockers
 
-Gate: clean checkout/ZIP recovery succeeds; staging web and internal native builds authenticate against the same backend; responsive/native shells and critical spikes pass.
+Gate: clean recovery works; staging foundation is usable; Web and native shells target one backend contract; critical native risks are either proven or recorded as explicit external blockers. Public store release is not required for Web GA at this milestone.
 
-## 102. Milestone 2 — Curriculum core + automated coverage assurance
+## 104. Milestone 2 — Curriculum core + automated coverage assurance
 
-Deliver:
+Deliver the official-source registry, scope manifest, doctrine graph, Rule Obligation compiler/catalog, source discovery/reconciliation, certifications, drift/impact analysis, and strict validation/admin audit required by the Learning & Assessment Specification.
 
-- ExamProgram/ExamComponent/Blueprint versions for NextGen Core
-- immutable official source artifacts and scope manifest
-- ExamLawProfile and source-discovery policy
-- doctrine/skill/ethics graph
-- automated Rule Obligation Compiler
-- authority resolution and lawful multi-source reconciliation
-- private outline import/reconciliation pipeline
-- omission/excess/conflict detection
-- subject-level certification and coverage dashboards
-- strict source/scope/rule validators
+Gate: official scope maps bidirectionally; CORE obligations have required authority/reconciliation evidence; deterministic compilation/certification checks pass.
 
-Gate: current official scope is 100% structurally imported/mapped with required metadata; rule-catalog compilation is reproducible; mandatory coverage validators pass on golden fixtures. Sourcebook reconciliation is optional enhanced validation, never a launch prerequisite.
+## 105. Milestone 3 — Assessment/OpenAI + presentation contracts
 
-## 103. Milestone 3 — Assessment + OpenAI + presentation contracts
+Deliver Generation Specifications, assessment domain/inventory, central AI services, solver/reviewer/repair/rubric flows, presentation-schema validation, assessment-scope confirmation, golden fixtures, and real staging OpenAI behavior.
 
-Deliver:
+Gate: generated MCQ/IQS/PT/LRPT fixtures pass full validation and no raw unvalidated assessment can reach a learner.
 
-- GenerationSpecification and immutable assessment domain
-- inventory search/selector
-- OpenAI service and prompt registry
-- generation, independent solver, adversarial reviewer, repair, rubric finalizer
-- Assessment Presentation Schema and UI Capability Manifest
-- web/native renderer proofs
-- AssessmentScopeTarget verification
-- golden MCQ/IQS/PT/LRPT corpus
-- real staging OpenAI
-- continuous validated inventory seeding begins here
+## 106. Milestone 4 — Cross-platform Practice + discovery loop
 
-Gate: no raw/unvalidated content can become AVAILABLE; all launch clients render the golden fixture matrix; independently confirmed scope targets are required before inventory credit.
+Deliver MCQ/IQS/PT/LRPT Practice, attempts/autosave/history/contextual Ask, schema renderer, annotations, grading renderer, anonymous Instant Practice, and Web/native contract parity at the implementation level reached by each client.
 
-## 104. Milestone 4 — Cross-platform Practice + discovery loop
+**Web GA requirement:** all launch Practice families and critical interactions must be complete on Web.
 
-Deliver:
+**Native preparation requirement:** the same presentation schema, API contracts, capability registry, and persistence semantics must remain native-compatible; missing native UI capability is tracked explicitly in the client capability manifest and cannot be papered over with a Web-only schema.
 
-- MCQ/IQS/PT/LRPT Practice on web/iOS/Android
-- attempt/workspace/annotation persistence and autosave
-- anonymous Instant Practice using canonical AssessmentVersions
-- anonymous discovery claim after signup
-- grading/results and contextual Ask BarClimb
-- History baseline
-- public learning-page interactive islands
-- cross-device resume and offline-safe ordinary practice
+Gate: complete Web Practice workflows pass in staging; native renderer risk paths remain proven and tracked toward Native GA.
 
-Gate: anonymous SEO → Instant Practice → signup claim and authenticated Practice flows pass on staging; long-form recovery and ownership/concurrency tests pass.
+## 107. Milestone 5 — Learner intelligence + My BarClimb
 
-## 105. Milestone 5 — Learner intelligence + My BarClimb orchestration
+Deliver exposure/evidence math, recommendations, Progress, server-authored projections, Study Sessions, Review/Suggested Review, Repair Plans, Search/private overlays, and signed-in orchestration.
 
-Deliver:
+Gate: golden vectors pass exact learner-state/recommendation outputs; Web signed-in journeys are complete for Web GA; projection contracts remain client-neutral for native consumption.
 
-- evidence/exposure ledger
-- Performance/Coverage/Confidence/Retention/Readiness + Evidence Completeness
-- Recommendation engine
-- server-authoritative HomeProjection / My BarClimb state
-- Quick/Standard/Deep Study Sessions
-- Review Queue + Suggested Review
-- Weakness Repair / Repair Plans
-- Session Impact / What Changed
-- adaptive Path to Exam / This Week planning
-- Progress and authenticated universal Search/private overlays
-- longitudinal and writing-trajectory analytics where evidence permits
+## 108. Milestone 6 — Simulation
 
-Gate: deterministic learner test vectors pass; all orchestration decisions are inspectable, advisory, entitlement-aware, and consistent across web/iOS/Android.
+Deliver blueprint assembly, preassembly/version pinning, server timers, section transitions, exam-software profile, scoring/results, and no-AI-after-start invariant.
 
-## 106. Milestone 6 — Cross-platform Simulation
+Gate: full Web staging simulation survives OpenAI disabled after Begin. Native simulation remains a Native GA requirement and must consume the same assembled simulation contract rather than a fork.
+
+## 109. Milestone 7 — Quality + publication foundation
+
+Deliver votes/challenges/regrades, reliability/legal freshness, inventory planning, publication foundation, aggregate insights, and public-response consent/withdrawal.
+
+Gate: intentionally flawed seeded content is detected/reviewed and removed from eligibility; publication truth remains client-independent.
+
+## 110. Milestone 8 — Learning network + growth loops
+
+Deliver public profiles, responses, qualified views, learning signals, discussions, reputation, Circles, sharing, moderation, and Web notification surfaces; preserve native notification/deep-link/community contracts for Native GA.
+
+Gate: Web network safety/moderation and core community E2E pass. Native UGC moderation UI and push behavior are separate Native GA blockers, not Web GA blockers.
+
+## 111. Milestone 9 — Public platform + Web commerce
+
+Deliver SEO/search/sharing/sitemaps/privacy/CMP, Stripe Web subscriptions, provider-neutral entitlements, direct sponsor marketplace, Web ad stack, SendGrid, and public acquisition loops.
+
+Web Stripe may never become the entitlement source of truth. `purchase_source=STRIPE` resolves through the same Subscription/Entitlement domain later used by Apple and Google purchase sources.
+
+Gate: Web Plus purchase/entitlement works, ads disappear for authenticated Plus, sponsor flow works from verified Web payment events, public pages remain substantive with ads disabled, and native clients can later consume the same entitlement capability projection without domain migration.
+
+## 112. Milestone 10 — Coverage completion + Web GA hardening + native-release preparation
 
 Deliver:
 
-- blueprint assembly/preassembly/version pinning
-- server-authoritative timers and section transitions
-- simulation fidelity UI on all launch clients
-- immutable submission/scoring/results
-- Simulation → Repair Plan workflow
-- no-live-AI-after-Begin invariant
+- security/accessibility/cost/load/failure/cross-device/SEO hardening
+- launch inventory completion and CoverageReleaseSnapshot
+- production Web provider configuration
+- Web billing/privacy/support/rollback readiness
+- moderation readiness for public Web community
+- final Web golden journeys
+- native internal/release-candidate preparation at the strongest available level
+- explicit Native GA remaining-work ledger for iOS and Android
+- continuity cold-recovery drill
 
-Gate: full staging simulation completes with OpenAI disabled after Begin on supported clients; restart/reconnect timing and submission recovery pass.
+Gate: **Web GA Launch Checklist (§115) passes.** iOS/Android public store approval is not required for Web GA. Any unresolved native work must remain visible in `CLIENT_PARITY.md`, provider/store ledgers, and the Native GA checklist; Web GA may not downgrade those obligations.
 
-## 107. Milestone 7 — Quality + publication foundation
-
-Deliver:
-
-- challenge/regrade/reliability/legal-freshness systems
-- inventory planner and source-impact revalidation
-- publication lifecycle, consent/withdrawal, privacy scrub
-- aggregate insight generation
-- canonical SEO publishing primitives and trust signals
-- search index foundation
-
-Gate: intentionally flawed/stale items are detected and removed from scored eligibility/public trust surfaces; publication withdrawal and legal-freshness propagation pass.
-
-## 108. Milestone 8 — Learning network + growth loops
-
-Deliver:
-
-- username-first public profiles
-- published responses/contributions
-- qualified views
-- educational reactions
-- threaded discussion/replies
-- follows/bookmarks
-- contribution reputation/achievements/Momentum
-- Community Pulse
-- invite-only Study Circles
-- creator analytics
-- sharing/deep links/push loops
-- report/block/mute/moderation/appeals
-
-Gate: UGC safety and anti-gaming tests pass; subscription status cannot affect public rank/reaction weight/reputation; community activity cannot alter mastery.
-
-## 109. Milestone 9 — Public platform + cross-platform commerce
-
-Deliver:
-
-- full Django SSR SEO hierarchy
-- search-intent-aware public pages
-- authenticated private overlays on canonical pages
-- sitemap/canonicals/Search Console readiness
-- Stripe web subscriptions
-- StoreKit/App Store server lifecycle
-- Google Play Billing/server lifecycle
-- unified Django entitlement
-- SendGrid
-- direct sponsor marketplace
-- AdSense web / AdMob native external fill where approved
-- house/no-ad fallbacks
-
-Gate: web/iOS/Android purchase/restore/cancel/grace/refund tests converge on the same entitlement; Plus is ad/upsell-free globally; public pages remain useful with ads disabled.
-
-## 110. Milestone 10 — Coverage completion + stores + hardening + coordinated launch
-
-Deliver:
-
-- 100% required official scope + CORE Rule Obligations at launch coverage threshold
-- final coverage release snapshot
-- launch inventory completion
-- security/abuse/load/accessibility/browser/device audits
-- production providers and budget alarms
-- App Store and Play production candidates/listings
-- privacy/account deletion/moderation support
-- release/rollback/data-recovery drills
-- final golden user journeys for Visitor, Free, and Plus
-
-Gate: Production Launch Checklist passes; iOS and Android satisfy the documented coordinated launch window; cold-recovery drill succeeds from latest repository ZIP.
+---
 
 # PART XXX — DEFINITION OF DONE
 
-## 111. Feature definition of done
+## 113. Feature definition of done
 
 A feature is complete only when all applicable gates pass:
 
@@ -3164,13 +3030,13 @@ A feature is complete only when all applicable gates pass:
 - manual browser verification
 - handoff updated
 
-No “backend complete, UI later” or “desktop done, mobile later” may be called feature-complete.
+No “backend complete, UI later” may be called feature-complete. For a Web-GA-scoped feature, Web UI may complete before the native concrete UI only when the portable domain/API/presentation contract is already native-compatible and the remaining native work is explicitly tracked for Native GA; “mobile later” may never justify a Web-only contract that requires later redesign.
 
 ---
 
 # PART XXXI — LAUNCH AND CASH-GENERATION GATES
 
-## 112. Revenue readiness
+## 114. Revenue readiness
 
 The application is technically revenue-ready only if:
 
@@ -3199,65 +3065,74 @@ AdSense approval is not required to launch the application, but AdSense revenue 
 - campaign pacing/reporting works
 - creative approval is operational
 
-## 113. Production Launch Checklist
+## 115. Web GA Production Launch Checklist
 
-All must pass:
+All applicable Web GA items must pass:
 
-1. all ten milestone gates
-2. production Heroku pipeline configured
+1. all ten acceptance milestones through the Web GA gate
+2. production Heroku Web pipeline configured
 3. database backup/recovery procedure tested
-4. production S3 permissions verified
+4. production S3 permissions verified where Web GA uses S3
 5. OpenAI production limits/budget alarms configured
-6. Stripe live webhook test completed
+6. Stripe live Web webhook test completed
 7. SendGrid domain authentication and live delivery test completed
 8. Sentry production environment configured with privacy scrubbing
 9. privacy/cookie settings verified
-10. Terms, Privacy Policy, Cookie Policy, advertising/sponsor terms available
-11. minimum launch inventory achieved
+10. Terms, Privacy Policy, Cookie Policy, Community Standards, and advertising/sponsor terms available as applicable
+11. minimum launch inventory and strict curriculum coverage gates achieved
 12. no subject materially empty
 13. public SEO hubs substantive and internally linked
-14. direct sponsor house campaign works even if AdSense is off
-15. paid upgrade and restoration tested
+14. direct sponsor/house fallback works even if external ad approval is unavailable
+15. Web paid upgrade/cancellation/grace/downgrade paths tested
 16. support contact tested
-17. accessibility manual spot audit complete
-18. mobile Safari critical flows complete
-19. simulation complete with OpenAI disabled after start
+17. accessibility manual audit of critical Web flows complete
+18. mobile Safari and responsive critical Web flows complete
+19. Web simulation completes with OpenAI disabled after start
 20. rollback drill documented
+21. public Web UGC moderation/report/block flows operational
+22. native architecture invariants, capability manifests, deep-link contracts, provider-neutral entitlement model, and current iOS/Android parity gaps are documented and not regressed
+23. no marketing or product surface falsely claims App Store/Google Play availability before the applicable Native GA
+
+**Not Web GA blockers by themselves:** App Store approval, Google Play approval, native store billing/restore completion, or native public release, provided the native architecture-preservation requirements and early-risk proofs in this Constitution are satisfied and remaining work is explicitly tracked.
+
+## 116. Native GA release gates
+
+Each native platform has an independent public release gate defined by the Native Platform Specification. iOS/Android release requires its own critical assessment parity, device/runtime recovery, deep links, push, UGC safety, privacy/deletion, provider-neutral entitlement consumption, platform billing/restore where offered, observability, store metadata/review readiness, and production release verification.
 
 ---
 
 # PART XXXII — ADVERSARIAL BUILD REVIEW AND FINAL SPEC UPDATES
 
-## 114. Issues discovered in final review
+## 117. Issues discovered in final review
 
 A final adversarial review identified five risks that would have produced a “working” but commercially weak application if left implicit. They are now incorporated as requirements:
 
-### 113.1 External ad approval risk
+### 117.1 External ad approval risk
 
 **Risk:** assuming AdSense revenue exists on launch day.  
 **Resolution:** AdSense is default external fill when approved, but house ads and BarClimb Direct are fully operational independently. Launch does not depend on Google approval.
 
-### 113.2 Conversion not engineered
+### 117.2 Conversion not engineered
 
 **Risk:** excellent study engine with no defined free→paid funnel.  
 **Resolution:** upgrade moments, quota behavior, conversion events, and checkout handoff are now explicit (§85–86).
 
-### 113.3 Direct sponsor marketplace dependent on organic discovery
+### 117.3 Direct sponsor marketplace dependent on organic discovery
 
 **Risk:** sponsor self-service exists but generates no sponsor revenue.  
 **Resolution:** admin-assisted campaign creation and outbound-sales support are mandatory (§87). The product can sell sponsorship directly from launch.
 
-### 113.4 Launch content too thin
+### 117.4 Launch content too thin
 
 **Risk:** AI engine works, but public site lacks enough trusted content for users, SEO, and AdSense review.  
-**Resolution:** launch inventory minimums and curriculum breadth gates are mandatory (§10, §112).
+**Resolution:** launch inventory minimums and curriculum breadth gates are mandatory (§10, §115).
 
-### 113.5 Release process creates fragile production
+### 117.5 Release process creates fragile production
 
 **Risk:** Codex produces features but no safe release/rollback discipline.  
 **Resolution:** staging, feature flags, release checks, migration discipline, and rollback contracts are mandatory (§95–97).
 
-## 115. Remaining non-engineering uncertainties
+## 118. Remaining non-engineering uncertainties
 
 No build specification can guarantee “printing cash.” Revenue depends on variables outside software correctness, including:
 
@@ -3278,7 +3153,7 @@ These uncertainties are handled through instrumentation and launch operations ra
 
 # PART XXXIII — BUSINESS VALIDATION AFTER LAUNCH
 
-## 116. Required first 90-day metrics
+## 119. Required first 90-day metrics
 
 Track at minimum:
 
@@ -3340,313 +3215,70 @@ Provider assumptions belong in `ENVIRONMENT.md`/`ARCHITECTURE.md` and are not an
 
 # FINAL BUILD VERDICT
 
-**READY TO BUILD: YES — subject to creating the repository copies of the contracts and beginning Milestone 1 only after this Constitution is committed as the authoritative source of truth.**
+**BUILD/RELEASE STRATEGY VERDICT: READY TO CONTINUE — Web GA may be prioritized as the first commercial release while native architecture remains first-class and iOS/Android proceed through their separate Native GA gates.**
 
-The specification is sufficiently complete that Codex should not need to invent a major product decision, data lifecycle, learner algorithm, monetization mechanism, provider integration strategy, responsive behavior, or definition of completion.
+The specification is sufficiently complete that implementation agents should not need to invent a major product decision, data lifecycle, learner algorithm, monetization mechanism, provider integration strategy, release-sequencing rule, responsive behavior, or definition of completion.
 
 The remaining decisions during implementation should be ordinary engineering choices—library-level details, query optimization, component internals, and low-level code organization—provided they conform to this Constitution.
 
 **Commercial verdict:** The application is architected to be cash-generating from launch through subscription, AdSense when approved, and direct sponsorship. No responsible specification can guarantee revenue before traffic, conversion, sponsor demand, and assessment trust are observed. The app is now designed to measure and optimize those variables instead of merely hoping for them.
 
 
-# PART XXXV — FINAL CROSS-SCENARIO APPLICATION ARCHITECTURE
-
-This amendment is authoritative over older duplicated model/API/UI language. It exists to guarantee that the three primary journeys—anonymous SEO discovery, authenticated Free study, and authenticated Plus study—are supported by one coherent application rather than parallel ad-hoc implementations.
-
-## 117. Projection architecture: server owns page meaning
-
-Complex learner-facing surfaces use server-composed, versioned **projections**. A projection is not a second source of truth; it composes canonical domain state into one response appropriate for a surface. React/React Native may render projections but may not independently reimplement learner planning, entitlement, coverage, publication eligibility, ad eligibility, or private/public visibility rules.
-
-Required projections:
-
-### `HomeProjectionV1`
-Contains:
-- authoritative Recommended Next and rationale token/summary;
-- deterministic Resume candidate and precedence reason;
-- readiness/evidence-completeness snapshot;
-- active StudySession/RepairPlan state;
-- Review Queue/Suggested Review summary;
-- Path-to-Exam/This-Week summary where available;
-- restrained Community Pulse references;
-- effective capabilities/entitlement;
-- notification summary;
-- no private data belonging to another learner.
-
-### `PublicLearningPageProjectionV1`
-Canonical public SSR content remains cacheable and identity-independent. Authenticated/private additions are fetched separately from a **private no-store overlay** and may include:
-- learner status for the mapped nodes;
-- prior attempts/history references;
-- retention/review state;
-- Recommended Practice action;
-- Plus-only deeper insight where entitled.
-
-Private overlays must never be embedded into shared CDN/page caches, sitemap HTML, OpenGraph metadata, structured data, or anonymous SSR fragments.
+# PART XXXV — WEB-FIRST RELEASE AMENDMENT (2026-08-15)
 
-### `SearchProjectionV1`
-Supports public and authenticated result groups:
-- Learn
-- Practice
-- official scope/doctrine
-- skills/ethics
-- community/public responses
-- authenticated History
-- authenticated learner status
-- authenticated Review/Suggested Review
-- contextually eligible Ask BarClimb action.
-
-Search ranking may use public relevance and private learner utility in separate stages; private learner weakness may never alter public SEO ranking or leak into another user's results.
-
-### `ProgressProjectionV1`
-Server-calculated subject/doctrine/rule/skill state with Performance/Coverage/Confidence/Retention, Evidence Completeness, mastery state, testing expectation, and recommended action. Clients may simplify presentation but not recalculate labels.
-
-### `AttemptWorkspaceProjectionV1` / `GradeProjectionV1`
-Version-pinned assessment presentation + authoritative workspace/grade state. Answer keys/rubric internals are withheld according to lifecycle/mode permissions.
-
-### `EntitlementCapabilityProjectionV1`
-Maps plan/purchase/grace state into effective capabilities. UI checks capabilities such as `can_start_full_simulation`, `can_start_pt`, `can_use_advanced_ask`, `ads_suppressed`, rather than scattering plan-name conditionals across clients.
-
-## 118. Canonical domain additions required by the journeys
-
-The following models are required in addition to earlier canonical models. Equivalent normalized implementations require a documented contract update.
-
-### `learning.StudyPreference`
-- user OneToOne
-- exam_target/window reference
-- typical_session_minutes nullable
-- study_days_per_week nullable
-- reminder preferences reference
-- updated_at
-
-Preferences guide but never override learner evidence or explicit user choice.
-
-### `learning.StudySession`
-- user
-- kind QUICK/STANDARD/DEEP/CUSTOM/REPAIR/SIMULATION_REPAIR
-- target_minutes nullable
-- source RECOMMENDED/USER_SELECTED/REPAIR/REVIEW
-- state PLANNED/ACTIVE/PAUSED/COMPLETED/ABANDONED/DISMISSED
-- planner_version
-- started_at/completed_at
-- impact_snapshot nullable after completion
-
-### `learning.StudySessionItem`
-Ordered link to assessment, review action, rule recall, or other registered learning action; includes status and rationale. Items may be replanned only under documented state rules; completed evidence is immutable.
-
-### `learning.ReviewQueueItem`
-- user
-- typed target (rule/assessment/public explanation/model response as allowed)
-- source MANUAL/SUGGESTED_ACCEPTED/AUTO_OPT_IN
-- state ACTIVE/COMPLETED/DISMISSED/ARCHIVED
-- due_at nullable
-- reason code
-- created_at/completed_at
-
-`Suggested Review` is computed separately and does not populate the durable queue without acceptance or explicit opt-in.
-
-### `learning.RepairPlan` and `learning.RepairPlanStep`
-Bounded adaptive sequence tied to one or more diagnosed learner deficits. Store diagnosis basis, planner/model version, targeted nodes/skills, state, ordered steps, adaptation events, and completion outcome. Repair plans may update recommendations but never rewrite historical grades/evidence.
-
-### `learning.LearnerPlanSnapshot`
-Versioned Path-to-Exam / This-Week projection inputs and generated plan summary. It is advisory, re-plannable, and never a rigid obligation calendar.
-
-### `learning.SessionImpact`
-Immutable/computable post-session summary referencing evidence/state deltas actually caused by completed eligible learning evidence. Product engagement events alone cannot create impact.
+## 120. Governing release-sequencing amendment
 
-### `learning.AnonymousDiscoverySession`
-Privacy-minimized, short-lived discovery identity supporting Instant Practice continuity before signup. Contains opaque token/hash, timestamps, consent/region state as needed, and claim/expiry state. It must not become a hidden durable learner profile.
+This section is a later product decision and controls over older language that implies Web, iOS, and Android must become publicly available on the same date. The product remains multi-client by architecture; only public distribution sequencing changes.
 
-### `learning.AnonymousAttemptClaim`
-Auditable, idempotent claim/merge record binding eligible anonymous attempts to a newly authenticated account after proof of possession/session continuity. Prevent double claim and cross-user claim.
+### 120.1 Web-first does not mean Web-only
 
-### `communications.Notification` / `communications.DeviceRegistration`
-Canonical notification inbox/delivery state and platform device registrations. Notification preferences are server-authoritative and segmented by learning/results/community/product/marketing categories.
+The following canonical invariants apply before and after every release gate:
 
-### `search.SearchDocument` or equivalent indexed representation
-Search uses PostgreSQL full-text/trigram infrastructure at launch with an explicit indexed representation linking back to canonical subjects/doctrines/rules/skills/ethics/publications/assessments/community objects. The index stores searchable/public fields and canonical IDs; it does not become a second curriculum or publication source of truth. Private History/learner-status groups are joined after authorization and are never copied into the public search index.
+- one Django/server-authoritative backend and account/identity model;
+- one curriculum and Rule Obligation system;
+- one immutable AssessmentVersion truth and one learner-evidence/readiness system;
+- one publication/community identity and moderation system;
+- one provider-neutral Subscription/Entitlement truth into which Stripe, Apple, and Google purchase lifecycles map;
+- canonical HTTPS identifiers and URLs that remain useful on Web and can later resolve through Universal/App Links;
+- renderer-independent assessment/domain schemas and server responses expressed as portable contracts rather than Web-rendered UI;
+- portable attempt/workspace, annotation, recovery, and cross-device state;
+- explicit Web/iOS/Android capability and parity manifests.
 
-### `common.ClientSurfaceCapabilityManifest`
-Versioned server-readable manifest recording which launch clients support which registered product surfaces/projection versions/capabilities. Minimum registered surfaces include HOME, PRACTICE, SIMULATION, PROGRESS, SEARCH, HISTORY, REVIEW, REPAIR, NOTIFICATIONS, PUBLIC_OVERLAY, COMMUNITY, CIRCLES, CREATOR_ANALYTICS, ACCOUNT_PRIVACY_BILLING. A feature may not be globally activated when a launch-required client lacks the necessary surface/projection support unless the flag explicitly defines a safe documented phased rollout.
-
-### Community/publication additions
-The canonical data model must include the `community/` models defined by the Product Experience & Learning Network Specification: PublicProfile, PublishedContribution, DiscussionThread, Comment, Reaction, ContentView, Follow, Bookmark, UserBlock, ContentReport, ModerationCase/Action, ReputationSnapshot, AchievementDefinition/UserAchievement, StudyCircle/Membership/Share. These are launch domain models, not optional frontend-only records.
+The following are forbidden even before Native GA:
 
-## 119. Required API/view surface
+- DOM-shaped assessment/domain schemas that native must later translate or replace;
+- Web session semantics as the only account model;
+- Stripe IDs or Web checkout state as entitlement truth;
+- browser-only learner persistence;
+- Web-generated HTML as the authenticated API contract;
+- canonical URLs that cannot resolve to future Universal/App Links;
+- desktop-only PT/IQS data models;
+- Web-only community, moderation, publication, privacy, deletion, or notification semantics;
+- release decisions that delete or postpone already-required native technical-risk proofs merely to accelerate Web GA.
 
-All endpoints are under `/api/v1/` unless explicitly public HTML routes. Schemas are versioned and OpenAPI-covered.
+### 120.2 What may be sequenced later
 
-### Surface projections
-- `GET /home/` → `HomeProjectionV1`
-- `GET /me/capabilities/` → effective entitlement/capabilities
-- `GET /search/` → `SearchProjectionV1`
-- `GET /progress/` and node drilldowns → `ProgressProjectionV1`
-- `GET /public/overlay/{target_type}/{target_id}/` → authenticated no-store private overlay
+The following concrete native deliverables may complete after Web GA without compromising the architecture when their contracts already exist and gaps are tracked:
 
-### Anonymous discovery / Instant Practice
-- create/recover anonymous discovery session through privacy-safe session mechanism
-- `POST /practice/instant/start/`
-- canonical attempt response/save/submit endpoints with anonymous ownership token where eligible
-- `POST /attempts/claim/` authenticated, idempotent, ownership-safe
-
-Anonymous attempts use the same validated AssessmentVersion and grading contracts but do not enter persistent learner analytics until successfully claimed.
-
-### My BarClimb orchestration
-- `POST /study-sessions/plan/`
-- `GET /study-sessions/{id}/`
-- `POST /study-sessions/{id}/start|pause|complete|dismiss/` or REST-equivalent actions
-- `GET /review/`
-- `POST /review/items/`
-- `DELETE/PATCH /review/items/{id}/`
-- `GET /review/suggestions/`
-- `POST /review/suggestions/{id}/accept|dismiss/`
-- `POST /repair-plans/`
-- `GET /repair-plans/{id}/`
-- `POST /repair-plans/{id}/next/` as needed by server planner
-- `GET/PATCH /study-preferences/`
-- `GET /plan/` for Path-to-Exam/This-Week projection
-- `GET /history/patterns/` Plus-capability protected and evidence-thresholded
-- `GET /progress/writing-trajectory/` Plus-capability protected and rubric-compatible
+- final native UI polish/parity;
+- store screenshots/listings/review submissions;
+- TestFlight/Play production rollout;
+- StoreKit/Google Play purchase and restore production verification;
+- final push-notification production setup;
+- platform-specific accessibility/device-matrix completion;
+- native public community moderation UI completion;
+- native full-simulation release certification.
 
-### Contextual Ask
-One central Ask service receives a registered context type + context identifier. Supported contexts include assessment-after-submit, grade, doctrine/public page, Search result, History slice, Progress node, simulation result, and RepairPlan. The server resolves allowable context; clients may not send hidden answer keys or arbitrary private learner data as prompt truth.
+### 120.3 Release-status truth
 
-### Community and notifications
-Community endpoints from the Product Experience spec are required. Add canonical notification read/preferences/device registration APIs shared by web/native.
+Web, iOS, and Android each expose an explicit release status. “BarClimb is live” may refer to Web GA only when the context clearly points to the website. Marketing must not imply native availability until that platform is actually released.
 
-## 120. Web route/view contract
+### 120.4 Three-scenario Web GA gate
 
-### Public SSR routes
-Django owns canonical indexable HTML for:
-- NextGen hub/family/subject/doctrine/rule/skill/ethics pages
-- public assessments
-- eligible published responses
-- aggregate insights
-- public profiles/contribution pages where indexable gates pass
-- pricing/advertise/legal/help pages.
-
-The first viewport is selected from the page's declared search-intent presentation, not dynamically changed by private learner weakness. Authenticated personalization hydrates only through the private overlay.
+Web GA must prove these primary journeys without creating parallel domain truth:
 
-### Authenticated app routes
-React owns Home, Practice setup/session, Simulation, Progress, History, Search, Review, RepairPlan, notifications, Account/Privacy/Billing, creator analytics, and Circles. Public pages may mount React islands for Instant Practice/community interactions without surrendering canonical SSR content.
+1. anonymous SEO visitor → substantive public learning → Instant Practice → signup and ownership-safe claim;
+2. authenticated learner → My BarClimb → Practice, Progress, Search, History, and Repair;
+3. Plus learner → ad-free deeper practice, simulation, analytics, contextual Ask, repair, and planning.
 
-## 121. UI composition/capability matrix
-
-Every significant surface must define states for Anonymous, Free, Plus, loading, empty, offline where applicable, error, and restricted capability. The same component should prefer capability-driven rendering over plan-name forks.
-
-### Public learning page
-Anonymous: answer search intent immediately → trust signals → Instant Practice → explanation/community → Continue Learning → earned signup.
-Free signed-in: all public content + private status/history/review overlay + account-only community writes.
-Plus: same public/community rank + deeper private learner overlay/Ask + globally suppressed ads/upsells.
-
-### Home
-Anonymous has no app Home. Free and Plus use the same Home composition. Plus has deeper eligible actions and no monetization friction; it does not get a separate dashboard.
-
-### Practice
-Same AssessmentRenderer and attempt domain for all eligible users. Free limits are checked before starting expensive/restricted work. Plus exposes advanced goals progressively, not by replacing the simple Recommended flow.
-
-### Progress/Search/History
-Free receives useful baseline insight. Plus capabilities may unlock deeper longitudinal/pattern/trajectory analysis, but underlying grades/evidence and public ranking are identical.
-
-### Simulation
-Fidelity mode suppresses community, Ask, explanations, recommendations, and ads during active exam sections for every plan. Entitlement controls eligibility to start—not the integrity of an already-started attempt.
-
-## 122. State ownership, caching, sync, and concurrency
-
-- Django/PostgreSQL is authoritative for learner state, entitlement, curriculum, publication/moderation, recommendations, billing lifecycle, and final attempt state.
-- Redis/KVS may cache projections/jobs but not become durable truth.
-- Public SSR caches are identity-independent. Private overlays are `Cache-Control: private, no-store` or equivalently protected.
-- Web service-worker/native offline caches must never expose answer keys early or another learner's private data.
-- Cross-device writes use optimistic concurrency/version tokens; explicit conflict resolution protects constructed responses, annotations, StudySession state, Review Queue, and repair progress.
-- Portable annotation anchors use versioned resource identity + text/range anchors, never screen coordinates.
-- Entitlement downgrade/revocation affects future privileged starts at safe boundaries. It never deletes work, rewrites evidence, or makes an in-progress accepted attempt unrecoverable.
-
-## 123. Privacy and identity boundaries across the three scenarios
-
-- Anonymous discovery is short-lived and not persistent learner analytics.
-- Signup claim is explicit and auditable.
-- Public canonical content never includes private learner overlays.
-- Public identity is username-first; real name is not required for community participation.
-- Community writes require authenticated identity; anonymous may read/share and use bounded public Ask/Instant Practice.
-- Plus status is private unless the user independently chooses to disclose it; subscription tier cannot influence community rank/reputation.
-- Creator analytics expose only the creator's authorized aggregate metrics and never viewer identities or private learner states.
-
-## 124. Product analytics vs learner evidence firewall
-
-Events such as page view, Search, reaction, comment, follow, bookmark, notification open, study-session wrapper completion, upgrade, and share are **product/network analytics**. They cannot directly improve Performance, Coverage, Confidence, Retention, Readiness, or mastery.
-
-Learner state changes only from validated eligible learner evidence under the Learning & Assessment Specification. Community/product activity may create a recommendation opportunity (for example, “test yourself on this concept”) but never mastery credit.
-
-## 125. Admin/operations required for orchestration
-
-Django Admin/staff tooling must additionally expose:
-- Home/recommendation rationale inspection
-- StudySession/RepairPlan anomaly inspection
-- Suggested Review policy parameters
-- learner planner/model version and active thresholds
-- Search indexing status
-- anonymous claim anomaly/audit records
-- effective entitlement/capability inspection by account
-- notification delivery/preferences troubleshooting
-- private-overlay/cache diagnostics
-- community moderation/reputation versions
-- per-client feature/parity flags.
-
-No staff control may directly falsify a learner score/readiness without an auditable evidence/recalculation path.
-
-## 126. Cross-scenario golden journeys required for GA
-
-### Scenario A — SEO visitor
-Search landing → immediate answer → Instant Practice → explanation → community/aggregate insight → second meaningful action (Discovery Activation) → signup → idempotent claim → Home/Progress reflects only claimed eligible evidence.
-
-### Scenario B — signed-in Free learner
-Home Recommended Next → StudySession → MCQ/IQS → grading → Session Impact → Progress → Search → canonical public page private overlay → community read/write → Review/Repair choice → cross-device resume.
-
-### Scenario C — Plus learner
-Home with no ads/upsells → advanced Practice/Weakness Repair → contextual Ask → deep Progress/History pattern analysis → Full Simulation → Repair Plan → personalized public-page overlay → creator/community participation with neutral ranking → cross-device continuation → billing grace/cancel/downgrade without lost work.
-
-Each journey must run on required web/browser and native matrices with entitlement, privacy, offline/reconnect, error, and authorization variants.
-
-## 127. Final architectural prohibition list
-
-The following are launch-blocking design errors:
-
-- client-side calculation of readiness or entitlement truth;
-- separate anonymous/free/Plus assessment implementations;
-- separate web/native curriculum or scoring semantics;
-- personalized data rendered into public cacheable HTML;
-- community popularity affecting mastery;
-- Plus status affecting public rank/reputation;
-- automatic durable Review Queue pollution from every error;
-- Resume permanently outranking a better learner recommendation without documented precedence;
-- billing state destroying in-progress learner work;
-- Search maintaining a competing doctrine taxonomy;
-- public Ask creating canonical law/content without the normal validation/publication pipeline;
-- endpoints returning future resource content, answer keys, or private rubric internals before authorized lifecycle state;
-- missing recovery/handoff updates after material architecture changes.
-
-
-## 128. Mandatory integration/security tests for cross-scenario surfaces
-
-Release-blocking tests include:
-- shared-cache test proving authenticated private overlay never appears in anonymous/public HTML;
-- anonymous attempt claim replay/cross-user theft tests;
-- entitlement capability tests across ACTIVE/GRACE/EXPIRED/REVOKED and Stripe/Apple/Google sources;
-- Plus ad suppression on authenticated public SSR + React hydration + native cold start;
-- search authorization tests proving private history/status never leaks to other users or public results;
-- answer-key/resource-release serializer tests for anonymous, Free, Plus, Simulation lifecycle states;
-- community rank test proving plan tier has zero ranking/reputation effect;
-- StudySession/RepairPlan idempotency and duplicate-evidence tests;
-- offline stale-projection tests proving clients do not recalculate readiness/recommendations;
-- notification deep-link authorization tests;
-- deleted/withdrawn public response cache/index invalidation tests.
-
-## 129. View-model performance budgets
-
-Projection aggregation must not turn Home/Search/Progress into N+1 query farms. Implementation must:
-- instrument projection latency and query counts;
-- prefetch/cache identity-independent data safely;
-- keep private caches user-scoped and short-lived where used;
-- allow partial noncritical modules (e.g. Community Pulse) to fail without blocking Recommended Next or assessment work;
-- define stale-while-revalidate behavior only for data where staleness is safe and visible.
-
-Home's critical learner action must not wait on ads, community, creator analytics, or nonessential notifications.
-Progress drilldowns should be lazy/paginated by hierarchy where needed; Home must not hydrate the entire curriculum graph or full History merely to render a readiness summary. Search result groups must be bounded/paginated.
+The same canonical contracts must remain consumable by iOS and Android as those clients advance to their independent Native GA gates.

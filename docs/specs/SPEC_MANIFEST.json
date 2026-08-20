@@ -1,24 +1,24 @@
 {
   "schema_version": 1,
-  "spec_set_version": "barclimb-v1-pre-kickoff-integrated-views-models-ui-final-2026-08-13",
+  "spec_set_version": "barclimb-v1-web-first-native-ga-sequencing-2026-08-20",
   "authority": "These four Markdown specifications are the controlling BarClimb build contracts. Chat transcripts are not authoritative over this bundle.",
   "supersedes": "Former standalone companion contracts and indexes are archive/provenance only.",
   "specifications": [
     {
       "filename": "BARCLIMB_BUILD_CONSTITUTION.md",
-      "sha256": "1dce79aace30addb03882f59f4de6c09ba9997527d14640a73b29a570d0583d7"
+      "sha256": "61178f063d53260133969fbaa9f5ecb3e387e45cf1f075ef25aded0c5ee57e27"
     },
     {
       "filename": "BARCLIMB_LEARNING_ASSESSMENT_SPEC.md",
-      "sha256": "211f064469d5efaf2f79acd125b3849f1ff38d6a25ba49695df940b57275b252"
+      "sha256": "14643a5e793b462ba85330c04dafc1ca3d6de691c717d669671a658eda2b7345"
     },
     {
       "filename": "BARCLIMB_PRODUCT_EXPERIENCE_NETWORK_SPEC.md",
-      "sha256": "8c490a99dfd795eb4bebdf73e9bd9e736a064ce1473cec00fb3e35e7b2da0a23"
+      "sha256": "b38d43cec829d9e657612c110588262104bdccf652419d4afe11a38d39a1046b"
     },
     {
       "filename": "BARCLIMB_NATIVE_PLATFORM_SPEC.md",
-      "sha256": "92ae46378e78ab87b51c573c24381b3700f92e631764b18bb5bf0acfc4d33c65"
+      "sha256": "aee48680b79457626d790984c7f1d72c4a2221634ad8eac2015aedde62f9ddf8"
     }
   ]
 }

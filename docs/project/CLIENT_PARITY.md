@@ -4,6 +4,8 @@ Status values: NOT_STARTED / PARTIAL / VERIFIED / INTENTIONAL_DIFFERENCE.
 
 M1.1 establishes proof shells only. `PARTIAL` below does not assert feature parity.
 
+Release sequencing is Web GA → iOS Native GA → Android Native GA. This table remains a required architecture and release ledger: a native UI gap may be intentional before Web GA only when shared contracts stay portable and the gap is explicit; every applicable gap remains a hard blocker for that platform's Native GA.
+
 | Capability | Web | iOS | Android | Notes |
 |---|---|---|---|---|
 | Client shell/toolchain | PARTIAL | PARTIAL | PARTIAL | Web ReactDOM mount/build passes; Expo 57 iOS/Android JS exports pass; no simulator/device/store-build verification |

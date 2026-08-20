@@ -2,7 +2,7 @@
 
 ## 2026-08-12 — Pre-kickoff specification and continuity baseline
 - Consolidated controlling specification set to four document families.
-- Locked NextGen-only v1, learning network, Web+iOS+Android launch, complete official-scope coverage, and cross-platform commerce/moderation requirements.
+- Locked NextGen-only v1, learning network, the then-current coordinated Web+iOS+Android release requirement, complete official-scope coverage, and cross-platform commerce/moderation requirements. The public-release sequencing was later superseded by the 2026-08-20 Web-first amendment without weakening multi-client architecture.
 - Added chat-independent repository recovery protocol.
 - Application implementation: not started in this bootstrap.
 ## 2026-08-13 — Pre-build coverage hardening
@@ -17,7 +17,7 @@
 
 ## 2026-08-13 — Final pre-build three-scenario architecture audit
 - Audited canonical models, API/view surfaces, UI composition, state ownership, permissions, milestones, feature flags, admin, caching, entitlement, and native parity across SEO Visitor, signed-in Free, and Plus.
-- Corrected stale nine-milestone/web-first and old pricing/permission language in the master Constitution.
+- Corrected the then-stale nine-milestone/Web-first language under the coordinated-launch decision and old pricing/permission language in the master Constitution. The coordinated public-release rule was later explicitly superseded by the 2026-08-20 amendment.
 - Added server-composed projections and explicit orchestration/domain models/endpoints.
 - Added security/idempotency/performance tests for anonymous claim, private overlays, cross-device state, entitlement transitions, Search privacy, and Plus ad suppression.
 - Synchronized all four controlling specs and continuity state.
@@ -74,3 +74,10 @@
 - Updated the Expo SDK 57 direct dependency from 57.0.12 to the current Expo-recommended `~57.0.13` patch range after Expo compatibility metadata made the CI dependency check fail on unchanged accepted `main`.
 - Regenerated the npm lock with Expo's compatible transitive patch set. React Native remains 0.86.2 and TypeScript remains 5.9.3 under the existing Expo validation exclusion.
 - Re-ran dependency validation, Expo Doctor, all Web/native/shared checks, both production bundle exports, backend foundation/auth checks, audit review, and continuity checks. No application behavior or M1.4 functionality was introduced.
+
+## 2026-08-20 — Web-first commercial release-strategy amendment
+- Reconciled the supplied four-spec amendment into the controlling bundle: Web GA is first, followed by independent iOS and Android Native GA gates, while one multi-client architecture remains mandatory from Milestone 1.
+- Preserved national NextGen-only v1 onboarding, provider-neutral entitlement, canonical cross-client truth, portable assessment/workspace contracts, and the three Visitor/Free/Plus Web GA journeys; corrected stale jurisdiction, Stripe-specific truth, and coupled-native-gate text found in the supplied Build/Native documents.
+- Reframed the same ten milestones into Web GA delivery gates plus continuing Native GA obligations. M1.4 native risk proof remains required architecture insurance; native store release itself is not a Web GA blocker.
+- This amendment occurred while `m1-4-staging-auth-client-proof` was already in progress. That branch remains intentionally unmerged and must merge amended main before continuing; M1.5 remains blocked pending M1.4 completion or explicit re-scope.
+- No application, dependency, environment, provider, deployment, or M1.4 file changed.

@@ -2,7 +2,7 @@
 
 **Status:** Authoritative v1 companion specification.
 
-This document consolidates and supersedes the former Mobile Platform Contract. It governs iOS and Android as first-class launch clients, shared TypeScript contracts, React Native/Expo architecture, native assessment parity, offline/recovery, deep links, push, privacy, community parity, subscription verification, store release pipelines, and native launch gates.
+This document consolidates and supersedes the former Mobile Platform Contract. It governs iOS and Android as first-class product clients from the foundation onward, shared TypeScript contracts, React Native/Expo architecture, native assessment parity, offline/recovery, deep links, push, privacy, community parity, subscription verification, store release pipelines, and separate Native GA gates.
 
 ## Native advertising correction
 
@@ -14,19 +14,19 @@ The server-side ad decision must therefore distinguish at least `WEB_ADSENSE`, `
 
 **Status:** Authoritative v1 companion contract  
 **Date:** August 12, 2026  
-**Scope:** iOS and Android launch architecture, native UX, shared packages, authentication, deep links, offline behavior, notifications, billing, release, store policy, QA, and launch parity.
+**Scope:** iOS and Android architecture from Milestone 1 through Native GA, native UX, shared packages, authentication, deep links, offline behavior, notifications, billing, release, store policy, QA, and parity.
 
-## 1. Launch requirement
+## 1. First-class native requirement and release sequencing
 
-BarClimb launches as three first-class clients:
+BarClimb is architected from the beginning for three first-class clients:
 
 1. Web
 2. iOS
 3. Android
 
-Native applications are a v1 launch requirement, not a post-launch roadmap item.
+**Web GA is the first commercial public release.** iOS and Android follow through separate Native GA gates. Native applications therefore are not a disposable post-Web rewrite or an optional architecture seam; their high-risk foundations, shared contracts, build/signing prerequisites, and parity ledger begin during Milestone 1 even though public store distribution may occur later.
 
-A mobile app may not be a thin WebView wrapper. It must provide a high-quality native study/community experience with platform-native navigation, text input, sharing, notifications, deep linking, offline resilience, and purchases.
+A mobile app may not be a thin WebView wrapper. It must ultimately provide a high-quality native study/community experience with platform-native navigation, text input, sharing, notifications, deep linking, offline resilience, and purchases.
 
 ## 2. Technology decision
 
@@ -343,7 +343,7 @@ Establish during Milestone 1:
 - version/build numbering
 - staged rollout/rollback strategy
 
-Production web release may not silently imply native release; each client has explicit release status, but public v1 launch requires all three launch gates.
+Production Web GA must not silently imply native release. Each client has explicit release status. Web GA may precede public iOS/Android availability, but the native release pipeline, identifiers, build/signing foundations, deep-link contracts, and parity ledgers begin early and remain active so later Native GA is a release of the same product rather than a retrofit.
 
 ## 20. Mobile security
 
@@ -377,19 +377,20 @@ Required on both iOS and Android staging/test builds:
 11. offline transition during practice → local state persists → reconnect sync.
 12. account deletion flow reachable and completes expected state.
 
-## 22. Native launch gate
+## 22. Native GA launch gate
 
-BarClimb cannot call v1 launched until:
+Web GA may already be live when this gate is evaluated. BarClimb cannot call the applicable native platform publicly launched until:
 
-- iOS App Store production release is approved/available or intentionally phased within a documented launch window;
-- Android Play production release is approved/available or intentionally phased within the same documented launch window;
-- both pass critical E2E flows;
+- that platform's App Store or Google Play production release is approved/available or intentionally phased within a documented launch window;
+- that platform passes its critical E2E flows on the required real-device/runtime matrix;
 - store billing and restoration are verified in production/sandbox-equivalent flows as applicable;
 - UGC report/block/moderation is functional;
 - push deep links work;
 - privacy/account deletion requirements are complete;
 - crash/observability is live;
 - assessment presentation parity is proven.
+
+iOS and Android are independent Native GA gates: iOS GA does not wait for Android approval, and Android GA does not retroactively alter iOS status. Evidence and unresolved gaps remain platform-specific in provider and client-parity ledgers.
 
 ## 23. Native technical-risk spikes required before feature build
 
@@ -426,66 +427,59 @@ Store-account setup is a schedule dependency, not a launch-week task.
 
 # CONSOLIDATED NATIVE BUILD RULE
 
-The native apps are not wrappers around the website. They consume the same authoritative backend/domain contracts while owning platform-native interaction, storage, lifecycle, accessibility, billing, and distribution behavior. Web, iOS, and Android all launch as supported clients.
+The native apps are not wrappers around the website. They consume the same authoritative backend/domain contracts while owning platform-native interaction, storage, lifecycle, accessibility, billing, and distribution behavior. Web may reach GA first; iOS and Android become supported public clients when their separate Native GA gates pass.
 
-## 26. Cross-scenario native projection and orchestration parity
+# PART III — WEB-FIRST / NATIVE-GA RELEASE CONTRACT
 
-Native iOS/Android consume the same server projections and domain contracts as web for Home/My BarClimb, Progress, Search, StudySession, Review Queue, RepairPlan, notifications, and entitlement capabilities. Native clients may render platform-native composition but may not independently decide learner priorities, coverage/mastery, publication visibility, or effective Plus status.
+## 26. Strategic release sequencing
 
-Required native routes/screens include:
-- Home/Recommended Next/Resume
-- Practice setup + AssessmentRenderer
-- Simulate
-- Progress drilldown
-- Search
-- History + eligible pattern insight
-- Review Queue/Suggested Review
-- RepairPlan
-- Notifications
-- public response/community/profile/Circle deep-link destinations
-- Account/Privacy/Billing
-- creator analytics
+BarClimb uses Web-first commercial release sequencing. Native remains first-class from Milestone 1, but public App Store/Google Play release no longer blocks Web GA.
 
-## 27. Cross-device continuation beyond attempts
+This is **not** permission to defer native architecture. Before Web GA, the project must preserve and continuously test the seams that are expensive to retrofit later:
 
-Cross-device sync covers not only attempt text but learning intent:
-- active StudySession/step
-- RepairPlan position
-- Review Queue state
-- portable annotations/highlights
-- selected resource/unit
-- substantial unfinished IQS/PT
-- notification-read state
-- relevant preferences.
+- one backend/domain identity across clients;
+- opaque/revocable native authentication architecture;
+- stable canonical HTTPS URLs and deep-link route registry;
+- Assessment Presentation Schema and client capability manifests;
+- server-authoritative attempts/autosave/evidence/recommendations;
+- portable annotation/resource anchors;
+- provider-neutral Subscription/Entitlement models;
+- public/community IDs and moderation semantics;
+- privacy/deletion semantics;
+- environment-specific API configuration;
+- internal build/signing/store-account prerequisites and technical-risk spikes.
 
-Server versions and conflict rules apply. Local caches must not silently overwrite newer server state.
+External Apple/Google enrollment, signing, review, or store delays are tracked as native-release dependencies and do not hold Web revenue hostage when these architecture obligations are met.
 
-## 28. Native Search and public-link behavior
+## 27. Native GA obligations after Web GA
 
-Search results use the shared SearchProjection. Opening a canonical public BarClimb URL should:
-1. open exact native destination when installed and supported;
-2. retain canonical HTTPS fallback on web;
-3. hydrate private learner overlay only after authenticated authorization;
-4. never put private learner metadata into shared link previews.
+Each platform must independently pass:
 
-## 29. Plus transition safety on native
+- production-capable signed build and release pipeline;
+- critical assessment-family parity;
+- PT/LRPT editor and recovery on target devices;
+- SecureStore/session restoration/revocation on real runtime;
+- Universal/App Links;
+- push notification routing;
+- account deletion/privacy surfaces;
+- UGC report/block/moderation;
+- provider-neutral Plus entitlement consumption;
+- StoreKit/Google Play purchase, restore, grace, refund/revocation behavior when native purchases are offered;
+- accessibility/device matrix;
+- crash/observability;
+- store metadata/review readiness.
 
-Effective entitlement/capabilities are resolved server-side and cached only for UX continuity. During transient startup entitlement uncertainty, prefer suppressing inappropriate paid-user ads until authoritative status resolves where feasible.
+A native client may launch later without altering scoring, learner evidence, public identity, community ranking, or subscription semantics established by Web GA.
 
-Grace/cancel/downgrade/refund cannot destroy or strand accepted in-progress work. A privilege change applies at documented safe boundaries and preserves history, learner state, published contributions, Review Queue, RepairPlan history, and local recovery data according to retention rules.
+## 28. Web-first compatibility gate
 
-## 30. Native offline boundaries for newer orchestration
+Before accepting a material Web feature intended for later native use, review must answer:
 
-Ordinary downloaded/cached Practice and in-progress writing may use offline recovery. New planner decisions, Search, community writes, entitlement-changing starts, new RepairPlan generation, and authoritative Progress recalculation generally require server connectivity unless an explicitly versioned offline contract exists.
+1. Is its server/domain contract renderer-independent?
+2. Can iOS/Android consume the same API object without scraping Web HTML?
+3. Is durable learner state server authoritative or safely syncable?
+4. Does the canonical public URL have a future native route mapping?
+5. Does monetization resolve through capabilities/entitlements rather than Web checkout state?
+6. Is the remaining native implementation gap recorded in `CLIENT_PARITY.md`?
 
-When offline, show the last synchronized projection as stale/read-only where appropriate rather than inventing a new recommendation locally.
-
-## 31. Additional native E2E flows
-
-Add to the launch suite:
-13. desktop/web StudySession starts → iPhone resumes same session intent and next eligible step.
-14. Android adds Review item → web reflects it exactly once; Suggested Review remains separate.
-15. Plus public-page deep link → native page opens with ad suppression and private overlay after auth, while copied share URL remains public-safe.
-16. active RepairPlan → process kill → recovery → adaptation continues without duplicate evidence.
-17. entitlement changes during an accepted PT → PT remains recoverable/submittable under safe-boundary policy; next privileged start observes new entitlement.
-18. offline launch → stale Home projection clearly labeled/degraded → reconnect → authoritative Home refresh with no client-side learner recalculation.
+If any answer is no, the Web implementation is architecturally incomplete even if Web UI works.

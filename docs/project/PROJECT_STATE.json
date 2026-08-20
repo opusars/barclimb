@@ -5,7 +5,7 @@
   "active_launch_train": "A_FOUNDATION",
   "active_milestone": 1,
   "status": "IN_PROGRESS",
-  "latest_known_good_commit": "fa476bff604578c0825a70db61b1d5ef7dee3b2d",
+  "latest_known_good_commit": "77d55674cf4a3c1f1f074aaac9eb6449b460534f",
   "active_branch": "spec-web-first-release-strategy",
   "database_migration_summary": "M1.3a retains the minimal accounts.User and adds an authentication generation, native-session generation snapshots, deterministic digest-only email-action derivation metadata, and the durable provider-neutral AuthEmailDelivery outbox. No learner, entitlement, curriculum, assessment, billing, or other business model exists.",
   "enabled_material_feature_flags": [],
@@ -26,10 +26,10 @@
     "adsense": "NOT_VERIFIED",
     "admob": "NOT_VERIFIED"
   },
-  "latest_test_summary": "Accepted main fa476bf is the historical green implementation baseline. The Web-first release-strategy amendment changes only controlling specifications and continuity: four-spec checksum validation, JSON parsing, ten-milestone sanity, contradictory-launch searches, continuity validation, and git diff checks pass locally. GitHub Actions run 32413722581 passed continuity and all TypeScript checks through npm check/portability, but failed Expo's live compatibility gate because SDK 57 now recommends expo~57.0.15 instead of the accepted-main 57.0.13 pin. The backend job passed. Application behavior and M1.4 were not modified by this branch.",
+  "latest_test_summary": "Accepted main 77d5567 is green with Expo SDK 57.0.15, React/ReactDOM 19.2.3, React Native 0.86.2, TypeScript 5.9.3, and Node 24.19.0/npm 11.17.0. The Web-first amendment remains pending on this branch with all four amended controlling specs and manifest preserved. Main CI run 32415566577 passed continuity, backend/PostgreSQL/Redis/Celery, TypeScript checks, live Expo validation/Doctor, and iOS/Android exports. Post-merge local specification, continuity, dependency, and repository checks are recorded in TEST_LEDGER.md; application behavior and M1.4 remain unchanged.",
   "known_blockers": [
-    "GitHub Actions is red from external Expo SDK 57 patch-metadata drift: accepted main pins expo~57.0.13 while CI now expects ~57.0.15. This specification-only branch may not change dependencies; a separate accepted-main dependency continuity correction is required before the amendment can become green.",
-    "M1.4 is already in progress on the intentionally unmerged m1-4-staging-auth-client-proof branch; after this amendment is merged to main, that published branch must merge amended main and reconcile its continuity before M1.4 continues.",
+    "The completed Web-first specification amendment remains pending and unmerged on spec-web-first-release-strategy until its reconciled merge commit passes GitHub Actions and is reviewed.",
+    "M1.4 remains incomplete and unmerged on m1-4-staging-auth-client-proof at fa5b2e7; after this amendment reaches main, that published branch must merge amended main and reconcile continuity before M1.4 continues.",
     "M1.5 must not begin until M1.4 is completed or explicitly re-scoped under the amended controlling specifications."
   ],
   "high_risk_items": [
@@ -38,6 +38,6 @@
     "Cross-scenario projections, anonymous claim security, private public-page overlays, entitlement transitions, and cross-device orchestration require explicit integration/security tests before GA.",
     "Official NCBE scope/source changes must pass source-drift and revalidation workflow; future exam scopes remain provisional until governing materials exist."
   ],
-  "exact_next_task": "First make a separate accepted-main dependency-only correction from expo~57.0.13 to Expo's current SDK 57-compatible patch, validate and merge it to main. Merge that updated main into spec-web-first-release-strategy and obtain green CI; then merge the amendment to main. Finally merge amended origin/main into the existing published m1-4-staging-auth-client-proof branch without rewriting its history, preserve M1.4 implementation/evidence, reconcile continuity, and complete or explicitly re-scope M1.4 before M1.5.",
-  "last_verified_at": "2026-08-20T13:24:00-07:00"
+  "exact_next_task": "Require green GitHub Actions and review on the exact reconciled spec-web-first-release-strategy merge commit, then merge this amendment to main without rewriting history. After amended main is green, merge updated origin/main into the existing published m1-4-staging-auth-client-proof branch, preserve its M1.4 implementation/evidence, reconcile continuity, and complete or explicitly re-scope M1.4 before M1.5.",
+  "last_verified_at": "2026-08-20T13:53:00-07:00"
 }

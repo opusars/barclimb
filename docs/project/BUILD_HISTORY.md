@@ -81,3 +81,14 @@
 - Reframed the same ten milestones into Web GA delivery gates plus continuing Native GA obligations. M1.4 native risk proof remains required architecture insurance; native store release itself is not a Web GA blocker.
 - This amendment occurred while `m1-4-staging-auth-client-proof` was already in progress. That branch remains intentionally unmerged and must merge amended main before continuing; M1.5 remains blocked pending M1.4 completion or explicit re-scope.
 - No application, dependency, environment, provider, deployment, or M1.4 file changed.
+
+## 2026-08-20 — Accepted-main Expo SDK 57 patch follow-up
+- Updated only the native direct Expo range from `~57.0.13` to `~57.0.15` after Expo's hosted SDK 57 compatibility metadata made the specification-amendment CI dependency gate fail on unchanged accepted main.
+- Regenerated the npm lock through Expo tooling. Expo-owned CLI/config/asset/constants/file-system/modules patches refreshed and the CLI graph deduplicated; React/ReactDOM, React Native, SecureStore, TypeScript, Node, npm, and application behavior remained unchanged.
+- Re-ran clean install, Expo compatibility/Doctor, all workspace checks, Web build, both native exports, backend foundation/auth regression, audit, continuity, and diff checks. No specification, M1.4, provider, route, auth, staging, EAS, deep-link, SecureStore, or product work entered the correction.
+- The Web-first specification amendment and M1.4 remain separate unmerged branches; M1.5 remains blocked.
+
+## 2026-08-20 — Web-first amendment accepted-main integration
+- Fast-forwarded accepted main to the already-reviewed Expo SDK 57.0.15 maintenance commit after its exact branch CI passed, then required and received green main CI on the same commit.
+- Merged accepted `origin/main` into `spec-web-first-release-strategy` without rebasing or rewriting published history. Reconciled continuity while preserving all four amended controlling specs, their manifest hashes, the accepted dependency lock, and application implementation.
+- The amendment remains pending on this branch until review and merge. M1.4 remains incomplete and unmerged at `fa5b2e7`; after this amendment reaches main, that published branch must merge amended main before continuation. M1.5 remains blocked.

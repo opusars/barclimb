@@ -11,6 +11,12 @@
     "android": {
       "package": "com.barclimb.app"
     },
-    "plugins": ["expo-secure-store"]
+    "plugins": ["expo-secure-store"],
+    "extra": {
+      "eas": {
+        "projectId": "8ed30301-53d9-4630-b2c4-70d6d51f465b"
+      }
+    },
+    "owner": "opusarss-team"
   }
 }

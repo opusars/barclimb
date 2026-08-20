@@ -2,7 +2,7 @@
 
 ## 2026-08-12 — Pre-kickoff specification and continuity baseline
 - Consolidated controlling specification set to four document families.
-- Locked NextGen-only v1, learning network, Web+iOS+Android launch, complete official-scope coverage, and cross-platform commerce/moderation requirements.
+- Locked NextGen-only v1, learning network, the then-current coordinated Web+iOS+Android release requirement, complete official-scope coverage, and cross-platform commerce/moderation requirements. The public-release sequencing was later superseded by the 2026-08-20 Web-first amendment without weakening multi-client architecture.
 - Added chat-independent repository recovery protocol.
 - Application implementation: not started in this bootstrap.
 ## 2026-08-13 — Pre-build coverage hardening
@@ -17,7 +17,7 @@
 
 ## 2026-08-13 — Final pre-build three-scenario architecture audit
 - Audited canonical models, API/view surfaces, UI composition, state ownership, permissions, milestones, feature flags, admin, caching, entitlement, and native parity across SEO Visitor, signed-in Free, and Plus.
-- Corrected stale nine-milestone/web-first and old pricing/permission language in the master Constitution.
+- Corrected the then-stale nine-milestone/Web-first language under the coordinated-launch decision and old pricing/permission language in the master Constitution. The coordinated public-release rule was later explicitly superseded by the 2026-08-20 amendment.
 - Added server-composed projections and explicit orchestration/domain models/endpoints.
 - Added security/idempotency/performance tests for anonymous claim, private overlays, cross-device state, entitlement transitions, Search privacy, and Plus ad suppression.
 - Synchronized all four controlling specs and continuity state.
@@ -83,3 +83,27 @@
 - Provisioned persistent non-production `barclimb-staging`, Essential-0 PostgreSQL `postgresql-aerodynamic-56880`, and Mini KVS `redis-flat-93728`; deployed code release v8 at commit `6bec558` with Web/worker/beat active. A later staging credential rotation advanced the current configuration release to v12; all three processes and database/KVS readiness recovered without a code change.
 - Verified deployed migrations, HTTPS redirect/forwarded protocol, PostgreSQL/KVS readiness, direct Web routes, Web session authentication, native bearer issuance/revocation, spoof-resistant auth throttling, scheduled beat recovery, worker outbox delivery, and sanitized logs.
 - M1.4 remains incomplete: EAS is not authenticated, full Xcode and Android tooling are absent, internal builds are not produced, and actual iOS/Android auth/SecureStore behavior is not exercised.
+
+## 2026-08-20 — Web-first commercial release-strategy amendment
+- Reconciled the supplied four-spec amendment into the controlling bundle: Web GA is first, followed by independent iOS and Android Native GA gates, while one multi-client architecture remains mandatory from Milestone 1.
+- Preserved national NextGen-only v1 onboarding, provider-neutral entitlement, canonical cross-client truth, portable assessment/workspace contracts, and the three Visitor/Free/Plus Web GA journeys; corrected stale jurisdiction, Stripe-specific truth, and coupled-native-gate text found in the supplied Build/Native documents.
+- Reframed the same ten milestones into Web GA delivery gates plus continuing Native GA obligations. M1.4 native risk proof remains required architecture insurance; native store release itself is not a Web GA blocker.
+- This amendment occurred while `m1-4-staging-auth-client-proof` was already in progress. That branch remains intentionally unmerged and must merge amended main before continuing; M1.5 remains blocked pending M1.4 completion or explicit re-scope.
+- No application, dependency, environment, provider, deployment, or M1.4 file changed.
+
+## 2026-08-20 — Accepted-main Expo SDK 57 patch follow-up
+- Updated only the native direct Expo range from `~57.0.13` to `~57.0.15` after Expo's hosted SDK 57 compatibility metadata made the specification-amendment CI dependency gate fail on unchanged accepted main.
+- Regenerated the npm lock through Expo tooling. Expo-owned CLI/config/asset/constants/file-system/modules patches refreshed and the CLI graph deduplicated; React/ReactDOM, React Native, SecureStore, TypeScript, Node, npm, and application behavior remained unchanged.
+- Re-ran clean install, Expo compatibility/Doctor, all workspace checks, Web build, both native exports, backend foundation/auth regression, audit, continuity, and diff checks. No specification, M1.4, provider, route, auth, staging, EAS, deep-link, SecureStore, or product work entered the correction.
+- The Web-first specification amendment and M1.4 remain separate unmerged branches; M1.5 remains blocked.
+
+## 2026-08-20 — Web-first amendment accepted-main integration
+- Fast-forwarded accepted main to the already-reviewed Expo SDK 57.0.15 maintenance commit after its exact branch CI passed, then required and received green main CI on the same commit.
+- Merged accepted `origin/main` into `spec-web-first-release-strategy` without rebasing or rewriting published history. Reconciled continuity while preserving all four amended controlling specs, their manifest hashes, the accepted dependency lock, and application implementation.
+- The amendment remains pending on this branch until review and merge. M1.4 remains incomplete and unmerged at `fa5b2e7`; after this amendment reaches main, that published branch must merge amended main before continuation. M1.5 remains blocked.
+
+## 2026-08-20 — M1.4 continuation under accepted Web-first strategy
+- Merged accepted main `4850b78` into the published M1.4 branch without rebasing or rewriting history, preserving the amended controlling specifications and the existing M1.4 implementation/evidence.
+- Reconciled M1.4's React Navigation/link dependencies with the accepted Expo SDK 57.0.15 baseline and regenerated the npm lock deterministically.
+- Web GA remains first, while M1.4 continues as mandatory early native architecture insurance. M1.5 remains blocked until M1.4 is completed or explicitly re-scoped from evidence.
+- Authenticated Expo/EAS as an Owner and linked the repository to the existing `@opusarss-team/barclimb` project without creating a duplicate. Apple/Android signing, internal-build, native-runtime, and OS association evidence remain separate gates.

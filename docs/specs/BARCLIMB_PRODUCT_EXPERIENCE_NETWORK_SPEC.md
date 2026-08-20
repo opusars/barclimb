@@ -2325,163 +2325,18 @@ Templates must support assessment, response, insight, achievement, and Circle-in
 
 BarClimb must feel like one product, not a study tool plus a bolted-on social network. Every community surface must lead back toward learning, every public identity is username-first, private learner intelligence stays private, public popularity never modifies readiness, and engagement mechanics must reward meaningful learning/contribution rather than endless consumption.
 
-# PART IV — FINAL THREE-SCENARIO SURFACE AND VIEW CONTRACT
+# PART IV — WEB GA JOURNEY GATE AND NATIVE CONTINUITY
 
-This part converts the Visitor, signed-in Free, and Plus journeys into explicit page/view composition requirements.
+## 31. Three primary Web GA journeys
 
-## 60. Global navigation and identity continuity
+Web GA requires complete end-to-end proof of:
 
-Public header: BarClimb brand, Learn/Practice discovery entry, Search, Pricing where appropriate, Sign in/Create account. It remains compact and content-first.
+1. anonymous SEO visitor → substantive public learning → Instant Practice → signup and ownership-safe claim;
+2. authenticated learner → My BarClimb → Practice, Progress, Search, History, and Repair;
+3. Plus learner → ad-free deeper practice, simulation, analytics, contextual Ask, repair, and planning.
 
-Authenticated shell: BarClimb | Practice | Simulate | Progress | Search | Account, with Home reached by brand/home affordance and mobile primary navigation optimized for Practice/Simulate/Progress. Notifications and contextual community entry must not crowd primary study navigation.
+These are three capability journeys through one product, not separate applications. They share canonical account, curriculum, AssessmentVersion, learner-evidence/readiness, publication/community, entitlement, URL, and attempt/workspace truth.
 
-Authentication should not visually replace the public knowledge graph with a disconnected application. Canonical public pages remain first-class destinations after signup.
+## 32. Native continuity during Web-first release
 
-## 61. Public SEO page composition by search intent
-
-Each canonical learning page declares one primary intent: LEARN, PRACTICE, COMPARE, EXAM_SCOPE, SKILL, or ETHICS. The first viewport varies composition while the canonical underlying subject matter remains consistent.
-
-Common order:
-1. answer the search intent immediately;
-2. restrained scope/freshness/reliability/provenance trust signals;
-3. high-value learning object or Instant Practice;
-4. explanation/distinction;
-5. aggregate/community insight when sufficiently supported;
-6. graph-aware Continue Learning;
-7. earned signup/persistence action;
-8. deeper related inventory/community.
-
-Never force signup before providing the answer/search value promised by the page.
-
-## 62. Authenticated private overlay composition
-
-When signed in, canonical public pages may add a clearly private **Your BarClimb** region after authentication:
-- current mapped mastery/coverage/evidence state;
-- last relevant attempt;
-- retention/review status;
-- recommended practice;
-- Add to Review / Practice this / Repair this actions;
-- Plus-only deeper patterns/Ask where eligible.
-
-This region must render from a private overlay endpoint and must not alter public canonical metadata/indexing.
-
-## 63. Home composition
-
-The Home experience is shared by Free and Plus:
-1. Recommended Next — visually dominant;
-2. qualifying Resume — strong but subordinate according to documented precedence;
-3. Readiness + Evidence Completeness snapshot;
-4. Practice / Simulate / Progress entry actions;
-5. active StudySession/RepairPlan/Review summary;
-6. Path-to-Exam/This-Week summary where useful;
-7. restrained recent activity and Community Pulse.
-
-Plus removes ads/upsells and unlocks deeper eligible actions. It does not receive a separate premium dashboard.
-
-## 64. Study Session UX
-
-Quick, Standard, and Deep are one-tap presets around planner-generated coherent work. Custom/advanced goals remain progressive disclosure.
-
-Session header shows purpose and approximate duration, not a rigid list learners are punished for deviating from. Users may skip/dismiss eligible steps. The server planner can adapt subsequent steps but must explain material changes on request.
-
-Session Complete should favor closure:
-- meaningful work completed;
-- actual learning impact;
-- unresolved areas;
-- next useful move;
-- clear stop/Done action.
-
-No endless “keep going” loop by default.
-
-## 65. Review Queue and Suggested Review UX
-
-Two visually distinct groups:
-- **My Review Queue** — intentional durable saves;
-- **Suggested Review** — system recommendations awaiting acceptance.
-
-Suggested items state why: retention due, repeated error, transfer uncertainty, unresolved writing issue, etc. Actions: Practice now / Add / Dismiss.
-
-The durable queue supports cleanup, completion/archive, and filters. It must not become a silent backlog of every wrong answer.
-
-## 66. Weakness Repair UX
-
-A Repair sequence begins with the current hypothesis and uses bounded diagnostic/adaptive steps. After enough evidence, summarize the likely bottleneck and what changed. Use cautious language when evidence is limited.
-
-Repair may be launched from Progress, Simulation results, History patterns, Search/public-page private overlays, or Recommended Next. It uses standard assessment components rather than inventing a second exercise engine.
-
-## 67. Progress and longitudinal storytelling
-
-Progress top level answers:
-- How am I doing?
-- How much of the applicable scope have I actually tested?
-- How stable is this picture?
-- What is strongest/weakest/unassessed?
-- What should I do next?
-
-Use the official NextGen hierarchy and visibly distinguish UNASSESSED/LIMITED EVIDENCE from poor performance.
-
-Longitudinal views may show prior-period snapshots and largest gains/unresolved areas, but avoid decorative charting or pseudo-precision unsupported by evidence.
-
-## 68. Search as universal study surface
-
-Authenticated Search groups results by intent and learner relevance: Learn, Your Status, Practice, History, Review, Community, and contextual Ask. Public Search omits private groups.
-
-Search supports official names, aliases, common abbreviations, Model Rule references, skills, doctrines, rules/issues, and assessment types. Search never invents new curriculum identity.
-
-## 69. History and Plus pattern intelligence
-
-History always preserves immutable attempt detail. Plus may add pattern summaries only when evidence thresholds are met, each with drillable supporting attempts and a Practice/Repair action. Pattern analysis is an explanatory layer over history, never a replacement for the record.
-
-## 70. Plus whole-site experience
-
-While authenticated with effective Plus capability:
-- no AdSense, AdMob, direct sponsor, house ad, or routine upgrade CTA anywhere;
-- public/SEO/community pages also suppress monetization chrome;
-- deep analytics and Ask appear contextually rather than in a separate Premium area;
-- community rank/reputation remains identical to Free rules;
-- billing UI is quiet and source-aware;
-- fair-use limits remain invisible during ordinary legitimate use.
-
-## 71. Community-to-learning bridge
-
-Community objects should normally expose a sensible learning action when one exists: Practice this rule, Try this assessment, Compare your response, Review this distinction, etc. Community engagement itself does not count as mastery.
-
-Community Pulse is finite and context-aware; no infinite generic feed is required for launch.
-
-## 72. View-state requirements
-
-Every major surface specifies:
-- loading/skeleton
-- useful empty state
-- error/retry
-- offline/degraded where relevant
-- Free restriction/transparent entitlement boundary
-- Plus state
-- accessibility/high-contrast
-- responsive desktop/tablet/mobile/native form.
-
-No major state may degrade to a raw API error, blank panel, or generic “Something went wrong” when a recoverable next action is known.
-
-## 73. Visual hierarchy across all scenarios
-
-The brand remains precision + ascent + momentum. Visual reward comes from clarity, progress, successful learning transitions, and meaningful contribution—not casino-style saturation.
-
-Priority hierarchy:
-1. current learning objective/action;
-2. assessment/resource content;
-3. feedback/progress;
-4. useful community context;
-5. monetization for eligible Free/anonymous surfaces.
-
-Ads or community chrome may never visually outrank an active learner action.
-
-## 74. Scenario acceptance heuristics
-
-A reviewer must be able to answer Yes:
-- Visitor: “Did I get the answer I searched for before being asked to commit?”
-- Visitor: “Did BarClimb reveal an interactive/network advantage over a static article?”
-- Free: “Is the best next study action obvious, while alternate choices remain available?”
-- Free: “Can I understand weak vs unassessed and see why a recommendation exists?”
-- Plus: “Has selling disappeared while capability deepened?”
-- Plus: “Can I move among app study, Search, public pages, community, and native without losing context?”
-- All: “Does every social/content interaction have a safe privacy/identity boundary?”
+Web GA may precede iOS and Android public distribution, but public IDs and canonical HTTPS URLs, community/moderation semantics, privacy/deletion behavior, notification targets, and portable learning/workspace contracts must remain consumable by native clients. Remaining native surface gaps are recorded in the Web/iOS/Android capability and parity manifests and remain hard blockers for the applicable Native GA, not hidden post-launch roadmap items.

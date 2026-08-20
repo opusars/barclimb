@@ -63,7 +63,7 @@ See `../specs/SPEC_MANIFEST.json`. Four Markdown specs control the build.
 - Deployed release/migrations, liveness/readiness, HTTPS redirect/forwarded protocol, direct routes, Web session auth, native bearer API issuance/revocation, rightmost-forwarded-IP throttling, beat recovery, worker delivery, and sanitized log evidence passed.
 - The production-rejected staging email sink proves outbox processing without delivery or SendGrid verification. Heroku/Postgres/KVS and Expo/EAS are `VERIFIED_NONPRODUCTION`; other providers remain `NOT_VERIFIED`.
 - Expo/EAS login verifies owner access to the existing `@opusarss-team/barclimb` project; the repository is durably linked to project ID `8ed30301-53d9-4630-b2c4-70d6d51f465b` without creating a duplicate.
-- EAS internal build `f2b86aba-4cec-4660-b8dd-f14ea112f134` produced a signed Android staging APK from exact source commit `9174007`; the stable evidence page is `https://expo.dev/accounts/opusarss-team/projects/barclimb/builds/f2b86aba-4cec-4660-b8dd-f14ea112f134`.
+- EAS internal build `2e340187-f441-4175-ba8b-852d044996f7` produced a signed Android staging APK from exact executable-state commit `2e32876bce0ecf315b174071fa6505d408f29258`; the stable evidence page is `https://expo.dev/accounts/opusarss-team/projects/barclimb/builds/2e340187-f441-4175-ba8b-852d044996f7`.
 - M1.4 remains incomplete: no BarClimb Apple Developer Program team currently exists, so iOS bundle/signing/profile/device setup and a real iOS build are blocked. This host lacks full Xcode/simctl and Android SDK/adb/emulator, and no actual native/SecureStore runtime proof exists. Android EAS signing is verified nonproduction, but Google Play ownership/recovery is not.
 
 ## Web-first release-strategy amendment

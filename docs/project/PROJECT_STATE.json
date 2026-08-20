@@ -27,7 +27,7 @@
     "adsense": "NOT_VERIFIED",
     "admob": "NOT_VERIFIED"
   },
-  "latest_test_summary": "Accepted main 4850b78 is merged into the published M1.4 branch without rewriting history. Correct Heroku owner account apollonomios@gmail.com can inspect barclimb-staging: Web/worker/beat are up, Essential-0 PostgreSQL 18.3 and Mini KVS 8.1.9 are available, public readiness reports database/KVS ok, and the delinquency API reports no scheduled suspension or deletion. Expo/EAS owner and project control plus historical Android internal build f2b86aba-4cec-4660-b8dd-f14ea112f134 are verified nonproduction. iOS now declares only standard/exempt encryption accurately, but no BarClimb Apple Developer Program team exists. Actual native runtimes, SecureStore OS behavior, and OS link association remain acceptance gaps.",
+  "latest_test_summary": "Accepted main 4850b78 is merged into the published M1.4 branch without rewriting history. Correct Heroku owner account apollonomios@gmail.com can inspect barclimb-staging: Web/worker/beat are up, Essential-0 PostgreSQL 18.3 and Mini KVS 8.1.9 are available, public readiness reports database/KVS ok, and the delinquency API reports no scheduled suspension or deletion. Expo/EAS owner/project control and signed Android internal build 2e340187-f441-4175-ba8b-852d044996f7 from exact executable commit 2e32876 are verified nonproduction. iOS now declares only standard/exempt encryption accurately, but no BarClimb Apple Developer Program team exists. Actual native runtimes, SecureStore OS behavior, and OS link association remain acceptance gaps.",
   "known_blockers": [
     "This host has only Apple Command Line Tools (no full Xcode/simctl) and no Android SDK/adb/emulator, so actual iOS/Android authentication and SecureStore runtime behavior cannot be exercised here.",
     "There is currently no BarClimb Apple Developer Program team. The iOS internal build remains blocked until the owner enrolls or grants an authorized team, accepts required agreements, and then completes interactive team/bundle/signing/profile/device setup. No Apple credential should be sent through repository or chat.",
@@ -41,5 +41,5 @@
     "Official NCBE scope/source changes must pass source-drift and revalidation workflow; future exam scopes remain provisional until governing materials exist."
   ],
   "exact_next_task": "Complete M1.4 only: establish or grant an authorized BarClimb Apple Developer Program team, then complete interactive iOS bundle/signing/profile/device setup and produce the iOS internal build; provide actual iOS and Android runtimes to exercise staging authentication, SecureStore save/restore/delete/restart/uninstall behavior, and OS link routing. Do not begin M1.5 or any product domain.",
-  "last_verified_at": "2026-08-20T15:04:50-07:00"
+  "last_verified_at": "2026-08-20T15:19:57-07:00"
 }

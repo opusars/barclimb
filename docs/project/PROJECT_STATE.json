@@ -4,10 +4,10 @@
   "product_phase": "MILESTONE_1_IN_PROGRESS",
   "active_launch_train": "A_FOUNDATION",
   "active_milestone": 1,
-  "status": "M1_4_ACCEPTED_PENDING_MERGE",
-  "latest_known_good_commit": "95b2d269566aae8a16045341d983b396c2a7a717",
-  "active_branch": "m1-4-staging-auth-client-proof",
-  "database_migration_summary": "M1.3a retains the minimal accounts.User and adds an authentication generation, native-session generation snapshots, deterministic digest-only email-action derivation metadata, and the durable provider-neutral AuthEmailDelivery outbox. No learner, entitlement, curriculum, assessment, billing, or other business model exists.",
+  "status": "M1_5_IMPLEMENTED_PENDING_ACCEPTANCE",
+  "latest_known_good_commit": "443bbbc849049d515d9c9b1797cd7909f50359f9",
+  "active_branch": "m1-5-assessment-presentation-proof",
+  "database_migration_summary": "M1.3a retains the minimal accounts.User and adds an authentication generation, native-session generation snapshots, deterministic digest-only email-action derivation metadata, and the durable provider-neutral AuthEmailDelivery outbox. M1.5 adds no Django model or migration; no learner, entitlement, curriculum, production assessment, billing, or other business model exists.",
   "enabled_material_feature_flags": [],
   "clients": {
     "web": "PARTIAL",
@@ -27,10 +27,10 @@
     "adsense": "NOT_VERIFIED",
     "admob": "NOT_VERIFIED"
   },
-  "latest_test_summary": "M1.4 foundation acceptance PASSED after authoritative main 95b2d26 was merged normally without rewriting history. Exact Node 24.19.0/npm 11.17.0 clean install, Expo compatibility/Doctor 20/20, nine typechecks, 9 Web tests, 18 native tests, Web build, seven-package portability, iOS/Android exports, Ruff/Django checks, 60 local backend tests, continuity/manifest/JSON/milestone checks, and staging sanity passed. Heroku/PostgreSQL/KVS and EAS/Android signing are verified nonproduction. Audit remains the accepted 15-node image-size/uuid baseline. Exact merge/reconciliation-commit CI is pending. No Apple team, iOS signed build, physical-device native auth/SecureStore lifecycle, live AASA/assetlinks routing, Google Play ownership/recovery, or native production purchase/restore is verified.",
+  "latest_test_summary": "M1.5 exact Node 24.19.0/npm 11.17.0 local acceptance PASSED: clean 717-package install, live Expo compatibility, Doctor 20/20, nine typechecks, 14 Web tests, 20 native tests, 8 shared schema/state tests, Web build, seven-package portability, iOS/Android exports at 863/858 modules, Ruff/Django/migration checks, and 60 local backend tests with four PostgreSQL-only skips. Continuity/manifest/JSON/milestone/diff/scope checks pass. Audit remains the accepted 15-node image-size/uuid baseline. Exact-commit GitHub CI remains pending.",
   "known_blockers": [
     "Apple Developer Program team access, final iOS signing/provisioning/build, physical-device iOS/Android authentication and SecureStore lifecycle, live AASA/assetlinks routing, Google Play ownership/recovery, store approvals, and native production purchase/restore remain mandatory platform-specific Native GA blockers even though they do not block the clarified M1.4 foundation gate.",
-    "M1.5 must not begin until this accepted M1.4 branch passes exact-commit GitHub Actions, is reviewed, and is merged to main."
+    "M1.5 may not be accepted until the full exact-runtime foundation suite, continuity review, exact-commit GitHub Actions, review, and merge to main pass."
   ],
   "high_risk_items": [
     "Execution breadth across web, iOS, Android, AI assessment quality, community moderation, and cross-platform commerce.",
@@ -38,6 +38,6 @@
     "Cross-scenario projections, anonymous claim security, private public-page overlays, entitlement transitions, and cross-device orchestration require explicit integration/security tests before GA.",
     "Official NCBE scope/source changes must pass source-drift and revalidation workflow; future exam scopes remain provisional until governing materials exist."
   ],
-  "exact_next_task": "Commit and push the completed M1.4 merge/reconciliation, require green GitHub Actions on the exact branch SHA, review it, then integrate it into main without rewriting history and require green main CI. Only after that merge may M1.5 begin from updated main. Preserve every deferred Native GA blocker.",
-  "last_verified_at": "2026-08-20T15:54:32-07:00"
+  "exact_next_task": "Finish M1.5 validation on exact Node 24.19.0/npm 11.17.0, review schema/client/fixture isolation and continuity, commit and push m1-5-assessment-presentation-proof, and require green GitHub Actions on the exact branch SHA. Do not merge automatically or begin Milestone 2.",
+  "last_verified_at": "2026-08-20T16:47:03-07:00"
 }

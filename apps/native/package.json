@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@barclimb/api-client": "0.1.0",
+    "@barclimb/assessment-schema": "0.1.0",
     "@barclimb/design-tokens": "0.1.0",
     "@barclimb/domain-types": "0.1.0",
     "@react-navigation/bottom-tabs": "^7.18.16",

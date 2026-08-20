@@ -29,6 +29,7 @@ import {
   restoreNativeSession,
 } from "./src/authSession";
 import { nativeEnvironment } from "./src/environment";
+import { AssessmentProofScreen } from "./src/AssessmentProofScreen";
 
 type AuthMode = "login" | "signup" | "forgot";
 type AuthStackParams = {
@@ -289,7 +290,13 @@ function AuthenticatedNavigator({
               )}
             </AppTabs.Screen>
             <AppTabs.Screen name="Practice">
-              {() => <DeferredScreen title="Practice" />}
+              {() =>
+                nativeEnvironment.environment === "production" ? (
+                  <DeferredScreen title="Practice" />
+                ) : (
+                  <AssessmentProofScreen />
+                )
+              }
             </AppTabs.Screen>
             <AppTabs.Screen name="Simulate">
               {() => <DeferredScreen title="Simulate" />}

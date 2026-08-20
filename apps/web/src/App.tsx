@@ -2,7 +2,15 @@ import { FormEvent, useEffect, useState } from "react";
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import { authPaths } from "@barclimb/api-client";
 import type { AuthenticatedUser } from "@barclimb/domain-types";
+import { AssessmentProof } from "./AssessmentProof";
 import { authModeForPath, type AuthRouteMode, webRoutes } from "./routes";
+
+const assessmentProofEnabled =
+  (
+    import.meta as ImportMeta & {
+      env?: Readonly<Record<string, string | undefined>>;
+    }
+  ).env?.VITE_APP_ENV !== "production";
 
 export function consumeActionTokenFromFragment(
   pathname = window.location.pathname,
@@ -142,21 +150,25 @@ export function App() {
         <strong>BarClimb</strong>
       </header>
       {mode === "authenticated" && user ? (
-        <section className="account-card">
-          <p className="eyebrow">My BarClimb</p>
-          <h1>Welcome, {user.username}.</h1>
-          <p className="private-email">
-            {user.email} ·{" "}
-            {user.is_email_verified ? "Verified" : "Verification pending"}
-          </p>
-          {!user.is_email_verified && (
-            <p>Check your inbox to verify your private account email.</p>
-          )}
-          <p className="quiet">
-            Learning surfaces are intentionally deferred beyond this milestone.
-          </p>
-          <button onClick={signOut}>Sign out</button>
-        </section>
+        <div className="authenticated-proof">
+          <section className="account-card">
+            <p className="eyebrow">My BarClimb</p>
+            <h1>Welcome, {user.username}.</h1>
+            <p className="private-email">
+              {user.email} ·{" "}
+              {user.is_email_verified ? "Verified" : "Verification pending"}
+            </p>
+            {!user.is_email_verified && (
+              <p>Check your inbox to verify your private account email.</p>
+            )}
+            <p className="quiet">
+              The assessment surface below is a development-only M1.5
+              architecture proof, not learner inventory.
+            </p>
+            <button onClick={signOut}>Sign out</button>
+          </section>
+          {assessmentProofEnabled && <AssessmentProof />}
+        </div>
       ) : (
         <section className="auth-layout">
           <div className="promise">

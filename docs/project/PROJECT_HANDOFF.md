@@ -1,9 +1,9 @@
 # BarClimb Project Handoff
 
 ## Current state
-M1.4 foundation acceptance is complete on `m1-4-staging-auth-client-proof`, pending exact-commit CI, review, and merge to main. Authoritative main `95b2d269566aae8a16045341d983b396c2a7a717` was merged normally into the branch without rewriting history. M1.4 retains persistent verified-nonproduction Heroku/PostgreSQL/KVS staging, deployed Web auth/routes/outbox processes, React Navigation, gated deep-link configuration, automated SecureStore states, verified owner access to the existing `@opusarss-team/barclimb` EAS project, and signed Android internal staging build `2e340187-f441-4175-ba8b-852d044996f7`.
+M1.4 is accepted in `main` at `443bbbc849049d515d9c9b1797cd7909f50359f9`; exact-main Foundation CI run `32427862224` passed. M1.5 local acceptance passes on `m1-5-assessment-presentation-proof`; exact-commit CI, review, and merge remain pending. M1.4 retains persistent verified-nonproduction Heroku/PostgreSQL/KVS staging, deployed Web auth/routes/outbox processes, React Navigation, gated deep-link configuration, automated SecureStore states, verified owner access to the existing `@opusarss-team/barclimb` EAS project, and signed Android internal staging build `2e340187-f441-4175-ba8b-852d044996f7`.
 
-The controlling release sequence remains **Web GA → iOS Native GA → Android Native GA**, with one first-class multi-client architecture and no Web-only shortcuts. The post-merge foundation validation passed. Apple enrollment/signing, physical-device authentication/SecureStore, live OS association routing, store ownership/approval, and native production purchase/restore do not block M1.4 foundation acceptance, but remain mandatory at the applicable Native GA and are not marked verified. M1.5 remains blocked until M1.4 merges to main.
+The controlling release sequence remains **Web GA → iOS Native GA → Android Native GA**, with one first-class multi-client architecture and no Web-only shortcuts. Apple enrollment/signing, physical-device authentication/SecureStore, live OS association routing, store ownership/approval, and native production purchase/restore remain mandatory at the applicable Native GA and are not marked verified. M1.5 changes none of those provider/device statuses.
 
 ## Authoritative contracts
 See `../specs/SPEC_MANIFEST.json`. Four Markdown specs control the build.
@@ -71,7 +71,7 @@ See `../specs/SPEC_MANIFEST.json`. Four Markdown specs control the build.
 - Native public-store approval, production store purchase/restore, and public native release are not Web GA blockers merely because they are incomplete.
 - Native remains active architecture insurance from Milestone 1: M1.4 risk proof, portable schemas/state, canonical URLs/deep-link contracts, provider-neutral entitlement, shared identity/curriculum/assessment/evidence/publication truth, and explicit capability/parity ledgers remain mandatory.
 - The Web GA gate retains the anonymous SEO → substantive learning → Instant Practice → signup/claim, authenticated My BarClimb, and Plus ad-free/deeper-learning journeys.
-- M1.5 may not begin until accepted M1.4 is merged to main.
+- M1.5 began only after accepted M1.4 was fast-forwarded to main and exact-main CI passed.
 
 ## M1.4 gate reconciliation
 - M1.4 foundation acceptance requires real staging with PostgreSQL/KVS and Web/worker/beat, deployed Web auth, portable native auth architecture, real native navigation, fail-closed portable configuration, EAS/build-project ownership, automated SecureStore state coverage, deep-link architecture/config, green Web/native CI and both exports, an explicit evidence ledger, and at least one real signed native internal-build path where current accounts permit.
@@ -89,10 +89,21 @@ See `../specs/SPEC_MANIFEST.json`. Four Markdown specs control the build.
 - No Web-only shortcut: shared-package portability passes, native uses React Native navigation rather than WebView, and the controlling portable auth/domain/link contracts remain intact.
 
 ## Current branch coordination
-- Authoritative main `95b2d26` is merged normally into the published M1.4 branch without rebasing or rewriting history. Existing M1.4 implementation/evidence and all current specs/manifest remain intact.
-- M1.4 foundation acceptance is complete, but the branch remains separate and unmerged from main pending exact-commit CI and review. Do not begin M1.5.
+- Authoritative accepted main is `443bbbc849049d515d9c9b1797cd7909f50359f9`; local and remote main passed exact-SHA CI before M1.5 began.
+- Active branch is `m1-5-assessment-presentation-proof`. It must be committed, pushed, and pass exact-commit CI, then reviewed. Do not merge automatically and do not begin Milestone 2.
+
+## M1.5 cross-client assessment presentation risk proof
+- `@barclimb/assessment-schema` defines one runtime-validated, JSON-serializable presentation contract for the four controlling families and all controlling response-type identifiers. The bounded component registry contains only `SINGLE_SELECT_QUESTION` and `LONG_RESPONSE_EDITOR`; schema validation rejects unknown components and renderers return a typed fail-safe rather than omitting content or using HTML/WebView.
+- One portable workspace state stores selected choice, draft document, active resource/view, review flag, formatting ranges/list/indent semantics, and save/recovery metadata without DOM/native coordinates or widget state.
+- Web consumes the shared MCQ/IQS/PT/LRPT fixtures through semantic radio buttons, resource tabs, a textarea workspace, keyboard-native controls, local snapshot persistence, and narrow/wide responsive CSS.
+- Native consumes the same fixture objects through accessible React Native `Pressable`/`TextInput` components, phone/tablet-responsive layout, unrestricted orientation, module-lifetime proof persistence, autosave, and background-transition save handling.
+- Shared state tests prove MCQ reselection/review, IQS resource switching without answer loss, long-form drafting/formatting, save pending/failure/retry, serialization/restoration, and recovery of the last complete snapshot after an interrupted write.
+- Every fixture is `TEST_FIXTURE` / `DEVELOPMENT_ONLY`, uses synthetic fictional text, and is hidden in production client environments. It never enters Django assessment inventory, curriculum, evidence, readiness, publication, grading, or analytics.
+- No backend assessment model/endpoint, AI, grading, curriculum, learner evidence, recommendation, or production attempt system was added. The eventual Django API must serve this renderer-independent shape and own authoritative attempt versions in Milestones 3–4.
+- Architectural conclusion: **yes**, one portable assessment presentation/state contract supports Web and React Native for MCQ, IQS, and long-form PT/LRPT without a second client-specific assessment model. Remaining risks concern production editor/storage libraries, richer editor behaviors, server autosave/concurrency/conflict semantics, and real-device accessibility/background/process recovery—not schema divergence.
 
 ## Tests actually run
+- M1.5 exact-runtime local acceptance on Node 24.19.0/npm 11.17.0: clean `npm ci` installed 717 packages; live Expo compatibility and Doctor 20/20 passed; all nine typechecks, 14 Web tests, 20 native tests, 8 shared schema/state tests, Web build, all seven portable packages, and iOS/Android exports at 863/858 modules passed. Ruff/Django/migration checks and 60 local backend tests passed with four PostgreSQL-only skips. Audit remained the accepted 15-node `image-size`/`uuid` graph. Exact-commit CI is pending push.
 - Current M1.4 acceptance rerun on exact Node 24.19.0/npm 11.17.0: clean `npm ci` installed 717 packages; live Expo compatibility passed; Doctor passed 20/20; `npm run check` passed all nine typechecks, 9 Web tests, 18 native tests, and production Web build; seven-package portability and iOS/Android exports at 854/849 modules passed. Ruff lint/format, Django system/migration checks, and 60 local backend tests passed with four PostgreSQL-only skips. Exact-commit GitHub CI supplies the PostgreSQL/Redis/Celery acceptance path.
 - Current read-only staging/EAS sanity: correct Heroku owner, Web/worker/beat, PostgreSQL/KVS, health/readiness, HTTPS/redirect, Web auth routes, anonymous auth enforcement, gated 404 association endpoints, EAS Owner project, and finished signed Android build all passed. No resource or credential changed.
 - `npm audit --omit=dev`: unchanged 15 aggregate nodes (7 moderate, 8 high) in the documented `image-size` and `uuid` toolchain families; no forced fix or security-family change.
@@ -118,7 +129,7 @@ Heroku app runtime, Essential-0 PostgreSQL, and Mini KVS remain `VERIFIED_NONPRO
 Execution breadth remains the principal engineering risk. Curriculum completeness depends on automated official-scope/rule compilation, authority provenance, lawful multi-source reconciliation, subject certification, and strict inventory gates. NCBE Sourcebooks are optional enhanced reconciliation when lawfully available; do not make purchase/access a build or launch dependency.
 
 ## Exact next task
-Commit and push the completed M1.4 reconciliation, require green GitHub Actions on the exact branch commit, then review and integrate the branch into main without rewriting history. Require green main CI. Only after that merge may M1.5 begin from updated main. Preserve every deferred Native GA blocker.
+Finish M1.5 validation on exact Node 24.19.0/npm 11.17.0, reconcile the final test/audit evidence, review the complete diff for scope and schema portability, commit and push `m1-5-assessment-presentation-proof`, and require green GitHub Actions on the exact branch SHA. Do not merge automatically and do not begin Milestone 2.
 
 ## Resume commands
 ```bash

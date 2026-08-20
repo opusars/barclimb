@@ -12,6 +12,6 @@ Controlling release sequence: **Web GA → iOS Native GA → Android Native GA**
 6. Follow `docs/project/RECOVERY_PLAYBOOK.md`.
 7. Continue from **Exact next task** in the handoff.
 
-The M1.4/Web-first gate reconciliation is authoritative in `main`, and current main is merged normally into `m1-4-staging-auth-client-proof` without rewriting history. M1.4 foundation acceptance passes on that branch; require exact-commit CI, review, and merge to main before beginning M1.5. Apple enrollment/signing, physical-device authentication/SecureStore, live OS association routing, store ownership/approval, and native production purchase/restore remain mandatory at the applicable Native GA and are not marked verified.
+M1.4 is accepted in `main` at `443bbbc849049d515d9c9b1797cd7909f50359f9`, with exact-main Foundation CI green. M1.5 local acceptance passes on `m1-5-assessment-presentation-proof`; exact-commit CI, review, and merge remain pending. It proves a shared assessment presentation/workspace contract only; it does not begin curriculum, production assessment, grading, evidence, or Milestone 2 work. Apple enrollment/signing, physical-device authentication/SecureStore, live OS association routing, store ownership/approval, and native production purchase/restore remain mandatory at the applicable Native GA and are not marked verified.
 
 If prose conflicts with repository reality, investigate and correct the continuity docs before new architecture work. Never reconstruct missing history from guesses.

@@ -1,9 +1,9 @@
 # BarClimb Project Handoff
 
 ## Current state
-Milestone 1 and M1.4 are in progress on `m1-4-staging-auth-client-proof` under accepted amended main. M1.4 has persistent verified-nonproduction Heroku/PostgreSQL/KVS staging, deployed Web auth/routes/outbox processes, React Navigation scaffolding, gated deep-link configuration, verified owner access to the existing `@opusarss-team/barclimb` EAS project, and a signed Android internal staging APK. It is not complete until iOS signing/build and actual iOS/Android authentication/SecureStore evidence close the remaining gaps. No learner profile, onboarding, entitlement, curriculum, assessment, billing, or later product domain has been implemented.
+M1.4 foundation acceptance is complete on `m1-4-staging-auth-client-proof`, pending exact-commit CI, review, and merge to main. Authoritative main `95b2d269566aae8a16045341d983b396c2a7a717` was merged normally into the branch without rewriting history. M1.4 retains persistent verified-nonproduction Heroku/PostgreSQL/KVS staging, deployed Web auth/routes/outbox processes, React Navigation, gated deep-link configuration, automated SecureStore states, verified owner access to the existing `@opusarss-team/barclimb` EAS project, and signed Android internal staging build `2e340187-f441-4175-ba8b-852d044996f7`.
 
-The controlling release sequence is **Web GA → iOS Native GA → Android Native GA**, while architecture remains one first-class multi-client product from Milestone 1. Public native approval/release does not gate Web GA merely because incomplete, but M1.4 remains mandatory early native architecture insurance and M1.5 remains blocked.
+The controlling release sequence remains **Web GA → iOS Native GA → Android Native GA**, with one first-class multi-client architecture and no Web-only shortcuts. The post-merge foundation validation passed. Apple enrollment/signing, physical-device authentication/SecureStore, live OS association routing, store ownership/approval, and native production purchase/restore do not block M1.4 foundation acceptance, but remain mandatory at the applicable Native GA and are not marked verified. M1.5 remains blocked until M1.4 merges to main.
 
 ## Authoritative contracts
 See `../specs/SPEC_MANIFEST.json`. Four Markdown specs control the build.
@@ -26,7 +26,7 @@ See `../specs/SPEC_MANIFEST.json`. Four Markdown specs control the build.
 - TypeScript remains on the controlling 5.x line at 5.9.3 through Expo's supported dependency-validation exclusion.
 - Hash-verified pip-tools production/development locks, npm 11 lock/install-script policy, per-surface lint environments, ES2022-only shared-package type environments, and an explicit portability gate.
 - Node 24.19.0/npm 11.17.0 and Python 3.13.15 are aligned in version files, package metadata, CI, and setup documentation.
-- Forced portrait orientation removed. Proper native routing/deep links remain later Milestone 1 foundation work.
+- Forced portrait orientation removed. M1.4 later establishes real native routing and gated deep-link foundations.
 
 ## Completed in M1.2
 - Celery 5.6.3 Django integration with Redis/Valkey-compatible environment-driven broker/cache configuration, no result backend, deterministic eager tests, explicit conservative delivery defaults, and one non-contractual infrastructure smoke task.
@@ -64,21 +64,41 @@ See `../specs/SPEC_MANIFEST.json`. Four Markdown specs control the build.
 - The production-rejected staging email sink proves outbox processing without delivery or SendGrid verification. Heroku/Postgres/KVS and Expo/EAS are `VERIFIED_NONPRODUCTION`; other providers remain `NOT_VERIFIED`.
 - Expo/EAS login verifies owner access to the existing `@opusarss-team/barclimb` project; the repository is durably linked to project ID `8ed30301-53d9-4630-b2c4-70d6d51f465b` without creating a duplicate.
 - EAS internal build `2e340187-f441-4175-ba8b-852d044996f7` produced a signed Android staging APK from exact executable-state commit `2e32876bce0ecf315b174071fa6505d408f29258`; the stable evidence page is `https://expo.dev/accounts/opusarss-team/projects/barclimb/builds/2e340187-f441-4175-ba8b-852d044996f7`.
-- M1.4 remains incomplete: no BarClimb Apple Developer Program team currently exists, so iOS bundle/signing/profile/device setup and a real iOS build are blocked. This host lacks full Xcode/simctl and Android SDK/adb/emulator, and no actual native/SecureStore runtime proof exists. Android EAS signing is verified nonproduction, but Google Play ownership/recovery is not.
+- Deferred Native GA evidence remains open: no BarClimb Apple Developer Program team currently exists, so iOS bundle/signing/profile/device setup and a real iOS build are blocked. This host lacks full Xcode/simctl and Android SDK/adb/emulator, and no actual native/SecureStore runtime proof exists. Android EAS signing is verified nonproduction, but Google Play ownership/recovery is not. Under the clarified gate these are not M1.4 foundation blockers and none is marked verified.
 
 ## Web-first release-strategy amendment
 - Web GA is the first commercial/revenue release; iOS Native GA and Android Native GA follow as independent platform gates.
 - Native public-store approval, production store purchase/restore, and public native release are not Web GA blockers merely because they are incomplete.
 - Native remains active architecture insurance from Milestone 1: M1.4 risk proof, portable schemas/state, canonical URLs/deep-link contracts, provider-neutral entitlement, shared identity/curriculum/assessment/evidence/publication truth, and explicit capability/parity ledgers remain mandatory.
 - The Web GA gate retains the anonymous SEO → substantive learning → Instant Practice → signup/claim, authenticated My BarClimb, and Plus ad-free/deeper-learning journeys.
-- M1.5 may not begin until M1.4 is completed or explicitly re-scoped under the amended controlling specifications.
+- M1.5 may not begin until accepted M1.4 is merged to main.
+
+## M1.4 gate reconciliation
+- M1.4 foundation acceptance requires real staging with PostgreSQL/KVS and Web/worker/beat, deployed Web auth, portable native auth architecture, real native navigation, fail-closed portable configuration, EAS/build-project ownership, automated SecureStore state coverage, deep-link architecture/config, green Web/native CI and both exports, an explicit evidence ledger, and at least one real signed native internal-build path where current accounts permit.
+- The signed Android staging APK is qualifying signed-build evidence; JavaScript exports alone would not be.
+- Missing Apple enrollment/team, final Apple signing/provisioning/iOS build, physical-device auth/SecureStore lifecycle, AASA/assetlinks publication and OS routing, Google Play ownership/recovery, store approvals, and native purchase/restore do not indefinitely block M1.4 or Web development when the foundation gate passes.
+- Every such deferred item remains a hard blocker for its applicable iOS or Android Native GA. Evidence may not be inferred across platforms or proof types.
+
+## M1.4 foundation acceptance evidence
+- Persistent nonproduction staging, PostgreSQL, and KVS: `barclimb-staging` is owner-accessible; Essential-0 PostgreSQL 18.3 and Mini KVS 8.1.9 are available; readiness reports both `ok`.
+- Operational processes and deployed Web auth: Web, worker, and beat are up; HTTPS root and login/signup/app routes return 200, HTTP redirects 301, and anonymous `/api/v1/auth/me/` correctly returns 401. Earlier controlled staging signup/login/session, native bearer, outbox/beat/worker, proxy/rate-limit, and sanitized-log proofs remain valid.
+- Portable native auth, real navigation, and fail-closed configuration: shared opaque-session contracts, React Navigation stacks/tabs, environment-specific app identities/origins, and rejection paths are implementation- and test-covered.
+- Native build ownership and signed path: authenticated EAS Owner access to `@opusarss-team/barclimb` project `8ed30301-53d9-4630-b2c4-70d6d51f465b` is current; finished Android internal build `2e340187-f441-4175-ba8b-852d044996f7` is tied to executable commit `2e32876`.
+- Shared validation: exact Node/npm clean install, Expo live compatibility and Doctor, all nine typechecks, Web/native tests, Web build, seven-package portability, both native JS exports, backend checks/tests, audit comparison, continuity, manifest/JSON/milestone checks, and diff/scope review pass.
+- SecureStore and deep links: automated state-machine coverage exercises restoration, authoritative rejection, transient failures, save/delete failures, revocation, and logout; route/config parsing and association gating are tested. Staging AASA/assetlinks remain 404, correctly preserving real OS routing as a Native GA gap.
+- No Web-only shortcut: shared-package portability passes, native uses React Native navigation rather than WebView, and the controlling portable auth/domain/link contracts remain intact.
 
 ## Current branch coordination
-- Accepted amended main `4850b78` is merged into this published branch without rebasing or rewriting history. Existing M1.4 implementation and evidence remain intact; the completion audit closed the Android internal-build path and recorded the remaining external gaps precisely.
-- M1.4 remains separate and unmerged from main. Do not begin M1.5 from this branch.
+- Authoritative main `95b2d26` is merged normally into the published M1.4 branch without rebasing or rewriting history. Existing M1.4 implementation/evidence and all current specs/manifest remain intact.
+- M1.4 foundation acceptance is complete, but the branch remains separate and unmerged from main pending exact-commit CI and review. Do not begin M1.5.
 
 ## Tests actually run
-- M1.4 final local rerun on exact Node 24.19.0/npm 11.17.0: clean `npm ci`, all nine typechecks, 9 Web tests, 18 native tests, Web build, all seven portability packages, live Expo dependency validation, Doctor 20/20, and iOS/Android JS exports PASSED. Ruff lint/format, Django system/migration checks, and 60 local backend tests PASSED with four PostgreSQL-only skips. Android EAS internal build passed; iOS credential/build and both actual runtimes remain blocked as recorded below and in `TEST_LEDGER.md`.
+- Current M1.4 acceptance rerun on exact Node 24.19.0/npm 11.17.0: clean `npm ci` installed 717 packages; live Expo compatibility passed; Doctor passed 20/20; `npm run check` passed all nine typechecks, 9 Web tests, 18 native tests, and production Web build; seven-package portability and iOS/Android exports at 854/849 modules passed. Ruff lint/format, Django system/migration checks, and 60 local backend tests passed with four PostgreSQL-only skips. Exact-commit GitHub CI supplies the PostgreSQL/Redis/Celery acceptance path.
+- Current read-only staging/EAS sanity: correct Heroku owner, Web/worker/beat, PostgreSQL/KVS, health/readiness, HTTPS/redirect, Web auth routes, anonymous auth enforcement, gated 404 association endpoints, EAS Owner project, and finished signed Android build all passed. No resource or credential changed.
+- `npm audit --omit=dev`: unchanged 15 aggregate nodes (7 moderate, 8 high) in the documented `image-size` and `uuid` toolchain families; no forced fix or security-family change.
+- Accepted-main exact-sha Foundation CI runs `32416558206` and `32417562112` on `4850b78`: PASSED. Local/remote main matched exactly before this branch was created.
+- Separate M1.4 exact-sha Foundation CI run `32423925699` on untouched commit `4c1d2e6`: PASSED.
+- M1.4 pre-reconciliation final rerun on exact Node 24.19.0/npm 11.17.0: clean `npm ci`, all nine typechecks, 9 Web tests, 18 native tests, Web build, all seven portability packages, live Expo dependency validation, Doctor 20/20, and iOS/Android JS exports PASSED. Ruff lint/format, Django system/migration checks, and 60 local backend tests PASSED with four PostgreSQL-only skips. Android EAS internal build passed; iOS credential/build and both actual runtimes remain deferred Native GA gaps.
 - Reconciled specification branch locally on Node 24.19.0/npm 11.17.0: clean `npm ci` installed 687 packages; live `CI=1 npx expo install --check` PASSED; Expo Doctor PASSED 20/20; `npm run check` PASSED all nine workspace typechecks, 4 Web tests, 13 native tests, and the Web production build; `npm run portability` PASSED all seven shared packages. Specification/continuity/search and diff checks are recorded in `TEST_LEDGER.md`.
 - Accepted-main GitHub Actions run `32415566577` on `77d5567`: PASSED continuity, backend/PostgreSQL/Redis/Celery, TypeScript checks, live Expo dependency validation/Doctor, and iOS/Android exports.
 - Web-first amendment GitHub Actions run `32413722581`: continuity PASSED; backend/PostgreSQL/Redis/Celery PASSED; TypeScript clean install, full check, and portability PASSED. The TypeScript job then FAILED `npx expo install --check` because Expo's live SDK 57 metadata advanced the recommended Expo patch from accepted-main 57.0.13 to 57.0.15. Doctor/exports were skipped after that failure. This is external baseline dependency drift, not a specification-diff failure, and remains outside this specification-only branch.
@@ -92,13 +112,13 @@ See `../specs/SPEC_MANIFEST.json`. Four Markdown specs control the build.
 - Remaining npm audit findings are upstream Expo/React Native build/config-tool paths documented in `SECURITY_ADVISORIES.md`; no forced downgrade was applied.
 
 ## Providers actually verified
-Heroku app runtime, Essential-0 PostgreSQL, and Mini KVS remain `VERIFIED_NONPRODUCTION`. Correct owner account `apollonomios@gmail.com` can inspect `barclimb-staging`; Web/worker/beat are up, PostgreSQL 18.3 and KVS 8.1.9 are available, public readiness is healthy, and Heroku reports no scheduled suspension or deletion. Expo/EAS account/project control and Android internal build/signing are verified nonproduction. SendGrid, Apple signing, Google Play ownership/recovery, and all other providers remain `NOT_VERIFIED`.
+Heroku app runtime, Essential-0 PostgreSQL, and Mini KVS remain `VERIFIED_NONPRODUCTION`. Correct owner account `apollonomios@gmail.com` can inspect `barclimb-staging`; Web/worker/beat are up, PostgreSQL and KVS are available, public readiness is healthy, and Heroku reports no scheduled suspension or deletion. Expo/EAS project control and Android internal build/signing are verified nonproduction. Apple, Google Play, SendGrid, S3, OpenAI, Stripe, Sentry, and ad providers remain `NOT_VERIFIED`; no production-provider claim follows.
 
 ## Known risks
 Execution breadth remains the principal engineering risk. Curriculum completeness depends on automated official-scope/rule compilation, authority provenance, lawful multi-source reconciliation, subject certification, and strict inventory gates. NCBE Sourcebooks are optional enhanced reconciliation when lawfully available; do not make purchase/access a build or launch dependency.
 
 ## Exact next task
-Complete M1.4 only. Establish or grant an authorized BarClimb Apple Developer Program team, accept required Apple agreements, then run `npx eas-cli@22.0.0 build --platform ios --profile internal` interactively from `apps/native` to verify/register `com.barclimb.app.staging` and authorize the certificate, provisioning profile, and internal-test device; do not send credentials through chat or commit them. Provide actual iOS and Android runtimes to exercise staging auth, SecureStore save/restore/delete/restart/uninstall behavior, and OS link routing. Do not begin M1.5 or any product domain.
+Commit and push the completed M1.4 reconciliation, require green GitHub Actions on the exact branch commit, then review and integrate the branch into main without rewriting history. Require green main CI. Only after that merge may M1.5 begin from updated main. Preserve every deferred Native GA blocker.
 
 ## Resume commands
 ```bash
@@ -110,7 +130,7 @@ npm run doctor --workspace @barclimb/native
 ```
 Use Python 3.13.15, Node 24.19.0, and npm 11.17.0 for baseline parity. Install Python requirements with `--require-hashes`. See `../implementation/ENVIRONMENT.md` for setup and the PostgreSQL smoke path. Expo Doctor requires network access for all checks.
 
-For backend acceptance, also run PostgreSQL and Redis/Valkey, select `config.settings.postgres_test`, and execute the PostgreSQL concurrency and worker paths documented in `../implementation/ENVIRONMENT.md`. Staging is real and persistent; do not expose config values or test production there. Native acceptance still requires internal builds and actual platform runtimes.
+For backend acceptance, also run PostgreSQL and Redis/Valkey where available, select `config.settings.postgres_test`, and execute the PostgreSQL concurrency and worker paths documented in `../implementation/ENVIRONMENT.md`. Staging is real and persistent; do not expose config values or test production there. Native GA still requires the deferred platform-specific signed-build, actual-runtime, association, store, and purchase evidence.
 
 ## Final integration note
 Before feature UI implementation, establish the canonical provider-agnostic billing domain, server projection schemas, orchestration models/state machines, and client-surface capability manifest. These prevent Visitor/Free/Plus and Web/iOS/Android from diverging.

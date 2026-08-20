@@ -1,8 +1,8 @@
 # BarClimb Provider Status
 
-Secret values must never be committed here. Status is service-specific and evidence-gated.
+Secret values must never be committed here. Status is service-specific and evidence-gated; `VERIFIED_NONPRODUCTION` is not production acceptance.
 
-M1.2 verified local PostgreSQL 14 and Redis 7.2 behavior and adds equivalent PostgreSQL 17/Redis 7.2 CI services. These are dependency/runtime proofs, not verification of a Heroku app, Heroku Postgres plan, or managed KVS add-on; the provider status therefore remains unchanged.
+The M1.4 branch now contains authoritative main and passes the clarified foundation gate. Fresh read-only checks verify owner access to the existing Heroku staging app and EAS project: Heroku Web/worker/beat, Essential-0 PostgreSQL, Mini KVS, public readiness, and auth routes are healthy; EAS confirms the finished signed Android internal APK. This evidence does not verify production, an actual native runtime, Apple, or Google Play.
 
 M1.3 exercises Django console/in-memory email delivery behind a provider-neutral boundary. This does not verify SendGrid or any other transactional-email provider, so provider statuses remain unchanged.
 
@@ -18,12 +18,12 @@ Release relevance is gate-specific. Apple/Google store approval and native produ
 |---|---|---|---|---|
 | OpenAI | generation/grading/compiler | NOT_VERIFIED | none | Web GA blocker by assessment milestone |
 | Stripe | Web subscription purchase source | NOT_VERIFIED | none | Web GA paid-flow blocker; not entitlement truth |
-| Apple | iOS distribution/IAP purchase source | NOT_VERIFIED | no BarClimb Apple Developer Program team currently exists | iOS Native GA and M1.4 runtime-proof blocker; not a Web GA blocker by itself |
-| Google Play | Android distribution/billing purchase source | NOT_VERIFIED | signed EAS internal APK exists; Play project/ownership/recovery remains unverified | Android Native GA blocker; not a Web GA blocker by itself |
-| Expo/EAS | native project/build orchestration | VERIFIED_NONPRODUCTION | authenticated Owner; existing project linked; signed Android internal build succeeded | Android runtime and all iOS signing/runtime evidence remain separate |
+| Apple | iOS distribution/IAP purchase source | NOT_VERIFIED / BLOCKED_EXTERNAL | no BarClimb Apple Developer Program team; no signed iOS build | iOS Native GA blocker; not an M1.4/Web-train blocker by itself |
+| Google Play | Android distribution/billing purchase source | NOT_VERIFIED | signed EAS internal APK exists; Play ownership/recovery remains unverified | Android Native GA blocker; not an M1.4/Web-train blocker by itself |
+| Expo/EAS | native build-project control/internal builds | VERIFIED_NONPRODUCTION | authenticated Owner; existing project linked; signed Android internal build `2e340187-f441-4175-ba8b-852d044996f7` | satisfies available-platform M1.4 signed-build path; no iOS/runtime/store claim |
 | SendGrid | transactional email | NOT_VERIFIED | staging validating sink only; no provider delivery | Web GA requirement and later native-account dependency |
 | S3 | durable objects/exports/creative | NOT_VERIFIED | none | Web GA requirement where used; platform gates as applicable |
-| Heroku/Postgres/KVS | runtime/data/queue | VERIFIED_NONPRODUCTION | staging app + managed PostgreSQL/KVS + Web/worker/beat exercised | Web GA critical runtime; production still unverified |
+| Heroku/Postgres/KVS | runtime/data/queue | VERIFIED_NONPRODUCTION | staging Web/worker/beat, Essential-0 PostgreSQL, Mini KVS, readiness, owner/account-standing evidence | M1.4 staging gate evidence; production remains a Web GA blocker |
 | Sentry | observability | NOT_VERIFIED | none | Web GA requirement; each Native GA also requires native observability |
 | AdSense | Web external ads | NOT_VERIFIED | none | approval is activation blocker, not Web GA blocker when fallback works |
 | AdMob | native external ads | NOT_VERIFIED | none | native activation concern; not a Web GA blocker |

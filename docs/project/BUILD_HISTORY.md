@@ -74,3 +74,9 @@
 - Updated the Expo SDK 57 direct dependency from 57.0.12 to the current Expo-recommended `~57.0.13` patch range after Expo compatibility metadata made the CI dependency check fail on unchanged accepted `main`.
 - Regenerated the npm lock with Expo's compatible transitive patch set. React Native remains 0.86.2 and TypeScript remains 5.9.3 under the existing Expo validation exclusion.
 - Re-ran dependency validation, Expo Doctor, all Web/native/shared checks, both production bundle exports, backend foundation/auth checks, audit review, and continuity checks. No application behavior or M1.4 functionality was introduced.
+
+## 2026-08-20 — Accepted-main Expo SDK 57 patch follow-up
+- Updated only the native direct Expo range from `~57.0.13` to `~57.0.15` after Expo's hosted SDK 57 compatibility metadata made the specification-amendment CI dependency gate fail on unchanged accepted main.
+- Regenerated the npm lock through Expo tooling. Expo-owned CLI/config/asset/constants/file-system/modules patches refreshed and the CLI graph deduplicated; React/ReactDOM, React Native, SecureStore, TypeScript, Node, npm, and application behavior remained unchanged.
+- Re-ran clean install, Expo compatibility/Doctor, all workspace checks, Web build, both native exports, backend foundation/auth regression, audit, continuity, and diff checks. No specification, M1.4, provider, route, auth, staging, EAS, deep-link, SecureStore, or product work entered the correction.
+- The Web-first specification amendment and M1.4 remain separate unmerged branches; M1.5 remains blocked.

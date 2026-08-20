@@ -5,8 +5,8 @@
   "active_launch_train": "A_FOUNDATION",
   "active_milestone": 1,
   "status": "IN_PROGRESS",
-  "latest_known_good_commit": "6de380f97d140852a0c644c981ef39ae765fe30a",
-  "active_branch": "main",
+  "latest_known_good_commit": "fa476bff604578c0825a70db61b1d5ef7dee3b2d",
+  "active_branch": "maintenance-expo-sdk57-patch",
   "database_migration_summary": "M1.3a retains the minimal accounts.User and adds an authentication generation, native-session generation snapshots, deterministic digest-only email-action derivation metadata, and the durable provider-neutral AuthEmailDelivery outbox. No learner, entitlement, curriculum, assessment, billing, or other business model exists.",
   "enabled_material_feature_flags": [],
   "clients": {
@@ -26,14 +26,17 @@
     "adsense": "NOT_VERIFIED",
     "admob": "NOT_VERIFIED"
   },
-  "latest_test_summary": "The focused accepted-main dependency correction moves Expo SDK 57 from 57.0.12 to the Expo-recommended 57.0.13 patch while retaining React Native 0.86.2 and TypeScript 5.9.3. Clean npm ci, CI-mode Expo dependency validation, Expo Doctor 20/20, all workspace checks with 17 Vitest tests, portability, iOS/Android production exports, Ruff/Django checks, 48 SQLite tests with four PostgreSQL-only skips, continuity, audit review, and diff checks pass locally on the correction; hosted CI on the exact correction commit is the remaining acceptance observation.",
-  "known_blockers": [],
+  "latest_test_summary": "The focused accepted-main maintenance correction moves Expo SDK 57 from 57.0.13 to 57.0.15 while retaining React/ReactDOM 19.2.3, React Native 0.86.2, TypeScript 5.9.3, and Node 24.19.0/npm 11.17.0. Clean npm ci, live CI-mode Expo validation, Expo Doctor 20/20, all workspace checks with 17 Vitest tests, portability, Web build, iOS/Android production exports, Ruff/Django/migration checks, 48 SQLite tests with four PostgreSQL-only skips, audit review, continuity, and diff checks pass locally; exact-commit hosted CI remains the final acceptance observation.",
+  "known_blockers": [
+    "The completed Web-first specification amendment remains pending and unmerged on spec-web-first-release-strategy at 3236bfc; after this maintenance correction reaches main, that branch must merge updated main and obtain green CI before specification review/merge.",
+    "M1.4 remains pending and unmerged on m1-4-staging-auth-client-proof at fa5b2e7; M1.5 remains blocked until M1.4 is completed or explicitly re-scoped after the specification amendment is accepted."
+  ],
   "high_risk_items": [
     "Execution breadth across web, iOS, Android, AI assessment quality, community moderation, and cross-platform commerce.",
     "Milestone 2 must prove automated official-scope and Rule Obligation completeness with primary/official authority and lawful multi-source reconciliation; Sourcebooks are optional enhanced reconciliation, not a launch dependency.",
     "Cross-scenario projections, anonymous claim security, private public-page overlays, entitlement transitions, and cross-device orchestration require explicit integration/security tests before GA.",
     "Official NCBE scope/source changes must pass source-drift and revalidation workflow; future exam scopes remain provisional until governing materials exist."
   ],
-  "exact_next_task": "Confirm and accept hosted Foundation CI on the focused Expo 57.0.13 accepted-main dependency correction. Only after that exact commit is green may M1.4 staging authentication and client navigation/deep-link proof begin; do not infer M1.4 completion or provider verification from this maintenance correction.",
-  "last_verified_at": "2026-08-15T08:16:39-07:00"
+  "exact_next_task": "Require green GitHub Actions on the exact maintenance-expo-sdk57-patch commit, then fast-forward it into main through review. Next merge updated origin/main into spec-web-first-release-strategy, reconcile only its dependency/continuity conflicts, and require green CI before merging the specification amendment. Only afterward merge amended main into the existing published M1.4 branch without rewriting its history; do not begin M1.5.",
+  "last_verified_at": "2026-08-20T13:34:33-07:00"
 }

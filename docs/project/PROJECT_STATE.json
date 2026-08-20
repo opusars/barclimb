@@ -5,8 +5,8 @@
   "active_launch_train": "A_FOUNDATION",
   "active_milestone": 1,
   "status": "IN_PROGRESS",
-  "latest_known_good_commit": "77d55674cf4a3c1f1f074aaac9eb6449b460534f",
-  "active_branch": "spec-web-first-release-strategy",
+  "latest_known_good_commit": "4850b7829e9a5f6205082a761643d6f109de7fd6",
+  "active_branch": "spec-m14-web-first-gate-reconciliation",
   "database_migration_summary": "M1.3a retains the minimal accounts.User and adds an authentication generation, native-session generation snapshots, deterministic digest-only email-action derivation metadata, and the durable provider-neutral AuthEmailDelivery outbox. No learner, entitlement, curriculum, assessment, billing, or other business model exists.",
   "enabled_material_feature_flags": [],
   "clients": {
@@ -19,18 +19,20 @@
     "stripe": "NOT_VERIFIED",
     "apple": "NOT_VERIFIED",
     "google_play": "NOT_VERIFIED",
+    "expo_eas": "VERIFIED_NONPRODUCTION",
     "sendgrid": "NOT_VERIFIED",
     "s3": "NOT_VERIFIED",
-    "heroku_postgres_kvs": "NOT_VERIFIED",
+    "heroku_postgres_kvs": "VERIFIED_NONPRODUCTION",
     "sentry": "NOT_VERIFIED",
     "adsense": "NOT_VERIFIED",
     "admob": "NOT_VERIFIED"
   },
-  "latest_test_summary": "Accepted main 77d5567 is green with Expo SDK 57.0.15, React/ReactDOM 19.2.3, React Native 0.86.2, TypeScript 5.9.3, and Node 24.19.0/npm 11.17.0. The Web-first amendment remains pending on this branch with all four amended controlling specs and manifest preserved. Main CI run 32415566577 passed continuity, backend/PostgreSQL/Redis/Celery, TypeScript checks, live Expo validation/Doctor, and iOS/Android exports. Post-merge local specification, continuity, dependency, and repository checks are recorded in TEST_LEDGER.md; application behavior and M1.4 remain unchanged.",
+  "latest_test_summary": "Accepted main 4850b78 contains the Web-first amendment and Expo SDK 57.0.15 baseline; exact-sha Foundation CI runs 32416558206 and 32417562112 passed. Separate published M1.4 commit 4c1d2e6 is green in Foundation CI run 32423925699 and records verified-nonproduction Heroku/PostgreSQL/KVS staging, deployed Web/worker/beat auth runtime, EAS project ownership, real native navigation/config/deep-link foundations, automated SecureStore state coverage, and signed Android internal build 2e340187-f441-4175-ba8b-852d044996f7. No Apple team, iOS signed build, physical-device native auth/SecureStore lifecycle, live AASA/assetlinks routing, Google Play ownership/recovery, or native production purchase/restore is verified.",
   "known_blockers": [
-    "The completed Web-first specification amendment remains pending and unmerged on spec-web-first-release-strategy until its reconciled merge commit passes GitHub Actions and is reviewed.",
-    "M1.4 remains incomplete and unmerged on m1-4-staging-auth-client-proof at fa5b2e7; after this amendment reaches main, that published branch must merge amended main and reconcile continuity before M1.4 continues.",
-    "M1.5 must not begin until M1.4 is completed or explicitly re-scoped under the amended controlling specifications."
+    "This gate-reconciliation amendment remains pending on spec-m14-web-first-gate-reconciliation until its exact commit passes GitHub Actions and is reviewed/merged.",
+    "M1.4 remains separate and unmerged on m1-4-staging-auth-client-proof at 4c1d2e6. After this amendment reaches main, that branch must merge updated main, reconcile its continuity against the clarified gate, rerun acceptance checks, and then be reviewed/accepted without rewriting history.",
+    "Apple Developer Program team access, final iOS signing/provisioning/build, physical-device iOS/Android authentication and SecureStore lifecycle, live AASA/assetlinks routing, Google Play ownership/recovery, store approvals, and native production purchase/restore remain mandatory platform-specific Native GA blockers even though they do not block the clarified M1.4 foundation gate.",
+    "M1.5 must not begin until the existing M1.4 branch is brought forward, validated, accepted, and merged."
   ],
   "high_risk_items": [
     "Execution breadth across web, iOS, Android, AI assessment quality, community moderation, and cross-platform commerce.",
@@ -38,6 +40,6 @@
     "Cross-scenario projections, anonymous claim security, private public-page overlays, entitlement transitions, and cross-device orchestration require explicit integration/security tests before GA.",
     "Official NCBE scope/source changes must pass source-drift and revalidation workflow; future exam scopes remain provisional until governing materials exist."
   ],
-  "exact_next_task": "Require green GitHub Actions and review on the exact reconciled spec-web-first-release-strategy merge commit, then merge this amendment to main without rewriting history. After amended main is green, merge updated origin/main into the existing published m1-4-staging-auth-client-proof branch, preserve its M1.4 implementation/evidence, reconcile continuity, and complete or explicitly re-scope M1.4 before M1.5.",
-  "last_verified_at": "2026-08-20T13:53:00-07:00"
+  "exact_next_task": "Require green GitHub Actions and review for spec-m14-web-first-gate-reconciliation, then merge the amendment to main without rewriting history. After amended main is green, merge updated origin/main into m1-4-staging-auth-client-proof, preserve its implementation/evidence, reconcile and rerun the clarified M1.4 gate, and accept/merge it if green. Apple enrollment and physical-device proof are not prerequisites for that M1.4 acceptance, but remain mandatory before their applicable Native GA. Do not begin M1.5 first.",
+  "last_verified_at": "2026-08-20T15:34:06-07:00"
 }

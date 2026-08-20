@@ -1,9 +1,11 @@
 # BarClimb Project Handoff
 
 ## Current state
-Milestone 1 is in progress. M1.1/M1.1a established and corrected the multi-client repository/toolchain foundation; M1.2 added the asynchronous runtime/environment contract; M1.3 established the single minimal account identity and cross-client authentication; M1.3a hardens its credential transport, reset concurrency, proxy/HTTPS boundary, durable email delivery, and native recovery states. Accepted `main` has no learner profile, onboarding, entitlement, curriculum, assessment, billing, provider verification, or deployment.
+Milestone 1 is in progress. Accepted `main` is green at `4850b7829e9a5f6205082a761643d6f109de7fd6` and already contains the controlling Web-first release strategy. This specification-only branch clarifies the M1.4 foundation gate without changing application behavior or removing any Native GA obligation.
 
-The controlling release sequence is now **Web GA → iOS Native GA → Android Native GA**, while architecture remains one first-class multi-client product from Milestone 1. The amendment occurred while M1.4 was already in progress on `m1-4-staging-auth-client-proof`. That implementation branch remains intentionally unmerged and was not modified here; after this specification branch is accepted into `main`, M1.4 must merge amended main and reconcile its implementation/continuity before continuing.
+M1.4 remains separate and unmerged on `m1-4-staging-auth-client-proof` at green commit `4c1d2e64a0ab2e29684fcf95599ab2c4e27cf769`; this amendment does not modify that branch. Its committed evidence includes persistent Heroku/PostgreSQL/KVS staging, live Web/worker/beat processes, deployed Web/auth protocol proof, real native navigation and portable environment/deep-link configuration, automated SecureStore state coverage, verified EAS ownership, green Web/native checks and exports, and signed Android internal build `2e340187-f441-4175-ba8b-852d044996f7`. It does not include Apple team access, an iOS signed build, actual-device native auth/SecureStore lifecycle, live OS association routing, Google Play ownership/recovery, store approval, or native production purchase/restore.
+
+The controlling release sequence remains **Web GA → iOS Native GA → Android Native GA**, with one first-class multi-client product architecture. Under the clarified gate, the current committed M1.4 evidence appears sufficient for foundation acceptance once this amendment reaches main and the M1.4 branch is brought forward, continuity-reconciled, rerun, reviewed, and merged. The unverified external/device items move to—not out of—the relevant Native GA gate. M1.5 remains blocked until M1.4 is accepted and merged.
 
 ## Authoritative contracts
 See `../specs/SPEC_MANIFEST.json`. Four Markdown specs control the build.
@@ -63,11 +65,19 @@ See `../specs/SPEC_MANIFEST.json`. Four Markdown specs control the build.
 - The Web GA gate retains the anonymous SEO → substantive learning → Instant Practice → signup/claim, authenticated My BarClimb, and Plus ad-free/deeper-learning journeys.
 - M1.5 may not begin until M1.4 is completed or explicitly re-scoped under the amended controlling specifications.
 
+## M1.4 gate reconciliation
+- M1.4 foundation acceptance requires real staging with PostgreSQL/KVS and Web/worker/beat, deployed Web auth, portable native auth architecture, real native navigation, fail-closed portable configuration, EAS/build-project ownership, automated SecureStore state coverage, deep-link architecture/config, green Web/native CI and both exports, an explicit evidence ledger, and at least one real signed native internal-build path where current accounts permit.
+- The signed Android staging APK is qualifying signed-build evidence; JavaScript exports alone would not be.
+- Missing Apple enrollment/team, final Apple signing/provisioning/iOS build, physical-device auth/SecureStore lifecycle, AASA/assetlinks publication and OS routing, Google Play ownership/recovery, store approvals, and native purchase/restore do not indefinitely block M1.4 or Web development when the foundation gate passes.
+- Every such deferred item remains a hard blocker for its applicable iOS or Android Native GA. Evidence may not be inferred across platforms or proof types.
+
 ## Pending branch coordination
-- Accepted main is green at `77d5567`; this branch now contains it through a normal merge and remains pending until the reconciled commit passes CI and is reviewed/merged.
-- `m1-4-staging-auth-client-proof` remains untouched, incomplete, and unmerged at `fa5b2e7`. After this amendment reaches main, that published branch must merge amended main without rewriting history before M1.4 continues. M1.5 remains blocked.
+- Accepted main is green at `4850b78`; this gate-reconciliation branch begins from that exact commit and remains pending until its exact commit passes CI and is reviewed/merged.
+- `m1-4-staging-auth-client-proof` remains untouched by this amendment, green, separate, and unmerged at `4c1d2e6`. After this amendment reaches main, that published branch must merge updated main without rewriting history, reconcile its continuity, rerun the clarified gate, and be reviewed/accepted before M1.5 begins.
 
 ## Tests actually run
+- Accepted-main exact-sha Foundation CI runs `32416558206` and `32417562112` on `4850b78`: PASSED. Local/remote main matched exactly before this branch was created.
+- Separate M1.4 exact-sha Foundation CI run `32423925699` on untouched commit `4c1d2e6`: PASSED.
 - Reconciled specification branch locally on Node 24.19.0/npm 11.17.0: clean `npm ci` installed 687 packages; live `CI=1 npx expo install --check` PASSED; Expo Doctor PASSED 20/20; `npm run check` PASSED all nine workspace typechecks, 4 Web tests, 13 native tests, and the Web production build; `npm run portability` PASSED all seven shared packages. Specification/continuity/search and diff checks are recorded in `TEST_LEDGER.md`.
 - Accepted-main GitHub Actions run `32415566577` on `77d5567`: PASSED continuity, backend/PostgreSQL/Redis/Celery, TypeScript checks, live Expo dependency validation/Doctor, and iOS/Android exports.
 - Web-first amendment GitHub Actions run `32413722581`: continuity PASSED; backend/PostgreSQL/Redis/Celery PASSED; TypeScript clean install, full check, and portability PASSED. The TypeScript job then FAILED `npx expo install --check` because Expo's live SDK 57 metadata advanced the recommended Expo patch from accepted-main 57.0.13 to 57.0.15. Doctor/exports were skipped after that failure. This is external baseline dependency drift, not a specification-diff failure, and remains outside this specification-only branch.
@@ -81,13 +91,13 @@ See `../specs/SPEC_MANIFEST.json`. Four Markdown specs control the build.
 - Remaining npm audit findings are upstream Expo/React Native build/config-tool paths documented in `SECURITY_ADVISORIES.md`; no forced downgrade was applied.
 
 ## Providers actually verified
-Accepted main has no managed provider verification. Local PostgreSQL 14 and Redis 7.2 were exercised as runtime dependencies, but Heroku/Postgres/KVS remains `NOT_VERIFIED` in this branch. The unmerged M1.4 branch contains later nonproduction deployment evidence that must be reconciled when amended main is brought forward; do not silently copy its status without preserving its evidence.
+The separate M1.4 branch contains durable read-only evidence for `VERIFIED_NONPRODUCTION` Heroku/PostgreSQL/KVS and Expo/EAS control: the correct Heroku owner account can inspect `barclimb-staging`, live Web/worker/beat processes, Essential-0 PostgreSQL, Mini KVS, and healthy readiness; the EAS owner project produced a signed Android internal APK. These observations are now reflected in the continuity ledger, but the implementation remains unmerged. Apple, Google Play, SendGrid, S3, OpenAI, Stripe, Sentry, and ad providers remain `NOT_VERIFIED`; no production-provider claim follows.
 
 ## Known risks
 Execution breadth remains the principal engineering risk. Curriculum completeness depends on automated official-scope/rule compilation, authority provenance, lawful multi-source reconciliation, subject certification, and strict inventory gates. NCBE Sourcebooks are optional enhanced reconciliation when lawfully available; do not make purchase/access a build or launch dependency.
 
 ## Exact next task
-Require green GitHub Actions and review on the exact reconciled `spec-web-first-release-strategy` merge commit, then merge this amendment to main without rewriting history. After amended main is green, merge updated `origin/main` into the existing published `m1-4-staging-auth-client-proof` branch; preserve its M1.4 implementation/evidence, reconcile continuity, and rerun all M1.4 gates before continuation. Complete or explicitly re-scope M1.4 before M1.5. Do not begin application/product implementation from this specification branch.
+Require green GitHub Actions and review on the exact `spec-m14-web-first-gate-reconciliation` commit, then merge this amendment to main without rewriting history. After amended main is green, merge updated `origin/main` into the existing published `m1-4-staging-auth-client-proof` branch; preserve its M1.4 implementation/evidence, reconcile continuity, and rerun the clarified M1.4 gates. If green, review, accept, and merge M1.4 without waiting for Apple enrollment or physical-device proof. Keep those items explicit for the applicable Native GA. Do not begin M1.5 or any product domain first.
 
 ## Resume commands
 ```bash
@@ -99,7 +109,7 @@ npm run doctor --workspace @barclimb/native
 ```
 Use Python 3.13.15, Node 24.19.0, and npm 11.17.0 for baseline parity. Install Python requirements with `--require-hashes`. See `../implementation/ENVIRONMENT.md` for setup and the PostgreSQL smoke path. Expo Doctor requires network access for all checks.
 
-For real runtime acceptance, also run PostgreSQL and Redis/Valkey, select `config.settings.postgres_test`, execute the PostgreSQL concurrency suite, and execute worker/beat discovery documented in `../implementation/ENVIRONMENT.md`. Review/staging/production are contracts only; no Heroku app or managed add-on has been verified.
+For local runtime regression, also run PostgreSQL and Redis/Valkey, select `config.settings.postgres_test`, execute the PostgreSQL concurrency suite, and execute worker/beat discovery documented in `../implementation/ENVIRONMENT.md`. The separate M1.4 branch contains verified-nonproduction Heroku/PostgreSQL/KVS evidence; do not confuse that staging observation with production acceptance.
 
 ## Final integration note
 Before feature UI implementation, establish the canonical provider-agnostic billing domain, server projection schemas, orchestration models/state machines, and client-surface capability manifest. These prevent Visitor/Free/Plus and Web/iOS/Android from diverging.

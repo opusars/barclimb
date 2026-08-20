@@ -2931,7 +2931,24 @@ Deliver:
 - deep-link/native-routing skeleton and internal-build risk proof
 - Apple/Google project prerequisites begun early enough to expose external blockers
 
-Gate: clean recovery works; staging foundation is usable; Web and native shells target one backend contract; critical native risks are either proven or recorded as explicit external blockers. Public store release is not required for Web GA at this milestone.
+Gate: clean recovery works; staging foundation is usable; Web and native shells target one backend contract; critical native risks are either proven at foundation depth or recorded as explicit external blockers against the applicable Native GA. Public store release is not required for Web GA at this milestone.
+
+For **Milestone 1/M1.4 foundation acceptance**, the evidence package must include all of the following:
+
+- a real persistent staging backend with PostgreSQL and managed KVS;
+- live Web, worker, and beat process roles;
+- deployed Web authentication against that staging backend;
+- one portable native authentication protocol architecture shared with the server-authoritative identity model;
+- real native navigation rather than simulated destination state;
+- portable, fail-closed environment and client configuration;
+- verified control of the selected native build project/pipeline;
+- at least one genuinely signed native internal-build path on a platform for which the project currently has the required account access;
+- green Web/native CI, automated checks, and production JS exports for both iOS and Android;
+- a SecureStore credential state machine with automated save/restore/delete/failure coverage;
+- native deep-link route architecture and platform configuration, without falsely claiming live OS routing before associations and signing identities are verified; and
+- an explicit provider/account/device evidence ledger that distinguishes `VERIFIED`, `VERIFIED_NONPRODUCTION`, `NOT_VERIFIED`, and `BLOCKED_EXTERNAL` and never substitutes configuration, export, or API proof for device/runtime proof.
+
+A signed Android internal build satisfies the signed-path item above; a JavaScript export alone does not. Lack of an Apple Developer Program team, a physical device, a store account, or another externally controlled platform prerequisite does not by itself block M1.4 acceptance or the Web milestone train when every applicable foundation item above is proven and each unavailable proof is honestly relocated to the relevant Native GA ledger. This is **gate relocation, not requirement removal**: M1.4 does not verify the deferred item, and no later release may claim it from foundation evidence.
 
 ## 104. Milestone 2 — Curriculum core + automated coverage assurance
 
@@ -3098,6 +3115,8 @@ All applicable Web GA items must pass:
 ## 116. Native GA release gates
 
 Each native platform has an independent public release gate defined by the Native Platform Specification. iOS/Android release requires its own critical assessment parity, device/runtime recovery, deep links, push, UGC safety, privacy/deletion, provider-neutral entitlement consumption, platform billing/restore where offered, observability, store metadata/review readiness, and production release verification.
+
+In particular, the applicable Native GA retains every platform-specific proof that may have been externally blocked at M1.4. iOS requires Apple Developer Program team access, final Apple bundle/signing/provisioning, a signed iOS internal and production/store-capable build, physical-device Keychain/SecureStore and authentication lifecycle proof, published AASA association with real Universal Link routing, and App Store approval. Android requires a production/store-capable signed build, physical-device Keystore/SecureStore and authentication lifecycle proof, published `assetlinks.json` association with real App Link routing, Google Play ownership/recovery and approval, and equivalent device/runtime evidence. Each platform also requires production purchase/restore/lifecycle evidence when native purchases are offered. An Android signing success cannot satisfy an iOS gate, and configuration or JavaScript exports cannot satisfy either platform's runtime, link, signing, or store evidence.
 
 ---
 
@@ -3268,6 +3287,8 @@ The following concrete native deliverables may complete after Web GA without com
 - platform-specific accessibility/device-matrix completion;
 - native public community moderation UI completion;
 - native full-simulation release certification.
+
+The same scheduling rule applies at the Milestone 1 foundation boundary: external account enrollment, platform-final signing/provisioning, physical-device SecureStore/authentication lifecycle, publication and real OS routing of Universal/App Links, store ownership/recovery/approval, and native production purchase/restore may remain open after M1.4 only when the §103 foundation gate passes and the evidence ledger assigns each item to the applicable Native GA. Those obligations remain hard release gates; they are not converted into optional roadmap work.
 
 ### 120.3 Release-status truth
 

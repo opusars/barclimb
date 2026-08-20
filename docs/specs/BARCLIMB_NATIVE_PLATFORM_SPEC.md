@@ -330,18 +330,17 @@ App-store screenshots should show real assessment/community/progress value, not 
 
 ## 19. Mobile release pipeline
 
-Establish during Milestone 1:
+Establish during Milestone 1 at foundation depth:
 
-- bundle identifiers/application IDs
-- signing/certificates/keys managed securely
-- Expo/EAS or documented equivalent build pipeline
-- dev/internal builds
-- TestFlight
-- Google Play internal/closed testing
-- environment-specific API/config
-- source maps/symbol upload to observability
-- version/build numbering
-- staged rollout/rollback strategy
+- stable bundle-identifier/application-ID strategy and environment-specific identities;
+- Expo/EAS ownership or a documented equivalent build pipeline;
+- securely managed signing/certificate/key architecture and at least one genuinely signed internal-build path where current account access permits;
+- portable, fail-closed environment-specific API/config;
+- dev/internal build profiles, version/build numbering, and a documented staged rollout/rollback strategy;
+- source-map/symbol handling architecture for observability; and
+- an explicit per-platform ledger for account access, signing, build, device/runtime, deep-link, and store evidence.
+
+TestFlight, Google Play internal/closed testing, final platform signing/provisioning, production observability upload, and production rollout remain required at the applicable Native GA. An unavailable Apple team, store account, or test device is recorded as `BLOCKED_EXTERNAL` or `NOT_VERIFIED`; it does not by itself fail the Milestone 1 foundation gate when the portable architecture is in place and at least one permitted platform has produced a signed internal build. A JavaScript export is never a substitute for that signed-build proof.
 
 Production Web GA must not silently imply native release. Each client has explicit release status. Web GA may precede public iOS/Android availability, but the native release pipeline, identifiers, build/signing foundations, deep-link contracts, and parity ledgers begin early and remain active so later Native GA is a release of the same product rather than a retrofit.
 
@@ -392,18 +391,20 @@ Web GA may already be live when this gate is evaluated. BarClimb cannot call the
 
 iOS and Android are independent Native GA gates: iOS GA does not wait for Android approval, and Android GA does not retroactively alter iOS status. Evidence and unresolved gaps remain platform-specific in provider and client-parity ledgers.
 
-## 23. Native technical-risk spikes required before feature build
+## 23. Native technical-risk spikes and evidence schedule
 
-Milestone 1 must prove the riskiest native assumptions with throwaway-or-promotable prototypes before the full feature build:
+The project must prove the riskiest native assumptions early enough to prevent Web-only contracts. Throwaway-or-promotable prototypes cover:
 
 1. schema-driven MCQ renderer with strike-through/highlighting;
 2. IQS resource switching with persistent answer state;
 3. long PT/LRPT editor with autosave, copy/paste, formatting, keyboard behavior, background/foreground recovery, and hardware-keyboard sanity on tablet;
-4. Universal/App Link to an assessment/public response;
-5. staging auth + secure credential/token storage;
+4. Universal/App Link architecture and route mapping to an assessment/public response;
+5. staging auth protocol + secure credential/token storage state machine;
 6. one sandbox StoreKit product query and one Google Play test-product query as soon as store projects permit.
 
-A failed spike can change the concrete native library/tool choice without changing the product contract. It must be resolved before Milestone 4 rather than discovered at launch.
+A failed spike can change the concrete native library/tool choice without changing the product contract. Renderer/editor contract risks in items 1–3 must be resolved before the related Milestone 4 feature is accepted rather than discovered at launch.
+
+For Milestone 1/M1.4, items 4–5 are accepted at foundation depth only when native route configuration/canonical parsing exists, native authentication uses the shared server protocol, the SecureStore save/restore/delete/failure state machine has automated coverage, both platform exports and CI pass, and the evidence ledger is explicit. Live AASA/`assetlinks.json` publication and OS routing, physical-device SecureStore/authentication lifecycle, and the sandbox product queries in item 6 require the relevant external accounts/devices and may remain `BLOCKED_EXTERNAL` or `NOT_VERIFIED` until the applicable Native GA. They remain mandatory gates there and may not be inferred from config tests, exports, backend API calls, or another platform's signed build.
 
 ## 24. Account model decision for v1
 
@@ -413,7 +414,7 @@ A future social-sign-in change requires an auth-contract update and platform-pol
 
 ## 25. Developer-account prerequisites
 
-At Milestone 1 kickoff, create/verify and document ownership/access for:
+At Milestone 1 kickoff, begin verification and document ownership/access or the exact external blocker for:
 
 - Apple Developer Program / App Store Connect;
 - Google Play Console;
@@ -421,7 +422,7 @@ At Milestone 1 kickoff, create/verify and document ownership/access for:
 - signing and store roles using least privilege;
 - organization-owned recovery/admin access rather than a single developer’s personal credentials where feasible.
 
-Store-account setup is a schedule dependency, not a launch-week task.
+Store-account setup is a schedule dependency, not a launch-week task. Missing Apple Developer Program enrollment/team access or Google Play ownership/recovery does not by itself block M1.4 foundation acceptance or Web development when the shared architecture, EAS/build-project control, one available signed internal-build path, and honest evidence ledger satisfy the foundation gate. It remains a hard prerequisite for the applicable Native GA and must be pursued early rather than silently deferred.
 
 ---
 
@@ -449,7 +450,7 @@ This is **not** permission to defer native architecture. Before Web GA, the proj
 - environment-specific API configuration;
 - internal build/signing/store-account prerequisites and technical-risk spikes.
 
-External Apple/Google enrollment, signing, review, or store delays are tracked as native-release dependencies and do not hold Web revenue hostage when these architecture obligations are met.
+External Apple/Google enrollment, platform-final signing, physical-device access, association publication, review, or store delays are tracked as platform-specific native-release dependencies. They do not hold M1.4 acceptance or the Web milestone train hostage when the Milestone 1 foundation obligations are met, but no missing proof is treated as completed or removed.
 
 ## 27. Native GA obligations after Web GA
 
@@ -468,6 +469,8 @@ Each platform must independently pass:
 - accessibility/device matrix;
 - crash/observability;
 - store metadata/review readiness.
+
+The iOS gate specifically requires an authorized Apple Developer Program team, final bundle/signing/provisioning, a signed iOS internal and production/store-capable build, physical-device Keychain/SecureStore and authentication lifecycle proof, published AASA association with real Universal Link routing, App Store approval, and native purchase/restore lifecycle evidence when purchases are offered. The Android gate specifically requires production/store-capable signing, physical-device Keystore/SecureStore and authentication lifecycle proof, published `assetlinks.json` association with real App Link routing, Google Play ownership/recovery and approval, and native purchase/restore lifecycle evidence when purchases are offered. Evidence is platform-specific: a signed Android internal APK proves the early signed-build path but proves none of the iOS, device-runtime, OS-routing, Play ownership, or production-purchase obligations.
 
 A native client may launch later without altering scoring, learner evidence, public identity, community ranking, or subscription semantics established by Web GA.
 

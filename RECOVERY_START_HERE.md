@@ -12,6 +12,6 @@ Controlling release sequence: **Web GA → iOS Native GA → Android Native GA**
 6. Follow `docs/project/RECOVERY_PLAYBOOK.md`.
 7. Continue from **Exact next task** in the handoff.
 
-During this amendment, `m1-4-staging-auth-client-proof` remains a separate intentionally unmerged branch. Do not continue it from stale specs: after the amendment is accepted into `main`, merge amended main into that published branch and reconcile continuity before further M1.4 work. Do not begin M1.5 first.
+During this gate-reconciliation amendment, `m1-4-staging-auth-client-proof` remains a separate intentionally unmerged branch at `4c1d2e6`. Do not continue it from stale specs: after this amendment is accepted into `main`, merge updated main into that published branch, reconcile continuity, and rerun the clarified M1.4 gate. Its current committed evidence may then be accepted without waiting for Apple enrollment or physical-device proof, but those unverified items remain mandatory before the applicable Native GA. Do not begin M1.5 first.
 
 If prose conflicts with repository reality, investigate and correct the continuity docs before new architecture work. Never reconstruct missing history from guesses.

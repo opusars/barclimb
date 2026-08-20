@@ -8,9 +8,9 @@ Release sequencing is Web GA → iOS Native GA → Android Native GA. This table
 
 | Capability | Web | iOS | Android | Notes |
 |---|---|---|---|---|
-| Client shell/toolchain | PARTIAL | PARTIAL | PARTIAL | Web ReactDOM mount/build passes; Expo 57 iOS/Android JS exports pass; no simulator/device/store-build verification |
-| Native navigation/deep links | N/A | NOT_STARTED | NOT_STARTED | Current shell buttons simulate destinations in local state; routing/universal/app links remain later M1 work |
-| Auth/account | PARTIAL | PARTIAL | PARTIAL | One email-login/username-public identity; Web session+CSRF/query-free fragment completion and native generation-bound opaque session+recoverable SecureStore states implemented. Shared backend security semantics are tested; native device builds/deep-linked completion, deployed proxy, and real email delivery remain unverified |
+| Client shell/toolchain | PARTIAL | PARTIAL | PARTIAL | Accepted main exports both clients. Separate M1.4 evidence verifies EAS ownership and a signed Android internal APK; no signed iOS build or actual-device runtime is verified. |
+| Native navigation/deep links | N/A | PARTIAL | PARTIAL | Separate M1.4 branch replaces simulated destinations with React Navigation and test-covered gated link config/canonical parsing. Staging AASA/assetlinks stay unpublished and no real OS routing is verified; each remains a Native GA blocker. |
+| Auth/account | PARTIAL | PARTIAL | PARTIAL | Shared Web session/CSRF and native opaque-session protocols are implemented; M1.4 proves deployed Web/backend auth and automated native SecureStore states. Actual-device save/restore/delete/restart/uninstall and auth lifecycle remain unverified on iOS/Android; SendGrid remains unverified. |
 | MCQ interaction | NOT_STARTED | NOT_STARTED | NOT_STARTED | highlight/strike/review required |
 | IQS | NOT_STARTED | NOT_STARTED | NOT_STARTED | schema-driven |
 | PT/LRPT | NOT_STARTED | NOT_STARTED | NOT_STARTED | long-form editor/recovery critical |

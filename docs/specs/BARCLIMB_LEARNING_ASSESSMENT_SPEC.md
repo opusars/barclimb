@@ -676,6 +676,8 @@ The Assessment Presentation Schema and UI Capability Manifest are client-agnosti
 
 For **Web GA**, every required assessment family must satisfy the complete Web capability profile. A missing native concrete renderer does not block Web GA when the canonical schema/API/persistence contract is already native-compatible and the gap is explicitly tracked. For **Native GA**, that platform may not expose an assessment family until its renderer satisfies the required selection, elimination, highlighting, navigation, resource, editor, autosave, recovery, grading, challenge, and accessibility behaviors. No Web-only assessment schema may be introduced merely because native releases later.
 
+Milestone 1/M1.4 foundation acceptance proves the portable presentation, route, authentication, persistence, and client-capability seams at the depth defined by the Build Constitution and Native Platform Specification. It does not require physical-device assessment-renderer, SecureStore/authentication-lifecycle, or real Universal/App Link evidence when the needed platform account/device is unavailable. Those gaps must be recorded without claiming verification and remain mandatory before the applicable Native GA; this scheduling rule never permits a Web-shaped AssessmentVersion, workspace, annotation, autosave, recovery, grading, or evidence contract.
+
 Public/community controls are outside the timed assessment workspace. Discussion, signals, and creator metrics appear only after submission/publication or on public pages and may never distract a learner during a timed simulation section.
 
 ---
@@ -1561,3 +1563,4 @@ BarClimb releases commercially on Web before public native store releases. This 
 - Web GA may proceed while native concrete components remain incomplete, provided no Web-only contract makes later parity structurally impossible and the gap is tracked in client parity.
 - Native GA requires full supported-family parity and device/runtime validation under the Native Platform Specification.
 - Coverage certification and Web GA “complete current published NextGen scope” claims are curriculum/inventory facts, not claims that every client has already reached public distribution.
+- Physical-device assessment interaction, recovery, and link-routing proof that is externally unavailable during Milestone 1 remains a platform-specific Native GA obligation. Automated contract/configuration evidence and a signed build path may satisfy only the M1.4 foundation gate; neither proves the deferred runtime behavior.

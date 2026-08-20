@@ -64,7 +64,7 @@ See `../specs/SPEC_MANIFEST.json`. Four Markdown specs control the build.
 - The production-rejected staging email sink proves outbox processing without delivery or SendGrid verification. Heroku/Postgres/KVS and Expo/EAS are `VERIFIED_NONPRODUCTION`; other providers remain `NOT_VERIFIED`.
 - Expo/EAS login verifies owner access to the existing `@opusarss-team/barclimb` project; the repository is durably linked to project ID `8ed30301-53d9-4630-b2c4-70d6d51f465b` without creating a duplicate.
 - EAS internal build `f2b86aba-4cec-4660-b8dd-f14ea112f134` produced a signed Android staging APK from exact source commit `9174007`; the stable evidence page is `https://expo.dev/accounts/opusarss-team/projects/barclimb/builds/f2b86aba-4cec-4660-b8dd-f14ea112f134`.
-- M1.4 remains incomplete: the iOS internal build stopped before upload because no suitable Apple internal-distribution credentials exist, this host lacks full Xcode/simctl and Android SDK/adb/emulator, and no actual native/SecureStore runtime proof exists. Android EAS signing is verified nonproduction, but Google Play ownership/recovery is not.
+- M1.4 remains incomplete: no BarClimb Apple Developer Program team currently exists, so iOS bundle/signing/profile/device setup and a real iOS build are blocked. This host lacks full Xcode/simctl and Android SDK/adb/emulator, and no actual native/SecureStore runtime proof exists. Android EAS signing is verified nonproduction, but Google Play ownership/recovery is not.
 
 ## Web-first release-strategy amendment
 - Web GA is the first commercial/revenue release; iOS Native GA and Android Native GA follow as independent platform gates.
@@ -92,13 +92,13 @@ See `../specs/SPEC_MANIFEST.json`. Four Markdown specs control the build.
 - Remaining npm audit findings are upstream Expo/React Native build/config-tool paths documented in `SECURITY_ADVISORIES.md`; no forced downgrade was applied.
 
 ## Providers actually verified
-Heroku app runtime, Essential-0 PostgreSQL, and Mini KVS remain `VERIFIED_NONPRODUCTION` from persistent staging evidence. Current public health/readiness remain healthy, but the authenticated Heroku account now receives `forbidden` and cannot inspect the app; ownership/collaborator access requires human restoration. Expo/EAS account/project control and Android internal build/signing are verified nonproduction. SendGrid, Apple signing, Google Play ownership/recovery, and all other providers remain `NOT_VERIFIED`.
+Heroku app runtime, Essential-0 PostgreSQL, and Mini KVS remain `VERIFIED_NONPRODUCTION`. Correct owner account `apollonomios@gmail.com` can inspect `barclimb-staging`; Web/worker/beat are up, PostgreSQL 18.3 and KVS 8.1.9 are available, public readiness is healthy, and Heroku reports no scheduled suspension or deletion. Expo/EAS account/project control and Android internal build/signing are verified nonproduction. SendGrid, Apple signing, Google Play ownership/recovery, and all other providers remain `NOT_VERIFIED`.
 
 ## Known risks
 Execution breadth remains the principal engineering risk. Curriculum completeness depends on automated official-scope/rule compilation, authority provenance, lawful multi-source reconciliation, subject certification, and strict inventory gates. NCBE Sourcebooks are optional enhanced reconciliation when lawfully available; do not make purchase/access a build or launch dependency.
 
 ## Exact next task
-Complete M1.4 only. An authorized Apple Developer account holder must run `npx eas-cli@22.0.0 build --platform ios --profile internal` interactively from `apps/native`, complete Apple login/2FA, select the correct team, verify or register `com.barclimb.app.staging`, and authorize the distribution certificate, provisioning profile, and internal-test device registration; do not send credentials through chat or commit them. Provide actual iOS and Android runtimes to exercise staging auth, SecureStore save/restore/delete/restart/uninstall behavior, and OS link routing. Restore ownership/collaborator access for `barclimb-staging` to refresh current provider control. Do not begin M1.5 or any product domain.
+Complete M1.4 only. Establish or grant an authorized BarClimb Apple Developer Program team, accept required Apple agreements, then run `npx eas-cli@22.0.0 build --platform ios --profile internal` interactively from `apps/native` to verify/register `com.barclimb.app.staging` and authorize the certificate, provisioning profile, and internal-test device; do not send credentials through chat or commit them. Provide actual iOS and Android runtimes to exercise staging auth, SecureStore save/restore/delete/restart/uninstall behavior, and OS link routing. Do not begin M1.5 or any product domain.
 
 ## Resume commands
 ```bash

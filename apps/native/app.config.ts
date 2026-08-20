@@ -55,6 +55,10 @@ export default ({ config }: ConfigContext): ExpoConfig => {
     ios: {
       ...base.expo.ios,
       bundleIdentifier: `com.barclimb.app${suffix}`,
+      infoPlist: {
+        ...config.ios?.infoPlist,
+        ITSAppUsesNonExemptEncryption: false,
+      },
       associatedDomains:
         environment === "local" ? [] : [`applinks:${new URL(webBaseUrl).host}`],
     },

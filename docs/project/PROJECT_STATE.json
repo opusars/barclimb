@@ -27,11 +27,10 @@
     "adsense": "NOT_VERIFIED",
     "admob": "NOT_VERIFIED"
   },
-  "latest_test_summary": "Accepted main 4850b78 is merged into the published M1.4 branch without rewriting history. Existing verified-nonproduction M1.4 staging evidence remains; current public health/readiness are 200 with database/KVS ok, but the authenticated Heroku account no longer has app access. Expo/EAS owner and project control are verified. Android internal build f2b86aba-4cec-4660-b8dd-f14ea112f134 produced a signed staging APK from exact commit 9174007; iOS stopped before upload because no suitable internal-distribution credentials exist. Exact Node 24.19.0/npm 11.17.0 checks pass through 60 backend tests, 27 Web/native tests, Expo Doctor 20/20, Web build, portability, and both JS exports. Actual native runtimes, SecureStore OS behavior, and OS link association remain acceptance gaps.",
+  "latest_test_summary": "Accepted main 4850b78 is merged into the published M1.4 branch without rewriting history. Correct Heroku owner account apollonomios@gmail.com can inspect barclimb-staging: Web/worker/beat are up, Essential-0 PostgreSQL 18.3 and Mini KVS 8.1.9 are available, public readiness reports database/KVS ok, and the delinquency API reports no scheduled suspension or deletion. Expo/EAS owner and project control plus historical Android internal build f2b86aba-4cec-4660-b8dd-f14ea112f134 are verified nonproduction. iOS now declares only standard/exempt encryption accurately, but no BarClimb Apple Developer Program team exists. Actual native runtimes, SecureStore OS behavior, and OS link association remain acceptance gaps.",
   "known_blockers": [
-    "The authenticated Heroku account receives forbidden for barclimb-staging and the app is absent from its app list; restore ownership/collaborator access or authenticate the correct owner before process/account evidence can be refreshed.",
     "This host has only Apple Command Line Tools (no full Xcode/simctl) and no Android SDK/adb/emulator, so actual iOS/Android authentication and SecureStore runtime behavior cannot be exercised here.",
-    "The iOS internal build is blocked until an authorized Apple Developer account holder completes interactive Apple login/2FA, selects the correct team, verifies or registers com.barclimb.app.staging, and authorizes the distribution certificate, provisioning profile, and internal-test device registration. No Apple credential should be sent through repository or chat.",
+    "There is currently no BarClimb Apple Developer Program team. The iOS internal build remains blocked until the owner enrolls or grants an authorized team, accepts required agreements, and then completes interactive team/bundle/signing/profile/device setup. No Apple credential should be sent through repository or chat.",
     "The successful Android signed internal build proves EAS-managed Android build/signing only; Google Play ownership/recovery and actual Android runtime behavior remain unverified.",
     "M1.5 must not begin until M1.4 is completed or explicitly re-scoped under the amended controlling specifications."
   ],
@@ -41,6 +40,6 @@
     "Cross-scenario projections, anonymous claim security, private public-page overlays, entitlement transitions, and cross-device orchestration require explicit integration/security tests before GA.",
     "Official NCBE scope/source changes must pass source-drift and revalidation workflow; future exam scopes remain provisional until governing materials exist."
   ],
-  "exact_next_task": "Complete M1.4 only: an authorized Apple Developer account holder must run the iOS internal build interactively and complete Apple team/bundle/signing/device authorization without sharing credentials; provide actual iOS and Android runtimes to exercise staging authentication, SecureStore save/restore/delete/restart/uninstall behavior, and OS link routing; restore barclimb-staging Heroku ownership/collaborator access for current control evidence. Do not begin M1.5 or any product domain.",
-  "last_verified_at": "2026-08-20T14:46:16-07:00"
+  "exact_next_task": "Complete M1.4 only: establish or grant an authorized BarClimb Apple Developer Program team, then complete interactive iOS bundle/signing/profile/device setup and produce the iOS internal build; provide actual iOS and Android runtimes to exercise staging authentication, SecureStore save/restore/delete/restart/uninstall behavior, and OS link routing. Do not begin M1.5 or any product domain.",
+  "last_verified_at": "2026-08-20T15:04:50-07:00"
 }

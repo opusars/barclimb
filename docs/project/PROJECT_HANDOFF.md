@@ -1,7 +1,7 @@
 # BarClimb Project Handoff
 
 ## Current state
-Milestone 1 and M1.4 are in progress on `m1-4-staging-auth-client-proof` under accepted amended main. M1.4 has persistent verified-nonproduction Heroku/PostgreSQL/KVS staging, deployed Web auth/routes/outbox processes, React Navigation scaffolding, gated deep-link configuration, and verified owner access to the existing `@opusarss-team/barclimb` EAS project. It is not complete unless internal-build/signing and actual iOS/Android authentication/SecureStore evidence close the remaining gaps. No learner profile, onboarding, entitlement, curriculum, assessment, billing, or later product domain has been implemented.
+Milestone 1 and M1.4 are in progress on `m1-4-staging-auth-client-proof` under accepted amended main. M1.4 has persistent verified-nonproduction Heroku/PostgreSQL/KVS staging, deployed Web auth/routes/outbox processes, React Navigation scaffolding, gated deep-link configuration, verified owner access to the existing `@opusarss-team/barclimb` EAS project, and a signed Android internal staging APK. It is not complete until iOS signing/build and actual iOS/Android authentication/SecureStore evidence close the remaining gaps. No learner profile, onboarding, entitlement, curriculum, assessment, billing, or later product domain has been implemented.
 
 The controlling release sequence is **Web GA → iOS Native GA → Android Native GA**, while architecture remains one first-class multi-client product from Milestone 1. Public native approval/release does not gate Web GA merely because incomplete, but M1.4 remains mandatory early native architecture insurance and M1.5 remains blocked.
 
@@ -61,9 +61,10 @@ See `../specs/SPEC_MANIFEST.json`. Four Markdown specs control the build.
 - Canonical-link parsing removes query/fragment data from fallbacks. Universal/App Link configuration is gated; verification/reset remain Web-only and association endpoints stay unpublished until signing identities are verified.
 - Persistent `barclimb-staging` runs deployed commit `6bec558` with Essential-0 PostgreSQL `postgresql-aerodynamic-56880`, Mini KVS `redis-flat-93728`, and one Basic Web/worker/beat process each. The code deploy was release v8; credential rotation advanced the current configuration release to v12, after which all three processes and database/KVS readiness recovered.
 - Deployed release/migrations, liveness/readiness, HTTPS redirect/forwarded protocol, direct routes, Web session auth, native bearer API issuance/revocation, rightmost-forwarded-IP throttling, beat recovery, worker delivery, and sanitized log evidence passed.
-- The production-rejected staging email sink proves outbox processing without delivery or SendGrid verification. Heroku/Postgres/KVS is `VERIFIED_NONPRODUCTION`; every other provider remains `NOT_VERIFIED`.
-- Expo/EAS login now verifies owner access to the existing `@opusarss-team/barclimb` project; the repository is durably linked to project ID `8ed30301-53d9-4630-b2c4-70d6d51f465b` without creating a duplicate.
-- M1.4 remains incomplete: Apple team/bundle/signing and Android signing/recovery evidence and internal builds are pending, this host lacks full Xcode/simctl and Android SDK/adb/emulator, and no actual native/SecureStore runtime proof exists.
+- The production-rejected staging email sink proves outbox processing without delivery or SendGrid verification. Heroku/Postgres/KVS and Expo/EAS are `VERIFIED_NONPRODUCTION`; other providers remain `NOT_VERIFIED`.
+- Expo/EAS login verifies owner access to the existing `@opusarss-team/barclimb` project; the repository is durably linked to project ID `8ed30301-53d9-4630-b2c4-70d6d51f465b` without creating a duplicate.
+- EAS internal build `f2b86aba-4cec-4660-b8dd-f14ea112f134` produced a signed Android staging APK from exact source commit `9174007`; the stable evidence page is `https://expo.dev/accounts/opusarss-team/projects/barclimb/builds/f2b86aba-4cec-4660-b8dd-f14ea112f134`.
+- M1.4 remains incomplete: the iOS internal build stopped before upload because no suitable Apple internal-distribution credentials exist, this host lacks full Xcode/simctl and Android SDK/adb/emulator, and no actual native/SecureStore runtime proof exists. Android EAS signing is verified nonproduction, but Google Play ownership/recovery is not.
 
 ## Web-first release-strategy amendment
 - Web GA is the first commercial/revenue release; iOS Native GA and Android Native GA follow as independent platform gates.
@@ -73,10 +74,11 @@ See `../specs/SPEC_MANIFEST.json`. Four Markdown specs control the build.
 - M1.5 may not begin until M1.4 is completed or explicitly re-scoped under the amended controlling specifications.
 
 ## Current branch coordination
-- Accepted amended main `4850b78` is merged into this published branch without rebasing or rewriting history. Existing M1.4 implementation and evidence remain intact; current verification determines whether its external gaps can now close.
+- Accepted amended main `4850b78` is merged into this published branch without rebasing or rewriting history. Existing M1.4 implementation and evidence remain intact; the completion audit closed the Android internal-build path and recorded the remaining external gaps precisely.
 - M1.4 remains separate and unmerged from main. Do not begin M1.5 from this branch.
 
 ## Tests actually run
+- M1.4 final local rerun on exact Node 24.19.0/npm 11.17.0: clean `npm ci`, all nine typechecks, 9 Web tests, 18 native tests, Web build, all seven portability packages, live Expo dependency validation, Doctor 20/20, and iOS/Android JS exports PASSED. Ruff lint/format, Django system/migration checks, and 60 local backend tests PASSED with four PostgreSQL-only skips. Android EAS internal build passed; iOS credential/build and both actual runtimes remain blocked as recorded below and in `TEST_LEDGER.md`.
 - Reconciled specification branch locally on Node 24.19.0/npm 11.17.0: clean `npm ci` installed 687 packages; live `CI=1 npx expo install --check` PASSED; Expo Doctor PASSED 20/20; `npm run check` PASSED all nine workspace typechecks, 4 Web tests, 13 native tests, and the Web production build; `npm run portability` PASSED all seven shared packages. Specification/continuity/search and diff checks are recorded in `TEST_LEDGER.md`.
 - Accepted-main GitHub Actions run `32415566577` on `77d5567`: PASSED continuity, backend/PostgreSQL/Redis/Celery, TypeScript checks, live Expo dependency validation/Doctor, and iOS/Android exports.
 - Web-first amendment GitHub Actions run `32413722581`: continuity PASSED; backend/PostgreSQL/Redis/Celery PASSED; TypeScript clean install, full check, and portability PASSED. The TypeScript job then FAILED `npx expo install --check` because Expo's live SDK 57 metadata advanced the recommended Expo patch from accepted-main 57.0.13 to 57.0.15. Doctor/exports were skipped after that failure. This is external baseline dependency drift, not a specification-diff failure, and remains outside this specification-only branch.
@@ -86,17 +88,17 @@ See `../specs/SPEC_MANIFEST.json`. Four Markdown specs control the build.
 - Clean hash-verified Python lock installation passes on exact Python 3.13.15; Django 5.2.17 system check and 2 health/readiness tests pass on isolated SQLite and on a temporary local PostgreSQL 14 cluster after applying all built-in migrations. CI uses Python 3.13.15 and PostgreSQL 17.
 - Clean `npm ci`, ESLint, Prettier, all TypeScript workspace typechecks, three Vitest tests (including the ReactDOM mount), the portability gate, and the Vite production build pass on exact Node 24.19.0/npm 11.17.0.
 - `npm ls react react-dom --all` resolves only React 19.2.3; the built web asset contains only that React patch marker.
-- Expo dependency compatibility reports current, Expo Doctor passes 20/20, and iOS/Android production JS exports pass on exact Node 24.19.0. Simulator/device/store builds remain unverified because Xcode, Android SDK/adb, and EAS are not configured on this host.
+- Expo dependency compatibility reports current, Expo Doctor passes 20/20, and iOS/Android production JS exports pass on exact Node 24.19.0. A signed Android internal APK now passes through EAS. Simulator/device execution remains unverified because full Xcode/simctl and Android SDK/adb/emulator are absent; iOS internal build/signing is also pending.
 - Remaining npm audit findings are upstream Expo/React Native build/config-tool paths documented in `SECURITY_ADVISORIES.md`; no forced downgrade was applied.
 
 ## Providers actually verified
-Heroku app runtime, Essential-0 PostgreSQL, and Mini KVS remain `VERIFIED_NONPRODUCTION` from persistent staging evidence. Current public health/readiness remain healthy, but the authenticated Heroku account now receives `forbidden` and cannot inspect the app; ownership/collaborator access requires human restoration. Expo/EAS account and existing-project control are verified nonproduction. SendGrid, Apple signing, Google Play/signing, and all other providers remain `NOT_VERIFIED`.
+Heroku app runtime, Essential-0 PostgreSQL, and Mini KVS remain `VERIFIED_NONPRODUCTION` from persistent staging evidence. Current public health/readiness remain healthy, but the authenticated Heroku account now receives `forbidden` and cannot inspect the app; ownership/collaborator access requires human restoration. Expo/EAS account/project control and Android internal build/signing are verified nonproduction. SendGrid, Apple signing, Google Play ownership/recovery, and all other providers remain `NOT_VERIFIED`.
 
 ## Known risks
 Execution breadth remains the principal engineering risk. Curriculum completeness depends on automated official-scope/rule compilation, authority provenance, lawful multi-source reconciliation, subject certification, and strict inventory gates. NCBE Sourcebooks are optional enhanced reconciliation when lawfully available; do not make purchase/access a build or launch dependency.
 
 ## Exact next task
-Complete M1.4 only: authenticate an authorized Expo/EAS account, verify Apple and Android project/signing/recovery ownership, produce both internal builds, exercise staging auth and SecureStore on actual iOS and Android runtimes, and record the platform-specific evidence. GitHub Actions run `31895608020` is green on commit `0be3789`. Do not begin M1.5 or any product domain.
+Complete M1.4 only. An authorized Apple Developer account holder must run `npx eas-cli@22.0.0 build --platform ios --profile internal` interactively from `apps/native`, complete Apple login/2FA, select the correct team, verify or register `com.barclimb.app.staging`, and authorize the distribution certificate, provisioning profile, and internal-test device registration; do not send credentials through chat or commit them. Provide actual iOS and Android runtimes to exercise staging auth, SecureStore save/restore/delete/restart/uninstall behavior, and OS link routing. Restore ownership/collaborator access for `barclimb-staging` to refresh current provider control. Do not begin M1.5 or any product domain.
 
 ## Resume commands
 ```bash

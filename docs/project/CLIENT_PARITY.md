@@ -8,9 +8,9 @@ Release sequencing is Web GA → iOS Native GA → Android Native GA. This table
 
 | Capability | Web | iOS | Android | Notes |
 |---|---|---|---|---|
-| Client shell/toolchain | VERIFIED | PARTIAL | PARTIAL | Web builds and runs on persistent staging. Expo/EAS project ownership is verified and Expo 57 iOS/Android JS exports pass; internal signed builds and actual runtimes remain pending |
+| Client shell/toolchain | VERIFIED | PARTIAL | PARTIAL | Web builds and runs on persistent staging. Expo 57 iOS/Android JS exports pass. A signed Android internal staging APK exists; iOS signing/build and both actual runtimes remain pending |
 | Native navigation/deep links | N/A | PARTIAL | PARTIAL | React Navigation auth stack + authenticated tabs and canonical-link resolver implemented. Environment-specific IDs/intent configuration and association endpoints exist; OS association stays disabled until signing identities are verified |
-| Auth/account | VERIFIED | PARTIAL | PARTIAL | Web session/CSRF signup-login proof runs on staging; deployed outbox/safe sink and native bearer API issuance/revocation run. Native UI and SecureStore remain unverified on actual platforms |
+| Auth/account | VERIFIED | PARTIAL | PARTIAL | Web session/CSRF signup-login proof runs on staging; deployed outbox/safe sink and native bearer API issuance/revocation run. The Android APK is build-only evidence; native UI and SecureStore remain unverified on both actual platforms |
 | MCQ interaction | NOT_STARTED | NOT_STARTED | NOT_STARTED | highlight/strike/review required |
 | IQS | NOT_STARTED | NOT_STARTED | NOT_STARTED | schema-driven |
 | PT/LRPT | NOT_STARTED | NOT_STARTED | NOT_STARTED | long-form editor/recovery critical |

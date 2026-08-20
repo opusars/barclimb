@@ -107,3 +107,5 @@
 - Reconciled M1.4's React Navigation/link dependencies with the accepted Expo SDK 57.0.15 baseline and regenerated the npm lock deterministically.
 - Web GA remains first, while M1.4 continues as mandatory early native architecture insurance. M1.5 remains blocked until M1.4 is completed or explicitly re-scoped from evidence.
 - Authenticated Expo/EAS as an Owner and linked the repository to the existing `@opusarss-team/barclimb` project without creating a duplicate. Apple/Android signing, internal-build, native-runtime, and OS association evidence remain separate gates.
+- Produced signed Android internal build `f2b86aba-4cec-4660-b8dd-f14ea112f134` from merge commit `9174007` using EAS-managed credentials. The noninteractive iOS build stopped before upload because no suitable internal-distribution credentials exist.
+- M1.4 remains incomplete: no actual iOS/Android runtime or SecureStore lifecycle was exercised, OS association remains disabled/unverified, iOS build/signing requires authorized interactive Apple setup, and current Heroku account control remains blocked.

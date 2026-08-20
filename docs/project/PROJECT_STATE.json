@@ -27,11 +27,12 @@
     "adsense": "NOT_VERIFIED",
     "admob": "NOT_VERIFIED"
   },
-  "latest_test_summary": "Accepted main 4850b78 is merged into the published M1.4 branch without rewriting history. Existing verified-nonproduction M1.4 staging evidence remains; current public health/readiness are 200 with database/KVS ok, but the authenticated Heroku account no longer has app access. Expo/EAS authentication now verifies owner access to @opusarss-team/barclimb project 8ed30301-53d9-4630-b2c4-70d6d51f465b. Post-merge local checks pass through 60 backend tests, 27 Web/native tests, Expo Doctor 20/20, Web build, portability, and both JS exports. Internal builds, signing credentials, actual native runtimes, SecureStore OS behavior, and OS link association remain acceptance gaps.",
+  "latest_test_summary": "Accepted main 4850b78 is merged into the published M1.4 branch without rewriting history. Existing verified-nonproduction M1.4 staging evidence remains; current public health/readiness are 200 with database/KVS ok, but the authenticated Heroku account no longer has app access. Expo/EAS owner and project control are verified. Android internal build f2b86aba-4cec-4660-b8dd-f14ea112f134 produced a signed staging APK from exact commit 9174007; iOS stopped before upload because no suitable internal-distribution credentials exist. Exact Node 24.19.0/npm 11.17.0 checks pass through 60 backend tests, 27 Web/native tests, Expo Doctor 20/20, Web build, portability, and both JS exports. Actual native runtimes, SecureStore OS behavior, and OS link association remain acceptance gaps.",
   "known_blockers": [
     "The authenticated Heroku account receives forbidden for barclimb-staging and the app is absent from its app list; restore ownership/collaborator access or authenticate the correct owner before process/account evidence can be refreshed.",
     "This host has only Apple Command Line Tools (no full Xcode/simctl) and no Android SDK/adb/emulator, so actual iOS/Android authentication and SecureStore runtime behavior cannot be exercised here.",
-    "Apple team/bundle/signing ownership and Google Android signing/recovery ownership have not yet been verified; internal builds remain pending.",
+    "The iOS internal build is blocked until an authorized Apple Developer account holder completes interactive Apple login/2FA, selects the correct team, verifies or registers com.barclimb.app.staging, and authorizes the distribution certificate, provisioning profile, and internal-test device registration. No Apple credential should be sent through repository or chat.",
+    "The successful Android signed internal build proves EAS-managed Android build/signing only; Google Play ownership/recovery and actual Android runtime behavior remain unverified.",
     "M1.5 must not begin until M1.4 is completed or explicitly re-scoped under the amended controlling specifications."
   ],
   "high_risk_items": [
@@ -40,6 +41,6 @@
     "Cross-scenario projections, anonymous claim security, private public-page overlays, entitlement transitions, and cross-device orchestration require explicit integration/security tests before GA.",
     "Official NCBE scope/source changes must pass source-drift and revalidation workflow; future exam scopes remain provisional until governing materials exist."
   ],
-  "exact_next_task": "Complete M1.4 only: authenticate an authorized Expo/EAS account, verify Apple and Android project/signing ownership, produce both internal builds, and exercise native staging authentication and SecureStore on actual iOS and Android runtimes. Record exact platform evidence. Do not begin M1.5 or any product domain.",
-  "last_verified_at": "2026-08-20T14:25:00-07:00"
+  "exact_next_task": "Complete M1.4 only: an authorized Apple Developer account holder must run the iOS internal build interactively and complete Apple team/bundle/signing/device authorization without sharing credentials; provide actual iOS and Android runtimes to exercise staging authentication, SecureStore save/restore/delete/restart/uninstall behavior, and OS link routing; restore barclimb-staging Heroku ownership/collaborator access for current control evidence. Do not begin M1.5 or any product domain.",
+  "last_verified_at": "2026-08-20T14:46:16-07:00"
 }

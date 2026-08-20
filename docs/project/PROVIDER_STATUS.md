@@ -10,7 +10,7 @@ M1.4 verifies the Heroku runtime, Essential-0 PostgreSQL add-on `postgresql-aero
 
 On 2026-08-20 the public staging origin still returned 200 for health/readiness with database and KVS `ok`, HTTPS root 200, and HTTP→HTTPS 301. However, the currently authenticated Heroku account received `forbidden` for `barclimb-staging` and the app was absent from its app list. Historical provider proof remains valid, but current account/process control is blocked until ownership/collaborator access is restored; no replacement app was created.
 
-Expo authentication now verifies Owner role on both `opusars` and `opusarss-team`; the repository is linked to the pre-existing `@opusarss-team/barclimb` project ID `8ed30301-53d9-4630-b2c4-70d6d51f465b`. This proves Expo account/project control only, not Apple/Android signing, internal builds, OS runtime, store, or production readiness.
+Expo authentication verifies Owner role on both `opusars` and `opusarss-team`; the repository is linked to the pre-existing `@opusarss-team/barclimb` project ID `8ed30301-53d9-4630-b2c4-70d6d51f465b`. EAS build `f2b86aba-4cec-4660-b8dd-f14ea112f134` used EAS-managed Android credentials and produced a signed internal-distribution staging APK from exact commit `9174007`. This proves non-production Android build/signing orchestration, not Google Play ownership/recovery, actual Android runtime, store, or production readiness. The iOS internal build stopped before upload because no suitable internal-distribution credentials exist; Apple team/bundle/signing remains unverified.
 
 Release relevance is gate-specific. Apple/Google store approval and native production billing are Native GA blockers, not Web GA blockers merely because incomplete. Stripe is a Web GA commerce dependency but never canonical entitlement truth; Apple and Google purchase lifecycles must later map into the same Django Subscription/Entitlement domain.
 
@@ -18,9 +18,9 @@ Release relevance is gate-specific. Apple/Google store approval and native produ
 |---|---|---|---|---|
 | OpenAI | generation/grading/compiler | NOT_VERIFIED | none | Web GA blocker by assessment milestone |
 | Stripe | Web subscription purchase source | NOT_VERIFIED | none | Web GA paid-flow blocker; not entitlement truth |
-| Apple | iOS distribution/IAP purchase source | NOT_VERIFIED | Expo project owned; no Apple team/bundle/signing evidence yet | iOS Native GA blocker; not a Web GA blocker by itself |
-| Google Play | Android distribution/billing purchase source | NOT_VERIFIED | Expo project owned; no Android signing/Play evidence yet | Android Native GA blocker; not a Web GA blocker by itself |
-| Expo/EAS | native project/build orchestration | VERIFIED_NONPRODUCTION | authenticated Owner; existing BarClimb project linked | M1.4 build authority; signing/runtime evidence remains separate |
+| Apple | iOS distribution/IAP purchase source | NOT_VERIFIED | Expo project owned; iOS internal build found no suitable Apple credentials | iOS Native GA blocker; not a Web GA blocker by itself |
+| Google Play | Android distribution/billing purchase source | NOT_VERIFIED | signed EAS internal APK exists; Play project/ownership/recovery remains unverified | Android Native GA blocker; not a Web GA blocker by itself |
+| Expo/EAS | native project/build orchestration | VERIFIED_NONPRODUCTION | authenticated Owner; existing project linked; signed Android internal build succeeded | Android runtime and all iOS signing/runtime evidence remain separate |
 | SendGrid | transactional email | NOT_VERIFIED | staging validating sink only; no provider delivery | Web GA requirement and later native-account dependency |
 | S3 | durable objects/exports/creative | NOT_VERIFIED | none | Web GA requirement where used; platform gates as applicable |
 | Heroku/Postgres/KVS | runtime/data/queue | VERIFIED_NONPRODUCTION | staging app + managed PostgreSQL/KVS + Web/worker/beat exercised | Web GA critical runtime; production still unverified |

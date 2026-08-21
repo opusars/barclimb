@@ -1,7 +1,7 @@
 # BarClimb Project Handoff
 
 ## Current state
-M2.1 is accepted in `main` at `1b3ee5996cf82c50f3b645e1c29831115023dbb1`; exact-main Foundation CI run `32441068155` passed. M2.2a is implemented and fully validated locally on `m2-2a-rule-obligation-compiler-proof`, pending exact-commit CI, review, and merge. It proves deterministic Rule Obligation compilation/reconciliation/certification against immutable M2.1 scope identities using synthetic fixtures only. It does not import current real NCBE sources, establish a production national curriculum, add AI, or begin M2.2b. Accepted M1 platform evidence and deferred Native GA blockers remain unchanged.
+M2.2a is accepted in `main` at `a468fb6d3d850757fe1af82c18f244e95ad77de8`; exact-main Foundation CI run `32514192256` passed. M2.2b is active on `m2-2b-real-scope-authority-pilot` at the corrected second-human-review gate. The current NCBE Content Scope/Blueprint were acquired transiently from official sources and represented through immutable body-free provenance; one Rule 4 pilot leaf compiles/reconciles cleanly. First human review required five corrections, preserved as V1 history. Corrected V2 has eight `REVIEW_REQUIRED` obligations and cannot certify until a named qualified human reviewer provides explicit per-candidate attestations. It does not establish national curriculum completeness, add AI, or begin another slice. Accepted M1 platform evidence and deferred Native GA blockers remain unchanged.
 
 The controlling release sequence remains **Web GA → iOS Native GA → Android Native GA**, with one first-class multi-client architecture and no Web-only shortcuts. Apple enrollment/signing, physical-device authentication/SecureStore, live OS association routing, store ownership/approval, and native production purchase/restore remain mandatory at the applicable Native GA and are not marked verified. M1.5 changes none of those provider/device statuses.
 
@@ -89,8 +89,8 @@ See `../specs/SPEC_MANIFEST.json`. Four Markdown specs control the build.
 - No Web-only shortcut: shared-package portability passes, native uses React Native navigation rather than WebView, and the controlling portable auth/domain/link contracts remain intact.
 
 ## Current branch coordination
-- Authoritative accepted main is `1b3ee5996cf82c50f3b645e1c29831115023dbb1`; local and remote main passed exact-SHA CI before M2.2a began.
-- Active branch is `m2-2a-rule-obligation-compiler-proof`. It must pass full local/PostgreSQL validation, be committed and pushed, and pass exact-commit CI, then be reviewed. Do not merge automatically and do not begin M2.2b.
+- Authoritative accepted main is `a468fb6d3d850757fe1af82c18f244e95ad77de8`; exact-main Foundation CI run `32514192256` passed before M2.2b began.
+- Active branch is `m2-2b-real-scope-authority-pilot`. The corrected V2 review state may be committed/pushed after deterministic validation, but it must not certify or merge. Do not begin the next slice.
 
 ## M1.5 cross-client assessment presentation risk proof
 - `@barclimb/assessment-schema` defines one runtime-validated, JSON-serializable presentation contract for the four controlling families and all controlling response-type identifiers. The bounded component registry contains only `SINGLE_SELECT_QUESTION` and `LONG_RESPONSE_EDITOR`; schema validation rejects unknown components and renderers return a typed fail-safe rather than omitting content or using HTML/WebView.
@@ -116,7 +116,16 @@ See `../specs/SPEC_MANIFEST.json`. Four Markdown specs control the build.
 - Synthetic `TEST_FIXTURE` scope, authority, obligations, issues, reviews, compiles, and snapshots are production-ineligible by default and hidden from the production API. No real NCBE document or production doctrine is present. This proves the integrity gate, not current real-source acquisition or national completeness.
 - M2.2b should acquire/register real current official NCBE artifacts and a bounded substantive-authority pilot, define reviewed real-source coverage policy, and feed controlled candidates through this deterministic gate. It must not introduce AI or claim full production curriculum completeness prematurely.
 
+## M2.2b controlled real-source and substantive-authority pilot
+- Official NCBE Content Scope and Blueprint for July 2026–February 2027 are hash-pinned at their canonical NCBE URIs. Acquired bytes are transient and excluded from Git/API because redistribution is not clearly authorized. The operator supplies bytes explicitly; ordinary request paths never download them.
+- `NCBE_NEXTGEN_SCOPE_2026_07_2027_02` validates and activates in isolated proof with checksum `2d8a1052ada18b413f24b7d0eef1c855a76d8a9a31688130757d5dd6511ca56f`, 32 items, 26 leaves, and 20 testable leaves. Family law and trusts/estates remain supplied-law contexts; future July 2028 treatment is not active.
+- The one-leaf pilot maps eight manually controlled candidates to `civil-procedure-service-process-notice` and supports them with the hash-pinned official December 1, 2025 Federal Rules of Civil Procedure. `PILOT_ONLY` policy cannot claim national completeness.
+- First human review approved Candidates 1–2 subject to structural corrections, rejected Candidates 3–4 as written, refined Candidate 5, and approved Candidates 6–8. V1 remains unapproved/uncertified and its disposition is preserved in `M2_2B_HUMAN_REVIEW_PACKET_V1.md`.
+- Corrected `BARCLIMB_PILOT_FRCP_RULE4_2025_V2` removes Candidate 1's misleading edges, classifies Candidate 2 as `LIMITATION`, corrects Candidates 3–5, and preserves only Candidate 6's valid `HAS_EXCEPTION` and `HAS_REMEDY` relationships. Checksum is `0148dea24c906e2e257265681044ae57ad4b60b9a1e290f291e95dc2315825ec`.
+- V2 compilation/reconciliation has zero duplicate, omission, excess, conflict, ambiguity, provenance, jurisdiction, warning, or blocking issues; one of one target leaves is sufficient; all eight decisions remain `REVIEW_REQUIRED`; `national_complete` is false. Certification is blocked solely by absent V2 human attestations. No reviewer identity or approval was fabricated.
+
 ## Tests actually run
+- M2.2b V2 second-review validation: Ruff lint/format, Django system/migration checks, 12 focused correction regressions, 97 SQLite tests with eight PostgreSQL-only skips, and all 105 tests against disposable PostgreSQL 14/Redis passed. Exact acquired-byte proof reproduced scope checksum `2d8a1052ada18b413f24b7d0eef1c855a76d8a9a31688130757d5dd6511ca56f` and compile checksum `0148dea24c906e2e257265681044ae57ad4b60b9a1e290f291e95dc2315825ec`. Continuity, JSON, diff, and raw-source/secret/junk review passed. No client/shared code changed; exact-commit CI remains pending commit/push.
 - M2.2a exact-runtime local acceptance: a clean hash-verified Python 3.13.15 install passed Ruff, Django system/migration checks, 85 SQLite tests with eight PostgreSQL-only skips, all 93 tests against PostgreSQL 14, and the live Redis/Celery foundation smoke. The 12 focused deterministic compiler tests and two PostgreSQL-only curriculum integrity tests are included in those totals.
 - Exact Node 24.19.0/npm 11.17.0 clean `npm ci` installed 717 packages. `npm run check` passed all nine typechecks, 14 Web tests, 20 native tests, 8 assessment-schema tests, and the production Web build; seven-package portability, live Expo compatibility, Doctor 20/20, and iOS/Android exports at 863/858 modules passed. The lockfile did not change.
 - Current `npm audit --omit=dev` retains 15 aggregate paths in the same documented `image-size` and `uuid` toolchain families. Current advisory metadata reports 10 moderate/5 high rather than the earlier 7 moderate/8 high; dependencies, paths, reachability, and mitigation are unchanged, and no forced fix was run.
@@ -146,7 +155,7 @@ Heroku app runtime, Essential-0 PostgreSQL, and Mini KVS remain `VERIFIED_NONPRO
 Execution breadth remains the principal engineering risk. Curriculum completeness depends on automated official-scope/rule compilation, authority provenance, lawful multi-source reconciliation, subject certification, and strict inventory gates. NCBE Sourcebooks are optional enhanced reconciliation when lawfully available; do not make purchase/access a build or launch dependency.
 
 ## Exact next task
-Commit and push `m2-2a-rule-obligation-compiler-proof`, require green GitHub Actions on the exact branch SHA, and then stop for review. Do not merge automatically and do not begin M2.2b.
+Review `docs/project/M2_2B_HUMAN_REVIEW_PACKET.md` as the corrected V2 packet and provide named, explicit per-candidate human dispositions. Do not fabricate approval, certify, merge, or begin the next curriculum slice.
 
 ## Resume commands
 ```bash

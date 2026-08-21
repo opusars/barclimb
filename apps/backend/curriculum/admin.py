@@ -8,6 +8,7 @@ from .models import (
     CoveragePolicy,
     CoverageReleaseSnapshot,
     CurriculumCompileVersion,
+    ObligationHumanReview,
     ObligationRelationship,
     ObligationScopeMapping,
     ReconciliationIssue,
@@ -60,6 +61,7 @@ for model in (
     ObligationRelationship,
     AuthorityEvidence,
     ReviewResolution,
+    ObligationHumanReview,
     CoverageReleaseSnapshot,
 ):
     admin.site.register(model, ImmutableAdmin)

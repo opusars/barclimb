@@ -1,0 +1,127 @@
+{
+  "schema": "BARCLIMB_RULE_COMPILER_V2",
+  "compile": {
+    "version_identifier": "BARCLIMB_PILOT_FRCP_RULE4_2025_V2",
+    "official_scope_version": "NCBE_NEXTGEN_SCOPE_2026_07_2027_02",
+    "compiler_schema_version": "BARCLIMB_RULE_COMPILER_V2",
+    "source_class": "PRODUCTION"
+  },
+  "coverage_policy": {
+    "stable_id": "BARCLIMB_FRCP_RULE4_SERVICE_PILOT",
+    "policy_version": "2025_V2",
+    "coverage_class": "PILOT_ONLY",
+    "target_scope_item_ids": ["civil-procedure-service-process-notice"],
+    "minimum_obligations_per_leaf": 1,
+    "requires_primary_authority": true,
+    "requires_human_review": true,
+    "allowed_obligation_kinds": ["RULE", "PROCEDURAL_STEP", "EXCEPTION", "LIMITATION", "REMEDY", "DISTINCTION"]
+  },
+  "authorities": [
+    {
+      "stable_id": "USCOURTS_FRCP",
+      "source_version": "2025-12-01",
+      "authority_class": "SUBSTANTIVE_PRIMARY",
+      "authority_type": "FEDERAL_RULES_OF_CIVIL_PROCEDURE",
+      "title": "Federal Rules of Civil Procedure",
+      "canonical_citation": "Fed. R. Civ. P. 4 (Dec. 1, 2025)",
+      "source_uri": "https://www.uscourts.gov/sites/default/files/document/federal-rules-of-civil-procedure.pdf",
+      "expected_sha256": "bd8705fc038d87e4fe222a7ea2e4324222c9430e2373fce56826bd2dfa2f8baf",
+      "source_class": "PRODUCTION",
+      "is_national": true,
+      "jurisdiction": "",
+      "issuing_authority": "Supreme Court of the United States and Congress; official pamphlet published by the House Committee on the Judiciary",
+      "publication_date": "2025-12-01",
+      "effective_date": "2025-12-01",
+      "retrieved_at": "2026-08-21T19:06:49Z",
+      "media_type": "application/pdf",
+      "storage_disposition": "TRANSIENT_HASH_ONLY",
+      "rights_basis": "Official U.S. government legal material; full pamphlet remains transient because the pilot needs provenance and locators, not repository duplication."
+    }
+  ],
+  "obligations": [
+    {
+      "stable_id": "frcp4-service-plaintiff-responsibility",
+      "kind": "RULE",
+      "statement": "The plaintiff is responsible for having the summons and complaint served within the time allowed by Rule 4(m) and must furnish the necessary copies to the person who makes service.",
+      "scope_item_ids": ["civil-procedure-service-process-notice"],
+      "review_required": true,
+      "inclusion_rationale": "Bounded federal service-of-process pilot mapped to the exact current NCBE scope leaf.",
+      "mapping_rationale": "Rule 4(c)(1) directly concerns service of process.",
+      "evidence": [{"authority_id": "USCOURTS_FRCP", "role": "SUBSTANTIVE_SUPPORT", "locator": "Rule 4(c)(1); pamphlet pp. 2–3", "proposition": "Plaintiff responsibility for service and copies."}]
+    },
+    {
+      "stable_id": "frcp4-service-server-qualification",
+      "kind": "LIMITATION",
+      "statement": "A summons and complaint may be served by a person who is at least 18 years old and is not a party.",
+      "scope_item_ids": ["civil-procedure-service-process-notice"],
+      "review_required": true,
+      "inclusion_rationale": "Bounded federal service-of-process pilot.",
+      "mapping_rationale": "Rule 4(c)(2) limits who may serve process to a nonparty who is at least 18 years old.",
+      "evidence": [{"authority_id": "USCOURTS_FRCP", "role": "SUBSTANTIVE_SUPPORT", "locator": "Rule 4(c)(2); pamphlet p. 3", "proposition": "Nonparty adult server qualification."}]
+    },
+    {
+      "stable_id": "frcp4-waiver-request",
+      "kind": "PROCEDURAL_STEP",
+      "statement": "A plaintiff requesting waiver of service must make the request in writing and address it to the individual defendant or, for a defendant subject to Rule 4(h), to an officer, managing or general agent, or other agent authorized by appointment or law to receive service of process, and must satisfy Rule 4(d)(1)’s remaining notice, copy, return-means, consequence, date, and response-time requirements.",
+      "scope_item_ids": ["civil-procedure-service-process-notice"],
+      "review_required": true,
+      "inclusion_rationale": "Bounded federal waiver-of-service procedure.",
+      "mapping_rationale": "Rule 4(d)(1)(A) distinguishes the proper addressee for an individual from the specified Rule 4(h) entity representatives, and Rule 4(d)(1)(B)–(G) governs the remaining waiver request requirements.",
+      "evidence": [{"authority_id": "USCOURTS_FRCP", "role": "SUBSTANTIVE_SUPPORT", "locator": "Rule 4(d)(1)(A)–(G); pamphlet p. 3", "proposition": "Written waiver request; individual and Rule 4(h) addressee distinction; notice, copy, return-means, consequence, date, and response-time requirements."}]
+    },
+    {
+      "stable_id": "frcp4-waiver-expense-consequence",
+      "kind": "REMEDY",
+      "statement": "If a defendant located within the United States fails without good cause to sign and return a waiver requested by a plaintiff located within the United States, the court must impose the expenses later incurred in making service and the reasonable expenses, including attorney’s fees, of any motion required to collect those service expenses.",
+      "scope_item_ids": ["civil-procedure-service-process-notice"],
+      "review_required": true,
+      "inclusion_rationale": "Bounded consequence attached to the federal waiver process.",
+      "mapping_rationale": "Rule 4(d)(2) conditions expense shifting on United States location of both the requesting plaintiff and the nonwaiving defendant and identifies both recoverable expense categories.",
+      "evidence": [{"authority_id": "USCOURTS_FRCP", "role": "SUBSTANTIVE_SUPPORT", "locator": "Rule 4(d)(2); pamphlet p. 3", "proposition": "Expense shifting, including attorney’s fees, after a United States defendant without good cause fails to return a waiver requested by a United States plaintiff."}]
+    },
+    {
+      "stable_id": "frcp4-domestic-individual-service",
+      "kind": "DISTINCTION",
+      "statement": "An individual served within a United States judicial district may be served by a method allowed by the law of the state where the district court sits or the state where service is made, or by one of the methods listed in Rule 4(e)(2).",
+      "scope_item_ids": ["civil-procedure-service-process-notice"],
+      "review_required": true,
+      "inclusion_rationale": "Bounded distinction among nationally applicable federal service routes.",
+      "mapping_rationale": "Rule 4(e) distinguishes methods allowed by the law of the state where the district court sits or service is made from the methods listed in Rule 4(e)(2).",
+      "evidence": [{"authority_id": "USCOURTS_FRCP", "role": "SUBSTANTIVE_SUPPORT", "locator": "Rule 4(e)(1)–(2); pamphlet p. 4", "proposition": "Domestic individual service through applicable forum-state or service-state law or a listed Rule 4(e)(2) method."}]
+    },
+    {
+      "stable_id": "frcp4-service-time-limit",
+      "kind": "LIMITATION",
+      "statement": "Rule 4(m) generally requires service within 90 days after the complaint is filed, subject to the rule's extension and inapplicability provisions.",
+      "scope_item_ids": ["civil-procedure-service-process-notice"],
+      "review_required": true,
+      "inclusion_rationale": "Bounded federal service timing limitation.",
+      "mapping_rationale": "Rule 4(m) directly limits the time for service.",
+      "evidence": [{"authority_id": "USCOURTS_FRCP", "role": "SUBSTANTIVE_SUPPORT", "locator": "Rule 4(m); pamphlet p. 8", "proposition": "General 90-day service period and qualification."}]
+    },
+    {
+      "stable_id": "frcp4-good-cause-extension",
+      "kind": "EXCEPTION",
+      "statement": "If the plaintiff shows good cause for failure to serve within Rule 4(m)'s period, the court must extend the time for service for an appropriate period.",
+      "scope_item_ids": ["civil-procedure-service-process-notice"],
+      "review_required": true,
+      "inclusion_rationale": "Bounded exception to the federal service deadline.",
+      "mapping_rationale": "Rule 4(m) expressly requires an extension upon good cause.",
+      "evidence": [{"authority_id": "USCOURTS_FRCP", "role": "SUBSTANTIVE_SUPPORT", "locator": "Rule 4(m); pamphlet p. 8", "proposition": "Good-cause extension."}]
+    },
+    {
+      "stable_id": "frcp4-untimely-service-response",
+      "kind": "REMEDY",
+      "statement": "After notice to the plaintiff, the court must dismiss without prejudice against an unserved defendant or order service within a specified time when Rule 4(m)'s period expires.",
+      "scope_item_ids": ["civil-procedure-service-process-notice"],
+      "review_required": true,
+      "inclusion_rationale": "Bounded procedural consequence for untimely service.",
+      "mapping_rationale": "Rule 4(m) states the court's alternatives after notice.",
+      "evidence": [{"authority_id": "USCOURTS_FRCP", "role": "SUBSTANTIVE_SUPPORT", "locator": "Rule 4(m); pamphlet p. 8", "proposition": "Dismissal without prejudice or service order after notice."}]
+    }
+  ],
+  "relationships": [
+    {"source_id": "frcp4-service-time-limit", "target_id": "frcp4-good-cause-extension", "kind": "HAS_EXCEPTION", "ordering": 1},
+    {"source_id": "frcp4-service-time-limit", "target_id": "frcp4-untimely-service-response", "kind": "HAS_REMEDY", "ordering": 2}
+  ]
+}

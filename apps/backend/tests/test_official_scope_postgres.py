@@ -49,7 +49,9 @@ def test_postgres_triggers_reject_historical_scope_and_child_bulk_mutation():
         source_class="TEST_FIXTURE",
     )
     scope = OfficialScopeVersion.objects.create(
-        version_identifier="TEST_FIXTURE_POSTGRES_SCOPE_V1", is_test_fixture=True
+        version_identifier="TEST_FIXTURE_POSTGRES_SCOPE_V1",
+        is_test_fixture=True,
+        release_class="TEST_FIXTURE",
     )
     OfficialScopeSource.objects.create(scope_version=scope, artifact=artifact, role="PERIMETER")
     root = OfficialScopeItem.objects.create(

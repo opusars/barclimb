@@ -4,10 +4,10 @@
   "product_phase": "MILESTONE_2_IN_PROGRESS",
   "active_launch_train": "B_COMPLETE_LEARNER_LOOP",
   "active_milestone": 2,
-  "status": "M2_2A_IMPLEMENTED_PENDING_ACCEPTANCE",
-  "latest_known_good_commit": "1b3ee5996cf82c50f3b645e1c29831115023dbb1",
-  "active_branch": "m2-2a-rule-obligation-compiler-proof",
-  "database_migration_summary": "M1.3a retains identity/outbox models. M2.1 owns immutable official artifacts and scope versions/items. M2.2a adds immutable AuthoritySource and CoveragePolicy, versioned CurriculumCompileVersion, canonical RuleObligation, version-scoped scope mappings, typed ObligationRelationship, structured AuthorityEvidence, relational ReconciliationIssue and ReviewResolution, immutable CoverageReleaseSnapshot, constraints/indexes/PROTECT semantics, and PostgreSQL certified-history triggers. No real NCBE/curriculum corpus, production assessment, learner evidence, entitlement, billing, or AI model exists.",
+  "status": "M2_2B_SECOND_HUMAN_REVIEW_PENDING",
+  "latest_known_good_commit": "a468fb6d3d850757fe1af82c18f244e95ad77de8",
+  "active_branch": "m2-2b-real-scope-authority-pilot",
+  "database_migration_summary": "M1.3a retains identity/outbox models. M2.1/M2.2a immutable source, scope, Rule Obligation, reconciliation, and snapshot truth is accepted. M2.2b adds explicit artifact media/rights/storage/effective-period metadata, current/future scope periods and normalization status, body-free V2 operator imports, PILOT_ONLY coverage, immutable production obligation-review attestations, and non-national snapshot metadata. The current real NCBE perimeter and Rule 4 pilot are reproducible operator inputs, not data migrations or committed raw documents. V2 remains unapproved and uncertified; no production assessment, learner evidence, entitlement, billing, or AI model exists.",
   "enabled_material_feature_flags": [],
   "clients": {
     "web": "PARTIAL",
@@ -27,10 +27,11 @@
     "adsense": "NOT_VERIFIED",
     "admob": "NOT_VERIFIED"
   },
-  "latest_test_summary": "M2.2a exact-runtime local acceptance passes a clean hash-verified Python 3.13.15 install, Ruff, Django system/migration checks, 85 SQLite tests (8 PostgreSQL skips), all 93 PostgreSQL tests, Celery smoke, exact Node 24.19.0/npm 11.17.0 clean npm ci, nine typechecks, 14 Web tests, 20 native tests, 8 assessment-schema tests, Web build, seven-package portability, Expo compatibility, Doctor 20/20, and iOS/Android exports at 863/858 modules. Audit retains 15 aggregate nodes in the same image-size/uuid families, now reported as 10 moderate/5 high. Continuity, JSON, manifest hashes, ten milestones, diff/scope, controlling-spec isolation, and secret/generated-junk review pass. Commit/push and exact-commit GitHub CI remain pending.",
+  "latest_test_summary": "M2.2b V2 validation passes Ruff lint/format, Django system/migration checks, 97 SQLite tests with 8 PostgreSQL-only skips, all 105 PostgreSQL 14/Redis tests, 12 focused real-source/pilot regression tests, continuity, JSON, git diff, and secret/generated-junk/raw-source review. Transient exact official bytes reproduce active scope checksum 2d8a1052ada18b413f24b7d0eef1c855a76d8a9a31688130757d5dd6511ca56f and corrected compile checksum 0148dea24c906e2e257265681044ae57ad4b60b9a1e290f291e95dc2315825ec with zero reconciliation issues, one of one pilot leaves sufficient, national_complete false, all eight REVIEW_REQUIRED, and certification blocked for absent V2 human attestations. Exact-commit CI remains pending until commit/push.",
   "known_blockers": [
     "Apple Developer Program team access, final iOS signing/provisioning/build, physical-device iOS/Android authentication and SecureStore lifecycle, live AASA/assetlinks routing, Google Play ownership/recovery, store approvals, and native production purchase/restore remain mandatory platform-specific Native GA blockers even though they do not block the clarified M1.4 foundation gate.",
-    "M2.2a may not be accepted until exact-commit GitHub Actions passes, followed by review and merge to main."
+    "M2.2b V2 may not certify or become acceptance-ready until a named qualified human reviewer reviews the corrected eight-candidate packet and records explicit per-candidate decisions; no reviewer identity may be fabricated.",
+    "The branch may not merge until full local/PostgreSQL validation and exact-commit GitHub Actions pass after the second-review state is committed."
   ],
   "high_risk_items": [
     "Execution breadth across web, iOS, Android, AI assessment quality, community moderation, and cross-platform commerce.",
@@ -38,6 +39,6 @@
     "Cross-scenario projections, anonymous claim security, private public-page overlays, entitlement transitions, and cross-device orchestration require explicit integration/security tests before GA.",
     "Official NCBE scope/source changes must pass source-drift and revalidation workflow; future exam scopes remain provisional until governing materials exist."
   ],
-  "exact_next_task": "Commit and push m2-2a-rule-obligation-compiler-proof, require green GitHub Actions on the exact branch SHA, and then stop for review. Do not merge automatically or begin M2.2b.",
-  "last_verified_at": "2026-08-21T10:08:00-07:00"
+  "exact_next_task": "Review docs/project/M2_2B_HUMAN_REVIEW_PACKET.md as V2 and provide named per-candidate human dispositions. Do not certify, merge, fabricate approval, or begin the next curriculum slice.",
+  "last_verified_at": "2026-08-21T12:25:00-07:00"
 }

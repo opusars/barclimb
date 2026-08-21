@@ -20,12 +20,27 @@ class Command(BaseCommand):
         parser.add_argument("--reconcile", action="store_true")
         parser.add_argument("--certify", action="store_true")
         parser.add_argument("--dry-run", action="store_true")
+        parser.add_argument(
+            "--authority",
+            action="append",
+            default=[],
+            metavar="STABLE_ID=PATH",
+            help="Provide acquired authority bytes without embedding or committing them.",
+        )
 
     def handle(self, *args, **options):
         try:
             payload = json.loads(options["input"].read_text())
+            authority_contents = {}
+            for value in options["authority"]:
+                stable_id, separator, path = value.partition("=")
+                if not separator or not stable_id or not path:
+                    raise CommandError("--authority must be STABLE_ID=PATH")
+                authority_contents[stable_id] = Path(path).read_bytes()
             with transaction.atomic():
-                compile_version, created = compile_manifest(payload)
+                compile_version, created = compile_manifest(
+                    payload, authority_contents=authority_contents
+                )
                 initial_status = compile_version.status
                 if options["reconcile"] or options["certify"]:
                     compile_version, _ = reconcile_curriculum(compile_version.pk)

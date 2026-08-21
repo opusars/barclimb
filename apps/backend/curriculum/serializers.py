@@ -63,6 +63,12 @@ class CertifiedCurriculumSerializer(serializers.ModelSerializer):
             "covered_leaf_count": snapshot.covered_leaf_count,
             "blocking_issue_count": snapshot.blocking_issue_count,
             "warning_issue_count": snapshot.warning_issue_count,
+            "coverage_class": snapshot.coverage_class,
+            "national_complete": snapshot.national_complete,
+            "authority_provenance_sha256": snapshot.authority_provenance_sha256,
+            "human_review_status": snapshot.human_review_status,
+            "target_scope_item_ids": snapshot.coverage_results.get("target_scope_item_ids", []),
+            "total_active_scope_leaves": snapshot.coverage_results.get("total_active_scope_leaves"),
         }
 
     def get_obligations(self, obj):

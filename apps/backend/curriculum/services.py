@@ -16,6 +16,7 @@ from .models import (
     CoveragePolicy,
     CoverageReleaseSnapshot,
     CurriculumCompileVersion,
+    ObligationHumanReview,
     ObligationRelationship,
     ObligationScopeMapping,
     ReconciliationIssue,
@@ -86,6 +87,13 @@ def register_authority(*, content, **metadata):
             "source_class",
             "is_national",
             "jurisdiction",
+            "issuing_authority",
+            "publication_date",
+            "effective_date",
+            "retrieved_at",
+            "media_type",
+            "storage_disposition",
+            "rights_basis",
         )
         if existing.content_sha256 != checksum or any(
             getattr(existing, key) != metadata.get(key, getattr(existing, key)) for key in immutable
@@ -109,6 +117,9 @@ def _register_policy(definition, source_class):
         "requires_primary_authority": definition.get("requires_primary_authority", True),
         "allowed_obligation_kinds": allowed,
         "source_class": source_class,
+        "coverage_class": definition.get("coverage_class", "NATIONAL"),
+        "target_scope_item_ids": sorted(definition.get("target_scope_item_ids", [])),
+        "requires_human_review": definition.get("requires_human_review", False),
     }
     checksum = canonical_sha256(canonical)
     policy = CoveragePolicy.objects.filter(
@@ -190,9 +201,13 @@ def _would_cycle(source, target):
 
 
 @transaction.atomic
-def compile_manifest(payload):
-    if payload.get("schema") != "BARCLIMB_RULE_COMPILER_V1":
+def compile_manifest(payload, *, authority_contents=None):
+    if payload.get("schema") not in (
+        "BARCLIMB_RULE_COMPILER_V1",
+        "BARCLIMB_RULE_COMPILER_V2",
+    ):
         raise ValidationError("Unsupported Rule Obligation compiler schema.")
+    authority_contents = authority_contents or {}
     input_checksum = canonical_sha256(payload)
     definition = payload["compile"]
     existing = CurriculumCompileVersion.objects.filter(
@@ -224,14 +239,27 @@ def compile_manifest(payload):
         compiler_schema_version=definition["compiler_schema_version"],
         input_sha256=input_checksum,
         source_class=source_class,
+        coverage_class=policy.coverage_class,
+        national_complete=False,
         supersedes=supersedes,
     )
     authority_map = {}
     for entry in payload.get("authorities", []):
-        try:
-            content = base64.b64decode(entry["content_base64"], validate=True)
-        except Exception as error:
-            raise ValidationError("Authority content_base64 is invalid.") from error
+        if "content_base64" in entry:
+            try:
+                content = base64.b64decode(entry["content_base64"], validate=True)
+            except Exception as error:
+                raise ValidationError("Authority content_base64 is invalid.") from error
+        else:
+            content = authority_contents.get(entry["stable_id"])
+            if content is None:
+                raise ValidationError(
+                    f"Operator-controlled bytes are required for {entry['stable_id']}."
+                )
+            if sha256_bytes(content) != entry.get("expected_sha256"):
+                raise ValidationError(
+                    f"Authority bytes do not match expected_sha256 for {entry['stable_id']}."
+                )
         authority, _ = register_authority(
             content=content,
             stable_id=entry["stable_id"],
@@ -244,6 +272,13 @@ def compile_manifest(payload):
             source_class=entry.get("source_class", source_class),
             is_national=entry.get("is_national", True),
             jurisdiction=entry.get("jurisdiction", ""),
+            issuing_authority=entry.get("issuing_authority", ""),
+            publication_date=entry.get("publication_date"),
+            effective_date=entry.get("effective_date"),
+            retrieved_at=entry.get("retrieved_at"),
+            media_type=entry.get("media_type", ""),
+            storage_disposition=entry.get("storage_disposition", ""),
+            rights_basis=entry.get("rights_basis", ""),
         )
         if authority.source_class != source_class:
             raise ValidationError("Authority and compile source classifications must match.")
@@ -289,14 +324,17 @@ def compile_manifest(payload):
         requested_mappings = candidate.get("scope_item_ids", [])
         mapped = [scope_items[item_id] for item_id in requested_mappings if item_id in scope_items]
         missing_mappings = sorted(set(requested_mappings) - set(scope_items))
+        outside_pilot = []
+        if policy.coverage_class == CoveragePolicy.CoverageClass.PILOT_ONLY:
+            outside_pilot = sorted(set(requested_mappings) - set(policy.target_scope_item_ids))
         jurisdiction = candidate.get("jurisdiction", "")
         excess = candidate.get("classification") == "EXCESS" or not mapped
-        blocked = bool(jurisdiction) or bool(missing_mappings)
+        blocked = bool(jurisdiction) or bool(missing_mappings) or bool(outside_pilot)
         ambiguous = candidate.get("ambiguous", False)
         decision = "AUTO_APPROVABLE"
         if blocked:
             decision = "BLOCKED"
-        elif ambiguous or candidate.get("review_required", False):
+        elif ambiguous or candidate.get("review_required", False) or policy.requires_human_review:
             decision = "REVIEW_REQUIRED"
         status = "BLOCKED" if blocked else ("EXCESS" if excess else "INCLUDED")
         obligation = RuleObligation.objects.create(
@@ -338,13 +376,17 @@ def compile_manifest(payload):
                 supports=evidence.get("supports", True),
             )
         if blocked:
-            category = "UNSUPPORTED_JURISDICTION" if jurisdiction else "INVALID_STRUCTURE"
+            category = "UNSUPPORTED_JURISDICTION" if jurisdiction else "EXCESS"
             _issue(
                 compile_version,
                 f"blocked:{stable_id}",
                 category,
                 "BLOCKING",
-                "Candidate cannot enter national NEXTGEN_CORE.",
+                (
+                    "Candidate cannot enter national NEXTGEN_CORE."
+                    if jurisdiction
+                    else "Candidate mapping falls outside the bounded PILOT_ONLY policy."
+                ),
                 obligation=obligation,
             )
         elif excess:
@@ -446,11 +488,16 @@ def reconcile_curriculum(compile_id):
     ):
         raise ValidationError("Only compiled curriculum may be reconciled.")
     policy = compile_version.coverage_policy
-    leaves = list(
-        compile_version.official_scope_version.items.filter(
-            is_leaf=True, perimeter="TESTABLE"
-        ).order_by("stable_id")
+    leaves_query = compile_version.official_scope_version.items.filter(
+        is_leaf=True, perimeter="TESTABLE"
     )
+    if policy.coverage_class == CoveragePolicy.CoverageClass.PILOT_ONLY:
+        leaves_query = leaves_query.filter(stable_id__in=policy.target_scope_item_ids)
+        found = set(leaves_query.values_list("stable_id", flat=True))
+        missing = sorted(set(policy.target_scope_item_ids) - found)
+        if missing:
+            raise ValidationError({"unknown_pilot_scope_items": missing})
+    leaves = list(leaves_query.order_by("stable_id"))
     covered = 0
     sufficient = 0
     leaf_results = []
@@ -501,7 +548,13 @@ def reconcile_curriculum(compile_id):
     open_issues = compile_version.issues.filter(status="OPEN")
     counts = Counter(open_issues.values_list("category", flat=True))
     report = {
+        "coverage_class": policy.coverage_class,
+        "national_complete": False,
+        "target_scope_item_ids": sorted(policy.target_scope_item_ids),
         "total_official_leaves": len(leaves),
+        "total_active_scope_leaves": compile_version.official_scope_version.items.filter(
+            is_leaf=True, perimeter="TESTABLE"
+        ).count(),
         "leaves_with_obligations": covered,
         "leaves_sufficiently_covered": sufficient,
         "blocking_omission_count": counts["OMISSION"],
@@ -547,6 +600,29 @@ def resolve_issue(issue_id, *, reviewer, resolution, rationale, changes_canonica
 
 
 @transaction.atomic
+def record_obligation_review(obligation_id, *, reviewer, resolution, rationale, authority_reviewed):
+    if not reviewer.is_staff:
+        raise PermissionDenied("Production obligation review requires staff authority.")
+    obligation = RuleObligation.objects.select_for_update().get(pk=obligation_id)
+    if obligation.compile_version.status in (
+        CurriculumCompileVersion.Status.CERTIFIED,
+        CurriculumCompileVersion.Status.SUPERSEDED,
+    ):
+        raise ValidationError("Certified historical obligations cannot be reviewed again.")
+    existing = ObligationHumanReview.objects.filter(obligation=obligation).first()
+    if existing:
+        return existing, False
+    review = ObligationHumanReview.objects.create(
+        obligation=obligation,
+        reviewer=reviewer,
+        resolution=resolution,
+        rationale=rationale,
+        authority_reviewed=authority_reviewed,
+    )
+    return review, True
+
+
+@transaction.atomic
 def certify_curriculum(compile_id, *, allow_test_fixture=False):
     compile_version = CurriculumCompileVersion.objects.select_for_update().get(pk=compile_id)
     if (
@@ -568,6 +644,22 @@ def certify_curriculum(compile_id, *, allow_test_fixture=False):
     coverage = compile_version.reconciliation_report
     if coverage.get("blocking_issue_count") != 0:
         raise ValidationError("Reconcile again after review resolutions before certification.")
+    if compile_version.coverage_policy.requires_human_review:
+        missing_reviews = []
+        rejected_reviews = []
+        for obligation in compile_version.obligations.filter(compiler_status="INCLUDED"):
+            review = getattr(obligation, "human_review", None)
+            if review is None or not review.authority_reviewed:
+                missing_reviews.append(obligation.stable_id)
+            elif review.resolution != ObligationHumanReview.Resolution.APPROVE:
+                rejected_reviews.append(obligation.stable_id)
+        if missing_reviews or rejected_reviews:
+            raise ValidationError(
+                {
+                    "human_review_required": sorted(missing_reviews),
+                    "human_review_rejected": sorted(rejected_reviews),
+                }
+            )
     review_evidence = []
     for issue in compile_version.issues.select_related("review_resolution").order_by("stable_id"):
         review = issue.review_resolution if hasattr(issue, "review_resolution") else None
@@ -589,12 +681,45 @@ def certify_curriculum(compile_id, *, allow_test_fixture=False):
         "source_class": compile_version.source_class,
         "coverage": coverage,
         "review_evidence": review_evidence,
+        "coverage_class": compile_version.coverage_class,
+        "national_complete": False,
+        "obligation_reviews": sorted(
+            [
+                {
+                    "obligation": review.obligation.stable_id,
+                    "reviewer": str(review.reviewer_id),
+                    "resolution": review.resolution,
+                    "authority_reviewed": review.authority_reviewed,
+                    "rationale": review.rationale,
+                }
+                for review in ObligationHumanReview.objects.filter(
+                    obligation__compile_version=compile_version
+                ).select_related("obligation")
+            ],
+            key=lambda value: value["obligation"],
+        ),
     }
+    authority_provenance_sha256 = canonical_sha256(
+        sorted(
+            [
+                [authority.stable_id, authority.source_version, authority.content_sha256]
+                for authority in AuthoritySource.objects.filter(
+                    authorityevidence__obligation__compile_version=compile_version
+                ).distinct()
+            ]
+        )
+    )
     snapshot = CoverageReleaseSnapshot.objects.create(
         compile_version=compile_version,
         official_scope_version=compile_version.official_scope_version,
         compiler_schema_version=compile_version.compiler_schema_version,
         source_class=compile_version.source_class,
+        coverage_class=compile_version.coverage_class,
+        national_complete=False,
+        authority_provenance_sha256=authority_provenance_sha256,
+        human_review_status=(
+            "APPROVED" if compile_version.coverage_policy.requires_human_review else "NOT_REQUIRED"
+        ),
         obligation_count=compile_version.obligations.filter(compiler_status="INCLUDED").count(),
         leaf_count=coverage["total_official_leaves"],
         covered_leaf_count=coverage["leaves_sufficiently_covered"],

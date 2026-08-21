@@ -12,6 +12,7 @@ from .models import (
 )
 from .services import (
     register_artifact,
+    sha256_bytes,
     validate_and_activate,
     validate_scope,
     validate_scope_version,
@@ -27,9 +28,13 @@ def _datetime(value):
 
 
 @transaction.atomic
-def import_manifest(payload, *, activate=False, allow_test_fixture=False):
-    if payload.get("schema") != "BARCLIMB_OFFICIAL_SCOPE_IMPORT_V1":
+def import_manifest(payload, *, activate=False, allow_test_fixture=False, artifact_contents=None):
+    if payload.get("schema") not in (
+        "BARCLIMB_OFFICIAL_SCOPE_IMPORT_V1",
+        "BARCLIMB_OFFICIAL_SCOPE_IMPORT_V2",
+    ):
         raise ValidationError("Unsupported official-scope import schema.")
+    artifact_contents = artifact_contents or {}
     artifact_entries = payload.get("artifacts", [])
     artifact_ids = [entry.get("stable_id") for entry in artifact_entries]
     if len(artifact_ids) != len(set(artifact_ids)):
@@ -37,10 +42,22 @@ def import_manifest(payload, *, activate=False, allow_test_fixture=False):
     artifact_map = {}
     created_artifacts = 0
     for entry in artifact_entries:
-        try:
-            content = base64.b64decode(entry["content_base64"], validate=True)
-        except Exception as error:
-            raise ValidationError("Artifact content_base64 is invalid.") from error
+        if "content_base64" in entry:
+            try:
+                content = base64.b64decode(entry["content_base64"], validate=True)
+            except Exception as error:
+                raise ValidationError("Artifact content_base64 is invalid.") from error
+        else:
+            content = artifact_contents.get(entry["stable_id"])
+            if content is None:
+                raise ValidationError(
+                    f"Operator-controlled bytes are required for {entry['stable_id']}."
+                )
+            expected = entry.get("expected_sha256")
+            if not expected or sha256_bytes(content) != expected:
+                raise ValidationError(
+                    f"Acquired bytes do not match expected_sha256 for {entry['stable_id']}."
+                )
         supersedes = None
         predecessor = entry.get("supersedes")
         if predecessor:
@@ -59,7 +76,12 @@ def import_manifest(payload, *, activate=False, allow_test_fixture=False):
             source_uri=entry.get("source_uri", ""),
             publication_date=_date(entry.get("publication_date")),
             effective_date=_date(entry.get("effective_date")),
+            effective_end_date=_date(entry.get("effective_end_date")),
             retrieved_at=_datetime(entry.get("retrieved_at")),
+            byte_length=len(content),
+            media_type=entry.get("media_type", ""),
+            storage_disposition=entry.get("storage_disposition", ""),
+            rights_basis=entry.get("rights_basis", ""),
             source_version=entry["source_version"],
             status=entry.get("status", "PUBLISHED"),
             supersedes=supersedes,
@@ -78,6 +100,14 @@ def import_manifest(payload, *, activate=False, allow_test_fixture=False):
             "is_national": definition.get("is_national", True),
             "jurisdiction": definition.get("jurisdiction", ""),
             "is_test_fixture": definition.get("is_test_fixture", False),
+            "administration_start": _date(definition.get("administration_start")),
+            "administration_end": _date(definition.get("administration_end")),
+            "release_class": definition.get(
+                "release_class",
+                "TEST_FIXTURE" if definition.get("is_test_fixture", False) else "CURRENT",
+            ),
+            "normalization_report": definition.get("normalization_report", {}),
+            "freshness_checked_at": _datetime(definition.get("freshness_checked_at")),
         },
     )
     expected = (
@@ -86,6 +116,13 @@ def import_manifest(payload, *, activate=False, allow_test_fixture=False):
         definition.get("is_national", True),
         definition.get("jurisdiction", ""),
         definition.get("is_test_fixture", False),
+        _date(definition.get("administration_start")),
+        _date(definition.get("administration_end")),
+        definition.get(
+            "release_class",
+            "TEST_FIXTURE" if definition.get("is_test_fixture", False) else "CURRENT",
+        ),
+        definition.get("normalization_report", {}),
     )
     actual = (
         scope.exam_program,
@@ -93,6 +130,10 @@ def import_manifest(payload, *, activate=False, allow_test_fixture=False):
         scope.is_national,
         scope.jurisdiction,
         scope.is_test_fixture,
+        scope.administration_start,
+        scope.administration_end,
+        scope.release_class,
+        scope.normalization_report,
     )
     if actual != expected:
         raise ValidationError("Scope identity exists with different immutable metadata.")
@@ -141,6 +182,9 @@ def import_manifest(payload, *, activate=False, allow_test_fixture=False):
                     "source_artifact": source,
                     "source_locator": item["source_locator"],
                     "treatment_metadata": item.get("treatment_metadata", {}),
+                    "knowledge_treatment": item.get("knowledge_treatment", "UNSPECIFIED"),
+                    "normalization_status": item.get("normalization_status", "AUTO_ACCEPTED"),
+                    "normalization_notes": item.get("normalization_notes", ""),
                 },
             )
             if not was_created:
@@ -155,6 +199,9 @@ def import_manifest(payload, *, activate=False, allow_test_fixture=False):
                     "source_artifact_id": source.id,
                     "source_locator": item["source_locator"],
                     "treatment_metadata": item.get("treatment_metadata", {}),
+                    "knowledge_treatment": item.get("knowledge_treatment", "UNSPECIFIED"),
+                    "normalization_status": item.get("normalization_status", "AUTO_ACCEPTED"),
+                    "normalization_notes": item.get("normalization_notes", ""),
                 }
                 if any(getattr(created, key) != value for key, value in comparable.items()):
                     raise ValidationError(f"Scope item {stable_id} changed during re-import.")

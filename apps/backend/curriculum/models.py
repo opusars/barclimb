@@ -26,6 +26,13 @@ class AuthoritySource(models.Model):
     canonical_citation = models.CharField(max_length=300)
     source_uri = models.URLField(max_length=1000, blank=True)
     content_sha256 = models.CharField(max_length=64)
+    issuing_authority = models.CharField(max_length=200, blank=True)
+    publication_date = models.DateField(null=True, blank=True)
+    effective_date = models.DateField(null=True, blank=True)
+    retrieved_at = models.DateTimeField(null=True, blank=True)
+    media_type = models.CharField(max_length=120, blank=True)
+    storage_disposition = models.CharField(max_length=80, blank=True)
+    rights_basis = models.TextField(blank=True)
     source_class = models.CharField(max_length=16, choices=SourceClass.choices)
     is_national = models.BooleanField(default=True)
     jurisdiction = models.CharField(max_length=80, blank=True)
@@ -64,6 +71,10 @@ class AuthoritySource(models.Model):
 
 
 class CoveragePolicy(models.Model):
+    class CoverageClass(models.TextChoices):
+        NATIONAL = "NATIONAL", "National completeness"
+        PILOT_ONLY = "PILOT_ONLY", "Bounded pilot only"
+
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     stable_id = models.CharField(max_length=160)
     policy_version = models.CharField(max_length=80)
@@ -72,6 +83,11 @@ class CoveragePolicy(models.Model):
     allowed_obligation_kinds = models.JSONField(default=list)
     canonical_sha256 = models.CharField(max_length=64)
     source_class = models.CharField(max_length=16, choices=AuthoritySource.SourceClass.choices)
+    coverage_class = models.CharField(
+        max_length=16, choices=CoverageClass.choices, default=CoverageClass.NATIONAL
+    )
+    target_scope_item_ids = models.JSONField(default=list, blank=True)
+    requires_human_review = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -100,6 +116,10 @@ class CoveragePolicy(models.Model):
     def clean(self):
         if not isinstance(self.allowed_obligation_kinds, list):
             raise ValidationError("Allowed obligation kinds must be a list.")
+        if not isinstance(self.target_scope_item_ids, list):
+            raise ValidationError("Target scope item identities must be a list.")
+        if self.coverage_class == self.CoverageClass.PILOT_ONLY and not self.target_scope_item_ids:
+            raise ValidationError("PILOT_ONLY policy requires an explicit target leaf subset.")
 
 
 class CurriculumCompileVersion(models.Model):
@@ -121,6 +141,12 @@ class CurriculumCompileVersion(models.Model):
     canonical_sha256 = models.CharField(max_length=64, blank=True)
     status = models.CharField(max_length=16, choices=Status.choices, default=Status.DRAFT)
     source_class = models.CharField(max_length=16, choices=AuthoritySource.SourceClass.choices)
+    coverage_class = models.CharField(
+        max_length=16,
+        choices=CoveragePolicy.CoverageClass.choices,
+        default=CoveragePolicy.CoverageClass.NATIONAL,
+    )
+    national_complete = models.BooleanField(default=False)
     compile_report = models.JSONField(default=dict, blank=True)
     reconciliation_report = models.JSONField(default=dict, blank=True)
     supersedes = models.ForeignKey(
@@ -167,6 +193,11 @@ class CurriculumCompileVersion(models.Model):
         fixture_compile = self.source_class == AuthoritySource.SourceClass.TEST_FIXTURE
         if fixture_scope != fixture_compile:
             raise ValidationError("Scope and curriculum source classifications must match.")
+        if (
+            self.coverage_class == CoveragePolicy.CoverageClass.PILOT_ONLY
+            and self.national_complete
+        ):
+            raise ValidationError("A PILOT_ONLY compile cannot claim national completeness.")
 
 
 class RuleObligation(models.Model):
@@ -402,6 +433,39 @@ class ReviewResolution(models.Model):
         return f"{self.issue}:{self.resolution}"
 
 
+class ObligationHumanReview(models.Model):
+    class Resolution(models.TextChoices):
+        APPROVE = "APPROVE", "Approve"
+        REJECT = "REJECT", "Reject"
+
+    obligation = models.OneToOneField(
+        RuleObligation, on_delete=models.PROTECT, related_name="human_review"
+    )
+    reviewer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
+    resolution = models.CharField(max_length=16, choices=Resolution.choices)
+    rationale = models.TextField()
+    authority_reviewed = models.BooleanField(default=False)
+    reviewed_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.obligation}:{self.resolution}"
+
+    def save(self, *args, **kwargs):
+        if self.pk and type(self).objects.filter(pk=self.pk).exists():
+            raise ValidationError("Human review attestations are immutable.")
+        self.full_clean()
+        super().save(*args, **kwargs)
+
+    def delete(self, *args, **kwargs):
+        raise ValidationError("Human review attestations cannot be deleted.")
+
+    def clean(self):
+        if not self.reviewer_id or not self.reviewer.is_staff:
+            raise ValidationError("Production obligation review requires a staff reviewer.")
+        if self.obligation.compile_version.source_class != AuthoritySource.SourceClass.PRODUCTION:
+            raise ValidationError("Production human review cannot attest fixture content.")
+
+
 class CoverageReleaseSnapshot(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     compile_version = models.OneToOneField(
@@ -410,6 +474,14 @@ class CoverageReleaseSnapshot(models.Model):
     official_scope_version = models.ForeignKey(OfficialScopeVersion, on_delete=models.PROTECT)
     compiler_schema_version = models.CharField(max_length=80)
     source_class = models.CharField(max_length=16, choices=AuthoritySource.SourceClass.choices)
+    coverage_class = models.CharField(
+        max_length=16,
+        choices=CoveragePolicy.CoverageClass.choices,
+        default=CoveragePolicy.CoverageClass.NATIONAL,
+    )
+    national_complete = models.BooleanField(default=False)
+    authority_provenance_sha256 = models.CharField(max_length=64, blank=True)
+    human_review_status = models.CharField(max_length=32, default="NOT_REQUIRED")
     obligation_count = models.PositiveIntegerField()
     leaf_count = models.PositiveIntegerField()
     covered_leaf_count = models.PositiveIntegerField()

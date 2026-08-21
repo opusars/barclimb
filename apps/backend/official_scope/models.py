@@ -22,8 +22,13 @@ class OfficialSourceArtifact(models.Model):
     source_uri = models.URLField(max_length=1000, blank=True)
     publication_date = models.DateField(null=True, blank=True)
     effective_date = models.DateField(null=True, blank=True)
+    effective_end_date = models.DateField(null=True, blank=True)
     retrieved_at = models.DateTimeField(null=True, blank=True)
     content_sha256 = models.CharField(max_length=64)
+    byte_length = models.PositiveBigIntegerField(null=True, blank=True)
+    media_type = models.CharField(max_length=120, blank=True)
+    storage_disposition = models.CharField(max_length=80, blank=True)
+    rights_basis = models.TextField(blank=True)
     source_version = models.CharField(max_length=160)
     status = models.CharField(max_length=16, choices=Status.choices, default=Status.PUBLISHED)
     supersedes = models.ForeignKey(
@@ -72,6 +77,11 @@ class OfficialScopeVersion(models.Model):
         ACTIVE = "ACTIVE", "Active"
         SUPERSEDED = "SUPERSEDED", "Superseded"
 
+    class ReleaseClass(models.TextChoices):
+        CURRENT = "CURRENT", "Current administration period"
+        FUTURE = "FUTURE", "Known future administration period"
+        TEST_FIXTURE = "TEST_FIXTURE", "Test fixture"
+
     EXAM_PROGRAM = "NEXTGEN_UBE"
     EXAM_COMPONENT = "NEXTGEN_CORE"
 
@@ -82,6 +92,13 @@ class OfficialScopeVersion(models.Model):
     is_national = models.BooleanField(default=True)
     jurisdiction = models.CharField(max_length=80, blank=True)
     normalized_sha256 = models.CharField(max_length=64, blank=True)
+    administration_start = models.DateField(null=True, blank=True)
+    administration_end = models.DateField(null=True, blank=True)
+    release_class = models.CharField(
+        max_length=16, choices=ReleaseClass.choices, default=ReleaseClass.CURRENT
+    )
+    normalization_report = models.JSONField(default=dict, blank=True)
+    freshness_checked_at = models.DateTimeField(null=True, blank=True)
     status = models.CharField(max_length=16, choices=Status.choices, default=Status.DRAFT)
     source_artifacts = models.ManyToManyField(
         OfficialSourceArtifact, through="OfficialScopeSource", related_name="scope_versions"
@@ -144,6 +161,16 @@ class OfficialScopeVersion(models.Model):
             or self.jurisdiction
         ):
             raise ValidationError("V1 official scope must be national NEXTGEN_UBE/NEXTGEN_CORE.")
+        if bool(self.administration_start) != bool(self.administration_end):
+            raise ValidationError("Administration periods require both start and end dates.")
+        if (
+            self.administration_start
+            and self.administration_end
+            and self.administration_start > self.administration_end
+        ):
+            raise ValidationError("Administration period start must not follow its end.")
+        if self.is_test_fixture != (self.release_class == self.ReleaseClass.TEST_FIXTURE):
+            raise ValidationError("Fixture classification must agree with release_class.")
 
 
 class OfficialScopeSource(models.Model):
@@ -187,6 +214,29 @@ class OfficialScopeItem(models.Model):
         EXCLUDED = "EXCLUDED", "Excluded"
         UNSPECIFIED = "UNSPECIFIED", "Unspecified"
 
+    class KnowledgeTreatment(models.TextChoices):
+        RECALLED_REQUIRED = "RECALLED_REQUIRED", "Recalled knowledge required"
+        RECOGNITION_WITH_OR_WITHOUT_RESOURCES = (
+            "RECOGNITION_WITH_OR_WITHOUT_RESOURCES",
+            "May be tested with or without resources",
+        )
+        RESOURCES_ALWAYS_PROVIDED = (
+            "RESOURCES_ALWAYS_PROVIDED",
+            "Legal resources always provided",
+        )
+        FOUNDATIONAL_SKILL = "FOUNDATIONAL_SKILL", "Foundational skill"
+        EXAM_DESIGN_METADATA = "EXAM_DESIGN_METADATA", "Exam design metadata"
+        MIXED_OFFICIAL_MARKERS = (
+            "MIXED_OFFICIAL_MARKERS",
+            "Contains both recalled-only and with-or-without-resource topics",
+        )
+        UNSPECIFIED = "UNSPECIFIED", "Unspecified"
+
+    class NormalizationStatus(models.TextChoices):
+        AUTO_ACCEPTED = "AUTO_ACCEPTED", "Deterministically accepted"
+        REVIEW_REQUIRED = "REVIEW_REQUIRED", "Review required"
+        BLOCKED = "BLOCKED", "Blocked"
+
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     scope_version = models.ForeignKey(
         OfficialScopeVersion, on_delete=models.PROTECT, related_name="items"
@@ -206,6 +256,17 @@ class OfficialScopeItem(models.Model):
     source_artifact = models.ForeignKey(OfficialSourceArtifact, on_delete=models.PROTECT)
     source_locator = models.CharField(max_length=300)
     treatment_metadata = models.JSONField(default=dict, blank=True)
+    knowledge_treatment = models.CharField(
+        max_length=48,
+        choices=KnowledgeTreatment.choices,
+        default=KnowledgeTreatment.UNSPECIFIED,
+    )
+    normalization_status = models.CharField(
+        max_length=24,
+        choices=NormalizationStatus.choices,
+        default=NormalizationStatus.AUTO_ACCEPTED,
+    )
+    normalization_notes = models.TextField(blank=True)
 
     class Meta:
         constraints = [
@@ -258,6 +319,8 @@ class OfficialScopeItem(models.Model):
             "assessment_forms",
             "source",
             "notes",
+            "administration_period",
+            "resource_treatment",
         }
         unsupported = set(self.treatment_metadata) - allowed
         if unsupported:

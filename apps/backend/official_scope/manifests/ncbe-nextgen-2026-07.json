@@ -1,0 +1,103 @@
+{
+  "schema": "BARCLIMB_OFFICIAL_SCOPE_IMPORT_V2",
+  "artifacts": [
+    {
+      "stable_id": "NCBE_NEXTGEN_CONTENT_SCOPE",
+      "source_authority": "National Conference of Bar Examiners",
+      "artifact_type": "NEXTGEN_CONTENT_SCOPE",
+      "official_title": "NextGen UBE Content Scope: July 2026–February 2027",
+      "source_uri": "https://www.ncbex.org/sites/default/files/2025-07/NCBE%20NextGen%20UBE%20Content%20Scope-Aug%202025.pdf",
+      "publication_date": "2025-08-01",
+      "effective_date": "2026-07-01",
+      "effective_end_date": "2027-02-28",
+      "retrieved_at": "2026-08-21T19:06:49Z",
+      "expected_sha256": "22aa277048c04fdd887db66284c28bade9989b9f8a654fab05781bafa5b19b1a",
+      "media_type": "application/pdf",
+      "source_version": "2025-08_JUL2026-FEB2027",
+      "source_class": "OFFICIAL",
+      "storage_disposition": "TRANSIENT_HASH_ONLY",
+      "rights_basis": "NCBE copyright and website terms do not clearly authorize repository redistribution; retain URL, hash, metadata, short factual perimeter labels, and locators only.",
+      "provenance_notes": "Acquired from the public NCBE-controlled canonical URL; 6109365 bytes; raw bytes intentionally excluded from Git and API surfaces."
+    },
+    {
+      "stable_id": "NCBE_NEXTGEN_BLUEPRINT",
+      "source_authority": "National Conference of Bar Examiners",
+      "artifact_type": "NEXTGEN_BLUEPRINT",
+      "official_title": "NextGen UBE Blueprint July 2026–February 2027",
+      "source_uri": "https://www.ncbex.org/sites/default/files/2025-06/NCBE-NextGen-UBE-Blueprint.pdf",
+      "publication_date": "2025-06-02",
+      "effective_date": "2026-07-01",
+      "effective_end_date": "2027-02-28",
+      "retrieved_at": "2026-08-21T19:06:49Z",
+      "expected_sha256": "358f2e77c22d588b6a5f5ca3422b5c14a6c1fea46c7d4c640ff218be847846ad",
+      "media_type": "application/pdf",
+      "source_version": "2025-06-02_JUL2026-FEB2027",
+      "source_class": "OFFICIAL",
+      "storage_disposition": "TRANSIENT_HASH_ONLY",
+      "rights_basis": "Copyright notice states © 2025 NCBE, all rights reserved; repository redistribution was not assumed.",
+      "provenance_notes": "Acquired from the public NCBE-controlled canonical URL; 3587507 bytes; raw bytes intentionally excluded from Git and API surfaces."
+    }
+  ],
+  "scope": {
+    "version_identifier": "NCBE_NEXTGEN_SCOPE_2026_07_2027_02",
+    "exam_program": "NEXTGEN_UBE",
+    "exam_component": "NEXTGEN_CORE",
+    "is_national": true,
+    "jurisdiction": "",
+    "is_test_fixture": false,
+    "administration_start": "2026-07-01",
+    "administration_end": "2027-02-28",
+    "release_class": "CURRENT",
+    "freshness_checked_at": "2026-08-21T19:06:49Z",
+    "normalization_report": {
+      "schema": "BARCLIMB_SCOPE_NORMALIZATION_REPORT_V1",
+      "method": "Human-controlled factual hierarchy transcription; typography and list numbering removed; no substantive descriptions copied.",
+      "ambiguities": [],
+      "blocking_issues": [],
+      "copyright_boundary": "Short labels and factual classifications only; source documents remain transient.",
+      "granularity_boundary": "This perimeter registry preserves current subject, skill, context, assessment-family, and pilot-leaf identity. It is not a BarClimb doctrinal breakdown."
+    },
+    "sources": [
+      {"artifact_id": "NCBE_NEXTGEN_CONTENT_SCOPE", "role": "PERIMETER_AND_TREATMENT"},
+      {"artifact_id": "NCBE_NEXTGEN_BLUEPRINT", "role": "EXAM_DESIGN_AND_TREATMENT"}
+    ],
+    "items": [
+      {"stable_id": "nextgen-current-root", "official_label": "Current national NextGen UBE perimeter", "source_artifact_id": "NCBE_NEXTGEN_CONTENT_SCOPE", "source_locator": "p. 1, About the NextGen UBE Content Scope", "normalization_notes": "Heading and administration-period metadata normalized into one root."},
+
+      {"stable_id": "foundational-skills", "parent_id": "nextgen-current-root", "official_label": "Foundational Skills", "ordering": 10, "subject_group": "FOUNDATIONAL_SKILLS", "source_artifact_id": "NCBE_NEXTGEN_CONTENT_SCOPE", "source_locator": "pp. 1–5"},
+      {"stable_id": "skill-issue-spotting-analysis", "parent_id": "foundational-skills", "official_label": "Issue spotting and analysis", "ordering": 1, "perimeter": "TESTABLE", "subject_group": "FOUNDATIONAL_SKILLS", "is_leaf": true, "source_artifact_id": "NCBE_NEXTGEN_CONTENT_SCOPE", "source_locator": "pp. 1–5, Foundational Skills Group A", "knowledge_treatment": "FOUNDATIONAL_SKILL"},
+      {"stable_id": "skill-investigation-evaluation", "parent_id": "foundational-skills", "official_label": "Investigation and evaluation", "ordering": 2, "perimeter": "TESTABLE", "subject_group": "FOUNDATIONAL_SKILLS", "is_leaf": true, "source_artifact_id": "NCBE_NEXTGEN_CONTENT_SCOPE", "source_locator": "pp. 1–5, Foundational Skills Group A", "knowledge_treatment": "FOUNDATIONAL_SKILL"},
+      {"stable_id": "skill-client-counseling-advising", "parent_id": "foundational-skills", "official_label": "Client counseling and advising", "ordering": 3, "perimeter": "TESTABLE", "subject_group": "FOUNDATIONAL_SKILLS", "is_leaf": true, "source_artifact_id": "NCBE_NEXTGEN_CONTENT_SCOPE", "source_locator": "pp. 1–5, Foundational Skills Group B", "knowledge_treatment": "FOUNDATIONAL_SKILL"},
+      {"stable_id": "skill-negotiation-dispute-resolution", "parent_id": "foundational-skills", "official_label": "Negotiation and dispute resolution", "ordering": 4, "perimeter": "TESTABLE", "subject_group": "FOUNDATIONAL_SKILLS", "is_leaf": true, "source_artifact_id": "NCBE_NEXTGEN_CONTENT_SCOPE", "source_locator": "pp. 1–5, Foundational Skills Group B", "knowledge_treatment": "FOUNDATIONAL_SKILL"},
+      {"stable_id": "skill-client-relationship-management", "parent_id": "foundational-skills", "official_label": "Client relationship and management", "ordering": 5, "perimeter": "TESTABLE", "subject_group": "FOUNDATIONAL_SKILLS", "is_leaf": true, "source_artifact_id": "NCBE_NEXTGEN_CONTENT_SCOPE", "source_locator": "pp. 1–5, Foundational Skills Group B", "knowledge_treatment": "FOUNDATIONAL_SKILL"},
+      {"stable_id": "skill-legal-research", "parent_id": "foundational-skills", "official_label": "Legal research", "ordering": 6, "perimeter": "TESTABLE", "subject_group": "FOUNDATIONAL_SKILLS", "is_leaf": true, "source_artifact_id": "NCBE_NEXTGEN_CONTENT_SCOPE", "source_locator": "pp. 1–5, Foundational Skills Group C", "knowledge_treatment": "FOUNDATIONAL_SKILL"},
+      {"stable_id": "skill-legal-writing-drafting", "parent_id": "foundational-skills", "official_label": "Legal writing and drafting", "ordering": 7, "perimeter": "TESTABLE", "subject_group": "FOUNDATIONAL_SKILLS", "is_leaf": true, "source_artifact_id": "NCBE_NEXTGEN_CONTENT_SCOPE", "source_locator": "pp. 1–5, Foundational Skills Group D", "knowledge_treatment": "FOUNDATIONAL_SKILL"},
+
+      {"stable_id": "foundational-concepts", "parent_id": "nextgen-current-root", "official_label": "Foundational Concepts and Principles", "ordering": 20, "subject_group": "FOUNDATIONAL_CONCEPTS", "source_artifact_id": "NCBE_NEXTGEN_CONTENT_SCOPE", "source_locator": "p. 1 and subject outlines pp. 6–42"},
+      {"stable_id": "subject-business-associations", "parent_id": "foundational-concepts", "official_label": "Business associations and relationships", "ordering": 1, "perimeter": "TESTABLE", "subject_group": "BUSINESS_ASSOCIATIONS", "is_leaf": true, "source_artifact_id": "NCBE_NEXTGEN_CONTENT_SCOPE", "source_locator": "pp. 6–9", "knowledge_treatment": "MIXED_OFFICIAL_MARKERS", "normalization_notes": "Aggregate subject identity; the authoritative PDF retains topic-level star markers."},
+      {"stable_id": "subject-civil-procedure", "parent_id": "foundational-concepts", "official_label": "Civil Procedure", "ordering": 2, "subject_group": "CIVIL_PROCEDURE", "source_artifact_id": "NCBE_NEXTGEN_CONTENT_SCOPE", "source_locator": "pp. 10–13"},
+      {"stable_id": "civil-procedure-jurisdiction", "parent_id": "subject-civil-procedure", "official_label": "Jurisdiction and related court authority", "ordering": 1, "perimeter": "TESTABLE", "subject_group": "CIVIL_PROCEDURE", "is_leaf": true, "source_artifact_id": "NCBE_NEXTGEN_CONTENT_SCOPE", "source_locator": "p. 11, I.A–B", "knowledge_treatment": "MIXED_OFFICIAL_MARKERS", "normalization_notes": "Short factual grouping; exact subtopics and markers remain in the source."},
+      {"stable_id": "civil-procedure-service-process-notice", "parent_id": "subject-civil-procedure", "official_label": "Service of process and notice", "ordering": 2, "perimeter": "TESTABLE", "subject_group": "CIVIL_PROCEDURE", "is_leaf": true, "source_artifact_id": "NCBE_NEXTGEN_CONTENT_SCOPE", "source_locator": "p. 11, I.C", "knowledge_treatment": "RECOGNITION_WITH_OR_WITHOUT_RESOURCES", "normalization_notes": "Punctuation-only normalization; unstarred source topic preserved.", "treatment_metadata": {"resource_treatment": "MAY_BE_TESTED_WITH_OR_WITHOUT_LEGAL_RESOURCES", "source": {"stable_id": "NCBE_NEXTGEN_CONTENT_SCOPE", "source_version": "2025-08_JUL2026-FEB2027"}, "notes": "Without resources, recognition that the topic is at issue is expected."}},
+      {"stable_id": "civil-procedure-venue-transfer", "parent_id": "subject-civil-procedure", "official_label": "Venue, forum non conveniens, and transfer", "ordering": 3, "perimeter": "TESTABLE", "subject_group": "CIVIL_PROCEDURE", "is_leaf": true, "source_artifact_id": "NCBE_NEXTGEN_CONTENT_SCOPE", "source_locator": "p. 11, I.D", "knowledge_treatment": "RECOGNITION_WITH_OR_WITHOUT_RESOURCES"},
+      {"stable_id": "civil-procedure-litigation", "parent_id": "subject-civil-procedure", "official_label": "Law applied by federal courts and pretrial litigation", "ordering": 4, "perimeter": "TESTABLE", "subject_group": "CIVIL_PROCEDURE", "is_leaf": true, "source_artifact_id": "NCBE_NEXTGEN_CONTENT_SCOPE", "source_locator": "pp. 11–12, II–III", "knowledge_treatment": "MIXED_OFFICIAL_MARKERS", "normalization_notes": "Short factual grouping; exact subtopics and markers remain in the source."},
+      {"stable_id": "civil-procedure-motions-judgments", "parent_id": "subject-civil-procedure", "official_label": "Motions, verdicts, and judgments", "ordering": 5, "perimeter": "TESTABLE", "subject_group": "CIVIL_PROCEDURE", "is_leaf": true, "source_artifact_id": "NCBE_NEXTGEN_CONTENT_SCOPE", "source_locator": "p. 13, IV–V", "knowledge_treatment": "MIXED_OFFICIAL_MARKERS", "normalization_notes": "Short factual grouping; exact subtopics and markers remain in the source."},
+      {"stable_id": "civil-procedure-appeals", "parent_id": "subject-civil-procedure", "official_label": "Appellate review", "ordering": 6, "perimeter": "TESTABLE", "subject_group": "CIVIL_PROCEDURE", "is_leaf": true, "source_artifact_id": "NCBE_NEXTGEN_CONTENT_SCOPE", "source_locator": "p. 13, VI", "knowledge_treatment": "MIXED_OFFICIAL_MARKERS", "normalization_notes": "Short factual grouping; exact subtopics and markers remain in the source."},
+      {"stable_id": "subject-constitutional-law", "parent_id": "foundational-concepts", "official_label": "Constitutional law", "ordering": 3, "perimeter": "TESTABLE", "subject_group": "CONSTITUTIONAL_LAW", "is_leaf": true, "source_artifact_id": "NCBE_NEXTGEN_CONTENT_SCOPE", "source_locator": "pp. 14–18", "knowledge_treatment": "MIXED_OFFICIAL_MARKERS", "normalization_notes": "Aggregate subject identity; the authoritative PDF retains topic-level star markers."},
+      {"stable_id": "subject-contracts", "parent_id": "foundational-concepts", "official_label": "Contracts", "ordering": 4, "perimeter": "TESTABLE", "subject_group": "CONTRACTS", "is_leaf": true, "source_artifact_id": "NCBE_NEXTGEN_CONTENT_SCOPE", "source_locator": "pp. 19–23", "knowledge_treatment": "MIXED_OFFICIAL_MARKERS", "normalization_notes": "Aggregate subject identity; the authoritative PDF retains topic-level star markers."},
+      {"stable_id": "subject-criminal-law", "parent_id": "foundational-concepts", "official_label": "Criminal law and constitutional protections of accused persons", "ordering": 5, "perimeter": "TESTABLE", "subject_group": "CRIMINAL_LAW", "is_leaf": true, "source_artifact_id": "NCBE_NEXTGEN_CONTENT_SCOPE", "source_locator": "pp. 24–28", "knowledge_treatment": "MIXED_OFFICIAL_MARKERS", "normalization_notes": "Aggregate subject identity; the authoritative PDF retains topic-level star markers."},
+      {"stable_id": "subject-evidence", "parent_id": "foundational-concepts", "official_label": "Evidence", "ordering": 6, "perimeter": "TESTABLE", "subject_group": "EVIDENCE", "is_leaf": true, "source_artifact_id": "NCBE_NEXTGEN_CONTENT_SCOPE", "source_locator": "pp. 29–33", "knowledge_treatment": "MIXED_OFFICIAL_MARKERS", "normalization_notes": "Aggregate subject identity; the authoritative PDF retains topic-level star markers."},
+      {"stable_id": "subject-real-property", "parent_id": "foundational-concepts", "official_label": "Real property", "ordering": 7, "perimeter": "TESTABLE", "subject_group": "REAL_PROPERTY", "is_leaf": true, "source_artifact_id": "NCBE_NEXTGEN_CONTENT_SCOPE", "source_locator": "pp. 34–39", "knowledge_treatment": "MIXED_OFFICIAL_MARKERS", "normalization_notes": "Aggregate subject identity; the authoritative PDF retains topic-level star markers."},
+      {"stable_id": "subject-torts", "parent_id": "foundational-concepts", "official_label": "Torts", "ordering": 8, "perimeter": "TESTABLE", "subject_group": "TORTS", "is_leaf": true, "source_artifact_id": "NCBE_NEXTGEN_CONTENT_SCOPE", "source_locator": "pp. 40–42", "knowledge_treatment": "MIXED_OFFICIAL_MARKERS", "normalization_notes": "Aggregate subject identity; the authoritative PDF retains topic-level star markers."},
+
+      {"stable_id": "supplied-law-contexts", "parent_id": "nextgen-current-root", "official_label": "Other legal domains used as skills contexts", "ordering": 30, "subject_group": "SUPPLIED_LAW_CONTEXT", "source_artifact_id": "NCBE_NEXTGEN_CONTENT_SCOPE", "source_locator": "p. 1"},
+      {"stable_id": "context-family-law", "parent_id": "supplied-law-contexts", "official_label": "Family law", "ordering": 1, "perimeter": "CONTEXT", "subject_group": "SUPPLIED_LAW_CONTEXT", "is_leaf": true, "source_artifact_id": "NCBE_NEXTGEN_CONTENT_SCOPE", "source_locator": "p. 1; Blueprint pp. 5–6", "knowledge_treatment": "RESOURCES_ALWAYS_PROVIDED", "treatment_metadata": {"administration_period": "JULY_2026_THROUGH_FEBRUARY_2028", "resource_treatment": "LEGAL_RESOURCES_PROVIDED", "source": {"stable_id": "NCBE_NEXTGEN_BLUEPRINT", "source_version": "2025-06-02_JUL2026-FEB2027"}, "notes": "Skills-focused context through February 2028; future July 2028 foundational treatment is not active."}},
+      {"stable_id": "context-trusts-estates", "parent_id": "supplied-law-contexts", "official_label": "Trusts and estates", "ordering": 2, "perimeter": "CONTEXT", "subject_group": "SUPPLIED_LAW_CONTEXT", "is_leaf": true, "source_artifact_id": "NCBE_NEXTGEN_CONTENT_SCOPE", "source_locator": "p. 1; Blueprint p. 5", "knowledge_treatment": "RESOURCES_ALWAYS_PROVIDED", "treatment_metadata": {"administration_period": "JULY_2026_THROUGH_FEBRUARY_2028", "resource_treatment": "LEGAL_RESOURCES_PROVIDED", "source": {"stable_id": "NCBE_NEXTGEN_BLUEPRINT", "source_version": "2025-06-02_JUL2026-FEB2027"}, "notes": "Skills-focused context; not foundational recalled-knowledge doctrine."}},
+      {"stable_id": "context-other-domains", "parent_id": "supplied-law-contexts", "official_label": "Other areas of legal knowledge used as skills contexts", "ordering": 3, "perimeter": "CONTEXT", "subject_group": "SUPPLIED_LAW_CONTEXT", "is_leaf": true, "source_artifact_id": "NCBE_NEXTGEN_CONTENT_SCOPE", "source_locator": "p. 1; Blueprint p. 5", "knowledge_treatment": "RESOURCES_ALWAYS_PROVIDED", "normalization_notes": "No additional domains invented; open category retained exactly as a context boundary."},
+
+      {"stable_id": "assessment-families", "parent_id": "nextgen-current-root", "official_label": "Assessment families", "ordering": 40, "perimeter": "CONTEXT", "subject_group": "EXAM_DESIGN", "source_artifact_id": "NCBE_NEXTGEN_BLUEPRINT", "source_locator": "pp. 1–3", "knowledge_treatment": "EXAM_DESIGN_METADATA"},
+      {"stable_id": "assessment-standalone-mcq", "parent_id": "assessment-families", "official_label": "Standalone multiple-choice questions", "ordering": 1, "perimeter": "CONTEXT", "subject_group": "EXAM_DESIGN", "is_leaf": true, "source_artifact_id": "NCBE_NEXTGEN_BLUEPRINT", "source_locator": "p. 2", "knowledge_treatment": "EXAM_DESIGN_METADATA", "treatment_metadata": {"assessment_forms": ["STANDALONE_MULTIPLE_CHOICE"], "source": {"stable_id": "NCBE_NEXTGEN_BLUEPRINT", "source_version": "2025-06-02_JUL2026-FEB2027"}}},
+      {"stable_id": "assessment-integrated-question-sets", "parent_id": "assessment-families", "official_label": "Integrated question sets", "ordering": 2, "perimeter": "CONTEXT", "subject_group": "EXAM_DESIGN", "is_leaf": true, "source_artifact_id": "NCBE_NEXTGEN_BLUEPRINT", "source_locator": "pp. 2–3", "knowledge_treatment": "EXAM_DESIGN_METADATA", "treatment_metadata": {"assessment_forms": ["INTEGRATED_DRAFTING_SET", "INTEGRATED_COUNSELING_SET"], "source": {"stable_id": "NCBE_NEXTGEN_BLUEPRINT", "source_version": "2025-06-02_JUL2026-FEB2027"}}},
+      {"stable_id": "assessment-performance-tasks", "parent_id": "assessment-families", "official_label": "Performance tasks", "ordering": 3, "perimeter": "CONTEXT", "subject_group": "EXAM_DESIGN", "is_leaf": true, "source_artifact_id": "NCBE_NEXTGEN_BLUEPRINT", "source_locator": "p. 3", "knowledge_treatment": "EXAM_DESIGN_METADATA", "treatment_metadata": {"assessment_forms": ["STANDARD_PERFORMANCE_TASK", "LEGAL_RESEARCH_PERFORMANCE_TASK"], "source": {"stable_id": "NCBE_NEXTGEN_BLUEPRINT", "source_version": "2025-06-02_JUL2026-FEB2027"}}}
+    ]
+  }
+}

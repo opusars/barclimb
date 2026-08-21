@@ -16,13 +16,13 @@ The lifecycle is `DRAFT → COMPILED → RECONCILED → CERTIFIED → SUPERSEDED
 
 Reconciliation categories are omission, excess, conflict, ambiguity, duplicate, unsupported provenance, invalid structure, and unsupported jurisdiction. Each issue has blocking, warning, or informational severity and open/resolved state. The report counts official granular leaves, mapped leaves, fixture-policy-sufficient leaves, omissions, excess, conflicts, ambiguities, provenance deficiencies, and severity totals.
 
-`CoveragePolicy` is immutable and versioned. The fixture policy demonstrates minimum qualifying obligations, allowed kinds, and primary-authority requirements; it is not a production completeness claim. Real-source policy requires later subject/legal review and may demand richer kind-specific conditions.
+`CoveragePolicy` is immutable and versioned. `NATIONAL` policies evaluate the full testable perimeter. `PILOT_ONLY` policies require an explicit leaf subset and cannot claim national completeness. Compiler mappings outside that subset are blocked. Reports always expose pilot class, target leaves, active-scope leaf count, and `national_complete: false`; no misleading national percentage is calculated.
 
 ## Decision and review boundary
 
 `AUTO_APPROVABLE` means exact valid mapping, supported kind, complete required provenance, and no deterministic conflict/ambiguity signal. `REVIEW_REQUIRED` targets ambiguity, conflict, deficient provenance, or explicit risk signals. `BLOCKED` covers unsupported jurisdiction/structure. These are deterministic policy outcomes, not probabilistic or AI confidence.
 
-Staff-only review records the triggering issue, resolution, reviewer identity, timestamp, rationale, and whether canonical truth changes. A resolution must be followed by reconciliation before certification so snapshot counts cannot become stale. Future sampled subject QA can use this boundary without making every clean obligation manually approved.
+Staff-only issue review records the triggering issue, resolution, reviewer identity, timestamp, rationale, and whether canonical truth changes. Production policies may additionally require an immutable `ObligationHumanReview` for every included obligation, including otherwise clean candidates. That attestation records a named staff reviewer, approve/reject decision, rationale, authority-reviewed flag, and timestamp. Certification refuses a missing, non-authority-reviewed, or rejected attestation. A resolution must be followed by reconciliation before certification so snapshot counts cannot become stale.
 
 ## Certification and history
 
@@ -42,6 +42,12 @@ python apps/backend/manage.py compile_rule_obligations controlled.json --reconci
 
 The command performs no acquisition/network work and reports scope/compiler versions, obligation and issue counts, eligibility, checksum, creation/dry-run state, and certification state. Mutation/review/certification are not public client APIs; Admin is inspection-only.
 
-## M2.2b boundary
+## M2.2b real-source pilot
 
-M2.2b should perform controlled acquisition and provenance registration for the real current NCBE perimeter plus a bounded real-authority pilot. It should verify licensing/public-distribution decisions, create production-classified compiler inputs, define reviewed leaf-specific completeness policy, and prove a narrow real-source reconciliation through this gate. It must not claim national completeness from M2.2a fixtures, import commercial sourcebooks as dependencies, or add OpenAI/embeddings/probabilistic extraction before deterministic real-source controls are proven.
+The first production candidate set targets only `civil-procedure-service-process-notice`. Its sole substantive authority is the official December 1, 2025 Federal Rules of Civil Procedure pamphlet from U.S. Courts, hash-pinned and supplied transiently through `--authority`. Eight manually constructed Rule 4 candidates exercise RULE, PROCEDURAL_STEP, DISTINCTION, LIMITATION, EXCEPTION, and REMEDY. The body-free manifest uses exact Rule 4 locators and no secondary authority.
+
+Deterministic compilation and reconciliation produce zero issues and satisfy the one-leaf pilot policy, but production certification remains blocked until a named human reviewer approves every candidate after reviewing the official authority. The decision packet is `docs/project/M2_2B_HUMAN_REVIEW_PACKET.md`. Test-only reviewer attestations prove mechanics and explicitly are not real substantive approval. Even after approval, the snapshot must remain `PILOT_ONLY`, `national_complete: false`, and one covered leaf out of the active perimeter—not “100% NextGen complete.”
+
+First human review required a versioned V2 correction rather than mutation of V1 history. V2 removes two misleading procedural-step relationships from the plaintiff-responsibility rule, classifies the nonparty-adult server requirement as a `LIMITATION`, preserves the Rule 4(h) waiver addressee distinction, restores both United States location predicates and both expense categories in Rule 4(d)(2), and uses Rule 4(e)'s precise forum-state/service-state formulation. Candidates 6–8 and the valid Rule 4(m) exception/remedy relationships remain unchanged. V1's correction-required disposition is retained in `docs/project/M2_2B_HUMAN_REVIEW_PACKET_V1.md`; V2 remains unapproved and uncertified.
+
+Negative tests reject missing primary authority, secondary-only support, jurisdiction-specific content, mappings outside the selected leaf, and conflicting candidates. Normal production APIs expose only certified production truth; fixtures, drafts, source bodies, and raw NCBE bytes remain excluded.

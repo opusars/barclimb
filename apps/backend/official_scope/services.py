@@ -57,6 +57,11 @@ def register_artifact(*, content: bytes, **metadata):
             "source_uri",
             "publication_date",
             "effective_date",
+            "effective_end_date",
+            "byte_length",
+            "media_type",
+            "storage_disposition",
+            "rights_basis",
             "source_class",
             "status",
         )
@@ -104,6 +109,9 @@ def _normalized_scope(scope):
             "source": [item.source_artifact.stable_id, item.source_artifact.source_version],
             "source_locator": item.source_locator,
             "treatment": item.treatment_metadata,
+            "knowledge_treatment": item.knowledge_treatment,
+            "normalization_status": item.normalization_status,
+            "normalization_notes": item.normalization_notes,
         }
         for item in scope.items.select_related("parent", "source_artifact").order_by("stable_id")
     ]
@@ -111,6 +119,13 @@ def _normalized_scope(scope):
         "exam_program": scope.exam_program,
         "exam_component": scope.exam_component,
         "is_national": scope.is_national,
+        "administration_start": (
+            scope.administration_start.isoformat() if scope.administration_start else None
+        ),
+        "administration_end": (
+            scope.administration_end.isoformat() if scope.administration_end else None
+        ),
+        "release_class": scope.release_class,
         "sources": sources,
         "items": items,
     }
@@ -139,6 +154,21 @@ def validate_scope(scope):
         errors.append(
             {"code": "FIXTURE_SOURCE", "message": "Test fixtures cannot support official scope."}
         )
+    if not scope.is_test_fixture and (
+        not scope.administration_start
+        or not scope.administration_end
+        or scope.release_class
+        not in (
+            OfficialScopeVersion.ReleaseClass.CURRENT,
+            OfficialScopeVersion.ReleaseClass.FUTURE,
+        )
+    ):
+        errors.append(
+            {
+                "code": "INVALID_ADMINISTRATION_PERIOD",
+                "message": "Production scope requires an explicit current or future period.",
+            }
+        )
     items = list(scope.items.select_related("parent", "source_artifact"))
     linked_ids = {link.artifact_id for link in source_links}
     linked_identities = {
@@ -166,6 +196,16 @@ def validate_scope(scope):
             and not (item.official_label.strip() or item.official_text.strip())
         ):
             errors.append({"code": "EMPTY_TESTABLE_LEAF", "item": item.stable_id})
+        if item.normalization_status == OfficialScopeItem.NormalizationStatus.BLOCKED:
+            errors.append({"code": "BLOCKING_NORMALIZATION", "item": item.stable_id})
+        if item.normalization_status == OfficialScopeItem.NormalizationStatus.REVIEW_REQUIRED:
+            warnings.append({"code": "NORMALIZATION_REVIEW_REQUIRED", "item": item.stable_id})
+        if (
+            not scope.is_test_fixture
+            and item.is_leaf
+            and item.knowledge_treatment == OfficialScopeItem.KnowledgeTreatment.UNSPECIFIED
+        ):
+            errors.append({"code": "UNSPECIFIED_KNOWLEDGE_TREATMENT", "item": item.stable_id})
         if not item.is_leaf and not item.children.exists():
             warnings.append({"code": "EMPTY_BRANCH", "item": item.stable_id})
     roots = [item for item in items if item.parent_id is None]
@@ -207,6 +247,8 @@ def validate_and_activate(scope_id, *, allow_test_fixture=False):
         raise ValidationError("Only draft or validated scope versions may be activated.")
     if scope.is_test_fixture and not allow_test_fixture:
         raise ValidationError("TEST_FIXTURE scope cannot be activated as production truth.")
+    if scope.release_class == OfficialScopeVersion.ReleaseClass.FUTURE:
+        raise ValidationError("Future official scope may be registered but not activated early.")
     report, checksum = validate_scope(scope)
     if not report.valid:
         raise ValidationError(report.as_dict())

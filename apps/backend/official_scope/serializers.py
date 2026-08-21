@@ -21,6 +21,9 @@ class ScopeItemSerializer(serializers.ModelSerializer):
             "source_artifact_id",
             "source_locator",
             "treatment_metadata",
+            "knowledge_treatment",
+            "normalization_status",
+            "normalization_notes",
         )
 
 
@@ -33,6 +36,12 @@ class ScopeSourceSerializer(serializers.ModelSerializer):
     source_version = serializers.CharField(source="artifact.source_version")
     status = serializers.CharField(source="artifact.status")
     content_sha256 = serializers.CharField(source="artifact.content_sha256")
+    media_type = serializers.CharField(source="artifact.media_type")
+    storage_disposition = serializers.CharField(source="artifact.storage_disposition")
+    publication_date = serializers.DateField(source="artifact.publication_date")
+    effective_date = serializers.DateField(source="artifact.effective_date")
+    effective_end_date = serializers.DateField(source="artifact.effective_end_date")
+    retrieved_at = serializers.DateTimeField(source="artifact.retrieved_at")
 
     class Meta:
         model = OfficialScopeSource
@@ -45,6 +54,12 @@ class ScopeSourceSerializer(serializers.ModelSerializer):
             "source_version",
             "status",
             "content_sha256",
+            "media_type",
+            "storage_disposition",
+            "publication_date",
+            "effective_date",
+            "effective_end_date",
+            "retrieved_at",
             "role",
         )
 
@@ -60,6 +75,9 @@ class ActiveScopeSerializer(serializers.ModelSerializer):
             "exam_component",
             "version_identifier",
             "normalized_sha256",
+            "administration_start",
+            "administration_end",
+            "release_class",
             "sources",
             "items",
         )

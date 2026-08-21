@@ -1,7 +1,7 @@
 # BarClimb Project Handoff
 
 ## Current state
-M1.5 is accepted in `main` at `0ebccf8da5e08fe18079e5d59477f33a956ae88b`; exact-main Foundation CI run `32434901406` passed. M2.1 is implemented on `m2-1-official-source-scope-foundation` pending full validation, exact-commit CI, review, and merge. It establishes immutable official-source provenance and the national NextGen scope perimeter without Rule Obligations, production curriculum/assessment, learner evidence, or AI. The accepted M1 native/platform evidence and deferred Native GA blockers remain unchanged.
+M2.1 is accepted in `main` at `1b3ee5996cf82c50f3b645e1c29831115023dbb1`; exact-main Foundation CI run `32441068155` passed. M2.2a is implemented and fully validated locally on `m2-2a-rule-obligation-compiler-proof`, pending exact-commit CI, review, and merge. It proves deterministic Rule Obligation compilation/reconciliation/certification against immutable M2.1 scope identities using synthetic fixtures only. It does not import current real NCBE sources, establish a production national curriculum, add AI, or begin M2.2b. Accepted M1 platform evidence and deferred Native GA blockers remain unchanged.
 
 The controlling release sequence remains **Web GA → iOS Native GA → Android Native GA**, with one first-class multi-client architecture and no Web-only shortcuts. Apple enrollment/signing, physical-device authentication/SecureStore, live OS association routing, store ownership/approval, and native production purchase/restore remain mandatory at the applicable Native GA and are not marked verified. M1.5 changes none of those provider/device statuses.
 
@@ -89,8 +89,8 @@ See `../specs/SPEC_MANIFEST.json`. Four Markdown specs control the build.
 - No Web-only shortcut: shared-package portability passes, native uses React Native navigation rather than WebView, and the controlling portable auth/domain/link contracts remain intact.
 
 ## Current branch coordination
-- Authoritative accepted main is `0ebccf8da5e08fe18079e5d59477f33a956ae88b`; local and remote main passed exact-SHA CI before M2.1 began.
-- Active branch is `m2-1-official-source-scope-foundation`. It must pass full local/PostgreSQL validation, be committed and pushed, and pass exact-commit CI, then be reviewed. Do not merge automatically and do not begin M2.2.
+- Authoritative accepted main is `1b3ee5996cf82c50f3b645e1c29831115023dbb1`; local and remote main passed exact-SHA CI before M2.2a began.
+- Active branch is `m2-2a-rule-obligation-compiler-proof`. It must pass full local/PostgreSQL validation, be committed and pushed, and pass exact-commit CI, then be reviewed. Do not merge automatically and do not begin M2.2b.
 
 ## M1.5 cross-client assessment presentation risk proof
 - `@barclimb/assessment-schema` defines one runtime-validated, JSON-serializable presentation contract for the four controlling families and all controlling response-type identifiers. The bounded component registry contains only `SINGLE_SELECT_QUESTION` and `LONG_RESPONSE_EDITOR`; schema validation rejects unknown components and renderers return a typed fail-safe rather than omitting content or using HTML/WebView.
@@ -109,11 +109,21 @@ See `../specs/SPEC_MANIFEST.json`. Four Markdown specs control the build.
 - Admin is inspection-only and the authenticated API exposes only the active version/checksum, suitable provenance, and portable hierarchy. All included source content is conspicuous synthetic `TEST_FIXTURE`; no official NCBE document bytes are committed and fixture truth is excluded from production activation/API.
 - M2.2 must key Rule Obligation/compiler provenance to immutable scope-version/item identities. It must not mutate the official perimeter, treat secondary material as perimeter authority, or infer completeness from question counts. No Rule Obligation, doctrine graph, reconciliation, certification, production assessment inventory, learner evidence, or AI exists yet.
 
+## M2.2a deterministic Rule Obligation compiler proof
+- `curriculum` versions one exact M2.1 scope, compiler schema, input hash, canonical output, immutable fixture policy, lifecycle, and supersession chain. Eleven controlling obligation kinds, many-to-many leaf mapping, typed acyclic semantic relations, structured primary/secondary evidence, and deterministic decision outcomes are relational truth.
+- Reconciliation produces machine-readable omission/excess/conflict/ambiguity/duplicate/provenance/jurisdiction/structure issues with blocking/warning/info severity and policy-based fixture coverage metrics. Secondary evidence never defines perimeter or substitutes for required primary authority.
+- Staff-only review records issue, resolution, reviewer, time, rationale, and truth impact. Certification requires a fresh zero-blocking reconciliation and exact hashes, then transactionally preserves an immutable coverage snapshot; PostgreSQL triggers protect certified/superseded history and children.
+- Synthetic `TEST_FIXTURE` scope, authority, obligations, issues, reviews, compiles, and snapshots are production-ineligible by default and hidden from the production API. No real NCBE document or production doctrine is present. This proves the integrity gate, not current real-source acquisition or national completeness.
+- M2.2b should acquire/register real current official NCBE artifacts and a bounded substantive-authority pilot, define reviewed real-source coverage policy, and feed controlled candidates through this deterministic gate. It must not introduce AI or claim full production curriculum completeness prematurely.
+
 ## Tests actually run
+- M2.2a exact-runtime local acceptance: a clean hash-verified Python 3.13.15 install passed Ruff, Django system/migration checks, 85 SQLite tests with eight PostgreSQL-only skips, all 93 tests against PostgreSQL 14, and the live Redis/Celery foundation smoke. The 12 focused deterministic compiler tests and two PostgreSQL-only curriculum integrity tests are included in those totals.
+- Exact Node 24.19.0/npm 11.17.0 clean `npm ci` installed 717 packages. `npm run check` passed all nine typechecks, 14 Web tests, 20 native tests, 8 assessment-schema tests, and the production Web build; seven-package portability, live Expo compatibility, Doctor 20/20, and iOS/Android exports at 863/858 modules passed. The lockfile did not change.
+- Current `npm audit --omit=dev` retains 15 aggregate paths in the same documented `image-size` and `uuid` toolchain families. Current advisory metadata reports 10 moderate/5 high rather than the earlier 7 moderate/8 high; dependencies, paths, reachability, and mitigation are unchanged, and no forced fix was run.
 - M1.5 exact-runtime local acceptance on Node 24.19.0/npm 11.17.0: clean `npm ci` installed 717 packages; live Expo compatibility and Doctor 20/20 passed; all nine typechecks, 14 Web tests, 20 native tests, 8 shared schema/state tests, Web build, all seven portable packages, and iOS/Android exports at 863/858 modules passed. Ruff/Django/migration checks and 60 local backend tests passed with four PostgreSQL-only skips. Audit remained the accepted 15-node `image-size`/`uuid` graph. Exact-commit CI is pending push.
 - Current M1.4 acceptance rerun on exact Node 24.19.0/npm 11.17.0: clean `npm ci` installed 717 packages; live Expo compatibility passed; Doctor passed 20/20; `npm run check` passed all nine typechecks, 9 Web tests, 18 native tests, and production Web build; seven-package portability and iOS/Android exports at 854/849 modules passed. Ruff lint/format, Django system/migration checks, and 60 local backend tests passed with four PostgreSQL-only skips. Exact-commit GitHub CI supplies the PostgreSQL/Redis/Celery acceptance path.
 - Current read-only staging/EAS sanity: correct Heroku owner, Web/worker/beat, PostgreSQL/KVS, health/readiness, HTTPS/redirect, Web auth routes, anonymous auth enforcement, gated 404 association endpoints, EAS Owner project, and finished signed Android build all passed. No resource or credential changed.
-- `npm audit --omit=dev`: unchanged 15 aggregate nodes (7 moderate, 8 high) in the documented `image-size` and `uuid` toolchain families; no forced fix or security-family change.
+- Earlier M1.4 audit evidence recorded the same 15 aggregate `image-size`/`uuid` toolchain paths as 7 moderate/8 high; the current M2.2a audit metadata redistribution is recorded above and in `SECURITY_ADVISORIES.md`.
 - Accepted-main exact-sha Foundation CI runs `32416558206` and `32417562112` on `4850b78`: PASSED. Local/remote main matched exactly before this branch was created.
 - Separate M1.4 exact-sha Foundation CI run `32423925699` on untouched commit `4c1d2e6`: PASSED.
 - M1.4 pre-reconciliation final rerun on exact Node 24.19.0/npm 11.17.0: clean `npm ci`, all nine typechecks, 9 Web tests, 18 native tests, Web build, all seven portability packages, live Expo dependency validation, Doctor 20/20, and iOS/Android JS exports PASSED. Ruff lint/format, Django system/migration checks, and 60 local backend tests PASSED with four PostgreSQL-only skips. Android EAS internal build passed; iOS credential/build and both actual runtimes remain deferred Native GA gaps.
@@ -136,7 +146,7 @@ Heroku app runtime, Essential-0 PostgreSQL, and Mini KVS remain `VERIFIED_NONPRO
 Execution breadth remains the principal engineering risk. Curriculum completeness depends on automated official-scope/rule compilation, authority provenance, lawful multi-source reconciliation, subject certification, and strict inventory gates. NCBE Sourcebooks are optional enhanced reconciliation when lawfully available; do not make purchase/access a build or launch dependency.
 
 ## Exact next task
-Finish M2.1 validation on exact Python 3.13.15 and Node 24.19.0/npm 11.17.0, including PostgreSQL triggers/integrity, reconcile final test/audit evidence, review scope/fixture isolation, commit and push `m2-1-official-source-scope-foundation`, and require green GitHub Actions on the exact branch SHA. Do not merge automatically and do not begin M2.2.
+Commit and push `m2-2a-rule-obligation-compiler-proof`, require green GitHub Actions on the exact branch SHA, and then stop for review. Do not merge automatically and do not begin M2.2b.
 
 ## Resume commands
 ```bash

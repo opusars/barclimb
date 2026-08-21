@@ -1,6 +1,6 @@
 # BarClimb Security Advisory Ledger
 
-Review date: 2026-08-20. Re-review on each Expo SDK or React Native patch upgrade and before a native release candidate. This ledger records `npm audit` reachability; it is not a claim that scanner findings are false.
+Review date: 2026-08-21. Re-review on each Expo SDK or React Native patch upgrade and before a native release candidate. This ledger records `npm audit` reachability; it is not a claim that scanner findings are false.
 
 ## Patched in M1.1a
 
@@ -14,7 +14,7 @@ Review date: 2026-08-20. Re-review on each Expo SDK or React Native patch upgrad
 | `image-size` `GHSA-w3rx-r6r6-pgpr` and `GHSA-5p2g-fcmc-qvqq` (high) | `expo@57.0.15` -> `@expo/metro@56.0.0` -> `metro@0.84.4` -> `image-size@1.2.1` | Build/development Metro image inspection. It is not imported by BarClimb application code or present as an independently invoked server-side parser in the shipped JS bundle. Exploitation would require an attacker-controlled malicious ICNS/JXL/HEIF asset to enter a trusted local/CI bundle input. | Keep build inputs repository-controlled and reviewed. No compatible Expo 57/RN 0.86 update currently resolves the scanner range. npm proposes incompatible downgrades to Expo 53/RN 0.72; do not apply. Recheck upstream patches before release. |
 | `uuid` `GHSA-w5hq-g745-h8pq` (moderate) | `expo@57.0.15` -> `@expo/config-plugins@57.0.8` -> `xcode@3.0.1` -> `uuid@7.0.3` | Native configuration/Xcode project tooling. The vulnerable buffer-supplied v3/v5/v6 API is not called by BarClimb application runtime code and is not a server endpoint. | Keep native config inputs trusted. No compatible Expo 57 fix is exposed by npm; its suggested Expo 53 downgrade violates the approved foundation. Recheck upstream patches before release. |
 
-`npm audit --omit=dev` reports 15 aggregate nodes (7 moderate, 8 high) because the two root advisories propagate through Expo CLI, Metro, config-plugin, and React Native dependency nodes. Those aggregate nodes share the two concrete advisory sources above; they do not represent 15 separately exploitable BarClimb code paths. `npm audit fix --force` was not run. The current repository has no released application, no production Metro server, and no untrusted asset-ingestion path.
+`npm audit --omit=dev` reports 15 aggregate nodes (10 moderate, 5 high) because the two root advisories propagate through Expo CLI, Metro, config-plugin, and React Native dependency nodes. Those aggregate nodes share the two concrete advisory sources above; they do not represent 15 separately exploitable BarClimb code paths. The M2.2a review changed no dependency or lockfile; current npm advisory metadata redistributed the same 15 paths between aggregate severity buckets without adding an advisory family or changing the documented reachability/mitigation. `npm audit fix --force` was not run. The current repository has no released application, no production Metro server, and no untrusted asset-ingestion path.
 
 The Expo 57.0.15 correction changed Expo-owned patch-level paths and deduplicated the CLI graph, reducing aggregate findings from 18 to 15 without changing the two underlying advisory families or their reachability. No compatible non-breaking audit fix is available.
 

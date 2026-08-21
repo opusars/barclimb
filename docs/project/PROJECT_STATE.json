@@ -4,10 +4,10 @@
   "product_phase": "MILESTONE_2_IN_PROGRESS",
   "active_launch_train": "B_COMPLETE_LEARNER_LOOP",
   "active_milestone": 2,
-  "status": "M2_1_IMPLEMENTED_PENDING_ACCEPTANCE",
-  "latest_known_good_commit": "0ebccf8da5e08fe18079e5d59477f33a956ae88b",
-  "active_branch": "m2-1-official-source-scope-foundation",
-  "database_migration_summary": "M1.3a retains the minimal accounts.User and authentication lifecycle/outbox models. M2.1 adds immutable OfficialSourceArtifact provenance, versioned multi-artifact OfficialScopeVersion and OfficialScopeSource relationships, hierarchical OfficialScopeItem perimeter truth, relational constraints/indexes/PROTECT semantics, and PostgreSQL historical-immutability triggers. No Rule Obligation, doctrine, production assessment, learner evidence, entitlement, billing, or AI model exists.",
+  "status": "M2_2A_IMPLEMENTED_PENDING_ACCEPTANCE",
+  "latest_known_good_commit": "1b3ee5996cf82c50f3b645e1c29831115023dbb1",
+  "active_branch": "m2-2a-rule-obligation-compiler-proof",
+  "database_migration_summary": "M1.3a retains identity/outbox models. M2.1 owns immutable official artifacts and scope versions/items. M2.2a adds immutable AuthoritySource and CoveragePolicy, versioned CurriculumCompileVersion, canonical RuleObligation, version-scoped scope mappings, typed ObligationRelationship, structured AuthorityEvidence, relational ReconciliationIssue and ReviewResolution, immutable CoverageReleaseSnapshot, constraints/indexes/PROTECT semantics, and PostgreSQL certified-history triggers. No real NCBE/curriculum corpus, production assessment, learner evidence, entitlement, billing, or AI model exists.",
   "enabled_material_feature_flags": [],
   "clients": {
     "web": "PARTIAL",
@@ -27,10 +27,10 @@
     "adsense": "NOT_VERIFIED",
     "admob": "NOT_VERIFIED"
   },
-  "latest_test_summary": "M2.1 local acceptance passes clean exact Node 24.19.0/npm 11.17.0 install, all nine typechecks, 14 Web/20 native/8 assessment-schema tests, Web build, portability, Expo compatibility/Doctor 20/20, iOS/Android exports at 863/858 modules, Ruff/Django/migration checks, 73 SQLite backend tests with six PostgreSQL-only skips, 79 complete PostgreSQL/Redis backend tests, 15 focused PostgreSQL scope tests, and Celery smoke. Audit remains the accepted 15-node image-size/uuid baseline. Final continuity/diff review, commit, and exact-commit GitHub CI remain pending.",
+  "latest_test_summary": "M2.2a exact-runtime local acceptance passes a clean hash-verified Python 3.13.15 install, Ruff, Django system/migration checks, 85 SQLite tests (8 PostgreSQL skips), all 93 PostgreSQL tests, Celery smoke, exact Node 24.19.0/npm 11.17.0 clean npm ci, nine typechecks, 14 Web tests, 20 native tests, 8 assessment-schema tests, Web build, seven-package portability, Expo compatibility, Doctor 20/20, and iOS/Android exports at 863/858 modules. Audit retains 15 aggregate nodes in the same image-size/uuid families, now reported as 10 moderate/5 high. Continuity, JSON, manifest hashes, ten milestones, diff/scope, controlling-spec isolation, and secret/generated-junk review pass. Commit/push and exact-commit GitHub CI remain pending.",
   "known_blockers": [
     "Apple Developer Program team access, final iOS signing/provisioning/build, physical-device iOS/Android authentication and SecureStore lifecycle, live AASA/assetlinks routing, Google Play ownership/recovery, store approvals, and native production purchase/restore remain mandatory platform-specific Native GA blockers even though they do not block the clarified M1.4 foundation gate.",
-    "M2.1 may not be accepted until its full exact-runtime suite, PostgreSQL trigger/integrity tests, continuity review, exact-commit GitHub Actions, review, and merge to main pass."
+    "M2.2a may not be accepted until exact-commit GitHub Actions passes, followed by review and merge to main."
   ],
   "high_risk_items": [
     "Execution breadth across web, iOS, Android, AI assessment quality, community moderation, and cross-platform commerce.",
@@ -38,6 +38,6 @@
     "Cross-scenario projections, anonymous claim security, private public-page overlays, entitlement transitions, and cross-device orchestration require explicit integration/security tests before GA.",
     "Official NCBE scope/source changes must pass source-drift and revalidation workflow; future exam scopes remain provisional until governing materials exist."
   ],
-  "exact_next_task": "Finish M2.1 full validation, including PostgreSQL immutability/activation behavior, review official-source/scope/fixture isolation and continuity, commit and push m2-1-official-source-scope-foundation, and require green GitHub Actions on the exact branch SHA. Do not merge automatically or begin M2.2.",
-  "last_verified_at": "2026-08-20T19:30:00-07:00"
+  "exact_next_task": "Commit and push m2-2a-rule-obligation-compiler-proof, require green GitHub Actions on the exact branch SHA, and then stop for review. Do not merge automatically or begin M2.2b.",
+  "last_verified_at": "2026-08-21T10:08:00-07:00"
 }

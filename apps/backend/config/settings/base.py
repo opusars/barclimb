@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     "accounts",
     "health",
     "official_scope",
+    "curriculum",
 ]
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -156,6 +157,7 @@ AUTH_RATE_LIMITS = {
     "native_session": (10, 300),
 }
 OFFICIAL_SCOPE_ALLOW_TEST_FIXTURE_API = False
+CURRICULUM_ALLOW_TEST_FIXTURE_API = False
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,

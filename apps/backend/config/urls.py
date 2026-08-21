@@ -9,6 +9,7 @@ urlpatterns = [
     path("api/v1/", include("health.urls")),
     path("api/v1/auth/", include("accounts.urls")),
     path("api/v1/official-scope/", include("official_scope.urls")),
+    path("api/v1/curriculum/", include("curriculum.urls")),
     path(".well-known/apple-app-site-association", apple_app_site_association),
     path(".well-known/assetlinks.json", android_asset_links),
     path("assets/<path:asset_path>", web_asset),

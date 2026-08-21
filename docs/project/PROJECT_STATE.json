@@ -4,10 +4,10 @@
   "product_phase": "MILESTONE_2_IN_PROGRESS",
   "active_launch_train": "B_COMPLETE_LEARNER_LOOP",
   "active_milestone": 2,
-  "status": "M2_2B_SECOND_HUMAN_REVIEW_PENDING",
+  "status": "M2_2B_BOUNDED_PILOT_CERTIFIED_CI_PENDING",
   "latest_known_good_commit": "a468fb6d3d850757fe1af82c18f244e95ad77de8",
   "active_branch": "m2-2b-real-scope-authority-pilot",
-  "database_migration_summary": "M1.3a retains identity/outbox models. M2.1/M2.2a immutable source, scope, Rule Obligation, reconciliation, and snapshot truth is accepted. M2.2b adds explicit artifact media/rights/storage/effective-period metadata, current/future scope periods and normalization status, body-free V2 operator imports, PILOT_ONLY coverage, immutable production obligation-review attestations, and non-national snapshot metadata. The current real NCBE perimeter and Rule 4 pilot are reproducible operator inputs, not data migrations or committed raw documents. V2 remains unapproved and uncertified; no production assessment, learner evidence, entitlement, billing, or AI model exists.",
+  "database_migration_summary": "M1.3a retains identity/outbox models. M2.1/M2.2a immutable source, scope, Rule Obligation, reconciliation, and snapshot truth is accepted. M2.2b adds explicit artifact media/rights/storage/effective-period metadata, current/future scope periods and normalization status, body-free V2 operator imports, PILOT_ONLY coverage, named external-human review attestations, immutable PostgreSQL review enforcement, and authority/review-bound non-national snapshots. Leo Rayos's eight approvals were recorded without fabricating an account, and exact-byte operator execution certified only the Rule 4 pilot snapshot 8ffc025a-ddac-5765-b7b2-130c84282c83. Inputs remain reproducible operator manifests rather than committed raw documents or data migrations. No production assessment, learner evidence, entitlement, billing, or AI model exists.",
   "enabled_material_feature_flags": [],
   "clients": {
     "web": "PARTIAL",
@@ -27,11 +27,11 @@
     "adsense": "NOT_VERIFIED",
     "admob": "NOT_VERIFIED"
   },
-  "latest_test_summary": "M2.2b V2 validation passes Ruff lint/format, Django system/migration checks, 97 SQLite tests with 8 PostgreSQL-only skips, all 105 PostgreSQL 14/Redis tests, 12 focused real-source/pilot regression tests, continuity, JSON, git diff, and secret/generated-junk/raw-source review. Transient exact official bytes reproduce active scope checksum 2d8a1052ada18b413f24b7d0eef1c855a76d8a9a31688130757d5dd6511ca56f and corrected compile checksum 0148dea24c906e2e257265681044ae57ad4b60b9a1e290f291e95dc2315825ec with zero reconciliation issues, one of one pilot leaves sufficient, national_complete false, all eight REVIEW_REQUIRED, and certification blocked for absent V2 human attestations. Exact-commit CI remains pending until commit/push.",
+  "latest_test_summary": "M2.2b final local validation passes Ruff lint/format, Django system/migration checks, 98 SQLite tests with 9 PostgreSQL-only skips, all 107 PostgreSQL 14/Redis tests, all workspace checks/Web build, and shared-package portability. Exact acquired bytes reproduce scope checksum 2d8a1052ada18b413f24b7d0eef1c855a76d8a9a31688130757d5dd6511ca56f and compile checksum 0148dea24c906e2e257265681044ae57ad4b60b9a1e290f291e95dc2315825ec. Eight Leo Rayos APPROVE records, zero reconciliation issues, one of one pilot leaves sufficient, PILOT_ONLY, and national_complete false created immutable snapshot 8ffc025a-ddac-5765-b7b2-130c84282c83 with certification SHA-256 60e160e3c1a458e4c5b98569fcf3f04d409086d328496f2ed41a020a5b591ae0; exact idempotent rerun returned the same snapshot. Continuity, JSON, diff, and secret/generated-junk/raw-source review pass; exact-commit CI remains.",
   "known_blockers": [
     "Apple Developer Program team access, final iOS signing/provisioning/build, physical-device iOS/Android authentication and SecureStore lifecycle, live AASA/assetlinks routing, Google Play ownership/recovery, store approvals, and native production purchase/restore remain mandatory platform-specific Native GA blockers even though they do not block the clarified M1.4 foundation gate.",
-    "M2.2b V2 may not certify or become acceptance-ready until a named qualified human reviewer reviews the corrected eight-candidate packet and records explicit per-candidate decisions; no reviewer identity may be fabricated.",
-    "The branch may not merge until full local/PostgreSQL validation and exact-commit GitHub Actions pass after the second-review state is committed."
+    "The bounded M2.2b certification covers only one official-scope leaf and must never be interpreted as complete Rule 4, Civil Procedure, or national NextGen curriculum truth.",
+    "The branch may not merge until final continuity/diff review and exact-commit GitHub Actions pass."
   ],
   "high_risk_items": [
     "Execution breadth across web, iOS, Android, AI assessment quality, community moderation, and cross-platform commerce.",
@@ -39,6 +39,6 @@
     "Cross-scenario projections, anonymous claim security, private public-page overlays, entitlement transitions, and cross-device orchestration require explicit integration/security tests before GA.",
     "Official NCBE scope/source changes must pass source-drift and revalidation workflow; future exam scopes remain provisional until governing materials exist."
   ],
-  "exact_next_task": "Review docs/project/M2_2B_HUMAN_REVIEW_PACKET.md as V2 and provide named per-candidate human dispositions. Do not certify, merge, fabricate approval, or begin the next curriculum slice.",
-  "last_verified_at": "2026-08-21T12:25:00-07:00"
+  "exact_next_task": "Complete final M2.2b continuity/diff validation, commit and push the certified bounded-pilot state, and require exact-commit GitHub Actions green. Then review/merge M2.2b separately; do not begin the next curriculum slice.",
+  "last_verified_at": "2026-08-21T13:05:00-07:00"
 }

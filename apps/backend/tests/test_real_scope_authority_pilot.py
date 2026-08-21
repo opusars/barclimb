@@ -1,10 +1,14 @@
 import copy
 import hashlib
 import json
+from io import StringIO
 from pathlib import Path
 
 import pytest
 from django.core.exceptions import ValidationError
+from django.core.management import call_command
+from django.core.management.base import CommandError
+from django.db import DatabaseError, connection, transaction
 from rest_framework.test import APIClient
 
 from accounts.models import User
@@ -24,6 +28,7 @@ pytestmark = pytest.mark.django_db
 BACKEND_ROOT = Path(__file__).resolve().parents[1]
 SCOPE_PATH = BACKEND_ROOT / "official_scope" / "manifests" / "ncbe-nextgen-2026-07.json"
 PILOT_PATH = BACKEND_ROOT / "curriculum" / "manifests" / "frcp-rule4-service-pilot.json"
+REVIEW_PATH = BACKEND_ROOT / "curriculum" / "manifests" / "frcp-rule4-service-pilot-review-v2.json"
 
 
 def _json(path):
@@ -260,9 +265,13 @@ def test_real_pilot_is_bounded_requires_human_review_and_certifies_only_after_at
         review, created = record_obligation_review(
             obligation.pk,
             reviewer=reviewer,
+            reviewer_name="TEST_FIXTURE legal reviewer",
+            reviewer_role_qualification="TEST_FIXTURE authenticated staff review proof",
             resolution="APPROVE",
             rationale="Deterministic CI review-boundary proof; not real legal-content approval.",
+            attestation="TEST_FIXTURE authority review only; not a real substantive approval.",
             authority_reviewed=True,
+            review_manifest_sha256="a" * 64,
         )
         assert created and review.resolution == "APPROVE"
     snapshot = certify_curriculum(compile_version.pk)
@@ -272,8 +281,76 @@ def test_real_pilot_is_bounded_requires_human_review_and_certifies_only_after_at
     assert snapshot.obligation_count == 8 and snapshot.covered_leaf_count == 1
     assert len(snapshot.authority_provenance_sha256) == 64
     assert ObligationHumanReview.objects.count() == 8
+    assert len(snapshot.human_review_sha256) == 64
+    assert len(snapshot.human_review_evidence) == 8
     with pytest.raises(ValidationError):
         snapshot.save()
+
+
+def test_named_external_review_manifest_records_exact_identity_and_certifies_bounded_pilot(
+    tmp_path,
+):
+    scope = _production_scope()
+    payload, authorities = _pilot_payload(version="BARCLIMB_PILOT_EXTERNAL_REVIEW_TEST")
+    compile_version, _ = compile_manifest(payload, authority_contents=authorities)
+    review = _json(REVIEW_PATH)
+    review["compile_version"] = compile_version.version_identifier
+    review["compile_checksum"] = compile_version.canonical_sha256
+    review["scope_checksum"] = scope.normalized_sha256
+    review["authority"]["sha256"] = hashlib.sha256(authorities["USCOURTS_FRCP"]).hexdigest()
+    review_path = tmp_path / "review.json"
+    review_path.write_text(json.dumps(review))
+    stdout = StringIO()
+
+    call_command("apply_obligation_reviews", review_path, "--certify", stdout=stdout)
+
+    result = json.loads(stdout.getvalue())
+    compile_version.refresh_from_db()
+    snapshot = compile_version.coverage_snapshot
+    assert result["certified"] is True and compile_version.status == "CERTIFIED"
+    assert result["review_count"] == 8 and result["reviews_created"] == 8
+    assert snapshot.coverage_class == "PILOT_ONLY" and snapshot.national_complete is False
+    assert snapshot.leaf_count == 1 and snapshot.covered_leaf_count == 1
+    assert snapshot.obligation_count == 8
+    assert len(snapshot.human_review_evidence) == 8
+    assert {entry["reviewer_name"] for entry in snapshot.human_review_evidence} == {"Leo Rayos"}
+    assert {entry["reviewer_role_qualification"] for entry in snapshot.human_review_evidence} == {
+        "JD; California bar exam passer; reviewer for BarClimb curriculum quality control."
+    }
+    assert not ObligationHumanReview.objects.exclude(reviewer__isnull=True).exists()
+    assert set(result["resolutions"].values()) == {"APPROVE"}
+
+    changed_review = copy.deepcopy(review)
+    changed_review["decisions"][0]["resolution"] = "REJECT"
+    review_path.write_text(json.dumps(changed_review))
+    with pytest.raises(CommandError, match="differs from immutable input"):
+        call_command("apply_obligation_reviews", review_path, "--certify", stdout=StringIO())
+
+
+@pytest.mark.postgres
+def test_postgres_external_human_review_is_database_immutable():
+    if connection.vendor != "postgresql":
+        pytest.skip("PostgreSQL-specific human-review trigger")
+    _production_scope()
+    payload, authorities = _pilot_payload(version="BARCLIMB_PILOT_REVIEW_TRIGGER_TEST")
+    compile_version, _ = compile_manifest(payload, authority_contents=authorities)
+    obligation = compile_version.obligations.order_by("stable_id").first()
+    review, _ = record_obligation_review(
+        obligation.pk,
+        reviewer=None,
+        reviewer_name="TEST_FIXTURE external reviewer",
+        reviewer_role_qualification="TEST_FIXTURE PostgreSQL immutability proof",
+        resolution="APPROVE",
+        rationale="TEST_FIXTURE rationale",
+        attestation="TEST_FIXTURE attestation",
+        authority_reviewed=True,
+        review_manifest_sha256="b" * 64,
+        operator_manifest=True,
+    )
+    with pytest.raises(DatabaseError), transaction.atomic():
+        ObligationHumanReview.objects.filter(pk=review.pk).update(rationale="changed")
+    with pytest.raises(DatabaseError), transaction.atomic():
+        ObligationHumanReview.objects.filter(pk=review.pk).delete()
 
 
 @pytest.mark.parametrize(

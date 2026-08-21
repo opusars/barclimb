@@ -1,8 +1,8 @@
 # M2.2b Human Review Packet V2 — FRCP Rule 4 Pilot
 
-Status: **PENDING SECOND HUMAN SUBSTANTIVE REVIEW**
+Status: **V2 HUMAN REVIEW APPROVED; BOUNDED PILOT CERTIFIED**
 
-This corrected packet supersedes V1 for review but does not overwrite its history. V1 and its correction-required disposition are preserved in `M2_2B_HUMAN_REVIEW_PACKET_V1.md`. No human identity or final approval has been recorded, and certification remains blocked.
+This corrected packet supersedes V1 for review but does not overwrite its history. V1 and its correction-required disposition remain preserved in `M2_2B_HUMAN_REVIEW_PACKET_V1.md`. Leo Rayos supplied explicit approval for every V2 candidate after reviewing the hash-identified authority. The approval and certification apply only to this bounded one-leaf pilot.
 
 ## Changes after first human review
 
@@ -13,9 +13,16 @@ This corrected packet supersedes V1 for review but does not overwrite its histor
 - Candidate 5: replaced “federal delivery methods” with the exact forum-state/service-state and listed Rule 4(e)(2) formulation.
 - Candidates 6–8: statements and relationships preserved unchanged.
 
-## Reviewer authority and evidence
+## Recorded reviewer authority and evidence
 
-The second reviewer must be a named human staff reviewer competent to review federal civil procedure. Record reviewer identity/role, review date, confirmation that the official authority was reviewed, and an `APPROVE` or `REJECT` decision with rationale for every candidate. This packet alone is not runtime approval; approved decisions must later be recorded through `record_obligation_review`.
+- Reviewer: Leo Rayos
+- Role/qualification: JD; California bar exam passer; reviewer for BarClimb curriculum quality control.
+- Recorded review timestamp: `2026-08-21T19:56:42+00:00`
+- Authority reviewed: hash-identified Federal Rules of Civil Procedure amended through December 1, 2025, including the cited Rule 4(c), (d), (e), and (m) provisions.
+- Decision: all eight V2 candidates `APPROVE`.
+- Rationale: “I reviewed the revised statements, authority locators, classifications, and relationship structure. The V2 corrections resolve the substantive and structural issues identified in the first human-review pass. I approve these eight obligations for this bounded one-leaf Rule 4 production pilot only.”
+- Review manifest SHA-256: `84fec53aa090c7c7d074b0057e604ac1589917adeb26de5fde146a13dcdedeec`
+- Immutable review-evidence SHA-256: `903ab69e9171969b826060943e25d8e40fcf84d4968525663197b43165c74e44`
 
 ## Official perimeter mapping
 
@@ -47,8 +54,8 @@ The second reviewer must be a named human staff reviewer competent to review fed
 - Proposition: Plaintiff responsibility for service and copies.
 - Mapping rationale: Rule 4(c)(1) directly concerns service of process.
 - Relationships: none. The two V1 procedural-step relationships were removed.
-- Status: `INCLUDED`; `REVIEW_REQUIRED`.
-- Reviewer judgment: confirm the combined service/copies proposition remains sufficiently atomic.
+- Status: `INCLUDED`; compiler decision `REVIEW_REQUIRED`; human review `APPROVE`.
+- Review result: approved as sufficiently atomic for the bounded pilot.
 
 ## Candidate 2
 
@@ -61,8 +68,8 @@ The second reviewer must be a named human staff reviewer competent to review fed
 - Proposition: Nonparty adult server qualification.
 - Mapping rationale: Rule 4(c)(2) limits who may serve process.
 - Relationships: none.
-- Status: `INCLUDED`; `REVIEW_REQUIRED`.
-- Reviewer judgment: confirm `LIMITATION` accurately represents the server-qualification constraint.
+- Status: `INCLUDED`; compiler decision `REVIEW_REQUIRED`; human review `APPROVE`.
+- Review result: approved with `LIMITATION` as the server-qualification constraint.
 
 ## Candidate 3
 
@@ -75,8 +82,8 @@ The second reviewer must be a named human staff reviewer competent to review fed
 - Proposition: Written waiver request; individual and Rule 4(h) addressee distinction; notice, copy, return-means, consequence, date, and response-time requirements.
 - Mapping rationale: Rule 4(d)(1)(A) distinguishes the proper addressee for an individual from specified Rule 4(h) entity representatives; Rule 4(d)(1)(B)–(G) governs the remaining requirements.
 - Relationships: none; waiver remains an alternative rather than a required formal-service sequence.
-- Status: `INCLUDED`; `REVIEW_REQUIRED`.
-- Reviewer judgment: confirm the corrected aggregate faithfully preserves the addressee distinction and all referenced requirement categories without implying a generic representative for every individual.
+- Status: `INCLUDED`; compiler decision `REVIEW_REQUIRED`; human review `APPROVE`.
+- Review result: approved; the corrected aggregate preserves the addressee distinction without implying a generic representative for every individual.
 
 ## Candidate 4
 
@@ -89,8 +96,8 @@ The second reviewer must be a named human staff reviewer competent to review fed
 - Proposition: Expense shifting, including attorney’s fees, after a United States defendant without good cause fails to return a waiver requested by a United States plaintiff.
 - Mapping rationale: Rule 4(d)(2) conditions expense shifting on United States location of both the requesting plaintiff and nonwaiving defendant and identifies both expense categories.
 - Relationships: none.
-- Status: `INCLUDED`; `REVIEW_REQUIRED`.
-- Reviewer judgment: confirm both location predicates, lack of good cause, and both recoverable-expense categories are accurately preserved.
+- Status: `INCLUDED`; compiler decision `REVIEW_REQUIRED`; human review `APPROVE`.
+- Review result: approved with both location predicates, lack of good cause, and both recoverable-expense categories preserved.
 
 ## Candidate 5
 
@@ -103,8 +110,8 @@ The second reviewer must be a named human staff reviewer competent to review fed
 - Proposition: Domestic individual service through applicable forum-state or service-state law or a listed Rule 4(e)(2) method.
 - Mapping rationale: Rule 4(e) distinguishes methods allowed by the law of the state where the district court sits or service is made from the methods listed in Rule 4(e)(2).
 - Relationships: none.
-- Status: `INCLUDED`; `REVIEW_REQUIRED`.
-- Reviewer judgment: confirm the precise formulation and national-core treatment of a federal rule that incorporates state-law methods.
+- Status: `INCLUDED`; compiler decision `REVIEW_REQUIRED`; human review `APPROVE`.
+- Review result: approved with the precise formulation and national-core treatment of a federal rule incorporating state-law methods.
 
 ## Candidate 6
 
@@ -117,8 +124,8 @@ The second reviewer must be a named human staff reviewer competent to review fed
 - Proposition: General 90-day service period and qualification.
 - Mapping rationale: Rule 4(m) directly limits the time for service.
 - Relationships: `HAS_EXCEPTION` → `frcp4-good-cause-extension` (ordering 1); `HAS_REMEDY` → `frcp4-untimely-service-response` (ordering 2).
-- Status: `INCLUDED`; `REVIEW_REQUIRED`.
-- Reviewer judgment: statement preserved as first-review approved; pilot intentionally does not expand every Rule 4(m) qualification.
+- Status: `INCLUDED`; compiler decision `REVIEW_REQUIRED`; human review `APPROVE`.
+- Review result: approved unchanged; the pilot intentionally does not expand every Rule 4(m) qualification.
 
 ## Candidate 7
 
@@ -131,8 +138,8 @@ The second reviewer must be a named human staff reviewer competent to review fed
 - Proposition: Good-cause extension.
 - Mapping rationale: Rule 4(m) expressly requires an extension upon good cause.
 - Relationships: target of Candidate 6's `HAS_EXCEPTION` relationship.
-- Status: `INCLUDED`; `REVIEW_REQUIRED`.
-- Reviewer judgment: statement and relationship preserved as first-review approved.
+- Status: `INCLUDED`; compiler decision `REVIEW_REQUIRED`; human review `APPROVE`.
+- Review result: approved unchanged with its relationship preserved.
 
 ## Candidate 8
 
@@ -145,8 +152,8 @@ The second reviewer must be a named human staff reviewer competent to review fed
 - Proposition: Dismissal without prejudice or service order after notice.
 - Mapping rationale: Rule 4(m) states the court's alternatives after notice.
 - Relationships: target of Candidate 6's `HAS_REMEDY` relationship.
-- Status: `INCLUDED`; `REVIEW_REQUIRED`.
-- Reviewer judgment: statement and relationship preserved as first-review approved.
+- Status: `INCLUDED`; compiler decision `REVIEW_REQUIRED`; human review `APPROVE`.
+- Review result: approved unchanged with its relationship preserved.
 
 ## Deterministic V2 gate status
 
@@ -161,11 +168,14 @@ The second reviewer must be a named human staff reviewer competent to review fed
 - Target leaves sufficiently covered: 1 of 1
 - Active official-scope testable leaves: 20
 - `national_complete`: `false`
-- All eight decisions: `REVIEW_REQUIRED`
-- Compile lifecycle: `RECONCILED`
-- Certification: **BLOCKED**, exactly because all eight V2 human attestations are absent
-- Certification snapshot: none
+- All eight compiler decisions: `REVIEW_REQUIRED`; satisfied by eight immutable human `APPROVE` attestations
+- Compile lifecycle: `CERTIFIED`
+- Certification snapshot ID: `8ffc025a-ddac-5765-b7b2-130c84282c83`
+- Certification SHA-256: `60e160e3c1a458e4c5b98569fcf3f04d409086d328496f2ed41a020a5b591ae0`
+- Authority-provenance SHA-256: `fa2a1355e70676f95fff5f02bc8c4ad03ce7594fc64be98dbf87c4cf5a0ce46c`
+- Certified at: `2026-08-21T20:02:43.716157+00:00`
+- Durable execution record: `M2_2B_CERTIFICATION_RECORD.json`
 
 ## Explicit boundary
 
-Approval would authorize certification only of these eight V2 obligations for `civil-procedure-service-process-notice`. It would not approve complete Rule 4 doctrine, the rest of Civil Procedure, another subject, the national NextGen curriculum, assessment content, learner evidence, mastery, or readiness.
+Approval and certification cover only these eight V2 obligations for `civil-procedure-service-process-notice`. They do not approve complete Rule 4 doctrine, the rest of Civil Procedure, another subject, the national NextGen curriculum, assessment content, learner evidence, mastery, or readiness.

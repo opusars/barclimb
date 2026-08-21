@@ -1,6 +1,7 @@
 import base64
 import re
 import unicodedata
+import uuid
 from collections import Counter, defaultdict
 
 from django.core.exceptions import PermissionDenied, ValidationError
@@ -600,24 +601,57 @@ def resolve_issue(issue_id, *, reviewer, resolution, rationale, changes_canonica
 
 
 @transaction.atomic
-def record_obligation_review(obligation_id, *, reviewer, resolution, rationale, authority_reviewed):
-    if not reviewer.is_staff:
+def record_obligation_review(
+    obligation_id,
+    *,
+    reviewer,
+    reviewer_name,
+    reviewer_role_qualification,
+    resolution,
+    rationale,
+    attestation,
+    authority_reviewed,
+    review_manifest_sha256,
+    reviewed_at=None,
+    operator_manifest=False,
+):
+    if reviewer is None and not operator_manifest:
+        raise PermissionDenied("External human review requires the privileged operator workflow.")
+    if reviewer is not None and not reviewer.is_staff:
         raise PermissionDenied("Production obligation review requires staff authority.")
     obligation = RuleObligation.objects.select_for_update().get(pk=obligation_id)
+    existing = ObligationHumanReview.objects.filter(obligation=obligation).first()
+    if existing:
+        expected = {
+            "reviewer_id": getattr(reviewer, "pk", None),
+            "reviewer_name": reviewer_name,
+            "reviewer_role_qualification": reviewer_role_qualification,
+            "resolution": resolution,
+            "rationale": rationale,
+            "attestation": attestation,
+            "authority_reviewed": authority_reviewed,
+            "review_manifest_sha256": review_manifest_sha256,
+            "reviewed_at": reviewed_at or existing.reviewed_at,
+        }
+        if any(getattr(existing, field) != value for field, value in expected.items()):
+            raise ValidationError("Existing human review differs from immutable input.")
+        return existing, False
     if obligation.compile_version.status in (
         CurriculumCompileVersion.Status.CERTIFIED,
         CurriculumCompileVersion.Status.SUPERSEDED,
     ):
         raise ValidationError("Certified historical obligations cannot be reviewed again.")
-    existing = ObligationHumanReview.objects.filter(obligation=obligation).first()
-    if existing:
-        return existing, False
     review = ObligationHumanReview.objects.create(
         obligation=obligation,
         reviewer=reviewer,
+        reviewer_name=reviewer_name,
+        reviewer_role_qualification=reviewer_role_qualification,
         resolution=resolution,
         rationale=rationale,
+        attestation=attestation,
         authority_reviewed=authority_reviewed,
+        review_manifest_sha256=review_manifest_sha256,
+        reviewed_at=reviewed_at or timezone.now(),
     )
     return review, True
 
@@ -673,32 +707,26 @@ def certify_curriculum(compile_id, *, allow_test_fixture=False):
                 "changes_canonical_truth": review.changes_canonical_truth if review else None,
             }
         )
-    snapshot_payload = {
-        "compile_sha256": compile_version.canonical_sha256,
-        "scope_sha256": compile_version.official_scope_version.normalized_sha256,
-        "policy_sha256": compile_version.coverage_policy.canonical_sha256,
-        "compiler_schema_version": compile_version.compiler_schema_version,
-        "source_class": compile_version.source_class,
-        "coverage": coverage,
-        "review_evidence": review_evidence,
-        "coverage_class": compile_version.coverage_class,
-        "national_complete": False,
-        "obligation_reviews": sorted(
-            [
-                {
-                    "obligation": review.obligation.stable_id,
-                    "reviewer": str(review.reviewer_id),
-                    "resolution": review.resolution,
-                    "authority_reviewed": review.authority_reviewed,
-                    "rationale": review.rationale,
-                }
-                for review in ObligationHumanReview.objects.filter(
-                    obligation__compile_version=compile_version
-                ).select_related("obligation")
-            ],
-            key=lambda value: value["obligation"],
-        ),
-    }
+    obligation_reviews = sorted(
+        [
+            {
+                "obligation": review.obligation.stable_id,
+                "reviewer_name": review.reviewer_name,
+                "reviewer_role_qualification": review.reviewer_role_qualification,
+                "resolution": review.resolution,
+                "authority_reviewed": review.authority_reviewed,
+                "rationale": review.rationale,
+                "attestation_sha256": sha256_bytes(review.attestation.encode()),
+                "review_manifest_sha256": review.review_manifest_sha256,
+                "reviewed_at": review.reviewed_at.isoformat(),
+            }
+            for review in ObligationHumanReview.objects.filter(
+                obligation__compile_version=compile_version
+            ).select_related("obligation")
+        ],
+        key=lambda value: value["obligation"],
+    )
+    human_review_sha256 = canonical_sha256(obligation_reviews)
     authority_provenance_sha256 = canonical_sha256(
         sorted(
             [
@@ -709,7 +737,26 @@ def certify_curriculum(compile_id, *, allow_test_fixture=False):
             ]
         )
     )
+    snapshot_payload = {
+        "compile_sha256": compile_version.canonical_sha256,
+        "scope_sha256": compile_version.official_scope_version.normalized_sha256,
+        "policy_sha256": compile_version.coverage_policy.canonical_sha256,
+        "compiler_schema_version": compile_version.compiler_schema_version,
+        "source_class": compile_version.source_class,
+        "coverage": coverage,
+        "review_evidence": review_evidence,
+        "coverage_class": compile_version.coverage_class,
+        "national_complete": False,
+        "authority_provenance_sha256": authority_provenance_sha256,
+        "human_review_sha256": human_review_sha256,
+        "obligation_reviews": obligation_reviews,
+    }
+    snapshot_id = uuid.uuid5(
+        uuid.NAMESPACE_URL,
+        f"barclimb:coverage:{compile_version.canonical_sha256}:{human_review_sha256}",
+    )
     snapshot = CoverageReleaseSnapshot.objects.create(
+        id=snapshot_id,
         compile_version=compile_version,
         official_scope_version=compile_version.official_scope_version,
         compiler_schema_version=compile_version.compiler_schema_version,
@@ -717,6 +764,8 @@ def certify_curriculum(compile_id, *, allow_test_fixture=False):
         coverage_class=compile_version.coverage_class,
         national_complete=False,
         authority_provenance_sha256=authority_provenance_sha256,
+        human_review_sha256=human_review_sha256,
+        human_review_evidence=obligation_reviews,
         human_review_status=(
             "APPROVED" if compile_version.coverage_policy.requires_human_review else "NOT_REQUIRED"
         ),

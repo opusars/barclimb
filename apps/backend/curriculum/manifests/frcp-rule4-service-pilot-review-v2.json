@@ -1,0 +1,32 @@
+{
+  "schema": "BARCLIMB_OBLIGATION_REVIEW_V1",
+  "review_id": "BARCLIMB_FRCP_RULE4_PILOT_V2_LEO_RAYOS_2026_08_21",
+  "reviewed_at": "2026-08-21T19:56:42Z",
+  "reviewer": {
+    "name": "Leo Rayos",
+    "role_qualification": "JD; California bar exam passer; reviewer for BarClimb curriculum quality control."
+  },
+  "compile_version": "BARCLIMB_PILOT_FRCP_RULE4_2025_V2",
+  "compile_checksum": "0148dea24c906e2e257265681044ae57ad4b60b9a1e290f291e95dc2315825ec",
+  "scope_version": "NCBE_NEXTGEN_SCOPE_2026_07_2027_02",
+  "scope_checksum": "2d8a1052ada18b413f24b7d0eef1c855a76d8a9a31688130757d5dd6511ca56f",
+  "coverage_class": "PILOT_ONLY",
+  "national_complete": false,
+  "authority": {
+    "stable_id": "USCOURTS_FRCP",
+    "source_version": "2025-12-01",
+    "sha256": "bd8705fc038d87e4fe222a7ea2e4324222c9430e2373fce56826bd2dfa2f8baf"
+  },
+  "rationale": "I reviewed the revised statements, authority locators, classifications, and relationship structure. The V2 corrections resolve the substantive and structural issues identified in the first human-review pass. I approve these eight obligations for this bounded one-leaf Rule 4 production pilot only.",
+  "attestation": "I reviewed the eight V2 Rule 4 pilot candidates in M2_2B_HUMAN_REVIEW_PACKET.md against the hash-identified Federal Rules of Civil Procedure, amended through December 1, 2025, including the cited provisions of Rule 4(c), (d), (e), and (m). My decisions are: 1. frcp4-service-plaintiff-responsibility — APPROVE; 2. frcp4-service-server-qualification — APPROVE; 3. frcp4-waiver-request — APPROVE; 4. frcp4-waiver-expense-consequence — APPROVE; 5. frcp4-domestic-individual-service — APPROVE; 6. frcp4-service-time-limit — APPROVE; 7. frcp4-good-cause-extension — APPROVE; 8. frcp4-untimely-service-response — APPROVE. Rationale: I reviewed the revised statements, authority locators, classifications, and relationship structure. The V2 corrections resolve the substantive and structural issues identified in the first human-review pass. I approve these eight obligations for this bounded one-leaf Rule 4 production pilot only. This approval does not represent approval of all Rule 4 doctrine, all service-of-process doctrine, all Civil Procedure, any other NCBE subject, or national NextGen curriculum completeness.",
+  "decisions": [
+    {"obligation": "frcp4-service-plaintiff-responsibility", "resolution": "APPROVE", "authority_reviewed": true},
+    {"obligation": "frcp4-service-server-qualification", "resolution": "APPROVE", "authority_reviewed": true},
+    {"obligation": "frcp4-waiver-request", "resolution": "APPROVE", "authority_reviewed": true},
+    {"obligation": "frcp4-waiver-expense-consequence", "resolution": "APPROVE", "authority_reviewed": true},
+    {"obligation": "frcp4-domestic-individual-service", "resolution": "APPROVE", "authority_reviewed": true},
+    {"obligation": "frcp4-service-time-limit", "resolution": "APPROVE", "authority_reviewed": true},
+    {"obligation": "frcp4-good-cause-extension", "resolution": "APPROVE", "authority_reviewed": true},
+    {"obligation": "frcp4-untimely-service-response", "resolution": "APPROVE", "authority_reviewed": true}
+  ]
+}

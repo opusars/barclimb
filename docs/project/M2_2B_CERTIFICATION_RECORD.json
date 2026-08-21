@@ -1,0 +1,68 @@
+{
+  "schema": "BARCLIMB_COVERAGE_CERTIFICATION_RECORD_V1",
+  "status": "CERTIFIED",
+  "compile_version": "BARCLIMB_PILOT_FRCP_RULE4_2025_V2",
+  "compile_checksum": "0148dea24c906e2e257265681044ae57ad4b60b9a1e290f291e95dc2315825ec",
+  "scope_version": "NCBE_NEXTGEN_SCOPE_2026_07_2027_02",
+  "scope_checksum": "2d8a1052ada18b413f24b7d0eef1c855a76d8a9a31688130757d5dd6511ca56f",
+  "authority": {
+    "stable_id": "USCOURTS_FRCP",
+    "source_version": "2025-12-01",
+    "sha256": "bd8705fc038d87e4fe222a7ea2e4324222c9430e2373fce56826bd2dfa2f8baf",
+    "provenance_sha256": "fa2a1355e70676f95fff5f02bc8c4ad03ce7594fc64be98dbf87c4cf5a0ce46c"
+  },
+  "human_review": {
+    "review_id": "BARCLIMB_FRCP_RULE4_PILOT_V2_LEO_RAYOS_2026_08_21",
+    "manifest_sha256": "84fec53aa090c7c7d074b0057e604ac1589917adeb26de5fde146a13dcdedeec",
+    "evidence_sha256": "903ab69e9171969b826060943e25d8e40fcf84d4968525663197b43165c74e44",
+    "attestation_sha256": "660511a50551037f6533f1bfb299d9dce342b847835800d68ce66dd77de0b312",
+    "reviewed_at": "2026-08-21T19:56:42+00:00",
+    "reviewer_name": "Leo Rayos",
+    "reviewer_role_qualification": "JD; California bar exam passer; reviewer for BarClimb curriculum quality control.",
+    "rationale": "I reviewed the revised statements, authority locators, classifications, and relationship structure. The V2 corrections resolve the substantive and structural issues identified in the first human-review pass. I approve these eight obligations for this bounded one-leaf Rule 4 production pilot only.",
+    "records": [
+      {"obligation": "frcp4-service-plaintiff-responsibility", "resolution": "APPROVE", "authority_reviewed": true},
+      {"obligation": "frcp4-service-server-qualification", "resolution": "APPROVE", "authority_reviewed": true},
+      {"obligation": "frcp4-waiver-request", "resolution": "APPROVE", "authority_reviewed": true},
+      {"obligation": "frcp4-waiver-expense-consequence", "resolution": "APPROVE", "authority_reviewed": true},
+      {"obligation": "frcp4-domestic-individual-service", "resolution": "APPROVE", "authority_reviewed": true},
+      {"obligation": "frcp4-service-time-limit", "resolution": "APPROVE", "authority_reviewed": true},
+      {"obligation": "frcp4-good-cause-extension", "resolution": "APPROVE", "authority_reviewed": true},
+      {"obligation": "frcp4-untimely-service-response", "resolution": "APPROVE", "authority_reviewed": true}
+    ]
+  },
+  "reconciliation": {
+    "duplicate_count": 0,
+    "omission_count": 0,
+    "excess_count": 0,
+    "conflict_count": 0,
+    "ambiguity_count": 0,
+    "provenance_deficient_count": 0,
+    "jurisdiction_issue_count": 0,
+    "blocking_issue_count": 0,
+    "warning_issue_count": 0
+  },
+  "coverage": {
+    "coverage_class": "PILOT_ONLY",
+    "target_scope_item_ids": ["civil-procedure-service-process-notice"],
+    "obligation_count": 8,
+    "target_leaf_count": 1,
+    "covered_leaf_count": 1,
+    "active_scope_testable_leaf_count": 20,
+    "national_complete": false
+  },
+  "snapshot": {
+    "id": "8ffc025a-ddac-5765-b7b2-130c84282c83",
+    "certification_sha256": "60e160e3c1a458e4c5b98569fcf3f04d409086d328496f2ed41a020a5b591ae0",
+    "certified_at": "2026-08-21T20:02:43.716157+00:00",
+    "immutable": true
+  },
+  "execution": {
+    "database": "Disposable isolated PostgreSQL 14 operator proof",
+    "exact_acquired_bytes": true,
+    "raw_source_bytes_committed": false,
+    "provider_database_changed": false,
+    "idempotent_rerun_confirmed": true
+  },
+  "boundary": "Certification covers only the eight reviewed obligations for civil-procedure-service-process-notice. It is not complete Rule 4 doctrine, complete service-of-process doctrine, complete Civil Procedure, another NCBE subject, national NextGen curriculum completeness, assessment inventory, learner evidence, mastery, or readiness."
+}

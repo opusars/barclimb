@@ -4,6 +4,7 @@ from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.db.models import Q
+from django.utils import timezone
 
 from official_scope.models import OfficialScopeItem, OfficialScopeVersion
 
@@ -441,11 +442,25 @@ class ObligationHumanReview(models.Model):
     obligation = models.OneToOneField(
         RuleObligation, on_delete=models.PROTECT, related_name="human_review"
     )
-    reviewer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
+    reviewer = models.ForeignKey(
+        settings.AUTH_USER_MODEL, null=True, blank=True, on_delete=models.PROTECT
+    )
+    reviewer_name = models.CharField(max_length=200, default="")
+    reviewer_role_qualification = models.TextField(default="")
     resolution = models.CharField(max_length=16, choices=Resolution.choices)
     rationale = models.TextField()
+    attestation = models.TextField(default="")
     authority_reviewed = models.BooleanField(default=False)
-    reviewed_at = models.DateTimeField(auto_now_add=True)
+    review_manifest_sha256 = models.CharField(max_length=64, default="")
+    reviewed_at = models.DateTimeField(default=timezone.now)
+
+    class Meta:
+        constraints = [
+            models.CheckConstraint(
+                condition=Q(review_manifest_sha256__regex=r"^[0-9a-f]{64}$"),
+                name="obligation_review_manifest_sha256_format",
+            )
+        ]
 
     def __str__(self):
         return f"{self.obligation}:{self.resolution}"
@@ -460,8 +475,14 @@ class ObligationHumanReview(models.Model):
         raise ValidationError("Human review attestations cannot be deleted.")
 
     def clean(self):
-        if not self.reviewer_id or not self.reviewer.is_staff:
+        if self.reviewer_id and not self.reviewer.is_staff:
             raise ValidationError("Production obligation review requires a staff reviewer.")
+        if not self.reviewer_name.strip() or not self.reviewer_role_qualification.strip():
+            raise ValidationError(
+                "Human review requires the reviewer's supplied identity and role."
+            )
+        if not self.rationale.strip() or not self.attestation.strip():
+            raise ValidationError("Human review requires rationale and the supplied attestation.")
         if self.obligation.compile_version.source_class != AuthoritySource.SourceClass.PRODUCTION:
             raise ValidationError("Production human review cannot attest fixture content.")
 
@@ -481,6 +502,8 @@ class CoverageReleaseSnapshot(models.Model):
     )
     national_complete = models.BooleanField(default=False)
     authority_provenance_sha256 = models.CharField(max_length=64, blank=True)
+    human_review_sha256 = models.CharField(max_length=64, blank=True)
+    human_review_evidence = models.JSONField(default=list, blank=True)
     human_review_status = models.CharField(max_length=32, default="NOT_REQUIRED")
     obligation_count = models.PositiveIntegerField()
     leaf_count = models.PositiveIntegerField()

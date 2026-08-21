@@ -32,8 +32,8 @@ python apps/backend/manage.py import_official_scope apps/backend/official_scope/
 
 Output states artifact creation/count/hash-derived scope checksum, scope version, item/leaf counts, validation report, dry-run state, and activation state. The command performs no network access and cannot activate `TEST_FIXTURE` truth.
 
-Before any release certification, an operator must revisit the official NCBE content-scope page, reacquire the applicable administration-period artifacts, compare hashes and dates, and create a new immutable version if they changed. The current version cannot be assumed current indefinitely. Production drift awaits a second genuine comparable official version; synthetic fixtures are never treated as its predecessor.
+Before any release certification, an operator must revisit the official NCBE content-scope page, reacquire the applicable administration-period artifacts, compare hashes and dates, and create a new immutable version if they changed. M2.2b certification used exact acquired bytes matching both committed hashes. That evidence is point-in-time: the current version cannot be assumed current indefinitely. Production drift awaits a second genuine comparable official version; synthetic fixtures are never treated as its predecessor.
 
 ## M2.2b boundary
 
-The production normalization contains 32 auditable items and 26 leaves, including 20 current testable aggregate/skill leaves. It preserves the official perimeter and treatment boundaries without copying NCBE prose or inventing BarClimb doctrinal leaves. It is not proof that all detailed NCBE subtopics have Rule Obligations. Only `civil-procedure-service-process-notice` is selected for the M2.2b curriculum pilot.
+The production normalization contains 32 auditable items and 26 leaves, including 20 current testable aggregate/skill leaves. It preserves the official perimeter and treatment boundaries without copying NCBE prose or inventing BarClimb doctrinal leaves. It is not proof that all detailed NCBE subtopics have Rule Obligations. Only `civil-procedure-service-process-notice` is selected and certified for the M2.2b curriculum pilot; `national_complete` remains false.

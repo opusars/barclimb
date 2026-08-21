@@ -37,3 +37,25 @@ Before any release certification, an operator must revisit the official NCBE con
 ## M2.2b boundary
 
 The production normalization contains 32 auditable items and 26 leaves, including 20 current testable aggregate/skill leaves. It preserves the official perimeter and treatment boundaries without copying NCBE prose or inventing BarClimb doctrinal leaves. It is not proof that all detailed NCBE subtopics have Rule Obligations. Only `civil-procedure-service-process-notice` is selected and certified for the M2.2b curriculum pilot; `national_complete` remains false.
+
+## M2.2c Civil Procedure extraction
+
+The subject plan deterministically queries active `TESTABLE` leaves whose official `subject_group` is
+`CIVIL_PROCEDURE`. The accepted scope yields exactly these six immutable identities:
+
+- `civil-procedure-jurisdiction`
+- `civil-procedure-service-process-notice`
+- `civil-procedure-venue-transfer`
+- `civil-procedure-litigation`
+- `civil-procedure-motions-judgments`
+- `civil-procedure-appeals`
+
+Import fails if the declared set, official label, hierarchy, source locator, treatment, version, or
+scope checksum differs from the active source truth. Curriculum decomposition lives only in
+`ScopeCoverageRequirement`; it never adds, splits, or relabels `OfficialScopeItem` records.
+
+Mixed official markers remain mixed at this layer. Future candidate compilation must consult exact
+source treatment at the subtopic/proposition level rather than converting a mixed leaf into a blanket
+recall rule. `RECOGNITION_WITH_OR_WITHOUT_RESOURCES` likewise distinguishes issue recognition from
+application using supplied resources. The plan may not invent stronger memorization obligations than
+the official source supports.

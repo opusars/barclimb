@@ -92,3 +92,32 @@ M2.2b adds no network activity to request handling. Privileged operators indepen
 The real NCBE perimeter remains distinct from substantive authority. NCBE Content Scope/Blueprint artifacts say what the national exam perimeter and treatment are; an official U.S. Courts federal-rules artifact supports the pilot legal propositions; optional secondary evidence could reconcile but cannot satisfy primary-authority policy; compiled Rule Obligations are derived BarClimb curriculum truth only after deterministic and human gates.
 
 The first pilot targets one Civil Procedure leaf and is structurally incapable of representing national completeness. `PILOT_ONLY` policy evaluates its declared subset, rejects mappings outside it, forces human review, and writes explicit non-national classification plus authority/review checksums into its immutable snapshot. Leo Rayos's eight V2 approvals were recorded through the privileged operator manifest without fabricating an account; exact-byte reconciliation remained clean and created snapshot `8ffc025a-ddac-5765-b7b2-130c84282c83`. No AI, assessment generation, learner state, readiness, or broader corpus is introduced.
+
+## M2.2c subject-planning boundary
+
+M2.2c adds an immutable relational planning layer between official NCBE perimeter and future Rule
+Obligation compiles. `SubjectCurriculumManifest` fixes one subject, exact official scope version,
+versioned completeness policy, and canonical checksum. `SubjectManifestLeaf` references—not copies or
+edits—every active official Civil Procedure leaf and preserves its hierarchy and treatment.
+`ScopeCoverageRequirement` plus typed `CoverageRequirementSlot` rows describe the structural kinds a
+future curriculum must satisfy. They contain planning labels, not substantive legal propositions.
+
+`SubjectAuthorityPlan` and `RequirementAuthorityPlan` map each requirement to actually applicable
+constitutional, statutory, federal-rule, Supreme Court, other-primary, or optional-secondary source
+families. Five case-law plans add explicit identity/citation, court/date, reliable-URI, proposition
+locator, authority-status, and later-treatment requirements. `CoverageRequirementSatisfaction` is the
+future explicit bridge from a typed slot to a reconciled/certified Rule Obligation; counts alone cannot
+fill it. PostgreSQL triggers protect the plan, mappings, reviews, and future satisfactions from bulk
+mutation.
+
+The existing Rule 4 snapshot links through `SubjectCertifiedSubset` as historical
+`PARTIAL_LEAF_COVERAGE`; neither its obligations nor snapshot are rewritten. A machine-readable report
+shows six official leaves, 18 planning requirements, 75 required slots, authority/acquisition gaps,
+candidate gaps, review status, and the partial snapshot. The report always returns
+`subject_complete: false` and `national_complete: false` in this planning slice. A separate future
+explicit subject-certification operation remains mandatory even after structural eligibility.
+
+The production plan is `REVIEW_PENDING`. `M2_2C_HUMAN_REVIEW_PACKET.md` requests qualified human
+review of decomposition, treatment, authority families, case-law needs, and ambiguous placements. No
+human approval is inferred, no subject-wide substantive candidates are authored, and no AI/provider
+integration is introduced.

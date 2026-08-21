@@ -52,3 +52,46 @@ Deterministic compilation and reconciliation produce zero issues and satisfy the
 First human review required a versioned V2 correction rather than mutation of V1 history. V2 removes two misleading procedural-step relationships from the plaintiff-responsibility rule, classifies the nonparty-adult server requirement as a `LIMITATION`, preserves the Rule 4(h) waiver addressee distinction, restores both United States location predicates and both expense categories in Rule 4(d)(2), and uses Rule 4(e)'s precise forum-state/service-state formulation. Candidates 6–8 and the valid Rule 4(m) exception/remedy relationships remain unchanged. V1's correction-required disposition is retained in `docs/project/M2_2B_HUMAN_REVIEW_PACKET_V1.md`; the distinct V2 review and certification do not rewrite it.
 
 Negative tests reject missing primary authority, secondary-only support, jurisdiction-specific content, mappings outside the selected leaf, and conflicting candidates. Normal production APIs expose only certified production truth; fixtures, drafts, source bodies, and raw NCBE bytes remain excluded.
+
+## M2.2c Civil Procedure completeness planning
+
+The first subject-scale manifest is
+`BARCLIMB_CIVPRO_CURRICULUM_MANIFEST@2026_V1`, checksum
+`8fd6506bfc4cfda72e1ee6aaad6d62f8ab233fb1c48ff45c308e01b12b60ebd8`. It targets exact
+scope `NCBE_NEXTGEN_SCOPE_2026_07_2027_02` and policy
+`BARCLIMB_CIVPRO_COVERAGE_POLICY@2026_V1`. The immutable plan contains all six Civil Procedure
+leaves, 18 curriculum-layer requirements, 75 typed obligation slots, 16 authority-family plans, 45
+requirement/authority mappings, and five proposition-level Supreme Court case plans.
+
+The slots make completeness noncircular. A future obligation must match the slot kind, map to the same
+official leaf, pass ordinary compiler/reconciliation/authority/jurisdiction review, and link through a
+certified snapshot before it may satisfy the slot. Every required slot and primary-authority mapping
+must pass; a percentage, a raw obligation count, or one obligation per leaf cannot produce
+`LEAF_CERTIFIED` or `SUBJECT_CERTIFIED`.
+
+Civil Procedure becomes subject-certification eligible only after every active testable leaf is
+addressed; all required slots have certified satisfactions; required primary authority is acquired and
+current; omissions, conflicts, authority gaps, and unsupported jurisdiction content are zero; human
+reviews are complete; reconciliation passes; and exact scope/manifest/authority/compiler/policy hashes
+are captured. Eligibility still requires a future explicit certification operation. M2.2c deliberately
+implements no subject snapshot or certification command.
+
+The Rule 4 snapshot is linked as `PARTIAL_LEAF_COVERAGE`, not decomposed or recertified. It establishes
+known certified evidence within `civil-procedure-service-process-notice` but satisfies no proposed
+subject slot without a later reviewed mapping. Every other leaf is `AUTHORITY_PLANNED`; the service leaf
+is `PARTIALLY_COVERED`; all remain uncovered for subject-certification purposes.
+
+Operator workflows:
+
+```bash
+python apps/backend/manage.py import_subject_plan \
+  apps/backend/curriculum/manifests/civil-procedure-subject-plan-2026-v1.json
+python apps/backend/manage.py report_subject_coverage \
+  BARCLIMB_CIVPRO_CURRICULUM_MANIFEST@2026_V1
+python apps/backend/manage.py record_subject_plan_review /controlled/review.json
+```
+
+The import requires the accepted active scope, acquired FRCP authority, and immutable Rule 4 snapshot
+to exist. It is deterministic and idempotent. Reporting is read-only and exposes planning/provenance
+metadata only. Review records exact external-human evidence through a privileged operator path and
+does not create or certify substantive obligations.

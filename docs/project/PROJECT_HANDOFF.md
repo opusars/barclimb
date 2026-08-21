@@ -1,7 +1,7 @@
 # BarClimb Project Handoff
 
 ## Current state
-M1.4 is accepted in `main` at `443bbbc849049d515d9c9b1797cd7909f50359f9`; exact-main Foundation CI run `32427862224` passed. M1.5 local acceptance passes on `m1-5-assessment-presentation-proof`; exact-commit CI, review, and merge remain pending. M1.4 retains persistent verified-nonproduction Heroku/PostgreSQL/KVS staging, deployed Web auth/routes/outbox processes, React Navigation, gated deep-link configuration, automated SecureStore states, verified owner access to the existing `@opusarss-team/barclimb` EAS project, and signed Android internal staging build `2e340187-f441-4175-ba8b-852d044996f7`.
+M1.5 is accepted in `main` at `0ebccf8da5e08fe18079e5d59477f33a956ae88b`; exact-main Foundation CI run `32434901406` passed. M2.1 is implemented on `m2-1-official-source-scope-foundation` pending full validation, exact-commit CI, review, and merge. It establishes immutable official-source provenance and the national NextGen scope perimeter without Rule Obligations, production curriculum/assessment, learner evidence, or AI. The accepted M1 native/platform evidence and deferred Native GA blockers remain unchanged.
 
 The controlling release sequence remains **Web GA → iOS Native GA → Android Native GA**, with one first-class multi-client architecture and no Web-only shortcuts. Apple enrollment/signing, physical-device authentication/SecureStore, live OS association routing, store ownership/approval, and native production purchase/restore remain mandatory at the applicable Native GA and are not marked verified. M1.5 changes none of those provider/device statuses.
 
@@ -89,8 +89,8 @@ See `../specs/SPEC_MANIFEST.json`. Four Markdown specs control the build.
 - No Web-only shortcut: shared-package portability passes, native uses React Native navigation rather than WebView, and the controlling portable auth/domain/link contracts remain intact.
 
 ## Current branch coordination
-- Authoritative accepted main is `443bbbc849049d515d9c9b1797cd7909f50359f9`; local and remote main passed exact-SHA CI before M1.5 began.
-- Active branch is `m1-5-assessment-presentation-proof`. It must be committed, pushed, and pass exact-commit CI, then reviewed. Do not merge automatically and do not begin Milestone 2.
+- Authoritative accepted main is `0ebccf8da5e08fe18079e5d59477f33a956ae88b`; local and remote main passed exact-SHA CI before M2.1 began.
+- Active branch is `m2-1-official-source-scope-foundation`. It must pass full local/PostgreSQL validation, be committed and pushed, and pass exact-commit CI, then be reviewed. Do not merge automatically and do not begin M2.2.
 
 ## M1.5 cross-client assessment presentation risk proof
 - `@barclimb/assessment-schema` defines one runtime-validated, JSON-serializable presentation contract for the four controlling families and all controlling response-type identifiers. The bounded component registry contains only `SINGLE_SELECT_QUESTION` and `LONG_RESPONSE_EDITOR`; schema validation rejects unknown components and renderers return a typed fail-safe rather than omitting content or using HTML/WebView.
@@ -101,6 +101,13 @@ See `../specs/SPEC_MANIFEST.json`. Four Markdown specs control the build.
 - Every fixture is `TEST_FIXTURE` / `DEVELOPMENT_ONLY`, uses synthetic fictional text, and is hidden in production client environments. It never enters Django assessment inventory, curriculum, evidence, readiness, publication, grading, or analytics.
 - No backend assessment model/endpoint, AI, grading, curriculum, learner evidence, recommendation, or production attempt system was added. The eventual Django API must serve this renderer-independent shape and own authoritative attempt versions in Milestones 3–4.
 - Architectural conclusion: **yes**, one portable assessment presentation/state contract supports Web and React Native for MCQ, IQS, and long-form PT/LRPT without a second client-specific assessment model. Remaining risks concern production editor/storage libraries, richer editor behaviors, server autosave/concurrency/conflict semantics, and real-device accessibility/background/process recovery—not schema divergence.
+
+## M2.1 immutable official-source and scope foundation
+- `official_scope` owns immutable/versioned artifact provenance, original-byte SHA-256, artifact status/supersession, any-number source-to-scope roles, versioned canonical scope hashes, hierarchical official items/leaves, exact source locators, and bounded source-provenanced treatment metadata.
+- Production scope coordinates are enforced as exactly national `NEXTGEN_UBE` / `NEXTGEN_CORE`. The file-fed importer performs no network acquisition, is idempotent, reports deterministic validation, defaults to no activation, and rejects state/jurisdiction scope through ordinary paths.
+- Explicit activation transactionally requires valid current normalization and fixture/source/hierarchy invariants, then preserves prior active truth as immutable `SUPERSEDED` history. Django guards, relational constraints/`PROTECT`, and PostgreSQL triggers cover both normal and bulk mutation paths.
+- Admin is inspection-only and the authenticated API exposes only the active version/checksum, suitable provenance, and portable hierarchy. All included source content is conspicuous synthetic `TEST_FIXTURE`; no official NCBE document bytes are committed and fixture truth is excluded from production activation/API.
+- M2.2 must key Rule Obligation/compiler provenance to immutable scope-version/item identities. It must not mutate the official perimeter, treat secondary material as perimeter authority, or infer completeness from question counts. No Rule Obligation, doctrine graph, reconciliation, certification, production assessment inventory, learner evidence, or AI exists yet.
 
 ## Tests actually run
 - M1.5 exact-runtime local acceptance on Node 24.19.0/npm 11.17.0: clean `npm ci` installed 717 packages; live Expo compatibility and Doctor 20/20 passed; all nine typechecks, 14 Web tests, 20 native tests, 8 shared schema/state tests, Web build, all seven portable packages, and iOS/Android exports at 863/858 modules passed. Ruff/Django/migration checks and 60 local backend tests passed with four PostgreSQL-only skips. Audit remained the accepted 15-node `image-size`/`uuid` graph. Exact-commit CI is pending push.
@@ -129,7 +136,7 @@ Heroku app runtime, Essential-0 PostgreSQL, and Mini KVS remain `VERIFIED_NONPRO
 Execution breadth remains the principal engineering risk. Curriculum completeness depends on automated official-scope/rule compilation, authority provenance, lawful multi-source reconciliation, subject certification, and strict inventory gates. NCBE Sourcebooks are optional enhanced reconciliation when lawfully available; do not make purchase/access a build or launch dependency.
 
 ## Exact next task
-Finish M1.5 validation on exact Node 24.19.0/npm 11.17.0, reconcile the final test/audit evidence, review the complete diff for scope and schema portability, commit and push `m1-5-assessment-presentation-proof`, and require green GitHub Actions on the exact branch SHA. Do not merge automatically and do not begin Milestone 2.
+Finish M2.1 validation on exact Python 3.13.15 and Node 24.19.0/npm 11.17.0, including PostgreSQL triggers/integrity, reconcile final test/audit evidence, review scope/fixture isolation, commit and push `m2-1-official-source-scope-foundation`, and require green GitHub Actions on the exact branch SHA. Do not merge automatically and do not begin M2.2.
 
 ## Resume commands
 ```bash

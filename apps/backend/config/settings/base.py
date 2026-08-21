@@ -23,6 +23,7 @@ REDIS_TLS_ALLOW_SELF_SIGNED = boolean("REDIS_TLS_ALLOW_SELF_SIGNED", default=Fal
 if REDIS_TLS_ALLOW_SELF_SIGNED and not REDIS_URL.startswith("rediss://"):
     raise ImproperlyConfigured("REDIS_TLS_ALLOW_SELF_SIGNED requires a rediss:// endpoint")
 INSTALLED_APPS = [
+    "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
@@ -31,6 +32,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "accounts",
     "health",
+    "official_scope",
 ]
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -42,7 +44,20 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 ROOT_URLCONF = "config.urls"
-TEMPLATES = []
+TEMPLATES = [
+    {
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": [],
+        "APP_DIRS": True,
+        "OPTIONS": {
+            "context_processors": [
+                "django.template.context_processors.request",
+                "django.contrib.auth.context_processors.auth",
+                "django.contrib.messages.context_processors.messages",
+            ]
+        },
+    }
+]
 WSGI_APPLICATION = "config.wsgi.application"
 ASGI_APPLICATION = "config.asgi.application"
 DATABASES = {
@@ -140,6 +155,7 @@ AUTH_RATE_LIMITS = {
     "password_reset": (5, 3600),
     "native_session": (10, 300),
 }
+OFFICIAL_SCOPE_ALLOW_TEST_FIXTURE_API = False
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,

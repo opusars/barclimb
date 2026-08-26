@@ -1,0 +1,28 @@
+{
+  "schema": "BARCLIMB_SUBJECT_PLAN_REVIEW_DISPOSITION_V1",
+  "subject_manifest": {
+    "stable_id": "BARCLIMB_CIVPRO_CURRICULUM_MANIFEST",
+    "manifest_version": "2026_V1",
+    "canonical_sha256": "8fd6506bfc4cfda72e1ee6aaad6d62f8ab233fb1c48ff45c308e01b12b60ebd8"
+  },
+  "review_packet": {
+    "path": "docs/project/M2_2C_HUMAN_REVIEW_PACKET_V1.md",
+    "sha256": "153746608c27abad008dbfa5cd858113c746696ed05fc410a1b6242e558b1f6c"
+  },
+  "disposition": "REJECT",
+  "resolution_detail": "REVISION_REQUIRED",
+  "received_date": "2026-08-26",
+  "reviewer_identity_status": "NOT_SUPPLIED_IN_REPOSITORY_CONTROLLED_INPUT",
+  "formal_subject_plan_review_recorded": false,
+  "rationale_categories": [
+    "OFFICIAL_PERIMETER_GRANULARITY",
+    "UNDERCOVERAGE",
+    "OVERCOVERAGE",
+    "DOCTRINAL_MISPLACEMENT",
+    "TREATMENT_MARKER_FIDELITY",
+    "AUTHORITY_CONDITIONALITY"
+  ],
+  "rationale": "The six coarse groupings were incorrectly treated as official terminal leaves; official topics were omitted or flattened; some proposed requirements exceeded or misplaced the accepted perimeter; mixed treatment was aggregated too early; and some authority families were overbroad or unconditional.",
+  "recording_boundary": "This file preserves the supplied rejection outcome without inventing reviewer identity, qualification, attestation wording, or approval. No SubjectPlanHumanReview workflow record is created from incomplete reviewer metadata.",
+  "next_state": "Revise the immutable plan as 2026_V2 and return it for a second qualified human review."
+}

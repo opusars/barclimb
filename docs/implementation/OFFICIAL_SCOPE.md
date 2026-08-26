@@ -40,8 +40,13 @@ The production normalization contains 32 auditable items and 26 leaves, includin
 
 ## M2.2c Civil Procedure extraction
 
-The subject plan deterministically queries active `TESTABLE` leaves whose official `subject_group` is
-`CIVIL_PROCEDURE`. The accepted scope yields exactly these six immutable identities:
+The accepted M2.2b scope registry contains six coarse Civil Procedure `OfficialScopeItem` records.
+Their normalization notes deliberately left exact subtopics and star markers in the hash-identified
+source. M2.2c V1 incorrectly treated those coarse records as terminal completeness leaves and was
+**REJECTED — REVISION REQUIRED**. V2 preserves the accepted scope version/checksum and adds an
+immutable subordinate `SubjectOfficialTopic` normalization rather than rewriting active scope truth.
+
+The six retained records are now classified only as BarClimb curriculum planning aggregates:
 
 - `civil-procedure-jurisdiction`
 - `civil-procedure-service-process-notice`
@@ -50,12 +55,15 @@ The subject plan deterministically queries active `TESTABLE` leaves whose offici
 - `civil-procedure-motions-judgments`
 - `civil-procedure-appeals`
 
-Import fails if the declared set, official label, hierarchy, source locator, treatment, version, or
-scope checksum differs from the active source truth. Curriculum decomposition lives only in
-`ScopeCoverageRequirement`; it never adds, splits, or relabels `OfficialScopeItem` records.
+They cannot establish completeness. V2 binds the accepted source artifact and administration period
+to the exact 27 terminal topics under sections I–VII: 14 starred/recalled-only and 13
+unstarred/with-or-without-resources. Every terminal topic has stable identity, exact parent hierarchy,
+short factual label, locator, marker, effective dates, canonical hash, and one planning-group mapping.
+Import fails on a missing/excess topic, cyclic/missing parent, treatment mismatch, aggregate mismatch,
+artifact mismatch, or scope/version/checksum mismatch.
 
-Mixed official markers remain mixed at this layer. Future candidate compilation must consult exact
-source treatment at the subtopic/proposition level rather than converting a mixed leaf into a blanket
-recall rule. `RECOGNITION_WITH_OR_WITHOUT_RESOURCES` likewise distinguishes issue recognition from
-application using supplied resources. The plan may not invent stronger memorization obligations than
-the official source supports.
+`MIXED_OFFICIAL_MARKERS` survives only as aggregate display metadata. Each requirement inherits its
+terminal marker: starred topics use `RECALL`; unstarred topics use
+`RECOGNITION_WITH_OR_WITHOUT_RESOURCES`. The latter may be tested with or without legal resources and
+does not become a blanket memorization requirement. The body-free terminal normalization copies no
+source explanations and commits no NCBE PDF bytes.

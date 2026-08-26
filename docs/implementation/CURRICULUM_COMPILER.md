@@ -55,39 +55,49 @@ Negative tests reject missing primary authority, secondary-only support, jurisdi
 
 ## M2.2c Civil Procedure completeness planning
 
-The first subject-scale manifest is
-`BARCLIMB_CIVPRO_CURRICULUM_MANIFEST@2026_V1`, checksum
-`8fd6506bfc4cfda72e1ee6aaad6d62f8ab233fb1c48ff45c308e01b12b60ebd8`. It targets exact
-scope `NCBE_NEXTGEN_SCOPE_2026_07_2027_02` and policy
-`BARCLIMB_CIVPRO_COVERAGE_POLICY@2026_V1`. The immutable plan contains all six Civil Procedure
-leaves, 18 curriculum-layer requirements, 75 typed obligation slots, 16 authority-family plans, 45
-requirement/authority mappings, and five proposition-level Supreme Court case plans.
+V1 (`BARCLIMB_CIVPRO_CURRICULUM_MANIFEST@2026_V1`) is immutable rejected history. Its six coarse
+leaves, 18 requirements, 75 slots, 16 authority plans, packet, and rejection disposition remain
+auditable. V2 (`BARCLIMB_CIVPRO_CURRICULUM_MANIFEST@2026_V2`) supersedes it without mutation and binds
+the same accepted scope to `BARCLIMB_CIVPRO_COVERAGE_POLICY@2026_V2` and
+`BARCLIMB_SUBJECT_CERTIFICATION_GATE_V2`.
+
+V2 contains 27 operative official terminal topics, six non-authoritative planning aggregates, 43
+terminal-linked requirements, 157 required typed slots, 22 authority plans, 76 requirement-authority
+mappings, and nine requirement-specific case-proposition plans. Every terminal topic maps to one or
+more requirements; completeness never runs over only the six aggregates.
 
 The slots make completeness noncircular. A future obligation must match the slot kind, map to the same
-official leaf, pass ordinary compiler/reconciliation/authority/jurisdiction review, and link through a
+official terminal topic, pass ordinary compiler/reconciliation/authority/jurisdiction review, and link through a
 certified snapshot before it may satisfy the slot. Every required slot and primary-authority mapping
-must pass; a percentage, a raw obligation count, or one obligation per leaf cannot produce
+must pass; a percentage, raw obligation count, one obligation per aggregate, or pilot snapshot cannot produce
 `LEAF_CERTIFIED` or `SUBJECT_CERTIFIED`.
 
-Civil Procedure becomes subject-certification eligible only after every active testable leaf is
+Civil Procedure becomes subject-certification eligible only after every active terminal topic is
 addressed; all required slots have certified satisfactions; required primary authority is acquired and
 current; omissions, conflicts, authority gaps, and unsupported jurisdiction content are zero; human
 reviews are complete; reconciliation passes; and exact scope/manifest/authority/compiler/policy hashes
 are captured. Eligibility still requires a future explicit certification operation. M2.2c deliberately
 implements no subject snapshot or certification command.
 
-The Rule 4 snapshot is linked as `PARTIAL_LEAF_COVERAGE`, not decomposed or recertified. It establishes
-known certified evidence within `civil-procedure-service-process-notice` but satisfies no proposed
-subject slot without a later reviewed mapping. Every other leaf is `AUTHORITY_PLANNED`; the service leaf
-is `PARTIALLY_COVERED`; all remain uncovered for subject-certification purposes.
+The Rule 4 snapshot is linked as `PARTIAL_LEAF_COVERAGE`, not decomposed or recertified. Waiver and
+domestic-individual-service candidates are identified as perimeter-relevant evidence. Rule 4(m)
+timing/consequences, service responsibility, and server qualification remain valid historical
+production evidence but are explicitly supplemental; they are not required completeness topics and
+cannot inflate the service terminal or subject state.
+
+Authority application is requirement-specific. `REQUIRED` mappings always apply; `CONDITIONAL`
+mappings carry a nonempty candidate condition; optional secondary evidence cannot replace primary
+authority. Erie/Hanna has separate substance/procedure, federal-rule-on-point, and choice-of-law
+requirements. FRCP, Rules Enabling Act, Article III, and incorporated state sources activate only on
+their relevant branch. FRAP is likewise conditional, not a blanket appellate dependency.
 
 Operator workflows:
 
 ```bash
 python apps/backend/manage.py import_subject_plan \
-  apps/backend/curriculum/manifests/civil-procedure-subject-plan-2026-v1.json
+  apps/backend/curriculum/manifests/civil-procedure-subject-plan-2026-v2.json
 python apps/backend/manage.py report_subject_coverage \
-  BARCLIMB_CIVPRO_CURRICULUM_MANIFEST@2026_V1
+  BARCLIMB_CIVPRO_CURRICULUM_MANIFEST@2026_V2
 python apps/backend/manage.py record_subject_plan_review /controlled/review.json
 ```
 

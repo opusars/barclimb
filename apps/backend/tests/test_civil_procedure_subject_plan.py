@@ -18,8 +18,10 @@ from curriculum.models import (
     CurriculumCompileVersion,
     RequirementAuthorityPlan,
     RuleObligation,
+    ScopeCoverageRequirement,
     SubjectCurriculumManifest,
     SubjectManifestLeaf,
+    SubjectOfficialTopic,
     SubjectPlanHumanReview,
 )
 from curriculum.subject_planning import (
@@ -41,7 +43,16 @@ BACKEND_ROOT = Path(__file__).resolve().parents[1]
 SCOPE_PATH = BACKEND_ROOT / "official_scope" / "manifests" / "ncbe-nextgen-2026-07.json"
 PILOT_PATH = BACKEND_ROOT / "curriculum" / "manifests" / "frcp-rule4-service-pilot.json"
 PLAN_PATH = BACKEND_ROOT / "curriculum" / "manifests" / "civil-procedure-subject-plan-2026-v1.json"
+PLAN_V2_PATH = (
+    BACKEND_ROOT / "curriculum" / "manifests" / "civil-procedure-subject-plan-2026-v2.json"
+)
 REVIEW_PACKET_PATH = BACKEND_ROOT.parents[1] / "docs" / "project" / "M2_2C_HUMAN_REVIEW_PACKET.md"
+REVIEW_PACKET_V1_PATH = (
+    BACKEND_ROOT.parents[1] / "docs" / "project" / "M2_2C_HUMAN_REVIEW_PACKET_V1.md"
+)
+V1_REVIEW_DISPOSITION_PATH = (
+    BACKEND_ROOT.parents[1] / "docs" / "project" / "M2_2C_V1_REVIEW_DISPOSITION.json"
+)
 
 EXPECTED_LEAF_IDS = {
     "civil-procedure-jurisdiction",
@@ -50,6 +61,35 @@ EXPECTED_LEAF_IDS = {
     "civil-procedure-litigation",
     "civil-procedure-motions-judgments",
     "civil-procedure-appeals",
+}
+EXPECTED_TERMINAL_TOPIC_IDS = {
+    "civpro-topic-federal-question-jurisdiction",
+    "civpro-topic-diversity-jurisdiction",
+    "civpro-topic-supplemental-jurisdiction",
+    "civpro-topic-concurrent-removal-jurisdiction",
+    "civpro-topic-personal-jurisdiction",
+    "civpro-topic-service-process-notice",
+    "civpro-topic-venue-forum-transfer",
+    "civpro-topic-state-law-federal-court",
+    "civpro-topic-preliminary-injunctions-tro",
+    "civpro-topic-pleadings-amended-pleadings",
+    "civpro-topic-rule-11",
+    "civpro-topic-joinder-claims-parties",
+    "civpro-topic-intervention-rule-24",
+    "civpro-topic-discovery-scope-limits",
+    "civpro-topic-discovery-rule-26f",
+    "civpro-topic-discovery-tools-ediscovery",
+    "civpro-topic-discovery-motions",
+    "civpro-topic-jury-trial-preservation",
+    "civpro-topic-rule-12-dismissal",
+    "civpro-topic-judgment-pleadings",
+    "civpro-topic-summary-judgment",
+    "civpro-topic-jmol",
+    "civpro-topic-default-default-judgment",
+    "civpro-topic-effect-judgment-preclusion",
+    "civpro-topic-final-judgment-rule",
+    "civpro-topic-interlocutory-review",
+    "civpro-topic-standards-review",
 }
 
 
@@ -192,6 +232,13 @@ def _import_plan():
     scope = _install_scope_descriptor()
     _install_accepted_pilot_snapshot(scope)
     return import_subject_plan(_json(PLAN_PATH))[0]
+
+
+def _import_v2_plan():
+    v1 = _import_plan()
+    v2, created = import_subject_plan(_json(PLAN_V2_PATH))
+    assert created and v2.supersedes == v1
+    return v2
 
 
 def test_plan_is_hash_exact_body_free_and_contains_all_real_civil_procedure_leaves():
@@ -342,7 +389,7 @@ def test_external_human_review_is_explicit_immutable_and_does_not_certify_subjec
         "resolution": "APPROVE",
         "rationale": "TEST review of the coverage plan only.",
         "attestation": "TEST attestation; no substantive obligations approved.",
-        "review_packet_sha256": hashlib.sha256(REVIEW_PACKET_PATH.read_bytes()).hexdigest(),
+        "review_packet_sha256": hashlib.sha256(REVIEW_PACKET_V1_PATH.read_bytes()).hexdigest(),
         "reviewed_at": "2026-08-21T00:00:00+00:00",
     }
     review_manifest = tmp_path / "subject-review.json"
@@ -352,7 +399,7 @@ def test_external_human_review_is_explicit_immutable_and_does_not_certify_subjec
         "record_subject_plan_review",
         review_manifest,
         "--packet",
-        REVIEW_PACKET_PATH,
+        REVIEW_PACKET_V1_PATH,
         stdout=stdout,
     )
     result = json.loads(stdout.getvalue())
@@ -363,7 +410,7 @@ def test_external_human_review_is_explicit_immutable_and_does_not_certify_subjec
         "record_subject_plan_review",
         review_manifest,
         "--packet",
-        REVIEW_PACKET_PATH,
+        REVIEW_PACKET_V1_PATH,
         stdout=stdout,
     )
     assert json.loads(stdout.getvalue())["created"] is False
@@ -423,6 +470,241 @@ def test_operator_report_answers_remaining_work_without_hidden_certification():
     assert report["subject_complete"] is False
 
 
+def test_v2_manifest_is_hash_exact_and_preserves_27_terminal_topics_not_six_rollups():
+    payload = _json(PLAN_V2_PATH)
+    assert payload["canonical_sha256"] == canonical_sha256(
+        {key: value for key, value in payload.items() if key != "canonical_sha256"}
+    )
+    terminal_topics = [topic for topic in payload["official_topics"] if topic["is_terminal"]]
+    assert {topic["stable_id"] for topic in terminal_topics} == EXPECTED_TERMINAL_TOPIC_IDS
+    assert sum(topic["official_marker"] == "STARRED" for topic in terminal_topics) == 14
+    assert sum(topic["official_marker"] == "UNSTARRED" for topic in terminal_topics) == 13
+    assert len(payload["planning_groups"]) == 6
+    assert all(
+        group["classification"] == "CURRICULUM_PLANNING_GROUP"
+        for group in payload["planning_groups"]
+    )
+    assert payload["manifest"]["official_scope_sha256"] == (
+        "2d8a1052ada18b413f24b7d0eef1c855a76d8a9a31688130757d5dd6511ca56f"
+    )
+    assert payload["manifest"]["terminal_inventory_sha256"] == canonical_sha256(
+        payload["official_topics"]
+    )
+    encoded = PLAN_V2_PATH.read_text()
+    assert '"statement"' not in encoded and '"obligations"' not in encoded
+
+
+def test_v2_rejects_six_group_only_or_changed_terminal_treatment_as_official_truth():
+    _import_plan()
+    six_group_only = copy.deepcopy(_json(PLAN_V2_PATH))
+    removed_topic_id = "civpro-topic-standards-review"
+    six_group_only["official_topics"] = [
+        topic
+        for topic in six_group_only["official_topics"]
+        if topic["stable_id"] != removed_topic_id
+    ]
+    six_group_only["coverage_requirements"] = [
+        requirement
+        for requirement in six_group_only["coverage_requirements"]
+        if requirement["official_topic_id"] != removed_topic_id
+    ]
+    _rechecksum(six_group_only)
+    with pytest.raises(ValidationError, match="accepted canonical manifest"):
+        import_subject_plan(six_group_only)
+
+    changed_marker = copy.deepcopy(_json(PLAN_V2_PATH))
+    topic = next(
+        topic
+        for topic in changed_marker["official_topics"]
+        if topic["stable_id"] == "civpro-topic-supplemental-jurisdiction"
+    )
+    topic["official_marker"] = "STARRED"
+    topic["knowledge_treatment"] = "RECALLED_REQUIRED"
+    for requirement in changed_marker["coverage_requirements"]:
+        if requirement["official_topic_id"] == topic["stable_id"]:
+            requirement["treatment_requirement"] = "RECALL"
+    changed_marker["manifest"]["terminal_inventory_sha256"] = canonical_sha256(
+        changed_marker["official_topics"]
+    )
+    _rechecksum(changed_marker)
+    with pytest.raises(ValidationError, match="accepted canonical manifest"):
+        import_subject_plan(changed_marker)
+
+
+def test_v1_rejection_history_is_preserved_without_fabricated_reviewer_identity():
+    disposition = _json(V1_REVIEW_DISPOSITION_PATH)
+    assert hashlib.sha256(REVIEW_PACKET_V1_PATH.read_bytes()).hexdigest() == (
+        "153746608c27abad008dbfa5cd858113c746696ed05fc410a1b6242e558b1f6c"
+    )
+    assert disposition["disposition"] == "REJECT"
+    assert disposition["resolution_detail"] == "REVISION_REQUIRED"
+    assert disposition["reviewer_identity_status"] == (
+        "NOT_SUPPLIED_IN_REPOSITORY_CONTROLLED_INPUT"
+    )
+    assert disposition["formal_subject_plan_review_recorded"] is False
+    packet = REVIEW_PACKET_PATH.read_text()
+    assert "SECOND REVIEW PENDING" in packet
+    assert all(topic_id in packet for topic_id in EXPECTED_TERMINAL_TOPIC_IDS)
+
+
+def test_v2_import_uses_terminal_topics_as_completeness_units_and_preserves_history():
+    manifest = _import_v2_plan()
+    same, created = import_subject_plan(_json(PLAN_V2_PATH))
+    assert same.pk == manifest.pk and not created
+    report = subject_coverage_report(manifest)
+    assert manifest.manifest_version == "2026_V2"
+    assert manifest.coverage_policy.policy_version == "2026_V2"
+    assert manifest.supersedes.manifest_version == "2026_V1"
+    assert manifest.coverage_policy.supersedes.policy_version == "2026_V1"
+    assert report["schema"] == "BARCLIMB_SUBJECT_COVERAGE_REPORT_V2"
+    assert report["official_terminal_topic_count"] == 27
+    assert report["planning_group_count"] == 6
+    assert report["official_leaf_count"] == 27
+    assert report["completeness_unit"] == "OFFICIAL_TERMINAL_TOPIC"
+    assert report["coverage_requirement_count"] == 43
+    assert report["required_slot_count"] == 157
+    assert report["authority_plan_count"] == 22
+    assert report["six_group_rollup_can_establish_completeness"] is False
+    assert set(report["uncovered_leaf_ids"]) == EXPECTED_TERMINAL_TOPIC_IDS
+    assert manifest.official_topics.filter(is_terminal=True).count() == 27
+    assert not manifest.official_topics.filter(
+        is_terminal=True, coverage_requirements__isnull=True
+    ).exists()
+    assert not RuleObligation.objects.exists()
+
+
+def test_v2_jurisdiction_is_granular_and_treatment_is_terminal_specific():
+    manifest = _import_v2_plan()
+    topics = {topic.stable_id: topic for topic in manifest.official_topics.filter(is_terminal=True)}
+    assert topics["civpro-topic-supplemental-jurisdiction"].official_marker == "UNSTARRED"
+    assert topics["civpro-topic-concurrent-removal-jurisdiction"].official_marker == "STARRED"
+    combined = topics["civpro-topic-concurrent-removal-jurisdiction"].coverage_requirements
+    assert set(combined.values_list("stable_id", flat=True)) == {
+        "civpro-concurrent-jurisdiction",
+        "civpro-removal-remand",
+    }
+    personal = topics["civpro-topic-personal-jurisdiction"].coverage_requirements
+    assert set(personal.values_list("stable_id", flat=True)) == {
+        "civpro-personal-specific",
+        "civpro-personal-general",
+        "civpro-personal-authority-consent-waiver",
+    }
+    for topic in topics.values():
+        expected = (
+            "RECALL"
+            if topic.official_marker == "STARRED"
+            else "RECOGNITION_WITH_OR_WITHOUT_RESOURCES"
+        )
+        assert not topic.coverage_requirements.exclude(treatment_requirement=expected).exists()
+
+
+def test_v2_rule4_pilot_is_immutable_partial_evidence_and_timing_is_supplemental():
+    before = hashlib.sha256(PILOT_PATH.read_bytes()).hexdigest()
+    manifest = _import_v2_plan()
+    service_group = manifest.manifest_leaves.get(
+        scope_item__stable_id="civil-procedure-service-process-notice"
+    )
+    subset = service_group.certified_subsets.get()
+    assert str(subset.coverage_snapshot_id) == "8ffc025a-ddac-5765-b7b2-130c84282c83"
+    assert subset.coverage_snapshot.compile_version.canonical_sha256 == (
+        "0148dea24c906e2e257265681044ae57ad4b60b9a1e290f291e95dc2315825ec"
+    )
+    assert subset.coverage_snapshot.certification_sha256 == (
+        "60e160e3c1a458e4c5b98569fcf3f04d409086d328496f2ed41a020a5b591ae0"
+    )
+    assert subset.perimeter_attribution["timing_content_required_for_subject_completion"] is False
+    assert "frcp4-service-time-limit" in subset.perimeter_attribution["supplemental_candidate_ids"]
+    assert not ScopeCoverageRequirement.objects.filter(
+        manifest_leaf__manifest=manifest, stable_id__contains="service-time"
+    ).exists()
+    assert hashlib.sha256(PILOT_PATH.read_bytes()).hexdigest() == before
+
+
+def test_v2_pretrial_dispositive_jury_judgment_and_appeal_regressions():
+    manifest = _import_v2_plan()
+    requirement_ids = set(
+        ScopeCoverageRequirement.objects.filter(manifest_leaf__manifest=manifest).values_list(
+            "stable_id", flat=True
+        )
+    )
+    assert {
+        "civpro-preliminary-injunctions-tro",
+        "civpro-rule-11",
+        "civpro-rule-12-dismissal",
+        "civpro-judgment-pleadings",
+        "civpro-summary-judgment",
+        "civpro-jmol",
+        "civpro-default-default-judgment",
+        "civpro-claim-preclusion",
+        "civpro-issue-preclusion",
+        "civpro-final-judgment-rule",
+        "civpro-interlocutory-review",
+        "civpro-standards-review",
+    }.issubset(requirement_ids)
+    assert "civpro-pretrial-disposition" not in requirement_ids
+    assert "civpro-posttrial-relief" not in requirement_ids
+    jury_topic = manifest.official_topics.get(stable_id="civpro-topic-jury-trial-preservation")
+    assert set(jury_topic.coverage_requirements.values_list("stable_id", flat=True)) == {
+        "civpro-jury-preservation-waiver"
+    }
+    jmol = ScopeCoverageRequirement.objects.get(
+        manifest_leaf__manifest=manifest, stable_id="civpro-jmol"
+    )
+    assert jmol.official_topic.stable_id == "civpro-topic-jmol"
+    summary = ScopeCoverageRequirement.objects.get(
+        manifest_leaf__manifest=manifest, stable_id="civpro-summary-judgment"
+    )
+    assert summary.official_topic.stable_id == "civpro-topic-summary-judgment"
+
+
+def test_v2_erie_and_authority_requirements_are_conditional_by_branch():
+    manifest = _import_v2_plan()
+    erie_requirements = ScopeCoverageRequirement.objects.filter(
+        manifest_leaf__manifest=manifest, stable_id__startswith="civpro-erie-"
+    )
+    assert erie_requirements.count() == 3
+    direct_rule = erie_requirements.get(stable_id="civpro-erie-federal-rule-on-point")
+    mappings = {
+        mapping.authority_plan.stable_id: mapping
+        for mapping in direct_rule.authority_mappings.select_related("authority_plan")
+    }
+    assert mappings["authority-frcp-current"].role == "CONDITIONAL"
+    assert mappings["authority-rules-enabling-act"].role == "CONDITIONAL"
+    assert mappings["authority-rules-of-decision-act"].role == "CONDITIONAL"
+    assert all(
+        mappings[authority_id].condition_expression
+        for authority_id in (
+            "authority-frcp-current",
+            "authority-rules-enabling-act",
+            "authority-rules-of-decision-act",
+        )
+    )
+    assert not direct_rule.authority_mappings.filter(role="REQUIRED").count() > 1
+    assert (
+        not RequirementAuthorityPlan.objects.filter(
+            requirement__manifest_leaf__manifest=manifest,
+            authority_plan__stable_id="authority-frap-conditional",
+        )
+        .exclude(role="CONDITIONAL")
+        .exists()
+    )
+    assert manifest.authority_plans.filter(case_authority_required=True).count() == 9
+
+
+def test_v2_subject_and_national_completeness_remain_false_at_second_review_gate():
+    manifest = _import_v2_plan()
+    report = subject_coverage_report(manifest)
+    assert report["certified_slot_count"] == 0
+    assert report["unresolved_candidate_slot_count"] == 157
+    assert report["human_review_status"] == "PENDING"
+    assert report["subject_certified"] is False
+    assert report["subject_complete"] is False
+    assert report["national_complete"] is False
+    assert not SubjectPlanHumanReview.objects.filter(manifest=manifest).exists()
+    with pytest.raises(ValidationError, match="subject_certification_blocked"):
+        assert_subject_certification_ready(manifest)
+
+
 @pytest.mark.postgres
 def test_postgres_subject_plan_records_are_database_immutable():
     if connection.vendor != "postgresql":
@@ -434,3 +716,15 @@ def test_postgres_subject_plan_records_are_database_immutable():
     with pytest.raises(DatabaseError), transaction.atomic():
         SubjectCurriculumManifest.objects.filter(pk=manifest.pk).delete()
     assert not SubjectPlanHumanReview.objects.exists()
+
+
+@pytest.mark.postgres
+def test_postgres_v2_official_terminal_topics_are_database_immutable():
+    if connection.vendor != "postgresql":
+        pytest.skip("PostgreSQL-specific subject-plan trigger")
+    manifest = _import_v2_plan()
+    topic = manifest.official_topics.filter(is_terminal=True).first()
+    with pytest.raises(DatabaseError), transaction.atomic():
+        SubjectOfficialTopic.objects.filter(pk=topic.pk).update(
+            official_label="mutated terminal topic"
+        )

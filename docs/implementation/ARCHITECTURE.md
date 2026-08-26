@@ -97,27 +97,37 @@ The first pilot targets one Civil Procedure leaf and is structurally incapable o
 
 M2.2c adds an immutable relational planning layer between official NCBE perimeter and future Rule
 Obligation compiles. `SubjectCurriculumManifest` fixes one subject, exact official scope version,
-versioned completeness policy, and canonical checksum. `SubjectManifestLeaf` references—not copies or
-edits—every active official Civil Procedure leaf and preserves its hierarchy and treatment.
-`ScopeCoverageRequirement` plus typed `CoverageRequirementSlot` rows describe the structural kinds a
-future curriculum must satisfy. They contain planning labels, not substantive legal propositions.
+versioned completeness policy, and canonical checksum. V1 was rejected because six coarse accepted
+scope records were mistaken for terminal leaves. V2 preserves those records as
+`CURRICULUM_PLANNING_GROUP` aggregates and adds `SubjectOfficialTopic`: a checksum-bound self-hierarchy
+of 27 exact source terminal topics with artifact, locator, marker, treatment, and effective-period
+truth. PostgreSQL and model guards make the V2 normalization immutable without rewriting the accepted
+scope version.
+
+`ScopeCoverageRequirement` now points to a terminal topic and planning aggregate. Typed
+`CoverageRequirementSlot` rows identify required future obligation kinds; the requirement separately
+bounds allowed kinds and inherits the exact terminal treatment. They contain planning descriptions,
+not substantive legal propositions.
 
 `SubjectAuthorityPlan` and `RequirementAuthorityPlan` map each requirement to actually applicable
 constitutional, statutory, federal-rule, Supreme Court, other-primary, or optional-secondary source
-families. Five case-law plans add explicit identity/citation, court/date, reliable-URI, proposition
+families. Conditional mappings carry explicit candidate predicates. Nine case-law plans add exact identity/citation, court/date, reliable-URI, proposition
 locator, authority-status, and later-treatment requirements. `CoverageRequirementSatisfaction` is the
 future explicit bridge from a typed slot to a reconciled/certified Rule Obligation; counts alone cannot
 fill it. PostgreSQL triggers protect the plan, mappings, reviews, and future satisfactions from bulk
 mutation.
 
 The existing Rule 4 snapshot links through `SubjectCertifiedSubset` as historical
-`PARTIAL_LEAF_COVERAGE`; neither its obligations nor snapshot are rewritten. A machine-readable report
-shows six official leaves, 18 planning requirements, 75 required slots, authority/acquisition gaps,
-candidate gaps, review status, and the partial snapshot. The report always returns
+`PARTIAL_LEAF_COVERAGE`; neither its obligations nor snapshot are rewritten. Its attribution separates
+perimeter-relevant service/waiver evidence from supplemental Rule 4(m) timing and other content. A
+machine-readable report shows 27 official terminal topics, six planning aggregates, 43 requirements,
+157 required slots, applicable authority/acquisition gaps, candidate gaps, review status, and the
+partial snapshot. The report always returns
 `subject_complete: false` and `national_complete: false` in this planning slice. A separate future
 explicit subject-certification operation remains mandatory even after structural eligibility.
 
-The production plan is `REVIEW_PENDING`. `M2_2C_HUMAN_REVIEW_PACKET.md` requests qualified human
-review of decomposition, treatment, authority families, case-law needs, and ambiguous placements. No
-human approval is inferred, no subject-wide substantive candidates are authored, and no AI/provider
-integration is introduced.
+V1 is `REJECTED — REVISION REQUIRED`; its exact packet and an identity-honest disposition record are
+preserved. V2 is `SECOND_REVIEW_PENDING`. The active `M2_2C_HUMAN_REVIEW_PACKET.md` requests qualified
+human review of all topic identities, decomposition, treatment, authority conditionality, Rule 4
+attribution, and remaining judgments. No V2 approval is inferred, no subject-wide substantive
+candidates are authored, and no AI/provider integration is introduced.

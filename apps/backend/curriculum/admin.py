@@ -24,6 +24,7 @@ from .models import (
     SubjectCoveragePolicy,
     SubjectCurriculumManifest,
     SubjectManifestLeaf,
+    SubjectOfficialTopic,
     SubjectPlanHumanReview,
 )
 
@@ -80,8 +81,28 @@ class SubjectCurriculumManifestAdmin(ImmutableAdmin):
 
 @admin.register(SubjectManifestLeaf)
 class SubjectManifestLeafAdmin(ImmutableAdmin):
-    list_display = ("manifest", "scope_item", "treatment", "coverage_status", "review_required")
+    list_display = (
+        "manifest",
+        "scope_item",
+        "classification",
+        "treatment",
+        "coverage_status",
+        "review_required",
+    )
     list_filter = ("manifest", "coverage_status", "treatment")
+
+
+@admin.register(SubjectOfficialTopic)
+class SubjectOfficialTopicAdmin(ImmutableAdmin):
+    list_display = (
+        "stable_id",
+        "manifest",
+        "is_terminal",
+        "official_marker",
+        "planning_group",
+        "source_locator",
+    )
+    list_filter = ("manifest", "is_terminal", "official_marker", "planning_group")
 
 
 @admin.register(ScopeCoverageRequirement)

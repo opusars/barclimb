@@ -651,6 +651,16 @@ class SubjectCurriculumManifest(models.Model):
 
 
 class SubjectManifestLeaf(models.Model):
+    class Classification(models.TextChoices):
+        LEGACY_OFFICIAL_AGGREGATE = (
+            "LEGACY_OFFICIAL_AGGREGATE",
+            "Legacy coarse official-scope aggregate",
+        )
+        CURRICULUM_PLANNING_GROUP = (
+            "CURRICULUM_PLANNING_GROUP",
+            "BarClimb curriculum planning group",
+        )
+
     class CoverageStatus(models.TextChoices):
         UNMAPPED = "UNMAPPED", "Unmapped"
         AUTHORITY_PLANNED = "AUTHORITY_PLANNED", "Authority planned"
@@ -664,6 +674,11 @@ class SubjectManifestLeaf(models.Model):
     scope_item = models.ForeignKey(OfficialScopeItem, on_delete=models.PROTECT)
     hierarchy_path = models.JSONField(default=list)
     treatment = models.CharField(max_length=48)
+    classification = models.CharField(
+        max_length=40,
+        choices=Classification.choices,
+        default=Classification.LEGACY_OFFICIAL_AGGREGATE,
+    )
     coverage_status = models.CharField(
         max_length=24, choices=CoverageStatus.choices, default=CoverageStatus.UNMAPPED
     )
@@ -705,6 +720,152 @@ class SubjectManifestLeaf(models.Model):
             raise ValidationError("Manifest leaf treatment must preserve official scope truth.")
 
 
+class SubjectOfficialTopic(models.Model):
+    class OfficialMarker(models.TextChoices):
+        NONE = "NONE", "Nonterminal hierarchy node"
+        STARRED = "STARRED", "Recalled knowledge required without resources"
+        UNSTARRED = (
+            "UNSTARRED",
+            "May be tested with or without resources",
+        )
+
+    manifest = models.ForeignKey(
+        SubjectCurriculumManifest, on_delete=models.PROTECT, related_name="official_topics"
+    )
+    stable_id = models.CharField(max_length=220)
+    parent = models.ForeignKey(
+        "self", null=True, blank=True, on_delete=models.PROTECT, related_name="children"
+    )
+    root_scope_item = models.ForeignKey(
+        OfficialScopeItem, null=True, blank=True, on_delete=models.PROTECT
+    )
+    planning_group = models.ForeignKey(
+        SubjectManifestLeaf,
+        null=True,
+        blank=True,
+        on_delete=models.PROTECT,
+        related_name="official_topics",
+    )
+    source_artifact = models.ForeignKey(
+        "official_scope.OfficialSourceArtifact", on_delete=models.PROTECT
+    )
+    official_label = models.CharField(max_length=500)
+    source_locator = models.CharField(max_length=300)
+    ordering = models.PositiveIntegerField(default=0)
+    is_terminal = models.BooleanField(default=False)
+    official_marker = models.CharField(
+        max_length=16, choices=OfficialMarker.choices, default=OfficialMarker.NONE
+    )
+    knowledge_treatment = models.CharField(max_length=48, default="UNSPECIFIED")
+    administration_start = models.DateField()
+    administration_end = models.DateField()
+    normalization_notes = models.TextField(blank=True)
+    canonical_sha256 = models.CharField(max_length=64)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=("manifest", "stable_id"), name="subject_official_topic_identity_unique"
+            ),
+            models.CheckConstraint(
+                condition=Q(canonical_sha256__regex=r"^[0-9a-f]{64}$"),
+                name="subject_official_topic_sha256_format",
+            ),
+            models.CheckConstraint(
+                condition=(
+                    Q(parent__isnull=False, root_scope_item__isnull=True)
+                    | Q(parent__isnull=True, root_scope_item__isnull=False)
+                ),
+                name="subject_official_topic_exact_parent",
+            ),
+            models.CheckConstraint(
+                condition=(
+                    Q(
+                        is_terminal=True,
+                        planning_group__isnull=False,
+                        official_marker="STARRED",
+                        knowledge_treatment="RECALLED_REQUIRED",
+                    )
+                    | Q(
+                        is_terminal=True,
+                        planning_group__isnull=False,
+                        official_marker="UNSTARRED",
+                        knowledge_treatment="RECOGNITION_WITH_OR_WITHOUT_RESOURCES",
+                    )
+                    | Q(
+                        is_terminal=False,
+                        planning_group__isnull=True,
+                        official_marker="NONE",
+                        knowledge_treatment="UNSPECIFIED",
+                    )
+                ),
+                name="subject_official_topic_terminal_treatment",
+            ),
+        ]
+        ordering = ("ordering", "stable_id")
+
+    def __str__(self):
+        return f"{self.manifest}:{self.stable_id}"
+
+    def save(self, *args, **kwargs):
+        if self.pk and type(self).objects.filter(pk=self.pk).exists():
+            raise ValidationError("Official subject topics are immutable.")
+        self.full_clean()
+        super().save(*args, **kwargs)
+
+    def delete(self, *args, **kwargs):
+        raise ValidationError("Official subject topics cannot be deleted.")
+
+    def clean(self):
+        if bool(self.parent_id) == bool(self.root_scope_item_id):
+            raise ValidationError(
+                "Official topics require exactly one parent topic or official subject root."
+            )
+        if self.parent_id and self.parent.manifest_id != self.manifest_id:
+            raise ValidationError("Official-topic parents must belong to the same manifest.")
+        if self.root_scope_item_id:
+            if (
+                self.root_scope_item.scope_version_id != self.manifest.official_scope_version_id
+                or self.root_scope_item.stable_id != "subject-civil-procedure"
+            ):
+                raise ValidationError(
+                    "Root official topics must attach to the manifest's Civil Procedure subject."
+                )
+        if (
+            self.source_artifact_id
+            not in self.manifest.official_scope_version.source_artifacts.values_list(
+                "id", flat=True
+            )
+        ):
+            raise ValidationError("Official topics must cite an accepted scope artifact.")
+        if (
+            self.administration_start != self.manifest.official_scope_version.administration_start
+            or self.administration_end != self.manifest.official_scope_version.administration_end
+        ):
+            raise ValidationError("Official-topic effective period must match scope truth.")
+        if self.is_terminal:
+            if not self.planning_group_id:
+                raise ValidationError("Terminal topics require a planning-group mapping.")
+            if self.planning_group.manifest_id != self.manifest_id:
+                raise ValidationError("Terminal topic and planning group must share a manifest.")
+            expected_treatment = {
+                self.OfficialMarker.STARRED: "RECALLED_REQUIRED",
+                self.OfficialMarker.UNSTARRED: "RECOGNITION_WITH_OR_WITHOUT_RESOURCES",
+            }.get(self.official_marker)
+            if expected_treatment is None or self.knowledge_treatment != expected_treatment:
+                raise ValidationError(
+                    "Terminal-topic marker and knowledge treatment must agree exactly."
+                )
+        elif (
+            self.planning_group_id
+            or self.official_marker != self.OfficialMarker.NONE
+            or self.knowledge_treatment != "UNSPECIFIED"
+        ):
+            raise ValidationError(
+                "Nonterminal official hierarchy nodes cannot carry operative treatment or grouping."
+            )
+
+
 class ScopeCoverageRequirement(models.Model):
     class RequirementType(models.TextChoices):
         GOVERNING_RULE = "GOVERNING_RULE", "Governing rule"
@@ -721,14 +882,27 @@ class ScopeCoverageRequirement(models.Model):
         RECOGNITION = "RECOGNITION", "Issue recognition without resources"
         RESOURCE_APPLICATION = "RESOURCE_APPLICATION", "Application with supplied resources"
         MIXED = "MIXED", "Mixed official treatment"
+        RECOGNITION_WITH_OR_WITHOUT_RESOURCES = (
+            "RECOGNITION_WITH_OR_WITHOUT_RESOURCES",
+            "Recognition without resources or application with supplied resources",
+        )
 
     manifest_leaf = models.ForeignKey(
         SubjectManifestLeaf, on_delete=models.PROTECT, related_name="coverage_requirements"
     )
+    official_topic = models.ForeignKey(
+        SubjectOfficialTopic,
+        null=True,
+        blank=True,
+        on_delete=models.PROTECT,
+        related_name="coverage_requirements",
+    )
     stable_id = models.CharField(max_length=220)
     doctrinal_subarea = models.CharField(max_length=300)
     requirement_type = models.CharField(max_length=32, choices=RequirementType.choices)
-    treatment_requirement = models.CharField(max_length=24, choices=TreatmentRequirement.choices)
+    treatment_requirement = models.CharField(max_length=48, choices=TreatmentRequirement.choices)
+    allowed_obligation_kinds = models.JSONField(default=list)
+    required_for_subject_completion = models.BooleanField(default=True)
     review_required = models.BooleanField(default=True)
     canonical_sha256 = models.CharField(max_length=64)
 
@@ -751,11 +925,33 @@ class ScopeCoverageRequirement(models.Model):
     def save(self, *args, **kwargs):
         if self.pk and type(self).objects.filter(pk=self.pk).exists():
             raise ValidationError("Coverage requirements are immutable.")
+        if not isinstance(self.allowed_obligation_kinds, list) or not self.allowed_obligation_kinds:
+            raise ValidationError("Coverage requirements need allowed obligation kinds.")
         self.full_clean()
         super().save(*args, **kwargs)
 
     def delete(self, *args, **kwargs):
         raise ValidationError("Coverage requirements cannot be deleted.")
+
+    def clean(self):
+        valid_kinds = {value for value, _label in RuleObligation.Kind.choices}
+        if not set(self.allowed_obligation_kinds).issubset(valid_kinds):
+            raise ValidationError("Coverage requirement contains an invalid obligation kind.")
+        if self.official_topic_id:
+            if not self.official_topic.is_terminal:
+                raise ValidationError("Coverage requirements must map to terminal official topics.")
+            if self.official_topic.planning_group_id != self.manifest_leaf_id:
+                raise ValidationError("Coverage requirement topic and planning group must agree.")
+            expected = {
+                SubjectOfficialTopic.OfficialMarker.STARRED: self.TreatmentRequirement.RECALL,
+                SubjectOfficialTopic.OfficialMarker.UNSTARRED: (
+                    self.TreatmentRequirement.RECOGNITION_WITH_OR_WITHOUT_RESOURCES
+                ),
+            }[self.official_topic.official_marker]
+            if self.treatment_requirement != expected:
+                raise ValidationError(
+                    "Requirement treatment must inherit its terminal-topic marker."
+                )
 
 
 class CoverageRequirementSlot(models.Model):
@@ -900,6 +1096,7 @@ class RequirementAuthorityPlan(models.Model):
     )
     role = models.CharField(max_length=32, choices=Role.choices)
     proposition_types = models.JSONField(default=list)
+    condition_expression = models.TextField(blank=True)
     canonical_sha256 = models.CharField(max_length=64)
 
     class Meta:
@@ -937,6 +1134,14 @@ class RequirementAuthorityPlan(models.Model):
             == SubjectAuthorityPlan.AuthorityLevel.OPTIONAL_SECONDARY
         ):
             raise ValidationError("Secondary evidence cannot replace required primary authority.")
+        if (
+            self.role == self.Role.CONDITIONAL
+            and not self.condition_expression.strip()
+            and self.requirement.manifest_leaf.manifest.manifest_version != "2026_V1"
+        ):
+            raise ValidationError("Conditional authority mappings require an explicit condition.")
+        if self.role != self.Role.CONDITIONAL and self.condition_expression.strip():
+            raise ValidationError("Only conditional authority mappings may carry a condition.")
 
 
 class CaseAuthorityRequirement(models.Model):
@@ -1064,6 +1269,7 @@ class SubjectCertifiedSubset(models.Model):
     )
     coverage_snapshot = models.ForeignKey(CoverageReleaseSnapshot, on_delete=models.PROTECT)
     contribution_class = models.CharField(max_length=24, default="PARTIAL_LEAF_COVERAGE")
+    perimeter_attribution = models.JSONField(default=dict, blank=True)
     canonical_sha256 = models.CharField(max_length=64)
 
     class Meta:
@@ -1084,6 +1290,8 @@ class SubjectCertifiedSubset(models.Model):
     def save(self, *args, **kwargs):
         if self.pk and type(self).objects.filter(pk=self.pk).exists():
             raise ValidationError("Certified subject subsets are immutable.")
+        if not isinstance(self.perimeter_attribution, dict):
+            raise ValidationError("Certified-subset perimeter attribution must be an object.")
         self.full_clean()
         super().save(*args, **kwargs)
 

@@ -4,9 +4,9 @@
   "product_phase": "MILESTONE_2_IN_PROGRESS",
   "active_launch_train": "B_COMPLETE_LEARNER_LOOP",
   "active_milestone": 2,
-  "status": "M2_2B_BOUNDED_PILOT_CERTIFIED_CI_PENDING",
-  "latest_known_good_commit": "a468fb6d3d850757fe1af82c18f244e95ad77de8",
-  "active_branch": "m2-2b-real-scope-authority-pilot",
+  "status": "EXPO_SDK57_PATCH_MAINTENANCE_VALIDATING_M2_2C_PAUSED",
+  "latest_known_good_commit": "2b042d158bb68307a0af223acec1542b62702d20",
+  "active_branch": "maintenance/expo-sdk57-patch",
   "database_migration_summary": "M1.3a retains identity/outbox models. M2.1/M2.2a immutable source, scope, Rule Obligation, reconciliation, and snapshot truth is accepted. M2.2b adds explicit artifact media/rights/storage/effective-period metadata, current/future scope periods and normalization status, body-free V2 operator imports, PILOT_ONLY coverage, named external-human review attestations, immutable PostgreSQL review enforcement, and authority/review-bound non-national snapshots. Leo Rayos's eight approvals were recorded without fabricating an account, and exact-byte operator execution certified only the Rule 4 pilot snapshot 8ffc025a-ddac-5765-b7b2-130c84282c83. Inputs remain reproducible operator manifests rather than committed raw documents or data migrations. No production assessment, learner evidence, entitlement, billing, or AI model exists.",
   "enabled_material_feature_flags": [],
   "clients": {
@@ -27,11 +27,12 @@
     "adsense": "NOT_VERIFIED",
     "admob": "NOT_VERIFIED"
   },
-  "latest_test_summary": "M2.2b final local validation passes Ruff lint/format, Django system/migration checks, 98 SQLite tests with 9 PostgreSQL-only skips, all 107 PostgreSQL 14/Redis tests, all workspace checks/Web build, and shared-package portability. Exact acquired bytes reproduce scope checksum 2d8a1052ada18b413f24b7d0eef1c855a76d8a9a31688130757d5dd6511ca56f and compile checksum 0148dea24c906e2e257265681044ae57ad4b60b9a1e290f291e95dc2315825ec. Eight Leo Rayos APPROVE records, zero reconciliation issues, one of one pilot leaves sufficient, PILOT_ONLY, and national_complete false created immutable snapshot 8ffc025a-ddac-5765-b7b2-130c84282c83 with certification SHA-256 60e160e3c1a458e4c5b98569fcf3f04d409086d328496f2ed41a020a5b591ae0; exact idempotent rerun returned the same snapshot. Continuity, JSON, diff, and secret/generated-junk/raw-source review pass; exact-commit CI remains.",
+  "latest_test_summary": "Expo SDK 57 maintenance uses live Expo authority to update expo 57.0.15 to 57.0.18, expo-linking 57.0.7 to 57.0.8, expo-secure-store 57.0.1 to 57.0.2, and React Native 0.86.2 to 0.86.3 while preserving React 19.2.3, TypeScript 5.9.3/exclusion, and Node 24.19.0/npm 11.17.0. Clean npm ci installed 716 packages. Nine workspace typechecks, 14 Web tests, 20 native tests, 8 assessment-schema tests, Web build, seven-package portability, Expo compatibility, Doctor 20/20, and iOS/Android exports at 863/858 modules pass. Ruff/Django/migrations, 98 SQLite tests with 9 skips, all 107 PostgreSQL 14/Redis 7.2 tests, and live Celery smoke pass. Audit improves from 15 nodes (10 moderate/5 high) in image-size/uuid families to 10 moderate nodes in the uuid toolchain family only. Exact Python 3.13.15 clean hash installation and exact-commit CI remain hosted gates.",
   "known_blockers": [
     "Apple Developer Program team access, final iOS signing/provisioning/build, physical-device iOS/Android authentication and SecureStore lifecycle, live AASA/assetlinks routing, Google Play ownership/recovery, store approvals, and native production purchase/restore remain mandatory platform-specific Native GA blockers even though they do not block the clarified M1.4 foundation gate.",
     "The bounded M2.2b certification covers only one official-scope leaf and must never be interpreted as complete Rule 4, Civil Procedure, or national NextGen curriculum truth.",
-    "The branch may not merge until final continuity/diff review and exact-commit GitHub Actions pass."
+    "M2.2c V2 is paused at branch 0436b0d63cbab2fd1a0ef15125683da5967e4150 and must not enter second human review until this accepted-main maintenance is separately reviewed/merged, brought forward without rewriting history, and exact M2.2c CI is green.",
+    "The maintenance branch may not merge until final continuity/diff review and exact-commit GitHub Actions pass."
   ],
   "high_risk_items": [
     "Execution breadth across web, iOS, Android, AI assessment quality, community moderation, and cross-platform commerce.",
@@ -39,6 +40,6 @@
     "Cross-scenario projections, anonymous claim security, private public-page overlays, entitlement transitions, and cross-device orchestration require explicit integration/security tests before GA.",
     "Official NCBE scope/source changes must pass source-drift and revalidation workflow; future exam scopes remain provisional until governing materials exist."
   ],
-  "exact_next_task": "Complete final M2.2b continuity/diff validation, commit and push the certified bounded-pilot state, and require exact-commit GitHub Actions green. Then review/merge M2.2b separately; do not begin the next curriculum slice.",
-  "last_verified_at": "2026-08-21T13:05:00-07:00"
+  "exact_next_task": "Finish the bounded Expo SDK 57 patch-maintenance diff review, commit/push maintenance/expo-sdk57-patch, and require exact-commit Foundation CI green. Do not merge automatically or touch M2.2c. After separate review/merge, bring accepted main into paused M2.2c without rewriting history and require green CI before its second human-review gate.",
+  "last_verified_at": "2026-08-30T13:55:00-07:00"
 }

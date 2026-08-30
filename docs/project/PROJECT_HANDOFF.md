@@ -1,7 +1,7 @@
 # BarClimb Project Handoff
 
 ## Current state
-M2.2a is accepted in `main` at `a468fb6d3d850757fe1af82c18f244e95ad77de8`; exact-main Foundation CI run `32514192256` passed. M2.2b is active on `m2-2b-real-scope-authority-pilot` with its bounded Rule 4 V2 pilot certified locally against exact acquired bytes. First human review required five corrections, preserved as V1 history. Leo Rayos then approved all eight corrected obligations after reviewing the hash-identified authority. The named review records and immutable `PILOT_ONLY` snapshot preserve one covered leaf and `national_complete: false`. This does not establish complete Rule 4, Civil Procedure, or national curriculum truth, add AI, or begin another slice. Accepted M1 platform evidence and deferred Native GA blockers remain unchanged.
+M2.2b is accepted in `main` at `2b042d158bb68307a0af223acec1542b62702d20`; exact-main Foundation CI run `32522925767` passed. The bounded Rule 4 V2 pilot, named human review, immutable `PILOT_ONLY` snapshot, and `national_complete: false` remain accepted and unchanged. `maintenance/expo-sdk57-patch` is a separate accepted-main maintenance branch that moves only the live Expo SDK 57 patch set and records dependency evidence. M2.2c is paused and untouched at `m2-2c-civpro-subject-foundation@0436b0d63cbab2fd1a0ef15125683da5967e4150`; do not begin its second human review, approval, or candidate compilation until maintenance is merged separately and brought forward. Accepted M1 platform evidence and deferred Native GA blockers remain unchanged.
 
 The controlling release sequence remains **Web GA → iOS Native GA → Android Native GA**, with one first-class multi-client architecture and no Web-only shortcuts. Apple enrollment/signing, physical-device authentication/SecureStore, live OS association routing, store ownership/approval, and native production purchase/restore remain mandatory at the applicable Native GA and are not marked verified. M1.5 changes none of those provider/device statuses.
 
@@ -22,7 +22,7 @@ See `../specs/SPEC_MANIFEST.json`. Four Markdown specs control the build.
 - npm-workspace monorepo boundaries for `apps/backend`, `apps/web`, `apps/native`, and seven shared TypeScript packages.
 - Django 5.2.17/DRF 3.16 environment-separated settings with PostgreSQL as the real-environment contract, a PostgreSQL CI/test setting, and SQLite isolated to foundation tests.
 - Versioned `/api/v1/health/` and database-backed `/api/v1/ready/` endpoints with automated tests.
-- One deduped React/ReactDOM 19.2.3 web runtime with a real root-shell mount test, and Expo SDK 57.0.15/React Native 0.86.2 native foundation. M1.4 replaces simulated destination state with React Navigation.
+- One deduped React/ReactDOM 19.2.3 web runtime with a real root-shell mount test, and Expo SDK 57.0.18/React Native 0.86.3 native foundation on the maintenance branch. M1.4 replaces simulated destination state with React Navigation.
 - TypeScript remains on the controlling 5.x line at 5.9.3 through Expo's supported dependency-validation exclusion.
 - Hash-verified pip-tools production/development locks, npm 11 lock/install-script policy, per-surface lint environments, ES2022-only shared-package type environments, and an explicit portability gate.
 - Node 24.19.0/npm 11.17.0 and Python 3.13.15 are aligned in version files, package metadata, CI, and setup documentation.
@@ -52,8 +52,8 @@ See `../specs/SPEC_MANIFEST.json`. Four Markdown specs control the build.
 
 ## Accepted-main dependency continuity corrections
 - Expo's current SDK 57 compatibility metadata moved the recommended `expo` patch from 57.0.12 to 57.0.13 after M1.3a reached `main`, causing the CI-mode dependency gate to fail without an application-code change.
-- The first correction used `~57.0.13`; accepted main now contains the Expo-required `~57.0.15` correction. M1.4 retains its React Navigation/Linking dependencies against that accepted lock baseline.
-- React/ReactDOM remain 19.2.3, React Native remains 0.86.2, TypeScript remains 5.9.3 and intentionally excluded from Expo dependency validation, and Node/npm remain 24.19.0/11.17.0.
+- Earlier corrections used `~57.0.13` and then accepted-main `~57.0.15`. Live Expo SDK 57 tooling on 2026-08-30 requires `expo@~57.0.18`, `expo-linking@~57.0.8`, `expo-secure-store@~57.0.2`, and React Native `0.86.3`; the maintenance branch applies exactly that direct compatibility set.
+- React/ReactDOM remain 19.2.3, TypeScript remains 5.9.3 and intentionally excluded from Expo dependency validation, and Node/npm remain 24.19.0/11.17.0. No SDK 58, prerelease, architecture, app-ID, EAS identity, signing, provider, product, or curriculum change is included.
 
 ## Completed in M1.4 repository/deployed proof
 - Web auth uses stable React Router paths for signup, login, verification, reset request/completion, and the authenticated proof shell; Django serves direct/refresh entry and hashed assets on the same staging origin as `/api/v1`.
@@ -89,8 +89,9 @@ See `../specs/SPEC_MANIFEST.json`. Four Markdown specs control the build.
 - No Web-only shortcut: shared-package portability passes, native uses React Native navigation rather than WebView, and the controlling portable auth/domain/link contracts remain intact.
 
 ## Current branch coordination
-- Authoritative accepted main is `a468fb6d3d850757fe1af82c18f244e95ad77de8`; exact-main Foundation CI run `32514192256` passed before M2.2b began.
-- Active branch is `m2-2b-real-scope-authority-pilot`. The bounded V2 pilot is certified and locally validated; exact-commit CI and separate review/merge remain. Do not broaden the certification, merge automatically, or begin the next slice.
+- Authoritative accepted main is `2b042d158bb68307a0af223acec1542b62702d20`; exact-main Foundation CI run `32522925767` passed.
+- Active branch is `maintenance/expo-sdk57-patch`, created from exact accepted main. It is limited to stable SDK 57 compatibility, npm-generated lock state, and continuity evidence; exact-commit CI and separate review/merge remain.
+- Paused M2.2c remains locally and remotely at `0436b0d63cbab2fd1a0ef15125683da5967e4150`. Do not modify/rebase it, begin second human review, record approval, or compile candidates during maintenance.
 
 ## M1.5 cross-client assessment presentation risk proof
 - `@barclimb/assessment-schema` defines one runtime-validated, JSON-serializable presentation contract for the four controlling families and all controlling response-type identifiers. The bounded component registry contains only `SINGLE_SELECT_QUESTION` and `LONG_RESPONSE_EDITOR`; schema validation rejects unknown components and renderers return a typed fail-safe rather than omitting content or using HTML/WebView.
@@ -127,10 +128,10 @@ See `../specs/SPEC_MANIFEST.json`. Four Markdown specs control the build.
 - Immutable snapshot `8ffc025a-ddac-5765-b7b2-130c84282c83` has certification SHA-256 `60e160e3c1a458e4c5b98569fcf3f04d409086d328496f2ed41a020a5b591ae0`, authority-provenance SHA-256 `fa2a1355e70676f95fff5f02bc8c4ad03ce7594fc64be98dbf87c4cf5a0ce46c`, and human-review SHA-256 `903ab69e9171969b826060943e25d8e40fcf84d4968525663197b43165c74e44`. Exact rerun is idempotent; changed review input is rejected.
 
 ## Tests actually run
-- M2.2b final local validation: Ruff lint/format and Django system/migration checks passed; 98 SQLite tests passed with nine PostgreSQL-only skips; all 107 tests passed against disposable PostgreSQL 14/Redis. Exact-byte scope/compile/review/certification and idempotency proofs passed. All workspace format/lint/typecheck/tests/Web build and shared-package portability passed. Continuity, JSON, diff, raw-source/secret/junk review passed; exact-commit CI remains. No client/shared code changed.
+- Expo maintenance validation: exact Node 24.19.0/npm 11.17.0 clean `npm ci` installed 716 packages; all nine typechecks, 14 Web tests, 20 native tests, 8 assessment-schema tests, Web build, seven-package portability, live Expo compatibility, Doctor 20/20, and iOS/Android exports at 863/858 modules passed. Ruff lint/format, Django system/migration checks, 98 SQLite tests with nine PostgreSQL-only skips, all 107 PostgreSQL 14/Redis 7.2 tests, and live Celery smoke passed. Exact Python 3.13.15 hash installation and exact-commit CI remain hosted gates.
 - M2.2a exact-runtime local acceptance: a clean hash-verified Python 3.13.15 install passed Ruff, Django system/migration checks, 85 SQLite tests with eight PostgreSQL-only skips, all 93 tests against PostgreSQL 14, and the live Redis/Celery foundation smoke. The 12 focused deterministic compiler tests and two PostgreSQL-only curriculum integrity tests are included in those totals.
 - Exact Node 24.19.0/npm 11.17.0 clean `npm ci` installed 717 packages. `npm run check` passed all nine typechecks, 14 Web tests, 20 native tests, 8 assessment-schema tests, and the production Web build; seven-package portability, live Expo compatibility, Doctor 20/20, and iOS/Android exports at 863/858 modules passed. The lockfile did not change.
-- Current `npm audit --omit=dev` retains 15 aggregate paths in the same documented `image-size` and `uuid` toolchain families. Current advisory metadata reports 10 moderate/5 high rather than the earlier 7 moderate/8 high; dependencies, paths, reachability, and mitigation are unchanged, and no forced fix was run.
+- Current `npm audit --omit=dev` reports 10 moderate aggregate nodes rooted only in the documented `uuid` native-configuration toolchain advisory. The Expo/Metro patch set removes the prior `image-size` family and all five high-severity aggregate nodes. No forced fix ran; npm's remaining suggested Expo 46 downgrade is incompatible.
 - M1.5 exact-runtime local acceptance on Node 24.19.0/npm 11.17.0: clean `npm ci` installed 717 packages; live Expo compatibility and Doctor 20/20 passed; all nine typechecks, 14 Web tests, 20 native tests, 8 shared schema/state tests, Web build, all seven portable packages, and iOS/Android exports at 863/858 modules passed. Ruff/Django/migration checks and 60 local backend tests passed with four PostgreSQL-only skips. Audit remained the accepted 15-node `image-size`/`uuid` graph. Exact-commit CI is pending push.
 - Current M1.4 acceptance rerun on exact Node 24.19.0/npm 11.17.0: clean `npm ci` installed 717 packages; live Expo compatibility passed; Doctor passed 20/20; `npm run check` passed all nine typechecks, 9 Web tests, 18 native tests, and production Web build; seven-package portability and iOS/Android exports at 854/849 modules passed. Ruff lint/format, Django system/migration checks, and 60 local backend tests passed with four PostgreSQL-only skips. Exact-commit GitHub CI supplies the PostgreSQL/Redis/Celery acceptance path.
 - Current read-only staging/EAS sanity: correct Heroku owner, Web/worker/beat, PostgreSQL/KVS, health/readiness, HTTPS/redirect, Web auth routes, anonymous auth enforcement, gated 404 association endpoints, EAS Owner project, and finished signed Android build all passed. No resource or credential changed.
@@ -157,7 +158,7 @@ Heroku app runtime, Essential-0 PostgreSQL, and Mini KVS remain `VERIFIED_NONPRO
 Execution breadth remains the principal engineering risk. Curriculum completeness depends on automated official-scope/rule compilation, authority provenance, lawful multi-source reconciliation, subject certification, and strict inventory gates. NCBE Sourcebooks are optional enhanced reconciliation when lawfully available; do not make purchase/access a build or launch dependency.
 
 ## Exact next task
-Complete final M2.2b continuity/diff validation, commit and push the bounded certification state, and require exact-commit Foundation CI green. Then review and merge M2.2b separately; do not broaden the certification or begin the next curriculum slice.
+Complete final Expo SDK 57 maintenance continuity/diff validation, commit and push `maintenance/expo-sdk57-patch`, and require exact-commit Foundation CI green. Do not merge automatically or touch M2.2c. After separate review/merge, bring accepted main into paused M2.2c without rewriting history and require green CI before its second human-review gate.
 
 ## Resume commands
 ```bash

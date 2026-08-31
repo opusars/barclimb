@@ -50,6 +50,12 @@ PLAN_V3_PATH = (
     BACKEND_ROOT / "curriculum" / "manifests" / "civil-procedure-subject-plan-2026-v3.json"
 )
 REVIEW_PACKET_PATH = BACKEND_ROOT.parents[1] / "docs" / "project" / "M2_2C_HUMAN_REVIEW_PACKET.md"
+REVIEW_PACKET_V3_REVIEWED_PATH = (
+    BACKEND_ROOT.parents[1] / "docs" / "project" / "M2_2C_HUMAN_REVIEW_PACKET_V3_REVIEWED.md"
+)
+V3_REVIEW_RECORD_PATH = (
+    BACKEND_ROOT.parents[1] / "docs" / "project" / "M2_2C_V3_HUMAN_REVIEW_RECORD.json"
+)
 REVIEW_PACKET_V1_PATH = (
     BACKEND_ROOT.parents[1] / "docs" / "project" / "M2_2C_HUMAN_REVIEW_PACKET_V1.md"
 )
@@ -559,7 +565,8 @@ def test_v1_rejection_history_is_preserved_without_fabricated_reviewer_identity(
     )
     assert disposition["formal_subject_plan_review_recorded"] is False
     packet = REVIEW_PACKET_PATH.read_text()
-    assert "THIRD REVIEW PENDING" in packet
+    assert "APPROVE — COVERAGE PLAN ACCEPTED" in packet
+    assert "Historical V1 disposition: **REJECT — REVISION REQUIRED**" in packet
     assert all(topic_id in packet for topic_id in EXPECTED_TERMINAL_TOPIC_IDS)
 
 
@@ -748,7 +755,7 @@ def test_v2_review_history_is_preserved_and_v3_manifest_is_hash_exact():
     )
     assert payload["official_topics"] == _json(PLAN_V2_PATH)["official_topics"]
     assert payload["certified_subsets"] == _json(PLAN_V2_PATH)["certified_subsets"]
-    assert "THIRD REVIEW PENDING" in REVIEW_PACKET_PATH.read_text()
+    assert "APPROVE — COVERAGE PLAN ACCEPTED" in REVIEW_PACKET_PATH.read_text()
 
 
 def test_v3_required_slots_are_narrowed_only_at_the_eight_reviewed_boundaries():
@@ -886,6 +893,114 @@ def test_v3_rule4_evidence_is_immutable_and_completeness_remains_false():
     assert not RuleObligation.objects.exists()
     with pytest.raises(ValidationError, match="subject_certification_blocked"):
         assert_subject_certification_ready(manifest)
+
+
+def test_v3_human_plan_approval_is_exact_immutable_and_does_not_certify_subject(tmp_path):
+    payload = _json(V3_REVIEW_RECORD_PATH)
+    manifest = _import_v3_plan()
+    assert payload["reviewed_git_sha"] == "d4908c78cf185ce4bb5342802dfa79d7866af2d1"
+    assert payload["subject_manifest"] == {
+        "stable_id": manifest.stable_id,
+        "manifest_version": manifest.manifest_version,
+        "canonical_sha256": manifest.canonical_sha256,
+    }
+    assert payload["coverage_policy"] == {
+        "stable_id": manifest.coverage_policy.stable_id,
+        "policy_version": manifest.coverage_policy.policy_version,
+        "canonical_sha256": manifest.coverage_policy.canonical_sha256,
+    }
+    assert payload["certification_gate_version"] == (
+        manifest.coverage_policy.certification_gate_version
+    )
+    assert payload["official_scope"] == {
+        "version_identifier": manifest.official_scope_version.version_identifier,
+        "normalized_sha256": manifest.official_scope_version.normalized_sha256,
+    }
+    assert (
+        hashlib.sha256(REVIEW_PACKET_V3_REVIEWED_PATH.read_bytes()).hexdigest()
+        == (payload["review_packet_sha256"])
+    )
+
+    stdout = StringIO()
+    call_command(
+        "record_subject_plan_review",
+        V3_REVIEW_RECORD_PATH,
+        "--packet",
+        REVIEW_PACKET_V3_REVIEWED_PATH,
+        stdout=stdout,
+    )
+    result = json.loads(stdout.getvalue())
+    assert result == {
+        "created": True,
+        "resolution": "APPROVE",
+        "review_id": SubjectPlanHumanReview.objects.get(manifest=manifest).pk,
+        "review_manifest_sha256": hashlib.sha256(V3_REVIEW_RECORD_PATH.read_bytes()).hexdigest(),
+    }
+    review = SubjectPlanHumanReview.objects.get(manifest=manifest)
+    assert review.reviewer_name == "Leo Rayos"
+    assert review.reviewer_role_qualification == (
+        "JD; California bar exam passer; reviewer for BarClimb curriculum quality control."
+    )
+    assert review.resolution == "APPROVE"
+    assert review.review_packet_sha256 == payload["review_packet_sha256"]
+    assert review.rationale == payload["rationale"]
+    assert review.attestation == payload["attestation"]
+
+    replay = StringIO()
+    call_command(
+        "record_subject_plan_review",
+        V3_REVIEW_RECORD_PATH,
+        "--packet",
+        REVIEW_PACKET_V3_REVIEWED_PATH,
+        stdout=replay,
+    )
+    assert json.loads(replay.getvalue())["created"] is False
+
+    changed = copy.deepcopy(payload)
+    changed["rationale"] += " changed"
+    changed_path = tmp_path / "changed-review.json"
+    changed_path.write_text(json.dumps(changed))
+    with pytest.raises(CommandError, match="differs from immutable input"):
+        call_command(
+            "record_subject_plan_review",
+            changed_path,
+            "--packet",
+            REVIEW_PACKET_V3_REVIEWED_PATH,
+            stdout=StringIO(),
+        )
+    wrong_binding = copy.deepcopy(payload)
+    wrong_binding["subject_manifest"]["canonical_sha256"] = "0" * 64
+    wrong_binding_path = tmp_path / "wrong-binding.json"
+    wrong_binding_path.write_text(json.dumps(wrong_binding))
+    with pytest.raises(CommandError, match="subject-manifest checksum"):
+        call_command(
+            "record_subject_plan_review",
+            wrong_binding_path,
+            "--packet",
+            REVIEW_PACKET_V3_REVIEWED_PATH,
+            stdout=StringIO(),
+        )
+    wrong_packet = tmp_path / "wrong-packet.md"
+    wrong_packet.write_text("changed reviewed input")
+    with pytest.raises(CommandError, match="does not match review_packet_sha256"):
+        call_command(
+            "record_subject_plan_review",
+            V3_REVIEW_RECORD_PATH,
+            "--packet",
+            wrong_packet,
+            stdout=StringIO(),
+        )
+
+    report = subject_coverage_report(manifest)
+    assert report["human_review_status"] == "APPROVE"
+    assert report["official_terminal_topic_count"] == 27
+    assert report["coverage_requirement_count"] == 43
+    assert report["required_slot_count"] == 149
+    assert report["certified_slot_count"] == 0
+    assert report["subject_complete"] is False
+    assert report["subject_certified"] is False
+    assert report["national_complete"] is False
+    assert not RuleObligation.objects.exists()
 
 
 @pytest.mark.postgres

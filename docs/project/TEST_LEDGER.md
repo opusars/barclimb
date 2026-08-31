@@ -251,3 +251,9 @@
 ## 2026-08-31 — M2.2c V3 packet presentation cleanup
 - Packet-only invariants verify one active V3 title/status/introduction, one operative V3 manifest/policy/gate, explicitly archived V1/V2 review history, and no operative V2 residue. The active packet SHA-256 is `5a0b02efe178e2c8996a95cd19a5e1b0122ac242ad8505dad2b079e94dd9646b`; archived V1/V2 hashes remain unchanged.
 - Focused manifest/packet tests, continuity, canonical manifest/hash checks, JSON parsing, invariant counts, `git diff --check`, and secret/raw-source/generated-junk scans are the required documentation-only gate. No substantive runtime or dependency change requires a full client/Expo rerun.
+
+## 2026-08-31 — M2.2c V3 human plan-review workflow
+- Focused M2.2c suite passes 23 tests with two intended PostgreSQL-only skips. Full SQLite passes 121 tests with 11 PostgreSQL-only skips; disposable PostgreSQL 14/Redis 7.2 applies all migrations and passes all 132 tests. Ruff lint/format and Django system/migration-drift checks pass.
+- The exact production review manifest is applied through `record_subject_plan_review`; replay returns `created: false`, changed immutable review input is rejected, and changed packet bytes fail checksum validation.
+- Assertions preserve Leo Rayos's exact identity/qualification, `APPROVE` resolution and bounded attestation; bind reviewed commit, V3 manifest, policy/gate, official scope, and packet checksums; and prove 27 topics/43 requirements/149 slots, zero certified V3 slots, no Rule Obligations, and false subject/certified/national completeness.
+- Repository CI-equivalent client gates pass unchanged: nine workspace typechecks, 14 Web tests, 20 native tests, eight assessment-schema tests, Web production build, and seven-package portability. Live Expo SDK 57 compatibility and Doctor 20/20 pass; iOS/Android production exports pass at 863/858 modules. No client, dependency, lockfile, app identity, or native configuration changed.

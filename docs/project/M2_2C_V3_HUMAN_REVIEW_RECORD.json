@@ -1,0 +1,35 @@
+{
+  "schema": "BARCLIMB_SUBJECT_PLAN_HUMAN_REVIEW_V1",
+  "subject_manifest": {
+    "stable_id": "BARCLIMB_CIVPRO_CURRICULUM_MANIFEST",
+    "manifest_version": "2026_V3",
+    "canonical_sha256": "b706b7182ab165377a9e60520b083cdaf87562b256dfb0c371f9aa38d948c0c3"
+  },
+  "coverage_policy": {
+    "stable_id": "BARCLIMB_CIVPRO_COVERAGE_POLICY",
+    "policy_version": "2026_V3",
+    "canonical_sha256": "0b40a043ee0e84297904202e3634a06cb2f371e6f70ac8db8f8f472693f5adb4"
+  },
+  "certification_gate_version": "BARCLIMB_SUBJECT_CERTIFICATION_GATE_V3",
+  "official_scope": {
+    "version_identifier": "NCBE_NEXTGEN_SCOPE_2026_07_2027_02",
+    "normalized_sha256": "2d8a1052ada18b413f24b7d0eef1c855a76d8a9a31688130757d5dd6511ca56f"
+  },
+  "reviewed_git_sha": "d4908c78cf185ce4bb5342802dfa79d7866af2d1",
+  "review_packet_path_at_review": "docs/project/M2_2C_HUMAN_REVIEW_PACKET.md",
+  "review_packet_archive_path": "docs/project/M2_2C_HUMAN_REVIEW_PACKET_V3_REVIEWED.md",
+  "review_packet_sha256": "5a0b02efe178e2c8996a95cd19a5e1b0122ac242ad8505dad2b079e94dd9646b",
+  "reviewer_name": "Leo Rayos",
+  "reviewer_role_qualification": "JD; California bar exam passer; reviewer for BarClimb curriculum quality control.",
+  "resolution": "APPROVE",
+  "resolution_detail": "COVERAGE_PLAN_ACCEPTED",
+  "rationale": "I have reviewed the 27-topic Civil Procedure perimeter, 14-starred/13-unstarred treatment, 43 requirements, 149 typed completeness slots, requirement-level authority plan, and the eight V3 corrections. I approve the coverage plan for purposes of proceeding to controlled curriculum compilation only.",
+  "attestation": "I approve the M2.2c Civil Procedure V3 coverage plan at commit d4908c78cf185ce4bb5342802dfa79d7866af2d1. I have reviewed the 27-topic Civil Procedure perimeter, 14-starred/13-unstarred treatment, 43 requirements, 149 typed completeness slots, requirement-level authority plan, and the eight V3 corrections. I approve the coverage plan for purposes of proceeding to controlled curriculum compilation. This approval does not certify Civil Procedure as complete, does not approve any future substantive Rule Obligation statement, and does not establish national completeness.",
+  "reviewed_at": "2026-08-31T18:50:00Z",
+  "approval_boundary": {
+    "authorizes_controlled_curriculum_compilation": true,
+    "certifies_civil_procedure": false,
+    "approves_future_rule_obligations": false,
+    "establishes_national_completeness": false
+  }
+}

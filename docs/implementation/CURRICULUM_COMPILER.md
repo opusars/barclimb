@@ -105,3 +105,11 @@ The import requires the accepted active scope, acquired FRCP authority, and immu
 to exist. It is deterministic and idempotent. Reporting is read-only and exposes planning/provenance
 metadata only. Review records exact external-human evidence through a privileged operator path and
 does not create or certify substantive obligations.
+
+For V3, `BARCLIMB_SUBJECT_PLAN_HUMAN_REVIEW_V1` operator inputs additionally bind the reviewed Git
+SHA, canonical subject-manifest and coverage-policy checksums, certification-gate version, official
+scope identity/checksum, and exact reviewed packet checksum. The command validates those bindings
+against imported immutable truth before creating the one-per-manifest review. Exact replay is
+idempotent; changed evidence or packet bytes are rejected. Leo Rayos's V3 approval is preserved in
+`docs/project/M2_2C_V3_HUMAN_REVIEW_RECORD.json` and satisfies only the plan-review gate. It creates no
+Rule Obligation, certified slot, subject certification, or national-completeness claim.

@@ -18,8 +18,11 @@ This ledger is cold-recovery state, not a release certification.
 - Active subject manifest: `BARCLIMB_CIVPRO_CURRICULUM_MANIFEST@2026_V3`
 - V3 manifest SHA-256: `b706b7182ab165377a9e60520b083cdaf87562b256dfb0c371f9aa38d948c0c3`
 - Coverage policy: `BARCLIMB_CIVPRO_COVERAGE_POLICY@2026_V3`
-- Human review: `THIRD_REVIEW_PENDING`
-- Active V3 review-packet SHA-256: `5a0b02efe178e2c8996a95cd19a5e1b0122ac242ad8505dad2b079e94dd9646b`
+- Human review: `APPROVE — COVERAGE PLAN ACCEPTED`
+- Reviewed commit: `d4908c78cf185ce4bb5342802dfa79d7866af2d1`
+- Exact reviewed V3 packet SHA-256: `5a0b02efe178e2c8996a95cd19a5e1b0122ac242ad8505dad2b079e94dd9646b`
+- Immutable review-manifest SHA-256: `6ceea17f91c7523c993a25a702b6e7ab923117d8a918baa7ed916d57bac87c97`
+- Active post-review packet SHA-256: `07bc499231dbd32a7854b551f9bfc3ba34453ea702ce714f06624d930cc4376e`
 - Official terminal topics: 27 (`STARRED`: 14; `UNSTARRED`: 13)
 - BarClimb planning aggregates: 6; never completeness units
 - Coverage requirements: 43
@@ -40,9 +43,10 @@ perimeter-relevant evidence; Rule 4(m) timing and other out-of-perimeter content
 supplemental evidence. Nothing in the snapshot automatically satisfies a V3 slot or completes the
 service terminal topic.
 
-Next gate: third qualified human review of `M2_2C_HUMAN_REVIEW_PACKET.md`. The exact V1 and V2 packets
-remain at `M2_2C_HUMAN_REVIEW_PACKET_V1.md` and `M2_2C_HUMAN_REVIEW_PACKET_V2.md`; their dispositions
-are in `M2_2C_V1_REVIEW_DISPOSITION.json` and `M2_2C_V2_REVIEW_DISPOSITION.json`. No authority
-acquisition or candidate compilation may begin until V3 review is supplied and accurately recorded.
-Any later work must remain bounded and cannot
-mass-certify Civil Procedure.
+The plan-review gate is satisfied by Leo Rayos's exact supplied approval, recorded through
+`record_subject_plan_review`. The reviewed packet bytes remain at
+`M2_2C_HUMAN_REVIEW_PACKET_V3_REVIEWED.md`; the operator input and immutable bindings remain at
+`M2_2C_V3_HUMAN_REVIEW_RECORD.json`. The V1 and V2 packet/disposition history is unchanged. Approval
+permits a later separately authorized controlled curriculum-compilation slice; it does not acquire
+authority, approve candidate statements, satisfy any slot, or mass-certify Civil Procedure. The next
+gate is post-plan-approval acceptance review only.

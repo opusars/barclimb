@@ -1,5 +1,6 @@
 import hashlib
 import json
+import re
 from datetime import datetime
 from pathlib import Path
 
@@ -28,6 +29,36 @@ class Command(BaseCommand):
                 stable_id=payload["subject_manifest"]["stable_id"],
                 manifest_version=payload["subject_manifest"]["manifest_version"],
             )
+            if payload.get("schema") == "BARCLIMB_SUBJECT_PLAN_HUMAN_REVIEW_V1":
+                if payload["subject_manifest"].get("canonical_sha256") != manifest.canonical_sha256:
+                    raise ValueError(
+                        "Review subject-manifest checksum does not match immutable truth."
+                    )
+                policy = payload.get("coverage_policy", {})
+                if policy != {
+                    "stable_id": manifest.coverage_policy.stable_id,
+                    "policy_version": manifest.coverage_policy.policy_version,
+                    "canonical_sha256": manifest.coverage_policy.canonical_sha256,
+                }:
+                    raise ValueError(
+                        "Review coverage-policy identity does not match immutable truth."
+                    )
+                if (
+                    payload.get("certification_gate_version")
+                    != manifest.coverage_policy.certification_gate_version
+                ):
+                    raise ValueError(
+                        "Review certification-gate identity does not match immutable truth."
+                    )
+                if payload.get("official_scope") != {
+                    "version_identifier": manifest.official_scope_version.version_identifier,
+                    "normalized_sha256": manifest.official_scope_version.normalized_sha256,
+                }:
+                    raise ValueError(
+                        "Review official-scope identity does not match immutable truth."
+                    )
+                if not re.fullmatch(r"[0-9a-f]{40}", payload.get("reviewed_git_sha", "")):
+                    raise ValueError("Review requires an exact lowercase Git SHA.")
             review, created = record_subject_plan_review(
                 manifest.pk,
                 reviewer=None,

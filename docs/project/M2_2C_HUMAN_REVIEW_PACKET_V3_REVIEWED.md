@@ -1,8 +1,8 @@
 # M2.2c Civil Procedure Coverage-Plan Human Review Packet — V3
 
-Status: **APPROVE — COVERAGE PLAN ACCEPTED — NOT SUBJECT CERTIFIED**
+Status: **THIRD REVIEW PENDING — NOT APPROVED — NOT SUBJECT CERTIFIED**
 
-This packet records that a qualified human reviewer approved the narrowly corrected Civil Procedure typed completeness requirements and proposition-sensitive authority plan for controlled curriculum compilation. The approval does not approve substantive Rule Obligation statements. M2.2c V3 creates none.
+This packet asks a qualified human reviewer to assess the narrowly corrected Civil Procedure typed completeness requirements and proposition-sensitive authority plan. It does not ask for approval of substantive Rule Obligation statements. M2.2c V3 creates none.
 
 Official source bytes remain transient and are not reproduced. The short factual topic labels, hierarchy identifiers, locators, and star classifications below were normalized from the accepted hash-identified NCBE source.
 
@@ -21,20 +21,6 @@ Official source bytes remain transient and are not reproduced. The short factual
 - Existing Rule 4 snapshot: `8ffc025a-ddac-5765-b7b2-130c84282c83` (`PILOT_ONLY`)
 - Existing compile SHA-256: `0148dea24c906e2e257265681044ae57ad4b60b9a1e290f291e95dc2315825ec`
 - Existing certification SHA-256: `60e160e3c1a458e4c5b98569fcf3f04d409086d328496f2ed41a020a5b591ae0`
-
-## V3 human plan-review evidence
-
-- Disposition: **APPROVE — COVERAGE PLAN ACCEPTED**
-- Reviewer: Leo Rayos
-- Qualification: JD; California bar exam passer; reviewer for BarClimb curriculum quality control.
-- Reviewed commit: `d4908c78cf185ce4bb5342802dfa79d7866af2d1`
-- Exact reviewed packet archive: `M2_2C_HUMAN_REVIEW_PACKET_V3_REVIEWED.md`
-- Exact reviewed packet SHA-256: `5a0b02efe178e2c8996a95cd19a5e1b0122ac242ad8505dad2b079e94dd9646b`
-- Immutable operator review manifest: `M2_2C_V3_HUMAN_REVIEW_RECORD.json`
-- Review-manifest SHA-256: `6ceea17f91c7523c993a25a702b6e7ab923117d8a918baa7ed916d57bac87c97`
-- Reviewed at: `2026-08-31T18:50:00Z`
-- Gate result: the V3 human coverage-plan review gate is satisfied for proceeding to controlled curriculum compilation only.
-- Boundary: this approval does not certify Civil Procedure, approve any future substantive Rule Obligation, satisfy any typed slot, acquire authority, or establish national completeness.
 
 ## Historical review record — not operative V3 identity
 
@@ -1077,16 +1063,16 @@ Federal doctrine directing incorporation or comparison of state law remains nati
 - Required typed slots: `149` (V2 required `157`; V3 removes eight artificial mandatory slots and adds no replacements)
 - Authority plans: `22` (`1` acquired; `21` planned)
 - Certified V3 requirement slots: `0`
-- V3 human-review status: `APPROVE — COVERAGE PLAN ACCEPTED`
+- V3 human-review status: `PENDING`
 - `subject_complete: false`
 - `subject_certified: false`
 - `national_complete: false`
 
 Future `SUBJECT_CERTIFIED` requires every active terminal topic, every required slot, all applicable current primary authority, completed human review, deterministic reconciliation, zero blocking omission/conflict/jurisdiction/authority gaps, exact captured checksums, and a separate explicit certification operation. Aggregate or percentage coverage is insufficient.
 
-## Reviewed judgments
+## Open reviewer judgments
 
-The recorded V3 approval covers the reviewer judgments below for plan-level purposes only:
+For each terminal topic and requirement, record `APPROVE`, `REJECT`, or a precise required revision. Specifically determine:
 
 1. Whether the 27-topic identities, exact parent hierarchy, locators, and 14-starred/13-unstarred classifications faithfully normalize the accepted NCBE source.
 2. Whether each planning aggregate is useful without being mistaken for official terminal truth.
@@ -1106,8 +1092,6 @@ The recorded V3 approval covers the reviewer judgments below for plan-level purp
 16. Whether any requirement should be split, combined, renamed, narrowed, or removed before substantive candidate compilation begins.
 17. Whether the eight narrow V3 corrections resolve the V2 review disposition without changing any accepted perimeter, treatment, decomposition, or historical-evidence truth.
 
-## Recorded attestation and boundary
+## Attestation boundary
 
-Leo Rayos, JD; California bar exam passer; reviewer for BarClimb curriculum quality control, approved the M2.2c Civil Procedure V3 coverage plan at commit `d4908c78cf185ce4bb5342802dfa79d7866af2d1` after reviewing the 27-topic perimeter, 14-starred/13-unstarred treatment, 43 requirements, 149 typed completeness slots, requirement-level authority plan, and eight V3 corrections. The exact supplied attestation is preserved in `M2_2C_V3_HUMAN_REVIEW_RECORD.json` and was recorded through `record_subject_plan_review` against the exact reviewed packet.
-
-Approval covers this narrowly corrected planning structure for proceeding to controlled curriculum compilation only. It does not approve substantive candidate statements or future Rule Obligations; certify complete Civil Procedure doctrine; complete another subject, assessment inventory, learner mastery/readiness, or national NextGen curriculum; or perform the separate explicit subject-certification operation.
+A future V3 review record must identify the reviewer and qualification, the exact V3 packet SHA-256, resolution, rationale, attestation, and review time through `record_subject_plan_review`. Approval would cover this narrowly corrected planning structure only. It would not approve substantive candidate statements, complete Civil Procedure doctrine, another subject, assessment inventory, learner mastery/readiness, or national NextGen curriculum completeness.

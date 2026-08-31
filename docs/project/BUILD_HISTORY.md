@@ -203,3 +203,8 @@
 ## 2026-08-31 — M2.2c V3 review-packet presentation cleanup
 - Separated the active V3 identity/immutable inputs from the archived V1/V2 review record and labeled every historical V1/V2 field explicitly. The packet retains one V3 title, one third-review-pending status, one V3 introduction, and only V3 operative manifest/policy/gate metadata.
 - No topic, treatment, planning aggregate, requirement, typed slot, authority mapping, compiler/certification behavior, Rule 4 evidence, approval state, dependency, provider, application, specification, or subsequent-slice truth changed.
+
+## 2026-08-31 — M2.2c V3 human coverage-plan approval
+- Recorded Leo Rayos's supplied approval through the existing `record_subject_plan_review` operator workflow against reviewed commit `d4908c78cf185ce4bb5342802dfa79d7866af2d1`, V3 manifest SHA-256 `b706b7182ab165377a9e60520b083cdaf87562b256dfb0c371f9aa38d948c0c3`, policy/gate/scope identity, and exact reviewed packet SHA-256 `5a0b02efe178e2c8996a95cd19a5e1b0122ac242ad8505dad2b079e94dd9646b`. The immutable review manifest has SHA-256 `6ceea17f91c7523c993a25a702b6e7ab923117d8a918baa7ed916d57bac87c97`.
+- Preserved the reviewed packet bytes separately and updated the active packet to **APPROVE — COVERAGE PLAN ACCEPTED**. Exact replay is idempotent; altered packet or review input is rejected.
+- Approval satisfies only the V3 plan-review gate for a later separately authorized controlled compilation slice. No substantive candidate was compiled or approved, no authority was acquired, no slot was certified, no subject snapshot was created, and `subject_complete`, `subject_certified`, and `national_complete` remain false.

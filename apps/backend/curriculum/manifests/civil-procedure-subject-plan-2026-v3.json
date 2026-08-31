@@ -1,0 +1,3870 @@
+{
+  "schema": "BARCLIMB_SUBJECT_COVERAGE_PLAN_V2",
+  "manifest": {
+    "stable_id": "BARCLIMB_CIVPRO_CURRICULUM_MANIFEST",
+    "manifest_version": "2026_V3",
+    "subject_id": "CIVIL_PROCEDURE",
+    "subject_label": "Civil Procedure",
+    "official_scope_version": "NCBE_NEXTGEN_SCOPE_2026_07_2027_02",
+    "official_scope_sha256": "2d8a1052ada18b413f24b7d0eef1c855a76d8a9a31688130757d5dd6511ca56f",
+    "expected_terminal_topic_count": 27,
+    "terminal_inventory_sha256": "368082c4e5abc005055fc37dc62514880400ab873ccb42d29de85834c5418434",
+    "source_class": "PRODUCTION",
+    "supersedes": {
+      "stable_id": "BARCLIMB_CIVPRO_CURRICULUM_MANIFEST",
+      "manifest_version": "2026_V2"
+    }
+  },
+  "coverage_policy": {
+    "stable_id": "BARCLIMB_CIVPRO_COVERAGE_POLICY",
+    "policy_version": "2026_V3",
+    "administration_start": "2026-07-01",
+    "administration_end": "2027-02-28",
+    "requires_primary_authority": true,
+    "requires_human_review": true,
+    "certification_gate_version": "BARCLIMB_SUBJECT_CERTIFICATION_GATE_V3",
+    "supersedes": {
+      "stable_id": "BARCLIMB_CIVPRO_COVERAGE_POLICY",
+      "policy_version": "2026_V2"
+    },
+    "subject_certification_requires": [
+      "EVERY_ACTIVE_OFFICIAL_TERMINAL_TOPIC_ACCOUNTED_FOR",
+      "EVERY_REQUIRED_SLOT_CERTIFIED",
+      "APPLICABLE_REQUIRED_PRIMARY_AUTHORITY_CURRENT",
+      "ZERO_BLOCKING_OMISSIONS",
+      "ZERO_SUBSTANTIVE_CONFLICTS",
+      "ZERO_UNSUPPORTED_JURISDICTION_CONTENT",
+      "ALL_REQUIRED_HUMAN_REVIEWS_COMPLETE",
+      "DETERMINISTIC_RECONCILIATION_PASSES",
+      "EXACT_SCOPE_TOPIC_MANIFEST_AUTHORITY_COMPILER_POLICY_CHECKSUMS_CAPTURED",
+      "EXPLICIT_SUBJECT_CERTIFICATION_OPERATION"
+    ],
+    "prohibited_completeness_shortcuts": [
+      "SIX_PLANNING_GROUP_ROLLUP",
+      "PERCENTAGE_ONLY",
+      "ONE_OBLIGATION_PER_GROUP",
+      "RULE4_PILOT_ONLY"
+    ]
+  },
+  "planning_groups": [
+    {
+      "scope_item_id": "civil-procedure-jurisdiction",
+      "official_label": "Jurisdiction and related court authority",
+      "source_locator": "p. 11, I.A–B",
+      "treatment": "MIXED_OFFICIAL_MARKERS",
+      "hierarchy_path": [
+        "nextgen-current-root",
+        "foundational-concepts",
+        "subject-civil-procedure",
+        "civil-procedure-jurisdiction"
+      ],
+      "classification": "CURRICULUM_PLANNING_GROUP",
+      "coverage_status": "AUTHORITY_PLANNED",
+      "review_required": true
+    },
+    {
+      "scope_item_id": "civil-procedure-service-process-notice",
+      "official_label": "Service of process and notice",
+      "source_locator": "p. 11, I.C",
+      "treatment": "RECOGNITION_WITH_OR_WITHOUT_RESOURCES",
+      "hierarchy_path": [
+        "nextgen-current-root",
+        "foundational-concepts",
+        "subject-civil-procedure",
+        "civil-procedure-service-process-notice"
+      ],
+      "classification": "CURRICULUM_PLANNING_GROUP",
+      "coverage_status": "PARTIALLY_COVERED",
+      "review_required": true
+    },
+    {
+      "scope_item_id": "civil-procedure-venue-transfer",
+      "official_label": "Venue, forum non conveniens, and transfer",
+      "source_locator": "p. 11, I.D",
+      "treatment": "RECOGNITION_WITH_OR_WITHOUT_RESOURCES",
+      "hierarchy_path": [
+        "nextgen-current-root",
+        "foundational-concepts",
+        "subject-civil-procedure",
+        "civil-procedure-venue-transfer"
+      ],
+      "classification": "CURRICULUM_PLANNING_GROUP",
+      "coverage_status": "AUTHORITY_PLANNED",
+      "review_required": true
+    },
+    {
+      "scope_item_id": "civil-procedure-litigation",
+      "official_label": "Law applied by federal courts and pretrial litigation",
+      "source_locator": "pp. 11–12, II–III",
+      "treatment": "MIXED_OFFICIAL_MARKERS",
+      "hierarchy_path": [
+        "nextgen-current-root",
+        "foundational-concepts",
+        "subject-civil-procedure",
+        "civil-procedure-litigation"
+      ],
+      "classification": "CURRICULUM_PLANNING_GROUP",
+      "coverage_status": "AUTHORITY_PLANNED",
+      "review_required": true
+    },
+    {
+      "scope_item_id": "civil-procedure-motions-judgments",
+      "official_label": "Motions, verdicts, and judgments",
+      "source_locator": "p. 13, IV–V",
+      "treatment": "MIXED_OFFICIAL_MARKERS",
+      "hierarchy_path": [
+        "nextgen-current-root",
+        "foundational-concepts",
+        "subject-civil-procedure",
+        "civil-procedure-motions-judgments"
+      ],
+      "classification": "CURRICULUM_PLANNING_GROUP",
+      "coverage_status": "AUTHORITY_PLANNED",
+      "review_required": true
+    },
+    {
+      "scope_item_id": "civil-procedure-appeals",
+      "official_label": "Appellate review",
+      "source_locator": "p. 13, VI",
+      "treatment": "MIXED_OFFICIAL_MARKERS",
+      "hierarchy_path": [
+        "nextgen-current-root",
+        "foundational-concepts",
+        "subject-civil-procedure",
+        "civil-procedure-appeals"
+      ],
+      "classification": "CURRICULUM_PLANNING_GROUP",
+      "coverage_status": "AUTHORITY_PLANNED",
+      "review_required": true
+    }
+  ],
+  "official_topics": [
+    {
+      "stable_id": "civpro-section-i-jurisdiction-venue",
+      "parent_id": "subject-civil-procedure",
+      "official_label": "I. Jurisdiction and venue",
+      "source_locator": "p. 11, I",
+      "ordering": 100,
+      "is_terminal": false,
+      "official_marker": "NONE",
+      "knowledge_treatment": "UNSPECIFIED",
+      "source_artifact_id": "NCBE_NEXTGEN_CONTENT_SCOPE",
+      "administration_start": "2026-07-01",
+      "administration_end": "2027-02-28",
+      "normalization_notes": "Official hierarchy heading; not a completeness terminal."
+    },
+    {
+      "stable_id": "civpro-subsection-i-a-federal-subject-matter",
+      "parent_id": "civpro-section-i-jurisdiction-venue",
+      "official_label": "A. Federal subject-matter jurisdiction",
+      "source_locator": "p. 11, I.A",
+      "ordering": 110,
+      "is_terminal": false,
+      "official_marker": "NONE",
+      "knowledge_treatment": "UNSPECIFIED",
+      "source_artifact_id": "NCBE_NEXTGEN_CONTENT_SCOPE",
+      "administration_start": "2026-07-01",
+      "administration_end": "2027-02-28",
+      "normalization_notes": "Official hierarchy heading; not a completeness terminal."
+    },
+    {
+      "stable_id": "civpro-topic-federal-question-jurisdiction",
+      "parent_id": "civpro-subsection-i-a-federal-subject-matter",
+      "official_label": "Federal question jurisdiction",
+      "source_locator": "p. 11, I.A.1",
+      "ordering": 111,
+      "is_terminal": true,
+      "official_marker": "STARRED",
+      "knowledge_treatment": "RECALLED_REQUIRED",
+      "planning_group_scope_item_id": "civil-procedure-jurisdiction",
+      "source_artifact_id": "NCBE_NEXTGEN_CONTENT_SCOPE",
+      "administration_start": "2026-07-01",
+      "administration_end": "2027-02-28",
+      "normalization_notes": "Short factual terminal-topic identity and marker transcribed from the hash-identified official source; explanatory source prose is not reproduced."
+    },
+    {
+      "stable_id": "civpro-topic-diversity-jurisdiction",
+      "parent_id": "civpro-subsection-i-a-federal-subject-matter",
+      "official_label": "Diversity jurisdiction",
+      "source_locator": "p. 11, I.A.2",
+      "ordering": 112,
+      "is_terminal": true,
+      "official_marker": "STARRED",
+      "knowledge_treatment": "RECALLED_REQUIRED",
+      "planning_group_scope_item_id": "civil-procedure-jurisdiction",
+      "source_artifact_id": "NCBE_NEXTGEN_CONTENT_SCOPE",
+      "administration_start": "2026-07-01",
+      "administration_end": "2027-02-28",
+      "normalization_notes": "Short factual terminal-topic identity and marker transcribed from the hash-identified official source; explanatory source prose is not reproduced."
+    },
+    {
+      "stable_id": "civpro-topic-supplemental-jurisdiction",
+      "parent_id": "civpro-subsection-i-a-federal-subject-matter",
+      "official_label": "Supplemental jurisdiction",
+      "source_locator": "p. 11, I.A.3",
+      "ordering": 113,
+      "is_terminal": true,
+      "official_marker": "UNSTARRED",
+      "knowledge_treatment": "RECOGNITION_WITH_OR_WITHOUT_RESOURCES",
+      "planning_group_scope_item_id": "civil-procedure-jurisdiction",
+      "source_artifact_id": "NCBE_NEXTGEN_CONTENT_SCOPE",
+      "administration_start": "2026-07-01",
+      "administration_end": "2027-02-28",
+      "normalization_notes": "Short factual terminal-topic identity and marker transcribed from the hash-identified official source; explanatory source prose is not reproduced."
+    },
+    {
+      "stable_id": "civpro-topic-concurrent-removal-jurisdiction",
+      "parent_id": "civpro-subsection-i-a-federal-subject-matter",
+      "official_label": "Concurrent and removal jurisdiction",
+      "source_locator": "p. 11, I.A.4",
+      "ordering": 114,
+      "is_terminal": true,
+      "official_marker": "STARRED",
+      "knowledge_treatment": "RECALLED_REQUIRED",
+      "planning_group_scope_item_id": "civil-procedure-jurisdiction",
+      "source_artifact_id": "NCBE_NEXTGEN_CONTENT_SCOPE",
+      "administration_start": "2026-07-01",
+      "administration_end": "2027-02-28",
+      "normalization_notes": "Short factual terminal-topic identity and marker transcribed from the hash-identified official source; explanatory source prose is not reproduced."
+    },
+    {
+      "stable_id": "civpro-topic-personal-jurisdiction",
+      "parent_id": "civpro-section-i-jurisdiction-venue",
+      "official_label": "Personal jurisdiction",
+      "source_locator": "p. 11, I.B",
+      "ordering": 120,
+      "is_terminal": true,
+      "official_marker": "STARRED",
+      "knowledge_treatment": "RECALLED_REQUIRED",
+      "planning_group_scope_item_id": "civil-procedure-jurisdiction",
+      "source_artifact_id": "NCBE_NEXTGEN_CONTENT_SCOPE",
+      "administration_start": "2026-07-01",
+      "administration_end": "2027-02-28",
+      "normalization_notes": "Short factual terminal-topic identity and marker transcribed from the hash-identified official source; explanatory source prose is not reproduced."
+    },
+    {
+      "stable_id": "civpro-topic-service-process-notice",
+      "parent_id": "civpro-section-i-jurisdiction-venue",
+      "official_label": "Service of process and notice",
+      "source_locator": "p. 11, I.C",
+      "ordering": 130,
+      "is_terminal": true,
+      "official_marker": "UNSTARRED",
+      "knowledge_treatment": "RECOGNITION_WITH_OR_WITHOUT_RESOURCES",
+      "planning_group_scope_item_id": "civil-procedure-service-process-notice",
+      "source_artifact_id": "NCBE_NEXTGEN_CONTENT_SCOPE",
+      "administration_start": "2026-07-01",
+      "administration_end": "2027-02-28",
+      "normalization_notes": "Short factual terminal-topic identity and marker transcribed from the hash-identified official source; explanatory source prose is not reproduced."
+    },
+    {
+      "stable_id": "civpro-topic-venue-forum-transfer",
+      "parent_id": "civpro-section-i-jurisdiction-venue",
+      "official_label": "Venue, forum non conveniens, and transfer",
+      "source_locator": "p. 11, I.D",
+      "ordering": 140,
+      "is_terminal": true,
+      "official_marker": "UNSTARRED",
+      "knowledge_treatment": "RECOGNITION_WITH_OR_WITHOUT_RESOURCES",
+      "planning_group_scope_item_id": "civil-procedure-venue-transfer",
+      "source_artifact_id": "NCBE_NEXTGEN_CONTENT_SCOPE",
+      "administration_start": "2026-07-01",
+      "administration_end": "2027-02-28",
+      "normalization_notes": "Short factual terminal-topic identity and marker transcribed from the hash-identified official source; explanatory source prose is not reproduced."
+    },
+    {
+      "stable_id": "civpro-topic-state-law-federal-court",
+      "parent_id": "subject-civil-procedure",
+      "official_label": "II. State law in federal court",
+      "source_locator": "p. 11, II",
+      "ordering": 200,
+      "is_terminal": true,
+      "official_marker": "UNSTARRED",
+      "knowledge_treatment": "RECOGNITION_WITH_OR_WITHOUT_RESOURCES",
+      "planning_group_scope_item_id": "civil-procedure-litigation",
+      "source_artifact_id": "NCBE_NEXTGEN_CONTENT_SCOPE",
+      "administration_start": "2026-07-01",
+      "administration_end": "2027-02-28",
+      "normalization_notes": "Short factual terminal-topic identity and marker transcribed from the hash-identified official source; explanatory source prose is not reproduced."
+    },
+    {
+      "stable_id": "civpro-section-iii-pretrial-procedures",
+      "parent_id": "subject-civil-procedure",
+      "official_label": "III. Pretrial procedures",
+      "source_locator": "p. 12, III",
+      "ordering": 300,
+      "is_terminal": false,
+      "official_marker": "NONE",
+      "knowledge_treatment": "UNSPECIFIED",
+      "source_artifact_id": "NCBE_NEXTGEN_CONTENT_SCOPE",
+      "administration_start": "2026-07-01",
+      "administration_end": "2027-02-28",
+      "normalization_notes": "Official hierarchy heading; not a completeness terminal."
+    },
+    {
+      "stable_id": "civpro-topic-preliminary-injunctions-tro",
+      "parent_id": "civpro-section-iii-pretrial-procedures",
+      "official_label": "Preliminary injunctions and temporary restraining orders",
+      "source_locator": "p. 12, III.A",
+      "ordering": 310,
+      "is_terminal": true,
+      "official_marker": "UNSTARRED",
+      "knowledge_treatment": "RECOGNITION_WITH_OR_WITHOUT_RESOURCES",
+      "planning_group_scope_item_id": "civil-procedure-litigation",
+      "source_artifact_id": "NCBE_NEXTGEN_CONTENT_SCOPE",
+      "administration_start": "2026-07-01",
+      "administration_end": "2027-02-28",
+      "normalization_notes": "Short factual terminal-topic identity and marker transcribed from the hash-identified official source; explanatory source prose is not reproduced."
+    },
+    {
+      "stable_id": "civpro-topic-pleadings-amended-pleadings",
+      "parent_id": "civpro-section-iii-pretrial-procedures",
+      "official_label": "Pleadings and amended pleadings",
+      "source_locator": "p. 12, III.B",
+      "ordering": 320,
+      "is_terminal": true,
+      "official_marker": "STARRED",
+      "knowledge_treatment": "RECALLED_REQUIRED",
+      "planning_group_scope_item_id": "civil-procedure-litigation",
+      "source_artifact_id": "NCBE_NEXTGEN_CONTENT_SCOPE",
+      "administration_start": "2026-07-01",
+      "administration_end": "2027-02-28",
+      "normalization_notes": "Short factual terminal-topic identity and marker transcribed from the hash-identified official source; explanatory source prose is not reproduced."
+    },
+    {
+      "stable_id": "civpro-topic-rule-11",
+      "parent_id": "civpro-section-iii-pretrial-procedures",
+      "official_label": "Rule 11",
+      "source_locator": "p. 12, III.C",
+      "ordering": 330,
+      "is_terminal": true,
+      "official_marker": "STARRED",
+      "knowledge_treatment": "RECALLED_REQUIRED",
+      "planning_group_scope_item_id": "civil-procedure-litigation",
+      "source_artifact_id": "NCBE_NEXTGEN_CONTENT_SCOPE",
+      "administration_start": "2026-07-01",
+      "administration_end": "2027-02-28",
+      "normalization_notes": "Short factual terminal-topic identity and marker transcribed from the hash-identified official source; explanatory source prose is not reproduced."
+    },
+    {
+      "stable_id": "civpro-subsection-iii-d-joinder",
+      "parent_id": "civpro-section-iii-pretrial-procedures",
+      "official_label": "D. Joinder of parties and claims",
+      "source_locator": "p. 12, III.D",
+      "ordering": 340,
+      "is_terminal": false,
+      "official_marker": "NONE",
+      "knowledge_treatment": "UNSPECIFIED",
+      "source_artifact_id": "NCBE_NEXTGEN_CONTENT_SCOPE",
+      "administration_start": "2026-07-01",
+      "administration_end": "2027-02-28",
+      "normalization_notes": "Official hierarchy heading; not a completeness terminal."
+    },
+    {
+      "stable_id": "civpro-topic-joinder-claims-parties",
+      "parent_id": "civpro-subsection-iii-d-joinder",
+      "official_label": "Joinder of multiple claims, joinder of parties, counterclaims, crossclaims, third-party practice, and severance",
+      "source_locator": "p. 12, III.D.1",
+      "ordering": 341,
+      "is_terminal": true,
+      "official_marker": "STARRED",
+      "knowledge_treatment": "RECALLED_REQUIRED",
+      "planning_group_scope_item_id": "civil-procedure-litigation",
+      "source_artifact_id": "NCBE_NEXTGEN_CONTENT_SCOPE",
+      "administration_start": "2026-07-01",
+      "administration_end": "2027-02-28",
+      "normalization_notes": "Short factual terminal-topic identity and marker transcribed from the hash-identified official source; explanatory source prose is not reproduced."
+    },
+    {
+      "stable_id": "civpro-topic-intervention-rule-24",
+      "parent_id": "civpro-subsection-iii-d-joinder",
+      "official_label": "Intervention under Rule 24",
+      "source_locator": "p. 12, III.D.2",
+      "ordering": 342,
+      "is_terminal": true,
+      "official_marker": "UNSTARRED",
+      "knowledge_treatment": "RECOGNITION_WITH_OR_WITHOUT_RESOURCES",
+      "planning_group_scope_item_id": "civil-procedure-litigation",
+      "source_artifact_id": "NCBE_NEXTGEN_CONTENT_SCOPE",
+      "administration_start": "2026-07-01",
+      "administration_end": "2027-02-28",
+      "normalization_notes": "Short factual terminal-topic identity and marker transcribed from the hash-identified official source; explanatory source prose is not reproduced."
+    },
+    {
+      "stable_id": "civpro-subsection-iii-e-discovery",
+      "parent_id": "civpro-section-iii-pretrial-procedures",
+      "official_label": "E. Disclosures and discovery",
+      "source_locator": "p. 12, III.E",
+      "ordering": 350,
+      "is_terminal": false,
+      "official_marker": "NONE",
+      "knowledge_treatment": "UNSPECIFIED",
+      "source_artifact_id": "NCBE_NEXTGEN_CONTENT_SCOPE",
+      "administration_start": "2026-07-01",
+      "administration_end": "2027-02-28",
+      "normalization_notes": "Official hierarchy heading; not a completeness terminal."
+    },
+    {
+      "stable_id": "civpro-topic-discovery-scope-limits",
+      "parent_id": "civpro-subsection-iii-e-discovery",
+      "official_label": "Scope and limits of discovery",
+      "source_locator": "p. 12, III.E.1",
+      "ordering": 351,
+      "is_terminal": true,
+      "official_marker": "STARRED",
+      "knowledge_treatment": "RECALLED_REQUIRED",
+      "planning_group_scope_item_id": "civil-procedure-litigation",
+      "source_artifact_id": "NCBE_NEXTGEN_CONTENT_SCOPE",
+      "administration_start": "2026-07-01",
+      "administration_end": "2027-02-28",
+      "normalization_notes": "Short factual terminal-topic identity and marker transcribed from the hash-identified official source; explanatory source prose is not reproduced."
+    },
+    {
+      "stable_id": "civpro-topic-discovery-rule-26f",
+      "parent_id": "civpro-subsection-iii-e-discovery",
+      "official_label": "Rule 26(f) conference and planning for discovery",
+      "source_locator": "p. 12, III.E.2",
+      "ordering": 352,
+      "is_terminal": true,
+      "official_marker": "STARRED",
+      "knowledge_treatment": "RECALLED_REQUIRED",
+      "planning_group_scope_item_id": "civil-procedure-litigation",
+      "source_artifact_id": "NCBE_NEXTGEN_CONTENT_SCOPE",
+      "administration_start": "2026-07-01",
+      "administration_end": "2027-02-28",
+      "normalization_notes": "Short factual terminal-topic identity and marker transcribed from the hash-identified official source; explanatory source prose is not reproduced."
+    },
+    {
+      "stable_id": "civpro-topic-discovery-tools-ediscovery",
+      "parent_id": "civpro-subsection-iii-e-discovery",
+      "official_label": "Discovery tools and mechanisms, including e-discovery",
+      "source_locator": "p. 12, III.E.3",
+      "ordering": 353,
+      "is_terminal": true,
+      "official_marker": "STARRED",
+      "knowledge_treatment": "RECALLED_REQUIRED",
+      "planning_group_scope_item_id": "civil-procedure-litigation",
+      "source_artifact_id": "NCBE_NEXTGEN_CONTENT_SCOPE",
+      "administration_start": "2026-07-01",
+      "administration_end": "2027-02-28",
+      "normalization_notes": "Short factual terminal-topic identity and marker transcribed from the hash-identified official source; explanatory source prose is not reproduced."
+    },
+    {
+      "stable_id": "civpro-topic-discovery-motions",
+      "parent_id": "civpro-subsection-iii-e-discovery",
+      "official_label": "Discovery motions",
+      "source_locator": "p. 12, III.E.4",
+      "ordering": 354,
+      "is_terminal": true,
+      "official_marker": "UNSTARRED",
+      "knowledge_treatment": "RECOGNITION_WITH_OR_WITHOUT_RESOURCES",
+      "planning_group_scope_item_id": "civil-procedure-litigation",
+      "source_artifact_id": "NCBE_NEXTGEN_CONTENT_SCOPE",
+      "administration_start": "2026-07-01",
+      "administration_end": "2027-02-28",
+      "normalization_notes": "Short factual terminal-topic identity and marker transcribed from the hash-identified official source; explanatory source prose is not reproduced."
+    },
+    {
+      "stable_id": "civpro-topic-jury-trial-preservation",
+      "parent_id": "subject-civil-procedure",
+      "official_label": "IV. Preserving the right to a jury trial",
+      "source_locator": "p. 12, IV",
+      "ordering": 400,
+      "is_terminal": true,
+      "official_marker": "UNSTARRED",
+      "knowledge_treatment": "RECOGNITION_WITH_OR_WITHOUT_RESOURCES",
+      "planning_group_scope_item_id": "civil-procedure-motions-judgments",
+      "source_artifact_id": "NCBE_NEXTGEN_CONTENT_SCOPE",
+      "administration_start": "2026-07-01",
+      "administration_end": "2027-02-28",
+      "normalization_notes": "Short factual terminal-topic identity and marker transcribed from the hash-identified official source; explanatory source prose is not reproduced."
+    },
+    {
+      "stable_id": "civpro-section-v-dispositive-motions",
+      "parent_id": "subject-civil-procedure",
+      "official_label": "V. Dispositive motions",
+      "source_locator": "p. 13, V",
+      "ordering": 500,
+      "is_terminal": false,
+      "official_marker": "NONE",
+      "knowledge_treatment": "UNSPECIFIED",
+      "source_artifact_id": "NCBE_NEXTGEN_CONTENT_SCOPE",
+      "administration_start": "2026-07-01",
+      "administration_end": "2027-02-28",
+      "normalization_notes": "Official hierarchy heading; not a completeness terminal."
+    },
+    {
+      "stable_id": "civpro-topic-rule-12-dismissal",
+      "parent_id": "civpro-section-v-dispositive-motions",
+      "official_label": "Motion to dismiss under Rule 12",
+      "source_locator": "p. 13, V.A",
+      "ordering": 510,
+      "is_terminal": true,
+      "official_marker": "STARRED",
+      "knowledge_treatment": "RECALLED_REQUIRED",
+      "planning_group_scope_item_id": "civil-procedure-motions-judgments",
+      "source_artifact_id": "NCBE_NEXTGEN_CONTENT_SCOPE",
+      "administration_start": "2026-07-01",
+      "administration_end": "2027-02-28",
+      "normalization_notes": "Short factual terminal-topic identity and marker transcribed from the hash-identified official source; explanatory source prose is not reproduced."
+    },
+    {
+      "stable_id": "civpro-topic-judgment-pleadings",
+      "parent_id": "civpro-section-v-dispositive-motions",
+      "official_label": "Motion for judgment on the pleadings",
+      "source_locator": "p. 13, V.B",
+      "ordering": 520,
+      "is_terminal": true,
+      "official_marker": "UNSTARRED",
+      "knowledge_treatment": "RECOGNITION_WITH_OR_WITHOUT_RESOURCES",
+      "planning_group_scope_item_id": "civil-procedure-motions-judgments",
+      "source_artifact_id": "NCBE_NEXTGEN_CONTENT_SCOPE",
+      "administration_start": "2026-07-01",
+      "administration_end": "2027-02-28",
+      "normalization_notes": "Short factual terminal-topic identity and marker transcribed from the hash-identified official source; explanatory source prose is not reproduced."
+    },
+    {
+      "stable_id": "civpro-topic-summary-judgment",
+      "parent_id": "civpro-section-v-dispositive-motions",
+      "official_label": "Summary judgment motion",
+      "source_locator": "p. 13, V.C",
+      "ordering": 530,
+      "is_terminal": true,
+      "official_marker": "STARRED",
+      "knowledge_treatment": "RECALLED_REQUIRED",
+      "planning_group_scope_item_id": "civil-procedure-motions-judgments",
+      "source_artifact_id": "NCBE_NEXTGEN_CONTENT_SCOPE",
+      "administration_start": "2026-07-01",
+      "administration_end": "2027-02-28",
+      "normalization_notes": "Short factual terminal-topic identity and marker transcribed from the hash-identified official source; explanatory source prose is not reproduced."
+    },
+    {
+      "stable_id": "civpro-topic-jmol",
+      "parent_id": "civpro-section-v-dispositive-motions",
+      "official_label": "Motion for judgment as a matter of law",
+      "source_locator": "p. 13, V.D",
+      "ordering": 540,
+      "is_terminal": true,
+      "official_marker": "UNSTARRED",
+      "knowledge_treatment": "RECOGNITION_WITH_OR_WITHOUT_RESOURCES",
+      "planning_group_scope_item_id": "civil-procedure-motions-judgments",
+      "source_artifact_id": "NCBE_NEXTGEN_CONTENT_SCOPE",
+      "administration_start": "2026-07-01",
+      "administration_end": "2027-02-28",
+      "normalization_notes": "Short factual terminal-topic identity and marker transcribed from the hash-identified official source; explanatory source prose is not reproduced."
+    },
+    {
+      "stable_id": "civpro-section-vi-judgments",
+      "parent_id": "subject-civil-procedure",
+      "official_label": "VI. Judgments",
+      "source_locator": "p. 13, VI",
+      "ordering": 600,
+      "is_terminal": false,
+      "official_marker": "NONE",
+      "knowledge_treatment": "UNSPECIFIED",
+      "source_artifact_id": "NCBE_NEXTGEN_CONTENT_SCOPE",
+      "administration_start": "2026-07-01",
+      "administration_end": "2027-02-28",
+      "normalization_notes": "Official hierarchy heading; not a completeness terminal."
+    },
+    {
+      "stable_id": "civpro-topic-default-default-judgment",
+      "parent_id": "civpro-section-vi-judgments",
+      "official_label": "Entry of default and default judgment",
+      "source_locator": "p. 13, VI.A",
+      "ordering": 610,
+      "is_terminal": true,
+      "official_marker": "STARRED",
+      "knowledge_treatment": "RECALLED_REQUIRED",
+      "planning_group_scope_item_id": "civil-procedure-motions-judgments",
+      "source_artifact_id": "NCBE_NEXTGEN_CONTENT_SCOPE",
+      "administration_start": "2026-07-01",
+      "administration_end": "2027-02-28",
+      "normalization_notes": "Short factual terminal-topic identity and marker transcribed from the hash-identified official source; explanatory source prose is not reproduced."
+    },
+    {
+      "stable_id": "civpro-topic-effect-judgment-preclusion",
+      "parent_id": "civpro-section-vi-judgments",
+      "official_label": "Effect of judgment",
+      "source_locator": "p. 13, VI.B",
+      "ordering": 620,
+      "is_terminal": true,
+      "official_marker": "STARRED",
+      "knowledge_treatment": "RECALLED_REQUIRED",
+      "planning_group_scope_item_id": "civil-procedure-motions-judgments",
+      "source_artifact_id": "NCBE_NEXTGEN_CONTENT_SCOPE",
+      "administration_start": "2026-07-01",
+      "administration_end": "2027-02-28",
+      "normalization_notes": "Short factual terminal-topic identity and marker transcribed from the hash-identified official source; explanatory source prose is not reproduced."
+    },
+    {
+      "stable_id": "civpro-section-vii-appealability-review",
+      "parent_id": "subject-civil-procedure",
+      "official_label": "VII. Appealability and review",
+      "source_locator": "p. 13, VII",
+      "ordering": 700,
+      "is_terminal": false,
+      "official_marker": "NONE",
+      "knowledge_treatment": "UNSPECIFIED",
+      "source_artifact_id": "NCBE_NEXTGEN_CONTENT_SCOPE",
+      "administration_start": "2026-07-01",
+      "administration_end": "2027-02-28",
+      "normalization_notes": "Official hierarchy heading; not a completeness terminal."
+    },
+    {
+      "stable_id": "civpro-topic-final-judgment-rule",
+      "parent_id": "civpro-section-vii-appealability-review",
+      "official_label": "Final judgment rule",
+      "source_locator": "p. 13, VII.A",
+      "ordering": 710,
+      "is_terminal": true,
+      "official_marker": "UNSTARRED",
+      "knowledge_treatment": "RECOGNITION_WITH_OR_WITHOUT_RESOURCES",
+      "planning_group_scope_item_id": "civil-procedure-appeals",
+      "source_artifact_id": "NCBE_NEXTGEN_CONTENT_SCOPE",
+      "administration_start": "2026-07-01",
+      "administration_end": "2027-02-28",
+      "normalization_notes": "Short factual terminal-topic identity and marker transcribed from the hash-identified official source; explanatory source prose is not reproduced."
+    },
+    {
+      "stable_id": "civpro-topic-interlocutory-review",
+      "parent_id": "civpro-section-vii-appealability-review",
+      "official_label": "Availability of interlocutory review",
+      "source_locator": "p. 13, VII.B",
+      "ordering": 720,
+      "is_terminal": true,
+      "official_marker": "UNSTARRED",
+      "knowledge_treatment": "RECOGNITION_WITH_OR_WITHOUT_RESOURCES",
+      "planning_group_scope_item_id": "civil-procedure-appeals",
+      "source_artifact_id": "NCBE_NEXTGEN_CONTENT_SCOPE",
+      "administration_start": "2026-07-01",
+      "administration_end": "2027-02-28",
+      "normalization_notes": "Short factual terminal-topic identity and marker transcribed from the hash-identified official source; explanatory source prose is not reproduced."
+    },
+    {
+      "stable_id": "civpro-topic-standards-review",
+      "parent_id": "civpro-section-vii-appealability-review",
+      "official_label": "Standard of review on appeal",
+      "source_locator": "p. 13, VII.C",
+      "ordering": 730,
+      "is_terminal": true,
+      "official_marker": "UNSTARRED",
+      "knowledge_treatment": "RECOGNITION_WITH_OR_WITHOUT_RESOURCES",
+      "planning_group_scope_item_id": "civil-procedure-appeals",
+      "source_artifact_id": "NCBE_NEXTGEN_CONTENT_SCOPE",
+      "administration_start": "2026-07-01",
+      "administration_end": "2027-02-28",
+      "normalization_notes": "Short factual terminal-topic identity and marker transcribed from the hash-identified official source; explanatory source prose is not reproduced."
+    }
+  ],
+  "coverage_requirements": [
+    {
+      "stable_id": "civpro-federal-question",
+      "official_topic_id": "civpro-topic-federal-question-jurisdiction",
+      "planning_group_scope_item_id": "civil-procedure-jurisdiction",
+      "doctrinal_subarea": "Federal-question jurisdiction, including the well-pleaded-complaint and arising-under boundaries.",
+      "requirement_type": "GOVERNING_RULE",
+      "treatment_requirement": "RECALL",
+      "allowed_obligation_kinds": [
+        "RULE",
+        "ELEMENT",
+        "LIMITATION"
+      ],
+      "required_for_subject_completion": true,
+      "review_required": true,
+      "slots": [
+        {
+          "stable_id": "civpro-federal-question-rule",
+          "obligation_kind": "RULE",
+          "minimum_count": 1
+        },
+        {
+          "stable_id": "civpro-federal-question-element",
+          "obligation_kind": "ELEMENT",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-federal-question-rule",
+              "relationship_kind": "HAS_ELEMENT"
+            }
+          ]
+        },
+        {
+          "stable_id": "civpro-federal-question-limitation",
+          "obligation_kind": "LIMITATION",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-federal-question-rule",
+              "relationship_kind": "HAS_LIMITATION"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "stable_id": "civpro-diversity",
+      "official_topic_id": "civpro-topic-diversity-jurisdiction",
+      "planning_group_scope_item_id": "civil-procedure-jurisdiction",
+      "doctrinal_subarea": "Diversity jurisdiction, citizenship, complete diversity, amount in controversy, and aggregation.",
+      "requirement_type": "ELEMENTS_FACTORS",
+      "treatment_requirement": "RECALL",
+      "allowed_obligation_kinds": [
+        "RULE",
+        "ELEMENT",
+        "DISTINCTION",
+        "LIMITATION"
+      ],
+      "required_for_subject_completion": true,
+      "review_required": true,
+      "slots": [
+        {
+          "stable_id": "civpro-diversity-rule",
+          "obligation_kind": "RULE",
+          "minimum_count": 1
+        },
+        {
+          "stable_id": "civpro-diversity-element",
+          "obligation_kind": "ELEMENT",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-diversity-rule",
+              "relationship_kind": "HAS_ELEMENT"
+            }
+          ]
+        },
+        {
+          "stable_id": "civpro-diversity-distinction",
+          "obligation_kind": "DISTINCTION",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-diversity-rule",
+              "relationship_kind": "HAS_DISTINCTION"
+            }
+          ]
+        },
+        {
+          "stable_id": "civpro-diversity-limitation",
+          "obligation_kind": "LIMITATION",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-diversity-rule",
+              "relationship_kind": "HAS_LIMITATION"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "stable_id": "civpro-supplemental",
+      "official_topic_id": "civpro-topic-supplemental-jurisdiction",
+      "planning_group_scope_item_id": "civil-procedure-jurisdiction",
+      "doctrinal_subarea": "Supplemental jurisdiction, statutory inclusion limits, and discretionary declination.",
+      "requirement_type": "EXCEPTIONS_LIMITATIONS",
+      "treatment_requirement": "RECOGNITION_WITH_OR_WITHOUT_RESOURCES",
+      "allowed_obligation_kinds": [
+        "RULE",
+        "ELEMENT",
+        "EXCEPTION",
+        "LIMITATION"
+      ],
+      "required_for_subject_completion": true,
+      "review_required": true,
+      "slots": [
+        {
+          "stable_id": "civpro-supplemental-rule",
+          "obligation_kind": "RULE",
+          "minimum_count": 1
+        },
+        {
+          "stable_id": "civpro-supplemental-element",
+          "obligation_kind": "ELEMENT",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-supplemental-rule",
+              "relationship_kind": "HAS_ELEMENT"
+            }
+          ]
+        },
+        {
+          "stable_id": "civpro-supplemental-exception",
+          "obligation_kind": "EXCEPTION",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-supplemental-rule",
+              "relationship_kind": "HAS_EXCEPTION"
+            }
+          ]
+        },
+        {
+          "stable_id": "civpro-supplemental-limitation",
+          "obligation_kind": "LIMITATION",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-supplemental-rule",
+              "relationship_kind": "HAS_LIMITATION"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "stable_id": "civpro-concurrent-jurisdiction",
+      "official_topic_id": "civpro-topic-concurrent-removal-jurisdiction",
+      "planning_group_scope_item_id": "civil-procedure-jurisdiction",
+      "doctrinal_subarea": "Concurrent federal and state court authority where the official combined topic requires it.",
+      "requirement_type": "DISTINCTIONS_DEFINITIONS",
+      "treatment_requirement": "RECALL",
+      "allowed_obligation_kinds": [
+        "RULE",
+        "DISTINCTION"
+      ],
+      "required_for_subject_completion": true,
+      "review_required": true,
+      "slots": [
+        {
+          "stable_id": "civpro-concurrent-jurisdiction-rule",
+          "obligation_kind": "RULE",
+          "minimum_count": 1
+        },
+        {
+          "stable_id": "civpro-concurrent-jurisdiction-distinction",
+          "obligation_kind": "DISTINCTION",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-concurrent-jurisdiction-rule",
+              "relationship_kind": "HAS_DISTINCTION"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "stable_id": "civpro-removal-remand",
+      "official_topic_id": "civpro-topic-concurrent-removal-jurisdiction",
+      "planning_group_scope_item_id": "civil-procedure-jurisdiction",
+      "doctrinal_subarea": "Removal eligibility and procedure, remand grounds and procedure, and destination district.",
+      "requirement_type": "PROCEDURAL_BRANCHING",
+      "treatment_requirement": "RECALL",
+      "allowed_obligation_kinds": [
+        "RULE",
+        "PROCEDURAL_STEP",
+        "LIMITATION",
+        "REMEDY"
+      ],
+      "required_for_subject_completion": true,
+      "review_required": true,
+      "slots": [
+        {
+          "stable_id": "civpro-removal-remand-rule",
+          "obligation_kind": "RULE",
+          "minimum_count": 1
+        },
+        {
+          "stable_id": "civpro-removal-remand-procedural-step",
+          "obligation_kind": "PROCEDURAL_STEP",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-removal-remand-rule",
+              "relationship_kind": "HAS_PROCEDURAL_STEP"
+            }
+          ]
+        },
+        {
+          "stable_id": "civpro-removal-remand-limitation",
+          "obligation_kind": "LIMITATION",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-removal-remand-rule",
+              "relationship_kind": "HAS_LIMITATION"
+            }
+          ]
+        },
+        {
+          "stable_id": "civpro-removal-remand-remedy",
+          "obligation_kind": "REMEDY",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-removal-remand-rule",
+              "relationship_kind": "HAS_REMEDY"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "stable_id": "civpro-personal-specific",
+      "official_topic_id": "civpro-topic-personal-jurisdiction",
+      "planning_group_scope_item_id": "civil-procedure-jurisdiction",
+      "doctrinal_subarea": "Specific personal jurisdiction and constitutional contacts, relatedness, and reasonableness.",
+      "requirement_type": "ELEMENTS_FACTORS",
+      "treatment_requirement": "RECALL",
+      "allowed_obligation_kinds": [
+        "RULE",
+        "FACTOR",
+        "LIMITATION"
+      ],
+      "required_for_subject_completion": true,
+      "review_required": true,
+      "slots": [
+        {
+          "stable_id": "civpro-personal-specific-rule",
+          "obligation_kind": "RULE",
+          "minimum_count": 1
+        },
+        {
+          "stable_id": "civpro-personal-specific-factor",
+          "obligation_kind": "FACTOR",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-personal-specific-rule",
+              "relationship_kind": "HAS_FACTOR"
+            }
+          ]
+        },
+        {
+          "stable_id": "civpro-personal-specific-limitation",
+          "obligation_kind": "LIMITATION",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-personal-specific-rule",
+              "relationship_kind": "HAS_LIMITATION"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "stable_id": "civpro-personal-general",
+      "official_topic_id": "civpro-topic-personal-jurisdiction",
+      "planning_group_scope_item_id": "civil-procedure-jurisdiction",
+      "doctrinal_subarea": "General personal jurisdiction for individuals and entities and the at-home distinction.",
+      "requirement_type": "DISTINCTIONS_DEFINITIONS",
+      "treatment_requirement": "RECALL",
+      "allowed_obligation_kinds": [
+        "RULE",
+        "ELEMENT",
+        "DISTINCTION"
+      ],
+      "required_for_subject_completion": true,
+      "review_required": true,
+      "slots": [
+        {
+          "stable_id": "civpro-personal-general-rule",
+          "obligation_kind": "RULE",
+          "minimum_count": 1
+        },
+        {
+          "stable_id": "civpro-personal-general-element",
+          "obligation_kind": "ELEMENT",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-personal-general-rule",
+              "relationship_kind": "HAS_ELEMENT"
+            }
+          ]
+        },
+        {
+          "stable_id": "civpro-personal-general-distinction",
+          "obligation_kind": "DISTINCTION",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-personal-general-rule",
+              "relationship_kind": "HAS_DISTINCTION"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "stable_id": "civpro-personal-authority-consent-waiver",
+      "official_topic_id": "civpro-topic-personal-jurisdiction",
+      "planning_group_scope_item_id": "civil-procedure-jurisdiction",
+      "doctrinal_subarea": "Long-arm authority, consent, and waiver within the personal-jurisdiction perimeter.",
+      "requirement_type": "PROCEDURAL_BRANCHING",
+      "treatment_requirement": "RECALL",
+      "allowed_obligation_kinds": [
+        "RULE",
+        "PROCEDURAL_STEP",
+        "DISTINCTION",
+        "LIMITATION"
+      ],
+      "required_for_subject_completion": true,
+      "review_required": true,
+      "slots": [
+        {
+          "stable_id": "civpro-personal-authority-consent-waiver-rule",
+          "obligation_kind": "RULE",
+          "minimum_count": 1
+        },
+        {
+          "stable_id": "civpro-personal-authority-consent-waiver-procedural-step",
+          "obligation_kind": "PROCEDURAL_STEP",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-personal-authority-consent-waiver-rule",
+              "relationship_kind": "HAS_PROCEDURAL_STEP"
+            }
+          ]
+        },
+        {
+          "stable_id": "civpro-personal-authority-consent-waiver-distinction",
+          "obligation_kind": "DISTINCTION",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-personal-authority-consent-waiver-rule",
+              "relationship_kind": "HAS_DISTINCTION"
+            }
+          ]
+        },
+        {
+          "stable_id": "civpro-personal-authority-consent-waiver-limitation",
+          "obligation_kind": "LIMITATION",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-personal-authority-consent-waiver-rule",
+              "relationship_kind": "HAS_LIMITATION"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "stable_id": "civpro-notice-constitutional",
+      "official_topic_id": "civpro-topic-service-process-notice",
+      "planning_group_scope_item_id": "civil-procedure-service-process-notice",
+      "doctrinal_subarea": "Constitutional sufficiency of notice.",
+      "requirement_type": "ELEMENTS_FACTORS",
+      "treatment_requirement": "RECOGNITION_WITH_OR_WITHOUT_RESOURCES",
+      "allowed_obligation_kinds": [
+        "RULE",
+        "FACTOR",
+        "LIMITATION"
+      ],
+      "required_for_subject_completion": true,
+      "review_required": true,
+      "slots": [
+        {
+          "stable_id": "civpro-notice-constitutional-rule",
+          "obligation_kind": "RULE",
+          "minimum_count": 1
+        },
+        {
+          "stable_id": "civpro-notice-constitutional-factor",
+          "obligation_kind": "FACTOR",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-notice-constitutional-rule",
+              "relationship_kind": "HAS_FACTOR"
+            }
+          ]
+        },
+        {
+          "stable_id": "civpro-notice-constitutional-limitation",
+          "obligation_kind": "LIMITATION",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-notice-constitutional-rule",
+              "relationship_kind": "HAS_LIMITATION"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "stable_id": "civpro-service-methods",
+      "official_topic_id": "civpro-topic-service-process-notice",
+      "planning_group_scope_item_id": "civil-procedure-service-process-notice",
+      "doctrinal_subarea": "Permitted service methods for individuals and entities.",
+      "requirement_type": "PROCEDURAL_BRANCHING",
+      "treatment_requirement": "RECOGNITION_WITH_OR_WITHOUT_RESOURCES",
+      "allowed_obligation_kinds": [
+        "RULE",
+        "PROCEDURAL_STEP",
+        "DISTINCTION"
+      ],
+      "required_for_subject_completion": true,
+      "review_required": true,
+      "slots": [
+        {
+          "stable_id": "civpro-service-methods-rule",
+          "obligation_kind": "RULE",
+          "minimum_count": 1
+        },
+        {
+          "stable_id": "civpro-service-methods-procedural-step",
+          "obligation_kind": "PROCEDURAL_STEP",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-service-methods-rule",
+              "relationship_kind": "HAS_PROCEDURAL_STEP"
+            }
+          ]
+        },
+        {
+          "stable_id": "civpro-service-methods-distinction",
+          "obligation_kind": "DISTINCTION",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-service-methods-rule",
+              "relationship_kind": "HAS_DISTINCTION"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "stable_id": "civpro-service-waiver",
+      "official_topic_id": "civpro-topic-service-process-notice",
+      "planning_group_scope_item_id": "civil-procedure-service-process-notice",
+      "doctrinal_subarea": "Waiver of service within the official perimeter.",
+      "requirement_type": "PROCEDURAL_BRANCHING",
+      "treatment_requirement": "RECOGNITION_WITH_OR_WITHOUT_RESOURCES",
+      "allowed_obligation_kinds": [
+        "RULE",
+        "PROCEDURAL_STEP",
+        "LIMITATION"
+      ],
+      "required_for_subject_completion": true,
+      "review_required": true,
+      "slots": [
+        {
+          "stable_id": "civpro-service-waiver-rule",
+          "obligation_kind": "RULE",
+          "minimum_count": 1
+        },
+        {
+          "stable_id": "civpro-service-waiver-procedural-step",
+          "obligation_kind": "PROCEDURAL_STEP",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-service-waiver-rule",
+              "relationship_kind": "HAS_PROCEDURAL_STEP"
+            }
+          ]
+        },
+        {
+          "stable_id": "civpro-service-waiver-limitation",
+          "obligation_kind": "LIMITATION",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-service-waiver-rule",
+              "relationship_kind": "HAS_LIMITATION"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "stable_id": "civpro-venue-selection",
+      "official_topic_id": "civpro-topic-venue-forum-transfer",
+      "planning_group_scope_item_id": "civil-procedure-venue-transfer",
+      "doctrinal_subarea": "Initial federal venue selection.",
+      "requirement_type": "ELEMENTS_FACTORS",
+      "treatment_requirement": "RECOGNITION_WITH_OR_WITHOUT_RESOURCES",
+      "allowed_obligation_kinds": [
+        "RULE",
+        "ELEMENT",
+        "LIMITATION"
+      ],
+      "required_for_subject_completion": true,
+      "review_required": true,
+      "slots": [
+        {
+          "stable_id": "civpro-venue-selection-rule",
+          "obligation_kind": "RULE",
+          "minimum_count": 1
+        },
+        {
+          "stable_id": "civpro-venue-selection-element",
+          "obligation_kind": "ELEMENT",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-venue-selection-rule",
+              "relationship_kind": "HAS_ELEMENT"
+            }
+          ]
+        },
+        {
+          "stable_id": "civpro-venue-selection-limitation",
+          "obligation_kind": "LIMITATION",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-venue-selection-rule",
+              "relationship_kind": "HAS_LIMITATION"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "stable_id": "civpro-venue-improper-cure",
+      "official_topic_id": "civpro-topic-venue-forum-transfer",
+      "planning_group_scope_item_id": "civil-procedure-venue-transfer",
+      "doctrinal_subarea": "Improper venue and available cure.",
+      "requirement_type": "CONSEQUENCES_REMEDIES",
+      "treatment_requirement": "RECOGNITION_WITH_OR_WITHOUT_RESOURCES",
+      "allowed_obligation_kinds": [
+        "RULE",
+        "PROCEDURAL_STEP",
+        "REMEDY"
+      ],
+      "required_for_subject_completion": true,
+      "review_required": true,
+      "slots": [
+        {
+          "stable_id": "civpro-venue-improper-cure-rule",
+          "obligation_kind": "RULE",
+          "minimum_count": 1
+        },
+        {
+          "stable_id": "civpro-venue-improper-cure-procedural-step",
+          "obligation_kind": "PROCEDURAL_STEP",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-venue-improper-cure-rule",
+              "relationship_kind": "HAS_PROCEDURAL_STEP"
+            }
+          ]
+        },
+        {
+          "stable_id": "civpro-venue-improper-cure-remedy",
+          "obligation_kind": "REMEDY",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-venue-improper-cure-rule",
+              "relationship_kind": "HAS_REMEDY"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "stable_id": "civpro-venue-transfer",
+      "official_topic_id": "civpro-topic-venue-forum-transfer",
+      "planning_group_scope_item_id": "civil-procedure-venue-transfer",
+      "doctrinal_subarea": "Statutory transfer rules and relevant branch distinctions.",
+      "requirement_type": "PROCEDURAL_BRANCHING",
+      "treatment_requirement": "RECOGNITION_WITH_OR_WITHOUT_RESOURCES",
+      "allowed_obligation_kinds": [
+        "RULE",
+        "FACTOR",
+        "PROCEDURAL_STEP",
+        "DISTINCTION"
+      ],
+      "required_for_subject_completion": true,
+      "review_required": true,
+      "slots": [
+        {
+          "stable_id": "civpro-venue-transfer-rule",
+          "obligation_kind": "RULE",
+          "minimum_count": 1
+        },
+        {
+          "stable_id": "civpro-venue-transfer-factor",
+          "obligation_kind": "FACTOR",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-venue-transfer-rule",
+              "relationship_kind": "HAS_FACTOR"
+            }
+          ]
+        },
+        {
+          "stable_id": "civpro-venue-transfer-procedural-step",
+          "obligation_kind": "PROCEDURAL_STEP",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-venue-transfer-rule",
+              "relationship_kind": "HAS_PROCEDURAL_STEP"
+            }
+          ]
+        },
+        {
+          "stable_id": "civpro-venue-transfer-distinction",
+          "obligation_kind": "DISTINCTION",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-venue-transfer-rule",
+              "relationship_kind": "HAS_DISTINCTION"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "stable_id": "civpro-forum-non-conveniens",
+      "official_topic_id": "civpro-topic-venue-forum-transfer",
+      "planning_group_scope_item_id": "civil-procedure-venue-transfer",
+      "doctrinal_subarea": "Forum non conveniens dismissal as distinct from statutory transfer and venue cure.",
+      "requirement_type": "CONSEQUENCES_REMEDIES",
+      "treatment_requirement": "RECOGNITION_WITH_OR_WITHOUT_RESOURCES",
+      "allowed_obligation_kinds": [
+        "RULE",
+        "FACTOR",
+        "REMEDY",
+        "DISTINCTION"
+      ],
+      "required_for_subject_completion": true,
+      "review_required": true,
+      "slots": [
+        {
+          "stable_id": "civpro-forum-non-conveniens-rule",
+          "obligation_kind": "RULE",
+          "minimum_count": 1
+        },
+        {
+          "stable_id": "civpro-forum-non-conveniens-factor",
+          "obligation_kind": "FACTOR",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-forum-non-conveniens-rule",
+              "relationship_kind": "HAS_FACTOR"
+            }
+          ]
+        },
+        {
+          "stable_id": "civpro-forum-non-conveniens-remedy",
+          "obligation_kind": "REMEDY",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-forum-non-conveniens-rule",
+              "relationship_kind": "HAS_REMEDY"
+            }
+          ]
+        },
+        {
+          "stable_id": "civpro-forum-non-conveniens-distinction",
+          "obligation_kind": "DISTINCTION",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-forum-non-conveniens-rule",
+              "relationship_kind": "HAS_DISTINCTION"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "stable_id": "civpro-erie-substance-procedure",
+      "official_topic_id": "civpro-topic-state-law-federal-court",
+      "planning_group_scope_item_id": "civil-procedure-litigation",
+      "doctrinal_subarea": "Erie substance/procedure branch and circumstances in which state substantive law displaces federal decisional law.",
+      "requirement_type": "DISTINCTIONS_DEFINITIONS",
+      "treatment_requirement": "RECOGNITION_WITH_OR_WITHOUT_RESOURCES",
+      "allowed_obligation_kinds": [
+        "RULE",
+        "DISTINCTION",
+        "LIMITATION"
+      ],
+      "required_for_subject_completion": true,
+      "review_required": true,
+      "slots": [
+        {
+          "stable_id": "civpro-erie-substance-procedure-rule",
+          "obligation_kind": "RULE",
+          "minimum_count": 1
+        },
+        {
+          "stable_id": "civpro-erie-substance-procedure-distinction",
+          "obligation_kind": "DISTINCTION",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-erie-substance-procedure-rule",
+              "relationship_kind": "HAS_DISTINCTION"
+            }
+          ]
+        },
+        {
+          "stable_id": "civpro-erie-substance-procedure-limitation",
+          "obligation_kind": "LIMITATION",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-erie-substance-procedure-rule",
+              "relationship_kind": "HAS_LIMITATION"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "stable_id": "civpro-erie-federal-rule-on-point",
+      "official_topic_id": "civpro-topic-state-law-federal-court",
+      "planning_group_scope_item_id": "civil-procedure-litigation",
+      "doctrinal_subarea": "Federal-rule-directly-on-point and Rules Enabling Act branch when those authorities are implicated.",
+      "requirement_type": "PROCEDURAL_BRANCHING",
+      "treatment_requirement": "RECOGNITION_WITH_OR_WITHOUT_RESOURCES",
+      "allowed_obligation_kinds": [
+        "RULE",
+        "ELEMENT",
+        "DISTINCTION",
+        "LIMITATION"
+      ],
+      "required_for_subject_completion": true,
+      "review_required": true,
+      "slots": [
+        {
+          "stable_id": "civpro-erie-federal-rule-on-point-rule",
+          "obligation_kind": "RULE",
+          "minimum_count": 1
+        },
+        {
+          "stable_id": "civpro-erie-federal-rule-on-point-element",
+          "obligation_kind": "ELEMENT",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-erie-federal-rule-on-point-rule",
+              "relationship_kind": "HAS_ELEMENT"
+            }
+          ]
+        },
+        {
+          "stable_id": "civpro-erie-federal-rule-on-point-distinction",
+          "obligation_kind": "DISTINCTION",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-erie-federal-rule-on-point-rule",
+              "relationship_kind": "HAS_DISTINCTION"
+            }
+          ]
+        },
+        {
+          "stable_id": "civpro-erie-federal-rule-on-point-limitation",
+          "obligation_kind": "LIMITATION",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-erie-federal-rule-on-point-rule",
+              "relationship_kind": "HAS_LIMITATION"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "stable_id": "civpro-erie-choice-of-law",
+      "official_topic_id": "civpro-topic-state-law-federal-court",
+      "planning_group_scope_item_id": "civil-procedure-litigation",
+      "doctrinal_subarea": "State choice-of-law treatment within the national federal Erie inquiry.",
+      "requirement_type": "PROCEDURAL_BRANCHING",
+      "treatment_requirement": "RECOGNITION_WITH_OR_WITHOUT_RESOURCES",
+      "allowed_obligation_kinds": [
+        "RULE",
+        "PROCEDURAL_STEP",
+        "DISTINCTION"
+      ],
+      "required_for_subject_completion": true,
+      "review_required": true,
+      "slots": [
+        {
+          "stable_id": "civpro-erie-choice-of-law-rule",
+          "obligation_kind": "RULE",
+          "minimum_count": 1
+        },
+        {
+          "stable_id": "civpro-erie-choice-of-law-procedural-step",
+          "obligation_kind": "PROCEDURAL_STEP",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-erie-choice-of-law-rule",
+              "relationship_kind": "HAS_PROCEDURAL_STEP"
+            }
+          ]
+        },
+        {
+          "stable_id": "civpro-erie-choice-of-law-distinction",
+          "obligation_kind": "DISTINCTION",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-erie-choice-of-law-rule",
+              "relationship_kind": "HAS_DISTINCTION"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "stable_id": "civpro-preliminary-injunctions-tro",
+      "official_topic_id": "civpro-topic-preliminary-injunctions-tro",
+      "planning_group_scope_item_id": "civil-procedure-litigation",
+      "doctrinal_subarea": "Temporary restraining orders and preliminary injunctions as status-quo devices, including the preliminary-to-permanent relationship.",
+      "requirement_type": "DISTINCTIONS_DEFINITIONS",
+      "treatment_requirement": "RECOGNITION_WITH_OR_WITHOUT_RESOURCES",
+      "allowed_obligation_kinds": [
+        "RULE",
+        "DISTINCTION",
+        "FACTOR",
+        "PROCEDURAL_STEP",
+        "LIMITATION",
+        "REMEDY"
+      ],
+      "required_for_subject_completion": true,
+      "review_required": true,
+      "slots": [
+        {
+          "stable_id": "civpro-preliminary-injunctions-tro-rule",
+          "obligation_kind": "RULE",
+          "minimum_count": 1
+        },
+        {
+          "stable_id": "civpro-preliminary-injunctions-tro-distinction",
+          "obligation_kind": "DISTINCTION",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-preliminary-injunctions-tro-rule",
+              "relationship_kind": "HAS_DISTINCTION"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "stable_id": "civpro-pleading-standards-responsive",
+      "official_topic_id": "civpro-topic-pleadings-amended-pleadings",
+      "planning_group_scope_item_id": "civil-procedure-litigation",
+      "doctrinal_subarea": "Complaint and answer pleading standards and responsive pleadings within the official pleading topic.",
+      "requirement_type": "GOVERNING_RULE",
+      "treatment_requirement": "RECALL",
+      "allowed_obligation_kinds": [
+        "RULE",
+        "ELEMENT",
+        "PROCEDURAL_STEP",
+        "LIMITATION"
+      ],
+      "required_for_subject_completion": true,
+      "review_required": true,
+      "slots": [
+        {
+          "stable_id": "civpro-pleading-standards-responsive-rule",
+          "obligation_kind": "RULE",
+          "minimum_count": 1
+        },
+        {
+          "stable_id": "civpro-pleading-standards-responsive-element",
+          "obligation_kind": "ELEMENT",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-pleading-standards-responsive-rule",
+              "relationship_kind": "HAS_ELEMENT"
+            }
+          ]
+        },
+        {
+          "stable_id": "civpro-pleading-standards-responsive-procedural-step",
+          "obligation_kind": "PROCEDURAL_STEP",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-pleading-standards-responsive-rule",
+              "relationship_kind": "HAS_PROCEDURAL_STEP"
+            }
+          ]
+        },
+        {
+          "stable_id": "civpro-pleading-standards-responsive-limitation",
+          "obligation_kind": "LIMITATION",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-pleading-standards-responsive-rule",
+              "relationship_kind": "HAS_LIMITATION"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "stable_id": "civpro-amendments-relation-back",
+      "official_topic_id": "civpro-topic-pleadings-amended-pleadings",
+      "planning_group_scope_item_id": "civil-procedure-litigation",
+      "doctrinal_subarea": "Amended pleadings and relation back.",
+      "requirement_type": "PROCEDURAL_BRANCHING",
+      "treatment_requirement": "RECALL",
+      "allowed_obligation_kinds": [
+        "RULE",
+        "ELEMENT",
+        "PROCEDURAL_STEP",
+        "LIMITATION"
+      ],
+      "required_for_subject_completion": true,
+      "review_required": true,
+      "slots": [
+        {
+          "stable_id": "civpro-amendments-relation-back-rule",
+          "obligation_kind": "RULE",
+          "minimum_count": 1
+        },
+        {
+          "stable_id": "civpro-amendments-relation-back-element",
+          "obligation_kind": "ELEMENT",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-amendments-relation-back-rule",
+              "relationship_kind": "HAS_ELEMENT"
+            }
+          ]
+        },
+        {
+          "stable_id": "civpro-amendments-relation-back-procedural-step",
+          "obligation_kind": "PROCEDURAL_STEP",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-amendments-relation-back-rule",
+              "relationship_kind": "HAS_PROCEDURAL_STEP"
+            }
+          ]
+        },
+        {
+          "stable_id": "civpro-amendments-relation-back-limitation",
+          "obligation_kind": "LIMITATION",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-amendments-relation-back-rule",
+              "relationship_kind": "HAS_LIMITATION"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "stable_id": "civpro-rule-11",
+      "official_topic_id": "civpro-topic-rule-11",
+      "planning_group_scope_item_id": "civil-procedure-litigation",
+      "doctrinal_subarea": "Rule 11 inquiry, support, purpose, timing, procedure, and bounded sanctions consequences.",
+      "requirement_type": "PROCEDURAL_BRANCHING",
+      "treatment_requirement": "RECALL",
+      "allowed_obligation_kinds": [
+        "RULE",
+        "ELEMENT",
+        "PROCEDURAL_STEP",
+        "LIMITATION",
+        "REMEDY"
+      ],
+      "required_for_subject_completion": true,
+      "review_required": true,
+      "slots": [
+        {
+          "stable_id": "civpro-rule-11-rule",
+          "obligation_kind": "RULE",
+          "minimum_count": 1
+        },
+        {
+          "stable_id": "civpro-rule-11-element",
+          "obligation_kind": "ELEMENT",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-rule-11-rule",
+              "relationship_kind": "HAS_ELEMENT"
+            }
+          ]
+        },
+        {
+          "stable_id": "civpro-rule-11-procedural-step",
+          "obligation_kind": "PROCEDURAL_STEP",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-rule-11-rule",
+              "relationship_kind": "HAS_PROCEDURAL_STEP"
+            }
+          ]
+        },
+        {
+          "stable_id": "civpro-rule-11-limitation",
+          "obligation_kind": "LIMITATION",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-rule-11-rule",
+              "relationship_kind": "HAS_LIMITATION"
+            }
+          ]
+        },
+        {
+          "stable_id": "civpro-rule-11-remedy",
+          "obligation_kind": "REMEDY",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-rule-11-rule",
+              "relationship_kind": "HAS_REMEDY"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "stable_id": "civpro-joinder-claims",
+      "official_topic_id": "civpro-topic-joinder-claims-parties",
+      "planning_group_scope_item_id": "civil-procedure-litigation",
+      "doctrinal_subarea": "Joinder of multiple claims.",
+      "requirement_type": "ELEMENTS_FACTORS",
+      "treatment_requirement": "RECALL",
+      "allowed_obligation_kinds": [
+        "RULE",
+        "ELEMENT",
+        "LIMITATION"
+      ],
+      "required_for_subject_completion": true,
+      "review_required": true,
+      "slots": [
+        {
+          "stable_id": "civpro-joinder-claims-rule",
+          "obligation_kind": "RULE",
+          "minimum_count": 1
+        },
+        {
+          "stable_id": "civpro-joinder-claims-element",
+          "obligation_kind": "ELEMENT",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-joinder-claims-rule",
+              "relationship_kind": "HAS_ELEMENT"
+            }
+          ]
+        },
+        {
+          "stable_id": "civpro-joinder-claims-limitation",
+          "obligation_kind": "LIMITATION",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-joinder-claims-rule",
+              "relationship_kind": "HAS_LIMITATION"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "stable_id": "civpro-joinder-parties",
+      "official_topic_id": "civpro-topic-joinder-claims-parties",
+      "planning_group_scope_item_id": "civil-procedure-litigation",
+      "doctrinal_subarea": "Joinder of parties.",
+      "requirement_type": "ELEMENTS_FACTORS",
+      "treatment_requirement": "RECALL",
+      "allowed_obligation_kinds": [
+        "RULE",
+        "ELEMENT",
+        "LIMITATION"
+      ],
+      "required_for_subject_completion": true,
+      "review_required": true,
+      "slots": [
+        {
+          "stable_id": "civpro-joinder-parties-rule",
+          "obligation_kind": "RULE",
+          "minimum_count": 1
+        },
+        {
+          "stable_id": "civpro-joinder-parties-element",
+          "obligation_kind": "ELEMENT",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-joinder-parties-rule",
+              "relationship_kind": "HAS_ELEMENT"
+            }
+          ]
+        },
+        {
+          "stable_id": "civpro-joinder-parties-limitation",
+          "obligation_kind": "LIMITATION",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-joinder-parties-rule",
+              "relationship_kind": "HAS_LIMITATION"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "stable_id": "civpro-counterclaims-crossclaims",
+      "official_topic_id": "civpro-topic-joinder-claims-parties",
+      "planning_group_scope_item_id": "civil-procedure-litigation",
+      "doctrinal_subarea": "Counterclaims and crossclaims with their distinct procedural classifications.",
+      "requirement_type": "PROCEDURAL_BRANCHING",
+      "treatment_requirement": "RECALL",
+      "allowed_obligation_kinds": [
+        "RULE",
+        "PROCEDURAL_STEP",
+        "DISTINCTION",
+        "LIMITATION"
+      ],
+      "required_for_subject_completion": true,
+      "review_required": true,
+      "slots": [
+        {
+          "stable_id": "civpro-counterclaims-crossclaims-rule",
+          "obligation_kind": "RULE",
+          "minimum_count": 1
+        },
+        {
+          "stable_id": "civpro-counterclaims-crossclaims-procedural-step",
+          "obligation_kind": "PROCEDURAL_STEP",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-counterclaims-crossclaims-rule",
+              "relationship_kind": "HAS_PROCEDURAL_STEP"
+            }
+          ]
+        },
+        {
+          "stable_id": "civpro-counterclaims-crossclaims-distinction",
+          "obligation_kind": "DISTINCTION",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-counterclaims-crossclaims-rule",
+              "relationship_kind": "HAS_DISTINCTION"
+            }
+          ]
+        },
+        {
+          "stable_id": "civpro-counterclaims-crossclaims-limitation",
+          "obligation_kind": "LIMITATION",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-counterclaims-crossclaims-rule",
+              "relationship_kind": "HAS_LIMITATION"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "stable_id": "civpro-impleader",
+      "official_topic_id": "civpro-topic-joinder-claims-parties",
+      "planning_group_scope_item_id": "civil-procedure-litigation",
+      "doctrinal_subarea": "Third-party practice and impleader.",
+      "requirement_type": "PROCEDURAL_BRANCHING",
+      "treatment_requirement": "RECALL",
+      "allowed_obligation_kinds": [
+        "RULE",
+        "ELEMENT",
+        "PROCEDURAL_STEP",
+        "LIMITATION"
+      ],
+      "required_for_subject_completion": true,
+      "review_required": true,
+      "slots": [
+        {
+          "stable_id": "civpro-impleader-rule",
+          "obligation_kind": "RULE",
+          "minimum_count": 1
+        },
+        {
+          "stable_id": "civpro-impleader-element",
+          "obligation_kind": "ELEMENT",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-impleader-rule",
+              "relationship_kind": "HAS_ELEMENT"
+            }
+          ]
+        },
+        {
+          "stable_id": "civpro-impleader-procedural-step",
+          "obligation_kind": "PROCEDURAL_STEP",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-impleader-rule",
+              "relationship_kind": "HAS_PROCEDURAL_STEP"
+            }
+          ]
+        },
+        {
+          "stable_id": "civpro-impleader-limitation",
+          "obligation_kind": "LIMITATION",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-impleader-rule",
+              "relationship_kind": "HAS_LIMITATION"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "stable_id": "civpro-severance",
+      "official_topic_id": "civpro-topic-joinder-claims-parties",
+      "planning_group_scope_item_id": "civil-procedure-litigation",
+      "doctrinal_subarea": "The court's overriding power to sever within the official joinder topic.",
+      "requirement_type": "CONSEQUENCES_REMEDIES",
+      "treatment_requirement": "RECALL",
+      "allowed_obligation_kinds": [
+        "RULE",
+        "FACTOR",
+        "REMEDY"
+      ],
+      "required_for_subject_completion": true,
+      "review_required": true,
+      "slots": [
+        {
+          "stable_id": "civpro-severance-rule",
+          "obligation_kind": "RULE",
+          "minimum_count": 1
+        },
+        {
+          "stable_id": "civpro-severance-remedy",
+          "obligation_kind": "REMEDY",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-severance-rule",
+              "relationship_kind": "HAS_REMEDY"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "stable_id": "civpro-intervention",
+      "official_topic_id": "civpro-topic-intervention-rule-24",
+      "planning_group_scope_item_id": "civil-procedure-litigation",
+      "doctrinal_subarea": "Intervention as of right and permissive intervention, including circumstances barring intervention.",
+      "requirement_type": "EXCEPTIONS_LIMITATIONS",
+      "treatment_requirement": "RECOGNITION_WITH_OR_WITHOUT_RESOURCES",
+      "allowed_obligation_kinds": [
+        "RULE",
+        "ELEMENT",
+        "LIMITATION",
+        "DISTINCTION"
+      ],
+      "required_for_subject_completion": true,
+      "review_required": true,
+      "slots": [
+        {
+          "stable_id": "civpro-intervention-rule",
+          "obligation_kind": "RULE",
+          "minimum_count": 1
+        },
+        {
+          "stable_id": "civpro-intervention-element",
+          "obligation_kind": "ELEMENT",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-intervention-rule",
+              "relationship_kind": "HAS_ELEMENT"
+            }
+          ]
+        },
+        {
+          "stable_id": "civpro-intervention-limitation",
+          "obligation_kind": "LIMITATION",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-intervention-rule",
+              "relationship_kind": "HAS_LIMITATION"
+            }
+          ]
+        },
+        {
+          "stable_id": "civpro-intervention-distinction",
+          "obligation_kind": "DISTINCTION",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-intervention-rule",
+              "relationship_kind": "HAS_DISTINCTION"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "stable_id": "civpro-discovery-scope-limits",
+      "official_topic_id": "civpro-topic-discovery-scope-limits",
+      "planning_group_scope_item_id": "civil-procedure-litigation",
+      "doctrinal_subarea": "Scope and limits of discovery.",
+      "requirement_type": "EXCEPTIONS_LIMITATIONS",
+      "treatment_requirement": "RECALL",
+      "allowed_obligation_kinds": [
+        "RULE",
+        "ELEMENT",
+        "LIMITATION"
+      ],
+      "required_for_subject_completion": true,
+      "review_required": true,
+      "slots": [
+        {
+          "stable_id": "civpro-discovery-scope-limits-rule",
+          "obligation_kind": "RULE",
+          "minimum_count": 1
+        },
+        {
+          "stable_id": "civpro-discovery-scope-limits-element",
+          "obligation_kind": "ELEMENT",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-discovery-scope-limits-rule",
+              "relationship_kind": "HAS_ELEMENT"
+            }
+          ]
+        },
+        {
+          "stable_id": "civpro-discovery-scope-limits-limitation",
+          "obligation_kind": "LIMITATION",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-discovery-scope-limits-rule",
+              "relationship_kind": "HAS_LIMITATION"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "stable_id": "civpro-discovery-rule-26f",
+      "official_topic_id": "civpro-topic-discovery-rule-26f",
+      "planning_group_scope_item_id": "civil-procedure-litigation",
+      "doctrinal_subarea": "Rule 26(f) conference and proposed discovery planning.",
+      "requirement_type": "PROCEDURAL_BRANCHING",
+      "treatment_requirement": "RECALL",
+      "allowed_obligation_kinds": [
+        "RULE",
+        "PROCEDURAL_STEP",
+        "LIMITATION"
+      ],
+      "required_for_subject_completion": true,
+      "review_required": true,
+      "slots": [
+        {
+          "stable_id": "civpro-discovery-rule-26f-rule",
+          "obligation_kind": "RULE",
+          "minimum_count": 1
+        },
+        {
+          "stable_id": "civpro-discovery-rule-26f-procedural-step",
+          "obligation_kind": "PROCEDURAL_STEP",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-discovery-rule-26f-rule",
+              "relationship_kind": "HAS_PROCEDURAL_STEP"
+            }
+          ]
+        },
+        {
+          "stable_id": "civpro-discovery-rule-26f-limitation",
+          "obligation_kind": "LIMITATION",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-discovery-rule-26f-rule",
+              "relationship_kind": "HAS_LIMITATION"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "stable_id": "civpro-discovery-tools-ediscovery",
+      "official_topic_id": "civpro-topic-discovery-tools-ediscovery",
+      "planning_group_scope_item_id": "civil-procedure-litigation",
+      "doctrinal_subarea": "Discovery tools and mechanisms, including electronically stored information.",
+      "requirement_type": "PROCEDURAL_BRANCHING",
+      "treatment_requirement": "RECALL",
+      "allowed_obligation_kinds": [
+        "RULE",
+        "PROCEDURAL_STEP",
+        "DISTINCTION",
+        "LIMITATION"
+      ],
+      "required_for_subject_completion": true,
+      "review_required": true,
+      "slots": [
+        {
+          "stable_id": "civpro-discovery-tools-ediscovery-rule",
+          "obligation_kind": "RULE",
+          "minimum_count": 1
+        },
+        {
+          "stable_id": "civpro-discovery-tools-ediscovery-procedural-step",
+          "obligation_kind": "PROCEDURAL_STEP",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-discovery-tools-ediscovery-rule",
+              "relationship_kind": "HAS_PROCEDURAL_STEP"
+            }
+          ]
+        },
+        {
+          "stable_id": "civpro-discovery-tools-ediscovery-distinction",
+          "obligation_kind": "DISTINCTION",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-discovery-tools-ediscovery-rule",
+              "relationship_kind": "HAS_DISTINCTION"
+            }
+          ]
+        },
+        {
+          "stable_id": "civpro-discovery-tools-ediscovery-limitation",
+          "obligation_kind": "LIMITATION",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-discovery-tools-ediscovery-rule",
+              "relationship_kind": "HAS_LIMITATION"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "stable_id": "civpro-discovery-motions",
+      "official_topic_id": "civpro-topic-discovery-motions",
+      "planning_group_scope_item_id": "civil-procedure-litigation",
+      "doctrinal_subarea": "Protective-order, privilege-claim, and compel-motion procedure, plus recognition—not exhaustive memorization—of possible sanctions.",
+      "requirement_type": "PROCEDURAL_BRANCHING",
+      "treatment_requirement": "RECOGNITION_WITH_OR_WITHOUT_RESOURCES",
+      "allowed_obligation_kinds": [
+        "RULE",
+        "PROCEDURAL_STEP",
+        "LIMITATION",
+        "REMEDY"
+      ],
+      "required_for_subject_completion": true,
+      "review_required": true,
+      "slots": [
+        {
+          "stable_id": "civpro-discovery-motions-rule",
+          "obligation_kind": "RULE",
+          "minimum_count": 1
+        },
+        {
+          "stable_id": "civpro-discovery-motions-procedural-step",
+          "obligation_kind": "PROCEDURAL_STEP",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-discovery-motions-rule",
+              "relationship_kind": "HAS_PROCEDURAL_STEP"
+            }
+          ]
+        },
+        {
+          "stable_id": "civpro-discovery-motions-limitation",
+          "obligation_kind": "LIMITATION",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-discovery-motions-rule",
+              "relationship_kind": "HAS_LIMITATION"
+            }
+          ]
+        },
+        {
+          "stable_id": "civpro-discovery-motions-remedy",
+          "obligation_kind": "REMEDY",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-discovery-motions-rule",
+              "relationship_kind": "HAS_REMEDY"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "stable_id": "civpro-jury-preservation-waiver",
+      "official_topic_id": "civpro-topic-jury-trial-preservation",
+      "planning_group_scope_item_id": "civil-procedure-motions-judgments",
+      "doctrinal_subarea": "Preserving the jury-trial right and waiver consequences, excluding JMOL and generic verdict doctrine.",
+      "requirement_type": "PROCEDURAL_BRANCHING",
+      "treatment_requirement": "RECOGNITION_WITH_OR_WITHOUT_RESOURCES",
+      "allowed_obligation_kinds": [
+        "RULE",
+        "PROCEDURAL_STEP",
+        "LIMITATION"
+      ],
+      "required_for_subject_completion": true,
+      "review_required": true,
+      "slots": [
+        {
+          "stable_id": "civpro-jury-preservation-waiver-rule",
+          "obligation_kind": "RULE",
+          "minimum_count": 1
+        },
+        {
+          "stable_id": "civpro-jury-preservation-waiver-procedural-step",
+          "obligation_kind": "PROCEDURAL_STEP",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-jury-preservation-waiver-rule",
+              "relationship_kind": "HAS_PROCEDURAL_STEP"
+            }
+          ]
+        },
+        {
+          "stable_id": "civpro-jury-preservation-waiver-limitation",
+          "obligation_kind": "LIMITATION",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-jury-preservation-waiver-rule",
+              "relationship_kind": "HAS_LIMITATION"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "stable_id": "civpro-rule-12-dismissal",
+      "official_topic_id": "civpro-topic-rule-12-dismissal",
+      "planning_group_scope_item_id": "civil-procedure-motions-judgments",
+      "doctrinal_subarea": "Rule 12 dismissal timing, procedure, grounds, and failure-to-state-a-claim standard.",
+      "requirement_type": "PROCEDURAL_BRANCHING",
+      "treatment_requirement": "RECALL",
+      "allowed_obligation_kinds": [
+        "RULE",
+        "ELEMENT",
+        "PROCEDURAL_STEP",
+        "DEFENSE",
+        "LIMITATION"
+      ],
+      "required_for_subject_completion": true,
+      "review_required": true,
+      "slots": [
+        {
+          "stable_id": "civpro-rule-12-dismissal-rule",
+          "obligation_kind": "RULE",
+          "minimum_count": 1
+        },
+        {
+          "stable_id": "civpro-rule-12-dismissal-element",
+          "obligation_kind": "ELEMENT",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-rule-12-dismissal-rule",
+              "relationship_kind": "HAS_ELEMENT"
+            }
+          ]
+        },
+        {
+          "stable_id": "civpro-rule-12-dismissal-procedural-step",
+          "obligation_kind": "PROCEDURAL_STEP",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-rule-12-dismissal-rule",
+              "relationship_kind": "HAS_PROCEDURAL_STEP"
+            }
+          ]
+        },
+        {
+          "stable_id": "civpro-rule-12-dismissal-defense",
+          "obligation_kind": "DEFENSE",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-rule-12-dismissal-rule",
+              "relationship_kind": "HAS_DEFENSE"
+            }
+          ]
+        },
+        {
+          "stable_id": "civpro-rule-12-dismissal-limitation",
+          "obligation_kind": "LIMITATION",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-rule-12-dismissal-rule",
+              "relationship_kind": "HAS_LIMITATION"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "stable_id": "civpro-judgment-pleadings",
+      "official_topic_id": "civpro-topic-judgment-pleadings",
+      "planning_group_scope_item_id": "civil-procedure-motions-judgments",
+      "doctrinal_subarea": "Motion for judgment on the pleadings.",
+      "requirement_type": "GOVERNING_RULE",
+      "treatment_requirement": "RECOGNITION_WITH_OR_WITHOUT_RESOURCES",
+      "allowed_obligation_kinds": [
+        "RULE",
+        "ELEMENT",
+        "PROCEDURAL_STEP",
+        "LIMITATION"
+      ],
+      "required_for_subject_completion": true,
+      "review_required": true,
+      "slots": [
+        {
+          "stable_id": "civpro-judgment-pleadings-rule",
+          "obligation_kind": "RULE",
+          "minimum_count": 1
+        },
+        {
+          "stable_id": "civpro-judgment-pleadings-element",
+          "obligation_kind": "ELEMENT",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-judgment-pleadings-rule",
+              "relationship_kind": "HAS_ELEMENT"
+            }
+          ]
+        },
+        {
+          "stable_id": "civpro-judgment-pleadings-procedural-step",
+          "obligation_kind": "PROCEDURAL_STEP",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-judgment-pleadings-rule",
+              "relationship_kind": "HAS_PROCEDURAL_STEP"
+            }
+          ]
+        },
+        {
+          "stable_id": "civpro-judgment-pleadings-limitation",
+          "obligation_kind": "LIMITATION",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-judgment-pleadings-rule",
+              "relationship_kind": "HAS_LIMITATION"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "stable_id": "civpro-summary-judgment",
+      "official_topic_id": "civpro-topic-summary-judgment",
+      "planning_group_scope_item_id": "civil-procedure-motions-judgments",
+      "doctrinal_subarea": "Summary-judgment timing, procedure, standards, and Rule 12 conversion.",
+      "requirement_type": "PROCEDURAL_BRANCHING",
+      "treatment_requirement": "RECALL",
+      "allowed_obligation_kinds": [
+        "RULE",
+        "ELEMENT",
+        "PROCEDURAL_STEP",
+        "LIMITATION"
+      ],
+      "required_for_subject_completion": true,
+      "review_required": true,
+      "slots": [
+        {
+          "stable_id": "civpro-summary-judgment-rule",
+          "obligation_kind": "RULE",
+          "minimum_count": 1
+        },
+        {
+          "stable_id": "civpro-summary-judgment-element",
+          "obligation_kind": "ELEMENT",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-summary-judgment-rule",
+              "relationship_kind": "HAS_ELEMENT"
+            }
+          ]
+        },
+        {
+          "stable_id": "civpro-summary-judgment-procedural-step",
+          "obligation_kind": "PROCEDURAL_STEP",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-summary-judgment-rule",
+              "relationship_kind": "HAS_PROCEDURAL_STEP"
+            }
+          ]
+        },
+        {
+          "stable_id": "civpro-summary-judgment-limitation",
+          "obligation_kind": "LIMITATION",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-summary-judgment-rule",
+              "relationship_kind": "HAS_LIMITATION"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "stable_id": "civpro-jmol",
+      "official_topic_id": "civpro-topic-jmol",
+      "planning_group_scope_item_id": "civil-procedure-motions-judgments",
+      "doctrinal_subarea": "Judgment as a matter of law, including directed-verdict and post-verdict branches, separate from jury preservation.",
+      "requirement_type": "PROCEDURAL_BRANCHING",
+      "treatment_requirement": "RECOGNITION_WITH_OR_WITHOUT_RESOURCES",
+      "allowed_obligation_kinds": [
+        "RULE",
+        "ELEMENT",
+        "PROCEDURAL_STEP",
+        "LIMITATION",
+        "REMEDY"
+      ],
+      "required_for_subject_completion": true,
+      "review_required": true,
+      "slots": [
+        {
+          "stable_id": "civpro-jmol-rule",
+          "obligation_kind": "RULE",
+          "minimum_count": 1
+        },
+        {
+          "stable_id": "civpro-jmol-element",
+          "obligation_kind": "ELEMENT",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-jmol-rule",
+              "relationship_kind": "HAS_ELEMENT"
+            }
+          ]
+        },
+        {
+          "stable_id": "civpro-jmol-procedural-step",
+          "obligation_kind": "PROCEDURAL_STEP",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-jmol-rule",
+              "relationship_kind": "HAS_PROCEDURAL_STEP"
+            }
+          ]
+        },
+        {
+          "stable_id": "civpro-jmol-limitation",
+          "obligation_kind": "LIMITATION",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-jmol-rule",
+              "relationship_kind": "HAS_LIMITATION"
+            }
+          ]
+        },
+        {
+          "stable_id": "civpro-jmol-remedy",
+          "obligation_kind": "REMEDY",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-jmol-rule",
+              "relationship_kind": "HAS_REMEDY"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "stable_id": "civpro-default-default-judgment",
+      "official_topic_id": "civpro-topic-default-default-judgment",
+      "planning_group_scope_item_id": "civil-procedure-motions-judgments",
+      "doctrinal_subarea": "Entry of default and default judgment.",
+      "requirement_type": "PROCEDURAL_BRANCHING",
+      "treatment_requirement": "RECALL",
+      "allowed_obligation_kinds": [
+        "RULE",
+        "PROCEDURAL_STEP",
+        "LIMITATION",
+        "REMEDY"
+      ],
+      "required_for_subject_completion": true,
+      "review_required": true,
+      "slots": [
+        {
+          "stable_id": "civpro-default-default-judgment-rule",
+          "obligation_kind": "RULE",
+          "minimum_count": 1
+        },
+        {
+          "stable_id": "civpro-default-default-judgment-procedural-step",
+          "obligation_kind": "PROCEDURAL_STEP",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-default-default-judgment-rule",
+              "relationship_kind": "HAS_PROCEDURAL_STEP"
+            }
+          ]
+        },
+        {
+          "stable_id": "civpro-default-default-judgment-limitation",
+          "obligation_kind": "LIMITATION",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-default-default-judgment-rule",
+              "relationship_kind": "HAS_LIMITATION"
+            }
+          ]
+        },
+        {
+          "stable_id": "civpro-default-default-judgment-remedy",
+          "obligation_kind": "REMEDY",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-default-default-judgment-rule",
+              "relationship_kind": "HAS_REMEDY"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "stable_id": "civpro-claim-preclusion",
+      "official_topic_id": "civpro-topic-effect-judgment-preclusion",
+      "planning_group_scope_item_id": "civil-procedure-motions-judgments",
+      "doctrinal_subarea": "Claim-preclusion elements and limits within effect of judgment.",
+      "requirement_type": "ELEMENTS_FACTORS",
+      "treatment_requirement": "RECALL",
+      "allowed_obligation_kinds": [
+        "RULE",
+        "ELEMENT",
+        "EXCEPTION",
+        "LIMITATION"
+      ],
+      "required_for_subject_completion": true,
+      "review_required": true,
+      "slots": [
+        {
+          "stable_id": "civpro-claim-preclusion-rule",
+          "obligation_kind": "RULE",
+          "minimum_count": 1
+        },
+        {
+          "stable_id": "civpro-claim-preclusion-element",
+          "obligation_kind": "ELEMENT",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-claim-preclusion-rule",
+              "relationship_kind": "HAS_ELEMENT"
+            }
+          ]
+        },
+        {
+          "stable_id": "civpro-claim-preclusion-limitation",
+          "obligation_kind": "LIMITATION",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-claim-preclusion-rule",
+              "relationship_kind": "HAS_LIMITATION"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "stable_id": "civpro-issue-preclusion",
+      "official_topic_id": "civpro-topic-effect-judgment-preclusion",
+      "planning_group_scope_item_id": "civil-procedure-motions-judgments",
+      "doctrinal_subarea": "Issue-preclusion elements, limits, and distinctions from claim preclusion.",
+      "requirement_type": "DISTINCTIONS_DEFINITIONS",
+      "treatment_requirement": "RECALL",
+      "allowed_obligation_kinds": [
+        "RULE",
+        "ELEMENT",
+        "EXCEPTION",
+        "DISTINCTION",
+        "LIMITATION"
+      ],
+      "required_for_subject_completion": true,
+      "review_required": true,
+      "slots": [
+        {
+          "stable_id": "civpro-issue-preclusion-rule",
+          "obligation_kind": "RULE",
+          "minimum_count": 1
+        },
+        {
+          "stable_id": "civpro-issue-preclusion-element",
+          "obligation_kind": "ELEMENT",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-issue-preclusion-rule",
+              "relationship_kind": "HAS_ELEMENT"
+            }
+          ]
+        },
+        {
+          "stable_id": "civpro-issue-preclusion-distinction",
+          "obligation_kind": "DISTINCTION",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-issue-preclusion-rule",
+              "relationship_kind": "HAS_DISTINCTION"
+            }
+          ]
+        },
+        {
+          "stable_id": "civpro-issue-preclusion-limitation",
+          "obligation_kind": "LIMITATION",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-issue-preclusion-rule",
+              "relationship_kind": "HAS_LIMITATION"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "stable_id": "civpro-final-judgment-rule",
+      "official_topic_id": "civpro-topic-final-judgment-rule",
+      "planning_group_scope_item_id": "civil-procedure-appeals",
+      "doctrinal_subarea": "Final-judgment appealability rule and finality boundary, distinct from interlocutory-review routes.",
+      "requirement_type": "GOVERNING_RULE",
+      "treatment_requirement": "RECOGNITION_WITH_OR_WITHOUT_RESOURCES",
+      "allowed_obligation_kinds": [
+        "RULE",
+        "ELEMENT",
+        "EXCEPTION"
+      ],
+      "required_for_subject_completion": true,
+      "review_required": true,
+      "slots": [
+        {
+          "stable_id": "civpro-final-judgment-rule-rule",
+          "obligation_kind": "RULE",
+          "minimum_count": 1
+        },
+        {
+          "stable_id": "civpro-final-judgment-rule-element",
+          "obligation_kind": "ELEMENT",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-final-judgment-rule-rule",
+              "relationship_kind": "HAS_ELEMENT"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "stable_id": "civpro-interlocutory-review",
+      "official_topic_id": "civpro-topic-interlocutory-review",
+      "planning_group_scope_item_id": "civil-procedure-appeals",
+      "doctrinal_subarea": "Availability and distinct routes of interlocutory review within the official perimeter.",
+      "requirement_type": "PROCEDURAL_BRANCHING",
+      "treatment_requirement": "RECOGNITION_WITH_OR_WITHOUT_RESOURCES",
+      "allowed_obligation_kinds": [
+        "RULE",
+        "ELEMENT",
+        "EXCEPTION",
+        "DISTINCTION"
+      ],
+      "required_for_subject_completion": true,
+      "review_required": true,
+      "slots": [
+        {
+          "stable_id": "civpro-interlocutory-review-rule",
+          "obligation_kind": "RULE",
+          "minimum_count": 1
+        },
+        {
+          "stable_id": "civpro-interlocutory-review-element",
+          "obligation_kind": "ELEMENT",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-interlocutory-review-rule",
+              "relationship_kind": "HAS_ELEMENT"
+            }
+          ]
+        },
+        {
+          "stable_id": "civpro-interlocutory-review-exception",
+          "obligation_kind": "EXCEPTION",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-interlocutory-review-rule",
+              "relationship_kind": "HAS_EXCEPTION"
+            }
+          ]
+        },
+        {
+          "stable_id": "civpro-interlocutory-review-distinction",
+          "obligation_kind": "DISTINCTION",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-interlocutory-review-rule",
+              "relationship_kind": "HAS_DISTINCTION"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "stable_id": "civpro-standards-review",
+      "official_topic_id": "civpro-topic-standards-review",
+      "planning_group_scope_item_id": "civil-procedure-appeals",
+      "doctrinal_subarea": "Standards of review and distinctions among the specified levels of appellate deference.",
+      "requirement_type": "DISTINCTIONS_DEFINITIONS",
+      "treatment_requirement": "RECOGNITION_WITH_OR_WITHOUT_RESOURCES",
+      "allowed_obligation_kinds": [
+        "RULE",
+        "DISTINCTION",
+        "LIMITATION"
+      ],
+      "required_for_subject_completion": true,
+      "review_required": true,
+      "slots": [
+        {
+          "stable_id": "civpro-standards-review-rule",
+          "obligation_kind": "RULE",
+          "minimum_count": 1
+        },
+        {
+          "stable_id": "civpro-standards-review-distinction",
+          "obligation_kind": "DISTINCTION",
+          "minimum_count": 1,
+          "relationship_expectations": [
+            {
+              "source_slot_id": "civpro-standards-review-rule",
+              "relationship_kind": "HAS_DISTINCTION"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "authority_plans": [
+    {
+      "stable_id": "authority-us-constitution-article-iii",
+      "source_family": "U.S. Constitution, Article III",
+      "authority_level": "CONTROLLING_CONSTITUTION",
+      "planned_title": "Article III",
+      "canonical_source_uri": "https://constitution.congress.gov/constitution/article-3/",
+      "version_requirement": "The controlling national authority effective for the July 2026–February 2027 administration period.",
+      "freshness_requirement": "Verify official version, effective date, amendments, and controlling status before candidate certification.",
+      "drift_action": "A material change triggers deterministic impact analysis and re-reconciliation of every mapped requirement and candidate.",
+      "case_authority_required": false,
+      "acquisition_status": "PLANNED"
+    },
+    {
+      "stable_id": "authority-us-constitution-due-process",
+      "source_family": "U.S. Constitution, Due Process Clauses",
+      "authority_level": "CONTROLLING_CONSTITUTION",
+      "planned_title": "Fifth and Fourteenth Amendment Due Process Clauses",
+      "canonical_source_uri": "https://constitution.congress.gov/",
+      "version_requirement": "The controlling national authority effective for the July 2026–February 2027 administration period.",
+      "freshness_requirement": "Verify official version, effective date, amendments, and controlling status before candidate certification.",
+      "drift_action": "A material change triggers deterministic impact analysis and re-reconciliation of every mapped requirement and candidate.",
+      "case_authority_required": false,
+      "acquisition_status": "PLANNED"
+    },
+    {
+      "stable_id": "authority-us-constitution-seventh",
+      "source_family": "U.S. Constitution, Seventh Amendment",
+      "authority_level": "CONTROLLING_CONSTITUTION",
+      "planned_title": "Seventh Amendment",
+      "canonical_source_uri": "https://constitution.congress.gov/constitution/amendment-7/",
+      "version_requirement": "The controlling national authority effective for the July 2026–February 2027 administration period.",
+      "freshness_requirement": "Verify official version, effective date, amendments, and controlling status before candidate certification.",
+      "drift_action": "A material change triggers deterministic impact analysis and re-reconciliation of every mapped requirement and candidate.",
+      "case_authority_required": false,
+      "acquisition_status": "PLANNED"
+    },
+    {
+      "stable_id": "authority-28-usc-jurisdiction-removal",
+      "source_family": "Title 28 jurisdiction, removal, and remand provisions",
+      "authority_level": "CONTROLLING_STATUTE",
+      "planned_title": "Current Title 28 district-court jurisdiction, removal, and remand provisions",
+      "canonical_source_uri": "https://uscode.house.gov/",
+      "version_requirement": "The controlling national authority effective for the July 2026–February 2027 administration period.",
+      "freshness_requirement": "Verify official version, effective date, amendments, and controlling status before candidate certification.",
+      "drift_action": "A material change triggers deterministic impact analysis and re-reconciliation of every mapped requirement and candidate.",
+      "case_authority_required": false,
+      "acquisition_status": "PLANNED"
+    },
+    {
+      "stable_id": "authority-28-usc-venue-transfer",
+      "source_family": "Title 28 venue and transfer provisions",
+      "authority_level": "CONTROLLING_STATUTE",
+      "planned_title": "Current Title 28 venue and transfer provisions",
+      "canonical_source_uri": "https://uscode.house.gov/",
+      "version_requirement": "The controlling national authority effective for the July 2026–February 2027 administration period.",
+      "freshness_requirement": "Verify official version, effective date, amendments, and controlling status before candidate certification.",
+      "drift_action": "A material change triggers deterministic impact analysis and re-reconciliation of every mapped requirement and candidate.",
+      "case_authority_required": false,
+      "acquisition_status": "PLANNED"
+    },
+    {
+      "stable_id": "authority-rules-of-decision-act",
+      "source_family": "Rules of Decision Act",
+      "authority_level": "CONTROLLING_STATUTE",
+      "planned_title": "28 U.S.C. § 1652",
+      "canonical_source_uri": "https://uscode.house.gov/",
+      "version_requirement": "The controlling national authority effective for the July 2026–February 2027 administration period.",
+      "freshness_requirement": "Verify official version, effective date, amendments, and controlling status before candidate certification.",
+      "drift_action": "A material change triggers deterministic impact analysis and re-reconciliation of every mapped requirement and candidate.",
+      "case_authority_required": false,
+      "acquisition_status": "PLANNED"
+    },
+    {
+      "stable_id": "authority-rules-enabling-act",
+      "source_family": "Rules Enabling Act",
+      "authority_level": "CONTROLLING_STATUTE",
+      "planned_title": "28 U.S.C. §§ 2071–2077 as applicable",
+      "canonical_source_uri": "https://uscode.house.gov/",
+      "version_requirement": "The controlling national authority effective for the July 2026–February 2027 administration period.",
+      "freshness_requirement": "Verify official version, effective date, amendments, and controlling status before candidate certification.",
+      "drift_action": "A material change triggers deterministic impact analysis and re-reconciliation of every mapped requirement and candidate.",
+      "case_authority_required": false,
+      "acquisition_status": "PLANNED"
+    },
+    {
+      "stable_id": "authority-28-usc-preclusion",
+      "source_family": "Title 28 judgment-recognition provisions",
+      "authority_level": "CONTROLLING_STATUTE",
+      "planned_title": "Current Title 28 judgment-recognition provisions where applicable",
+      "canonical_source_uri": "https://uscode.house.gov/",
+      "version_requirement": "The controlling national authority effective for the July 2026–February 2027 administration period.",
+      "freshness_requirement": "Verify official version, effective date, amendments, and controlling status before candidate certification.",
+      "drift_action": "A material change triggers deterministic impact analysis and re-reconciliation of every mapped requirement and candidate.",
+      "case_authority_required": false,
+      "acquisition_status": "PLANNED"
+    },
+    {
+      "stable_id": "authority-28-usc-appellate",
+      "source_family": "Title 28 appellate-jurisdiction provisions",
+      "authority_level": "CONTROLLING_STATUTE",
+      "planned_title": "Current Title 28 appellate-jurisdiction provisions",
+      "canonical_source_uri": "https://uscode.house.gov/",
+      "version_requirement": "The controlling national authority effective for the July 2026–February 2027 administration period.",
+      "freshness_requirement": "Verify official version, effective date, amendments, and controlling status before candidate certification.",
+      "drift_action": "A material change triggers deterministic impact analysis and re-reconciliation of every mapped requirement and candidate.",
+      "case_authority_required": false,
+      "acquisition_status": "PLANNED"
+    },
+    {
+      "stable_id": "authority-frcp-current",
+      "source_family": "Federal Rules of Civil Procedure",
+      "authority_level": "CONTROLLING_RULE",
+      "planned_title": "Federal Rules of Civil Procedure, amended through December 1, 2025",
+      "canonical_source_uri": "https://www.uscourts.gov/forms-rules/current-rules-practice-procedure/federal-rules-civil-procedure",
+      "version_requirement": "The controlling national authority effective for the July 2026–February 2027 administration period.",
+      "freshness_requirement": "Verify official version, effective date, amendments, and controlling status before candidate certification.",
+      "drift_action": "A material change triggers deterministic impact analysis and re-reconciliation of every mapped requirement and candidate.",
+      "case_authority_required": false,
+      "acquisition_status": "ACQUIRED",
+      "acquired_authority": {
+        "stable_id": "USCOURTS_FRCP",
+        "source_version": "2025-12-01"
+      }
+    },
+    {
+      "stable_id": "authority-frap-conditional",
+      "source_family": "Federal Rules of Appellate Procedure",
+      "authority_level": "CONTROLLING_RULE",
+      "planned_title": "Current Federal Rules of Appellate Procedure only for propositions that genuinely require them",
+      "canonical_source_uri": "https://www.uscourts.gov/forms-rules/current-rules-practice-procedure/federal-rules-appellate-procedure",
+      "version_requirement": "The controlling national authority effective for the July 2026–February 2027 administration period.",
+      "freshness_requirement": "Verify official version, effective date, amendments, and controlling status before candidate certification.",
+      "drift_action": "A material change triggers deterministic impact analysis and re-reconciliation of every mapped requirement and candidate.",
+      "case_authority_required": false,
+      "acquisition_status": "PLANNED"
+    },
+    {
+      "stable_id": "authority-incorporated-state-law",
+      "source_family": "State primary law incorporated by a federal choice-of-law inquiry",
+      "authority_level": "OTHER_PRIMARY",
+      "planned_title": "Exact state primary source only when a national federal rule makes the comparison necessary",
+      "canonical_source_uri": "",
+      "version_requirement": "The controlling national authority effective for the July 2026–February 2027 administration period.",
+      "freshness_requirement": "Verify official version, effective date, amendments, and controlling status before candidate certification.",
+      "drift_action": "A material change triggers deterministic impact analysis and re-reconciliation of every mapped requirement and candidate.",
+      "case_authority_required": false,
+      "acquisition_status": "PLANNED"
+    },
+    {
+      "stable_id": "authority-scotus-jurisdiction",
+      "source_family": "U.S. Supreme Court jurisdiction authority",
+      "authority_level": "BINDING_SUPREME_COURT",
+      "planned_title": "Requirement-specific controlling Supreme Court subject-matter-jurisdiction authority",
+      "canonical_source_uri": "https://www.supremecourt.gov/opinions/opinions.aspx",
+      "version_requirement": "The controlling national authority effective for the July 2026–February 2027 administration period.",
+      "freshness_requirement": "Verify official version, effective date, amendments, and controlling status before candidate certification.",
+      "drift_action": "A material change triggers deterministic impact analysis and re-reconciliation of every mapped requirement and candidate.",
+      "case_authority_required": true,
+      "acquisition_status": "PLANNED",
+      "case_requirements": [
+        {
+          "stable_id": "authority-scotus-jurisdiction-proposition-plan",
+          "proposition_type": "REQUIREMENT_SPECIFIC_CONTROLLING_HOLDING",
+          "required_court": "Supreme Court of the United States",
+          "exact_case_identity_required": true,
+          "decision_date_required": true,
+          "reliable_source_uri_required": true,
+          "proposition_locator_required": true,
+          "authority_status_required": true,
+          "later_treatment_review_required": true
+        }
+      ]
+    },
+    {
+      "stable_id": "authority-scotus-personal-jurisdiction",
+      "source_family": "U.S. Supreme Court personal-jurisdiction authority",
+      "authority_level": "BINDING_SUPREME_COURT",
+      "planned_title": "Requirement-specific controlling Supreme Court personal-jurisdiction authority",
+      "canonical_source_uri": "https://www.supremecourt.gov/opinions/opinions.aspx",
+      "version_requirement": "The controlling national authority effective for the July 2026–February 2027 administration period.",
+      "freshness_requirement": "Verify official version, effective date, amendments, and controlling status before candidate certification.",
+      "drift_action": "A material change triggers deterministic impact analysis and re-reconciliation of every mapped requirement and candidate.",
+      "case_authority_required": true,
+      "acquisition_status": "PLANNED",
+      "case_requirements": [
+        {
+          "stable_id": "authority-scotus-personal-jurisdiction-proposition-plan",
+          "proposition_type": "REQUIREMENT_SPECIFIC_CONTROLLING_HOLDING",
+          "required_court": "Supreme Court of the United States",
+          "exact_case_identity_required": true,
+          "decision_date_required": true,
+          "reliable_source_uri_required": true,
+          "proposition_locator_required": true,
+          "authority_status_required": true,
+          "later_treatment_review_required": true
+        }
+      ]
+    },
+    {
+      "stable_id": "authority-scotus-notice",
+      "source_family": "U.S. Supreme Court constitutional-notice authority",
+      "authority_level": "BINDING_SUPREME_COURT",
+      "planned_title": "Requirement-specific controlling Supreme Court notice authority",
+      "canonical_source_uri": "https://www.supremecourt.gov/opinions/opinions.aspx",
+      "version_requirement": "The controlling national authority effective for the July 2026–February 2027 administration period.",
+      "freshness_requirement": "Verify official version, effective date, amendments, and controlling status before candidate certification.",
+      "drift_action": "A material change triggers deterministic impact analysis and re-reconciliation of every mapped requirement and candidate.",
+      "case_authority_required": true,
+      "acquisition_status": "PLANNED",
+      "case_requirements": [
+        {
+          "stable_id": "authority-scotus-notice-proposition-plan",
+          "proposition_type": "REQUIREMENT_SPECIFIC_CONTROLLING_HOLDING",
+          "required_court": "Supreme Court of the United States",
+          "exact_case_identity_required": true,
+          "decision_date_required": true,
+          "reliable_source_uri_required": true,
+          "proposition_locator_required": true,
+          "authority_status_required": true,
+          "later_treatment_review_required": true
+        }
+      ]
+    },
+    {
+      "stable_id": "authority-scotus-venue",
+      "source_family": "U.S. Supreme Court venue and forum non conveniens authority",
+      "authority_level": "BINDING_SUPREME_COURT",
+      "planned_title": "Requirement-specific controlling Supreme Court venue, transfer, or forum non conveniens authority",
+      "canonical_source_uri": "https://www.supremecourt.gov/opinions/opinions.aspx",
+      "version_requirement": "The controlling national authority effective for the July 2026–February 2027 administration period.",
+      "freshness_requirement": "Verify official version, effective date, amendments, and controlling status before candidate certification.",
+      "drift_action": "A material change triggers deterministic impact analysis and re-reconciliation of every mapped requirement and candidate.",
+      "case_authority_required": true,
+      "acquisition_status": "PLANNED",
+      "case_requirements": [
+        {
+          "stable_id": "authority-scotus-venue-proposition-plan",
+          "proposition_type": "REQUIREMENT_SPECIFIC_CONTROLLING_HOLDING",
+          "required_court": "Supreme Court of the United States",
+          "exact_case_identity_required": true,
+          "decision_date_required": true,
+          "reliable_source_uri_required": true,
+          "proposition_locator_required": true,
+          "authority_status_required": true,
+          "later_treatment_review_required": true
+        }
+      ]
+    },
+    {
+      "stable_id": "authority-scotus-erie",
+      "source_family": "U.S. Supreme Court Erie/Hanna authority",
+      "authority_level": "BINDING_SUPREME_COURT",
+      "planned_title": "Requirement-specific controlling Supreme Court Erie/Hanna authority",
+      "canonical_source_uri": "https://www.supremecourt.gov/opinions/opinions.aspx",
+      "version_requirement": "The controlling national authority effective for the July 2026–February 2027 administration period.",
+      "freshness_requirement": "Verify official version, effective date, amendments, and controlling status before candidate certification.",
+      "drift_action": "A material change triggers deterministic impact analysis and re-reconciliation of every mapped requirement and candidate.",
+      "case_authority_required": true,
+      "acquisition_status": "PLANNED",
+      "case_requirements": [
+        {
+          "stable_id": "authority-scotus-erie-proposition-plan",
+          "proposition_type": "REQUIREMENT_SPECIFIC_CONTROLLING_HOLDING",
+          "required_court": "Supreme Court of the United States",
+          "exact_case_identity_required": true,
+          "decision_date_required": true,
+          "reliable_source_uri_required": true,
+          "proposition_locator_required": true,
+          "authority_status_required": true,
+          "later_treatment_review_required": true
+        }
+      ]
+    },
+    {
+      "stable_id": "authority-scotus-pleading-injunction",
+      "source_family": "U.S. Supreme Court pleading and preliminary-injunction authority",
+      "authority_level": "BINDING_SUPREME_COURT",
+      "planned_title": "Requirement-specific controlling Supreme Court pleading or preliminary-injunction authority",
+      "canonical_source_uri": "https://www.supremecourt.gov/opinions/opinions.aspx",
+      "version_requirement": "The controlling national authority effective for the July 2026–February 2027 administration period.",
+      "freshness_requirement": "Verify official version, effective date, amendments, and controlling status before candidate certification.",
+      "drift_action": "A material change triggers deterministic impact analysis and re-reconciliation of every mapped requirement and candidate.",
+      "case_authority_required": true,
+      "acquisition_status": "PLANNED",
+      "case_requirements": [
+        {
+          "stable_id": "authority-scotus-pleading-injunction-proposition-plan",
+          "proposition_type": "REQUIREMENT_SPECIFIC_CONTROLLING_HOLDING",
+          "required_court": "Supreme Court of the United States",
+          "exact_case_identity_required": true,
+          "decision_date_required": true,
+          "reliable_source_uri_required": true,
+          "proposition_locator_required": true,
+          "authority_status_required": true,
+          "later_treatment_review_required": true
+        }
+      ]
+    },
+    {
+      "stable_id": "authority-scotus-preclusion",
+      "source_family": "U.S. Supreme Court preclusion authority",
+      "authority_level": "BINDING_SUPREME_COURT",
+      "planned_title": "Requirement-specific controlling Supreme Court claim- and issue-preclusion authority",
+      "canonical_source_uri": "https://www.supremecourt.gov/opinions/opinions.aspx",
+      "version_requirement": "The controlling national authority effective for the July 2026–February 2027 administration period.",
+      "freshness_requirement": "Verify official version, effective date, amendments, and controlling status before candidate certification.",
+      "drift_action": "A material change triggers deterministic impact analysis and re-reconciliation of every mapped requirement and candidate.",
+      "case_authority_required": true,
+      "acquisition_status": "PLANNED",
+      "case_requirements": [
+        {
+          "stable_id": "authority-scotus-preclusion-proposition-plan",
+          "proposition_type": "REQUIREMENT_SPECIFIC_CONTROLLING_HOLDING",
+          "required_court": "Supreme Court of the United States",
+          "exact_case_identity_required": true,
+          "decision_date_required": true,
+          "reliable_source_uri_required": true,
+          "proposition_locator_required": true,
+          "authority_status_required": true,
+          "later_treatment_review_required": true
+        }
+      ]
+    },
+    {
+      "stable_id": "authority-scotus-jury",
+      "source_family": "U.S. Supreme Court jury-trial authority",
+      "authority_level": "BINDING_SUPREME_COURT",
+      "planned_title": "Requirement-specific controlling Supreme Court jury-trial authority",
+      "canonical_source_uri": "https://www.supremecourt.gov/opinions/opinions.aspx",
+      "version_requirement": "The controlling national authority effective for the July 2026–February 2027 administration period.",
+      "freshness_requirement": "Verify official version, effective date, amendments, and controlling status before candidate certification.",
+      "drift_action": "A material change triggers deterministic impact analysis and re-reconciliation of every mapped requirement and candidate.",
+      "case_authority_required": true,
+      "acquisition_status": "PLANNED",
+      "case_requirements": [
+        {
+          "stable_id": "authority-scotus-jury-proposition-plan",
+          "proposition_type": "REQUIREMENT_SPECIFIC_CONTROLLING_HOLDING",
+          "required_court": "Supreme Court of the United States",
+          "exact_case_identity_required": true,
+          "decision_date_required": true,
+          "reliable_source_uri_required": true,
+          "proposition_locator_required": true,
+          "authority_status_required": true,
+          "later_treatment_review_required": true
+        }
+      ]
+    },
+    {
+      "stable_id": "authority-scotus-appellate",
+      "source_family": "U.S. Supreme Court appealability and review authority",
+      "authority_level": "BINDING_SUPREME_COURT",
+      "planned_title": "Requirement-specific controlling Supreme Court appealability or review authority",
+      "canonical_source_uri": "https://www.supremecourt.gov/opinions/opinions.aspx",
+      "version_requirement": "The controlling national authority effective for the July 2026–February 2027 administration period.",
+      "freshness_requirement": "Verify official version, effective date, amendments, and controlling status before candidate certification.",
+      "drift_action": "A material change triggers deterministic impact analysis and re-reconciliation of every mapped requirement and candidate.",
+      "case_authority_required": true,
+      "acquisition_status": "PLANNED",
+      "case_requirements": [
+        {
+          "stable_id": "authority-scotus-appellate-proposition-plan",
+          "proposition_type": "REQUIREMENT_SPECIFIC_CONTROLLING_HOLDING",
+          "required_court": "Supreme Court of the United States",
+          "exact_case_identity_required": true,
+          "decision_date_required": true,
+          "reliable_source_uri_required": true,
+          "proposition_locator_required": true,
+          "authority_status_required": true,
+          "later_treatment_review_required": true
+        }
+      ]
+    },
+    {
+      "stable_id": "authority-optional-secondary-reconciliation",
+      "source_family": "Authoritative secondary reconciliation",
+      "authority_level": "OPTIONAL_SECONDARY",
+      "planned_title": "Optional current secondary reconciliation source",
+      "canonical_source_uri": "https://www.law.cornell.edu/",
+      "version_requirement": "The controlling national authority effective for the July 2026–February 2027 administration period.",
+      "freshness_requirement": "Verify official version, effective date, amendments, and controlling status before candidate certification.",
+      "drift_action": "A material change triggers deterministic impact analysis and re-reconciliation of every mapped requirement and candidate.",
+      "case_authority_required": false,
+      "acquisition_status": "PLANNED"
+    }
+  ],
+  "requirement_authority_mappings": [
+    {
+      "requirement_id": "civpro-federal-question",
+      "authority_plan_id": "authority-28-usc-jurisdiction-removal",
+      "role": "REQUIRED",
+      "proposition_types": [
+        "GOVERNING_STATUTORY_TEXT"
+      ]
+    },
+    {
+      "requirement_id": "civpro-diversity",
+      "authority_plan_id": "authority-28-usc-jurisdiction-removal",
+      "role": "REQUIRED",
+      "proposition_types": [
+        "GOVERNING_STATUTORY_TEXT"
+      ]
+    },
+    {
+      "requirement_id": "civpro-supplemental",
+      "authority_plan_id": "authority-28-usc-jurisdiction-removal",
+      "role": "REQUIRED",
+      "proposition_types": [
+        "GOVERNING_STATUTORY_TEXT"
+      ]
+    },
+    {
+      "requirement_id": "civpro-concurrent-jurisdiction",
+      "authority_plan_id": "authority-28-usc-jurisdiction-removal",
+      "role": "CONDITIONAL",
+      "proposition_types": [
+        "GOVERNING_STATUTORY_TEXT"
+      ],
+      "condition_expression": "The candidate states a statutory jurisdiction proposition or a statutory distinction from removal or remand."
+    },
+    {
+      "requirement_id": "civpro-removal-remand",
+      "authority_plan_id": "authority-28-usc-jurisdiction-removal",
+      "role": "REQUIRED",
+      "proposition_types": [
+        "GOVERNING_STATUTORY_TEXT"
+      ]
+    },
+    {
+      "requirement_id": "civpro-federal-question",
+      "authority_plan_id": "authority-scotus-jurisdiction",
+      "role": "REQUIRED",
+      "proposition_types": [
+        "WELL_PLEADED_COMPLAINT_CONTROLLING_HOLDING"
+      ]
+    },
+    {
+      "requirement_id": "civpro-diversity",
+      "authority_plan_id": "authority-scotus-jurisdiction",
+      "role": "CONDITIONAL",
+      "proposition_types": [
+        "CONTROLLING_HOLDING"
+      ],
+      "condition_expression": "A candidate states a proposition not responsibly established by statutory text alone."
+    },
+    {
+      "requirement_id": "civpro-supplemental",
+      "authority_plan_id": "authority-scotus-jurisdiction",
+      "role": "CONDITIONAL",
+      "proposition_types": [
+        "CONTROLLING_HOLDING"
+      ],
+      "condition_expression": "A candidate states a proposition not responsibly established by statutory text alone."
+    },
+    {
+      "requirement_id": "civpro-concurrent-jurisdiction",
+      "authority_plan_id": "authority-scotus-jurisdiction",
+      "role": "REQUIRED",
+      "proposition_types": [
+        "CONCURRENT_JURISDICTION_CONTROLLING_HOLDING"
+      ]
+    },
+    {
+      "requirement_id": "civpro-federal-question",
+      "authority_plan_id": "authority-us-constitution-article-iii",
+      "role": "CONDITIONAL",
+      "proposition_types": [
+        "CONSTITUTIONAL_BOUNDARY"
+      ],
+      "condition_expression": "A candidate distinguishes constitutional judicial power from statutory jurisdiction."
+    },
+    {
+      "requirement_id": "civpro-personal-specific",
+      "authority_plan_id": "authority-us-constitution-due-process",
+      "role": "REQUIRED",
+      "proposition_types": [
+        "CONSTITUTIONAL_STANDARD"
+      ]
+    },
+    {
+      "requirement_id": "civpro-personal-general",
+      "authority_plan_id": "authority-us-constitution-due-process",
+      "role": "REQUIRED",
+      "proposition_types": [
+        "CONSTITUTIONAL_STANDARD"
+      ]
+    },
+    {
+      "requirement_id": "civpro-personal-authority-consent-waiver",
+      "authority_plan_id": "authority-us-constitution-due-process",
+      "role": "REQUIRED",
+      "proposition_types": [
+        "CONSTITUTIONAL_STANDARD"
+      ]
+    },
+    {
+      "requirement_id": "civpro-personal-specific",
+      "authority_plan_id": "authority-scotus-personal-jurisdiction",
+      "role": "REQUIRED",
+      "proposition_types": [
+        "CONTROLLING_HOLDING"
+      ]
+    },
+    {
+      "requirement_id": "civpro-personal-general",
+      "authority_plan_id": "authority-scotus-personal-jurisdiction",
+      "role": "REQUIRED",
+      "proposition_types": [
+        "CONTROLLING_HOLDING"
+      ]
+    },
+    {
+      "requirement_id": "civpro-personal-authority-consent-waiver",
+      "authority_plan_id": "authority-scotus-personal-jurisdiction",
+      "role": "REQUIRED",
+      "proposition_types": [
+        "CONTROLLING_HOLDING"
+      ]
+    },
+    {
+      "requirement_id": "civpro-personal-authority-consent-waiver",
+      "authority_plan_id": "authority-frcp-current",
+      "role": "CONDITIONAL",
+      "proposition_types": [
+        "CONTROLLING_RULE_TEXT"
+      ],
+      "condition_expression": "A candidate states a waiver or procedural-defense proposition governed by the FRCP."
+    },
+    {
+      "requirement_id": "civpro-notice-constitutional",
+      "authority_plan_id": "authority-us-constitution-due-process",
+      "role": "REQUIRED",
+      "proposition_types": [
+        "CONSTITUTIONAL_STANDARD"
+      ]
+    },
+    {
+      "requirement_id": "civpro-notice-constitutional",
+      "authority_plan_id": "authority-scotus-notice",
+      "role": "REQUIRED",
+      "proposition_types": [
+        "CONTROLLING_HOLDING"
+      ]
+    },
+    {
+      "requirement_id": "civpro-service-methods",
+      "authority_plan_id": "authority-frcp-current",
+      "role": "REQUIRED",
+      "proposition_types": [
+        "CONTROLLING_RULE_TEXT"
+      ]
+    },
+    {
+      "requirement_id": "civpro-service-waiver",
+      "authority_plan_id": "authority-frcp-current",
+      "role": "REQUIRED",
+      "proposition_types": [
+        "CONTROLLING_RULE_TEXT"
+      ]
+    },
+    {
+      "requirement_id": "civpro-venue-selection",
+      "authority_plan_id": "authority-28-usc-venue-transfer",
+      "role": "REQUIRED",
+      "proposition_types": [
+        "GOVERNING_STATUTORY_TEXT"
+      ]
+    },
+    {
+      "requirement_id": "civpro-venue-improper-cure",
+      "authority_plan_id": "authority-28-usc-venue-transfer",
+      "role": "REQUIRED",
+      "proposition_types": [
+        "GOVERNING_STATUTORY_TEXT"
+      ]
+    },
+    {
+      "requirement_id": "civpro-venue-transfer",
+      "authority_plan_id": "authority-28-usc-venue-transfer",
+      "role": "REQUIRED",
+      "proposition_types": [
+        "GOVERNING_STATUTORY_TEXT"
+      ]
+    },
+    {
+      "requirement_id": "civpro-forum-non-conveniens",
+      "authority_plan_id": "authority-28-usc-venue-transfer",
+      "role": "CONDITIONAL",
+      "proposition_types": [
+        "GOVERNING_STATUTORY_TEXT"
+      ],
+      "condition_expression": "The candidate contrasts common-law forum non conveniens with statutory transfer, depends on 28 U.S.C. § 1404 or § 1406, or otherwise states a statutory venue or transfer distinction."
+    },
+    {
+      "requirement_id": "civpro-venue-transfer",
+      "authority_plan_id": "authority-scotus-venue",
+      "role": "CONDITIONAL",
+      "proposition_types": [
+        "CONTROLLING_HOLDING"
+      ],
+      "condition_expression": "The candidate states a transfer proposition not fully established by statutory text."
+    },
+    {
+      "requirement_id": "civpro-forum-non-conveniens",
+      "authority_plan_id": "authority-scotus-venue",
+      "role": "REQUIRED",
+      "proposition_types": [
+        "CONTROLLING_HOLDING"
+      ]
+    },
+    {
+      "requirement_id": "civpro-erie-substance-procedure",
+      "authority_plan_id": "authority-rules-of-decision-act",
+      "role": "REQUIRED",
+      "proposition_types": [
+        "GOVERNING_STATUTORY_TEXT"
+      ]
+    },
+    {
+      "requirement_id": "civpro-erie-substance-procedure",
+      "authority_plan_id": "authority-scotus-erie",
+      "role": "REQUIRED",
+      "proposition_types": [
+        "CONTROLLING_HOLDING"
+      ]
+    },
+    {
+      "requirement_id": "civpro-erie-federal-rule-on-point",
+      "authority_plan_id": "authority-scotus-erie",
+      "role": "REQUIRED",
+      "proposition_types": [
+        "CONTROLLING_HOLDING"
+      ]
+    },
+    {
+      "requirement_id": "civpro-erie-choice-of-law",
+      "authority_plan_id": "authority-scotus-erie",
+      "role": "REQUIRED",
+      "proposition_types": [
+        "CONTROLLING_HOLDING"
+      ]
+    },
+    {
+      "requirement_id": "civpro-erie-substance-procedure",
+      "authority_plan_id": "authority-us-constitution-article-iii",
+      "role": "CONDITIONAL",
+      "proposition_types": [
+        "CONSTITUTIONAL_BOUNDARY"
+      ],
+      "condition_expression": "The candidate expressly relies on a constitutional allocation proposition."
+    },
+    {
+      "requirement_id": "civpro-erie-federal-rule-on-point",
+      "authority_plan_id": "authority-frcp-current",
+      "role": "CONDITIONAL",
+      "proposition_types": [
+        "CONTROLLING_RULE_TEXT"
+      ],
+      "condition_expression": "A Federal Rule of Civil Procedure is directly on point for the candidate proposition."
+    },
+    {
+      "requirement_id": "civpro-erie-federal-rule-on-point",
+      "authority_plan_id": "authority-rules-enabling-act",
+      "role": "CONDITIONAL",
+      "proposition_types": [
+        "GOVERNING_STATUTORY_TEXT"
+      ],
+      "condition_expression": "The candidate requires Rules Enabling Act validity or scope analysis."
+    },
+    {
+      "requirement_id": "civpro-erie-federal-rule-on-point",
+      "authority_plan_id": "authority-rules-of-decision-act",
+      "role": "CONDITIONAL",
+      "proposition_types": [
+        "GOVERNING_STATUTORY_TEXT"
+      ],
+      "condition_expression": "No federal rule is directly on point and the Rules of Decision Act branch controls."
+    },
+    {
+      "requirement_id": "civpro-erie-choice-of-law",
+      "authority_plan_id": "authority-rules-of-decision-act",
+      "role": "REQUIRED",
+      "proposition_types": [
+        "GOVERNING_STATUTORY_TEXT"
+      ]
+    },
+    {
+      "requirement_id": "civpro-erie-choice-of-law",
+      "authority_plan_id": "authority-incorporated-state-law",
+      "role": "CONDITIONAL",
+      "proposition_types": [
+        "INCORPORATED_STATE_PRIMARY_TEXT"
+      ],
+      "condition_expression": "A national federal choice-of-law proposition requires an exact state-law fact for comparison."
+    },
+    {
+      "requirement_id": "civpro-preliminary-injunctions-tro",
+      "authority_plan_id": "authority-frcp-current",
+      "role": "REQUIRED",
+      "proposition_types": [
+        "CONTROLLING_RULE_TEXT"
+      ]
+    },
+    {
+      "requirement_id": "civpro-pleading-standards-responsive",
+      "authority_plan_id": "authority-frcp-current",
+      "role": "REQUIRED",
+      "proposition_types": [
+        "CONTROLLING_RULE_TEXT"
+      ]
+    },
+    {
+      "requirement_id": "civpro-preliminary-injunctions-tro",
+      "authority_plan_id": "authority-scotus-pleading-injunction",
+      "role": "CONDITIONAL",
+      "proposition_types": [
+        "CONTROLLING_HOLDING"
+      ],
+      "condition_expression": "A required perimeter proposition genuinely depends on controlling case authority rather than Rule 65 text alone."
+    },
+    {
+      "requirement_id": "civpro-pleading-standards-responsive",
+      "authority_plan_id": "authority-scotus-pleading-injunction",
+      "role": "REQUIRED",
+      "proposition_types": [
+        "CONTROLLING_HOLDING"
+      ]
+    },
+    {
+      "requirement_id": "civpro-amendments-relation-back",
+      "authority_plan_id": "authority-frcp-current",
+      "role": "REQUIRED",
+      "proposition_types": [
+        "CONTROLLING_RULE_TEXT"
+      ]
+    },
+    {
+      "requirement_id": "civpro-rule-11",
+      "authority_plan_id": "authority-frcp-current",
+      "role": "REQUIRED",
+      "proposition_types": [
+        "CONTROLLING_RULE_TEXT"
+      ]
+    },
+    {
+      "requirement_id": "civpro-joinder-claims",
+      "authority_plan_id": "authority-frcp-current",
+      "role": "REQUIRED",
+      "proposition_types": [
+        "CONTROLLING_RULE_TEXT"
+      ]
+    },
+    {
+      "requirement_id": "civpro-joinder-parties",
+      "authority_plan_id": "authority-frcp-current",
+      "role": "REQUIRED",
+      "proposition_types": [
+        "CONTROLLING_RULE_TEXT"
+      ]
+    },
+    {
+      "requirement_id": "civpro-counterclaims-crossclaims",
+      "authority_plan_id": "authority-frcp-current",
+      "role": "REQUIRED",
+      "proposition_types": [
+        "CONTROLLING_RULE_TEXT"
+      ]
+    },
+    {
+      "requirement_id": "civpro-impleader",
+      "authority_plan_id": "authority-frcp-current",
+      "role": "REQUIRED",
+      "proposition_types": [
+        "CONTROLLING_RULE_TEXT"
+      ]
+    },
+    {
+      "requirement_id": "civpro-severance",
+      "authority_plan_id": "authority-frcp-current",
+      "role": "REQUIRED",
+      "proposition_types": [
+        "CONTROLLING_RULE_TEXT"
+      ]
+    },
+    {
+      "requirement_id": "civpro-intervention",
+      "authority_plan_id": "authority-frcp-current",
+      "role": "REQUIRED",
+      "proposition_types": [
+        "CONTROLLING_RULE_TEXT"
+      ]
+    },
+    {
+      "requirement_id": "civpro-discovery-scope-limits",
+      "authority_plan_id": "authority-frcp-current",
+      "role": "REQUIRED",
+      "proposition_types": [
+        "CONTROLLING_RULE_TEXT"
+      ]
+    },
+    {
+      "requirement_id": "civpro-discovery-rule-26f",
+      "authority_plan_id": "authority-frcp-current",
+      "role": "REQUIRED",
+      "proposition_types": [
+        "CONTROLLING_RULE_TEXT"
+      ]
+    },
+    {
+      "requirement_id": "civpro-discovery-tools-ediscovery",
+      "authority_plan_id": "authority-frcp-current",
+      "role": "REQUIRED",
+      "proposition_types": [
+        "CONTROLLING_RULE_TEXT"
+      ]
+    },
+    {
+      "requirement_id": "civpro-discovery-motions",
+      "authority_plan_id": "authority-frcp-current",
+      "role": "REQUIRED",
+      "proposition_types": [
+        "CONTROLLING_RULE_TEXT"
+      ]
+    },
+    {
+      "requirement_id": "civpro-amendments-relation-back",
+      "authority_plan_id": "authority-scotus-pleading-injunction",
+      "role": "CONDITIONAL",
+      "proposition_types": [
+        "CONTROLLING_HOLDING"
+      ],
+      "condition_expression": "A candidate states a controlling relation-back proposition not responsibly established by rule text alone."
+    },
+    {
+      "requirement_id": "civpro-jury-preservation-waiver",
+      "authority_plan_id": "authority-us-constitution-seventh",
+      "role": "REQUIRED",
+      "proposition_types": [
+        "CONSTITUTIONAL_TEXT"
+      ]
+    },
+    {
+      "requirement_id": "civpro-jury-preservation-waiver",
+      "authority_plan_id": "authority-frcp-current",
+      "role": "REQUIRED",
+      "proposition_types": [
+        "CONTROLLING_RULE_TEXT"
+      ]
+    },
+    {
+      "requirement_id": "civpro-jury-preservation-waiver",
+      "authority_plan_id": "authority-scotus-jury",
+      "role": "CONDITIONAL",
+      "proposition_types": [
+        "CONTROLLING_HOLDING"
+      ],
+      "condition_expression": "A candidate states a constitutional jury proposition not established by text and rules alone."
+    },
+    {
+      "requirement_id": "civpro-rule-12-dismissal",
+      "authority_plan_id": "authority-frcp-current",
+      "role": "REQUIRED",
+      "proposition_types": [
+        "CONTROLLING_RULE_TEXT"
+      ]
+    },
+    {
+      "requirement_id": "civpro-judgment-pleadings",
+      "authority_plan_id": "authority-frcp-current",
+      "role": "REQUIRED",
+      "proposition_types": [
+        "CONTROLLING_RULE_TEXT"
+      ]
+    },
+    {
+      "requirement_id": "civpro-summary-judgment",
+      "authority_plan_id": "authority-frcp-current",
+      "role": "REQUIRED",
+      "proposition_types": [
+        "CONTROLLING_RULE_TEXT"
+      ]
+    },
+    {
+      "requirement_id": "civpro-jmol",
+      "authority_plan_id": "authority-frcp-current",
+      "role": "REQUIRED",
+      "proposition_types": [
+        "CONTROLLING_RULE_TEXT"
+      ]
+    },
+    {
+      "requirement_id": "civpro-default-default-judgment",
+      "authority_plan_id": "authority-frcp-current",
+      "role": "REQUIRED",
+      "proposition_types": [
+        "CONTROLLING_RULE_TEXT"
+      ]
+    },
+    {
+      "requirement_id": "civpro-rule-12-dismissal",
+      "authority_plan_id": "authority-scotus-pleading-injunction",
+      "role": "CONDITIONAL",
+      "proposition_types": [
+        "CONTROLLING_HOLDING"
+      ],
+      "condition_expression": "A candidate states a controlling federal pleading or summary-judgment standard requiring case support."
+    },
+    {
+      "requirement_id": "civpro-summary-judgment",
+      "authority_plan_id": "authority-scotus-pleading-injunction",
+      "role": "CONDITIONAL",
+      "proposition_types": [
+        "CONTROLLING_HOLDING"
+      ],
+      "condition_expression": "A candidate states a controlling federal pleading or summary-judgment standard requiring case support."
+    },
+    {
+      "requirement_id": "civpro-jmol",
+      "authority_plan_id": "authority-scotus-jury",
+      "role": "CONDITIONAL",
+      "proposition_types": [
+        "CONTROLLING_HOLDING"
+      ],
+      "condition_expression": "A candidate states a constitutional or controlling case-driven JMOL proposition."
+    },
+    {
+      "requirement_id": "civpro-claim-preclusion",
+      "authority_plan_id": "authority-scotus-preclusion",
+      "role": "REQUIRED",
+      "proposition_types": [
+        "CONTROLLING_HOLDING"
+      ]
+    },
+    {
+      "requirement_id": "civpro-issue-preclusion",
+      "authority_plan_id": "authority-scotus-preclusion",
+      "role": "REQUIRED",
+      "proposition_types": [
+        "CONTROLLING_HOLDING"
+      ]
+    },
+    {
+      "requirement_id": "civpro-claim-preclusion",
+      "authority_plan_id": "authority-28-usc-preclusion",
+      "role": "CONDITIONAL",
+      "proposition_types": [
+        "GOVERNING_STATUTORY_TEXT"
+      ],
+      "condition_expression": "A candidate requires a federal judgment-recognition statute."
+    },
+    {
+      "requirement_id": "civpro-issue-preclusion",
+      "authority_plan_id": "authority-28-usc-preclusion",
+      "role": "CONDITIONAL",
+      "proposition_types": [
+        "GOVERNING_STATUTORY_TEXT"
+      ],
+      "condition_expression": "A candidate requires a federal judgment-recognition statute."
+    },
+    {
+      "requirement_id": "civpro-final-judgment-rule",
+      "authority_plan_id": "authority-28-usc-appellate",
+      "role": "REQUIRED",
+      "proposition_types": [
+        "GOVERNING_STATUTORY_TEXT"
+      ]
+    },
+    {
+      "requirement_id": "civpro-interlocutory-review",
+      "authority_plan_id": "authority-28-usc-appellate",
+      "role": "REQUIRED",
+      "proposition_types": [
+        "GOVERNING_STATUTORY_TEXT"
+      ]
+    },
+    {
+      "requirement_id": "civpro-standards-review",
+      "authority_plan_id": "authority-scotus-appellate",
+      "role": "REQUIRED",
+      "proposition_types": [
+        "CONTROLLING_HOLDING"
+      ]
+    },
+    {
+      "requirement_id": "civpro-final-judgment-rule",
+      "authority_plan_id": "authority-scotus-appellate",
+      "role": "CONDITIONAL",
+      "proposition_types": [
+        "CONTROLLING_HOLDING"
+      ],
+      "condition_expression": "A candidate states a case-driven appealability or review proposition not established by statute alone."
+    },
+    {
+      "requirement_id": "civpro-interlocutory-review",
+      "authority_plan_id": "authority-scotus-appellate",
+      "role": "CONDITIONAL",
+      "proposition_types": [
+        "CONTROLLING_HOLDING"
+      ],
+      "condition_expression": "A candidate states a case-driven appealability or review proposition not established by statute alone."
+    },
+    {
+      "requirement_id": "civpro-final-judgment-rule",
+      "authority_plan_id": "authority-frap-conditional",
+      "role": "CONDITIONAL",
+      "proposition_types": [
+        "CONTROLLING_RULE_TEXT"
+      ],
+      "condition_expression": "The exact candidate proposition genuinely depends on an appellate procedural rule."
+    },
+    {
+      "requirement_id": "civpro-interlocutory-review",
+      "authority_plan_id": "authority-frap-conditional",
+      "role": "CONDITIONAL",
+      "proposition_types": [
+        "CONTROLLING_RULE_TEXT"
+      ],
+      "condition_expression": "The exact candidate proposition genuinely depends on an appellate procedural rule."
+    },
+    {
+      "requirement_id": "civpro-standards-review",
+      "authority_plan_id": "authority-frap-conditional",
+      "role": "CONDITIONAL",
+      "proposition_types": [
+        "CONTROLLING_RULE_TEXT"
+      ],
+      "condition_expression": "The exact candidate proposition genuinely depends on an appellate procedural rule."
+    }
+  ],
+  "certified_subsets": [
+    {
+      "planning_group_scope_item_id": "civil-procedure-service-process-notice",
+      "snapshot_id": "8ffc025a-ddac-5765-b7b2-130c84282c83",
+      "compile_version": "BARCLIMB_PILOT_FRCP_RULE4_2025_V2",
+      "compile_sha256": "0148dea24c906e2e257265681044ae57ad4b60b9a1e290f291e95dc2315825ec",
+      "certification_sha256": "60e160e3c1a458e4c5b98569fcf3f04d409086d328496f2ed41a020a5b591ae0",
+      "coverage_class": "PILOT_ONLY",
+      "contribution_class": "PARTIAL_LEAF_COVERAGE",
+      "national_complete": false,
+      "perimeter_attribution": {
+        "official_topic_id": "civpro-topic-service-process-notice",
+        "required_perimeter_candidate_ids": [
+          "frcp4-waiver-request",
+          "frcp4-waiver-expense-consequence",
+          "frcp4-domestic-individual-service"
+        ],
+        "supplemental_candidate_ids": [
+          "frcp4-service-plaintiff-responsibility",
+          "frcp4-service-server-qualification",
+          "frcp4-service-time-limit",
+          "frcp4-good-cause-extension",
+          "frcp4-untimely-service-response"
+        ],
+        "timing_content_required_for_subject_completion": false,
+        "attribution_note": "The immutable snapshot remains valid production evidence. Rule 4(m) timing and other content outside the exact terminal-topic perimeter are supplemental and cannot inflate subject completeness."
+      }
+    }
+  ],
+  "planning_limitations": [
+    "No new substantive Rule Obligation statements are defined.",
+    "The six coarse accepted scope items are planning aggregates, not official terminal completeness units.",
+    "The Rule 4 pilot remains immutable partial and supplemental evidence; it does not complete its terminal topic.",
+    "No Rule 59, Rule 60, new-trial, generic verdict, broad appellate-procedure, or state-specific doctrine is required for perimeter completeness.",
+    "No terminal topic, planning group, subject, assessment inventory, learner evidence, readiness, or national-completeness truth is certified."
+  ],
+  "canonical_sha256": "b706b7182ab165377a9e60520b083cdaf87562b256dfb0c371f9aa38d948c0c3"
+}

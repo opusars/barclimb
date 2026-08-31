@@ -46,12 +46,21 @@ PLAN_PATH = BACKEND_ROOT / "curriculum" / "manifests" / "civil-procedure-subject
 PLAN_V2_PATH = (
     BACKEND_ROOT / "curriculum" / "manifests" / "civil-procedure-subject-plan-2026-v2.json"
 )
+PLAN_V3_PATH = (
+    BACKEND_ROOT / "curriculum" / "manifests" / "civil-procedure-subject-plan-2026-v3.json"
+)
 REVIEW_PACKET_PATH = BACKEND_ROOT.parents[1] / "docs" / "project" / "M2_2C_HUMAN_REVIEW_PACKET.md"
 REVIEW_PACKET_V1_PATH = (
     BACKEND_ROOT.parents[1] / "docs" / "project" / "M2_2C_HUMAN_REVIEW_PACKET_V1.md"
 )
 V1_REVIEW_DISPOSITION_PATH = (
     BACKEND_ROOT.parents[1] / "docs" / "project" / "M2_2C_V1_REVIEW_DISPOSITION.json"
+)
+REVIEW_PACKET_V2_PATH = (
+    BACKEND_ROOT.parents[1] / "docs" / "project" / "M2_2C_HUMAN_REVIEW_PACKET_V2.md"
+)
+V2_REVIEW_DISPOSITION_PATH = (
+    BACKEND_ROOT.parents[1] / "docs" / "project" / "M2_2C_V2_REVIEW_DISPOSITION.json"
 )
 
 EXPECTED_LEAF_IDS = {
@@ -239,6 +248,13 @@ def _import_v2_plan():
     v2, created = import_subject_plan(_json(PLAN_V2_PATH))
     assert created and v2.supersedes == v1
     return v2
+
+
+def _import_v3_plan():
+    v2 = _import_v2_plan()
+    v3, created = import_subject_plan(_json(PLAN_V3_PATH))
+    assert created and v3.supersedes == v2
+    return v3
 
 
 def test_plan_is_hash_exact_body_free_and_contains_all_real_civil_procedure_leaves():
@@ -543,7 +559,7 @@ def test_v1_rejection_history_is_preserved_without_fabricated_reviewer_identity(
     )
     assert disposition["formal_subject_plan_review_recorded"] is False
     packet = REVIEW_PACKET_PATH.read_text()
-    assert "SECOND REVIEW PENDING" in packet
+    assert "THIRD REVIEW PENDING" in packet
     assert all(topic_id in packet for topic_id in EXPECTED_TERMINAL_TOPIC_IDS)
 
 
@@ -701,6 +717,173 @@ def test_v2_subject_and_national_completeness_remain_false_at_second_review_gate
     assert report["subject_complete"] is False
     assert report["national_complete"] is False
     assert not SubjectPlanHumanReview.objects.filter(manifest=manifest).exists()
+    with pytest.raises(ValidationError, match="subject_certification_blocked"):
+        assert_subject_certification_ready(manifest)
+
+
+def test_v2_review_history_is_preserved_and_v3_manifest_is_hash_exact():
+    disposition = _json(V2_REVIEW_DISPOSITION_PATH)
+    assert hashlib.sha256(REVIEW_PACKET_V2_PATH.read_bytes()).hexdigest() == (
+        "9f7b27c1270f60dbf71a5c2baf15c7c5183a484e6e381737442ee29999b1047a"
+    )
+    assert disposition["disposition"] == "REVISE"
+    assert disposition["resolution_detail"] == "NARROW_V3_CORRECTION_REQUIRED"
+    assert disposition["reviewer_identity_status"] == (
+        "NOT_SUPPLIED_IN_REPOSITORY_CONTROLLED_INPUT"
+    )
+    assert disposition["formal_subject_plan_review_recorded"] is False
+
+    payload = _json(PLAN_V3_PATH)
+    assert payload["canonical_sha256"] == canonical_sha256(
+        {key: value for key, value in payload.items() if key != "canonical_sha256"}
+    )
+    terminal_topics = [topic for topic in payload["official_topics"] if topic["is_terminal"]]
+    assert {topic["stable_id"] for topic in terminal_topics} == EXPECTED_TERMINAL_TOPIC_IDS
+    assert sum(topic["official_marker"] == "STARRED" for topic in terminal_topics) == 14
+    assert sum(topic["official_marker"] == "UNSTARRED" for topic in terminal_topics) == 13
+    assert len(payload["planning_groups"]) == 6
+    assert all(
+        group["classification"] == "CURRICULUM_PLANNING_GROUP"
+        for group in payload["planning_groups"]
+    )
+    assert payload["official_topics"] == _json(PLAN_V2_PATH)["official_topics"]
+    assert payload["certified_subsets"] == _json(PLAN_V2_PATH)["certified_subsets"]
+    assert "THIRD REVIEW PENDING" in REVIEW_PACKET_PATH.read_text()
+
+
+def test_v3_required_slots_are_narrowed_only_at_the_eight_reviewed_boundaries():
+    manifest = _import_v3_plan()
+    report = subject_coverage_report(manifest)
+    assert manifest.manifest_version == "2026_V3"
+    assert manifest.coverage_policy.policy_version == "2026_V3"
+    assert manifest.supersedes.manifest_version == "2026_V2"
+    assert manifest.coverage_policy.supersedes.policy_version == "2026_V2"
+    assert report["official_terminal_topic_count"] == 27
+    assert report["planning_group_count"] == 6
+    assert report["coverage_requirement_count"] == 43
+    assert report["required_slot_count"] == 149
+    assert report["authority_plan_count"] == 22
+    assert report["six_group_rollup_can_establish_completeness"] is False
+
+    expected_kinds = {
+        "civpro-preliminary-injunctions-tro": {"RULE", "DISTINCTION"},
+        "civpro-severance": {"RULE", "REMEDY"},
+        "civpro-claim-preclusion": {"RULE", "ELEMENT", "LIMITATION"},
+        "civpro-issue-preclusion": {"RULE", "ELEMENT", "DISTINCTION", "LIMITATION"},
+        "civpro-final-judgment-rule": {"RULE", "ELEMENT"},
+        "civpro-interlocutory-review": {"RULE", "ELEMENT", "EXCEPTION", "DISTINCTION"},
+        "civpro-standards-review": {"RULE", "DISTINCTION"},
+    }
+    for requirement_id, kinds in expected_kinds.items():
+        requirement = ScopeCoverageRequirement.objects.get(
+            manifest_leaf__manifest=manifest, stable_id=requirement_id
+        )
+        assert set(requirement.slots.values_list("obligation_kind", flat=True)) == kinds
+
+    v2_payload = _json(PLAN_V2_PATH)
+    v3_payload = _json(PLAN_V3_PATH)
+    changed_requirements = {
+        requirement["stable_id"]
+        for requirement in v3_payload["coverage_requirements"]
+        if requirement
+        != next(
+            old
+            for old in v2_payload["coverage_requirements"]
+            if old["stable_id"] == requirement["stable_id"]
+        )
+    }
+    assert changed_requirements == {
+        "civpro-preliminary-injunctions-tro",
+        "civpro-severance",
+        "civpro-claim-preclusion",
+        "civpro-issue-preclusion",
+        "civpro-final-judgment-rule",
+        "civpro-standards-review",
+    }
+
+
+def test_v3_authority_corrections_are_proposition_sensitive_and_bounded():
+    manifest = _import_v3_plan()
+
+    def mappings(requirement_id):
+        requirement = ScopeCoverageRequirement.objects.get(
+            manifest_leaf__manifest=manifest, stable_id=requirement_id
+        )
+        return {
+            mapping.authority_plan.stable_id: mapping
+            for mapping in requirement.authority_mappings.select_related("authority_plan")
+        }
+
+    fnc = mappings("civpro-forum-non-conveniens")
+    assert fnc["authority-scotus-venue"].role == "REQUIRED"
+    assert fnc["authority-28-usc-venue-transfer"].role == "CONDITIONAL"
+    assert "§ 1404 or § 1406" in fnc["authority-28-usc-venue-transfer"].condition_expression
+
+    injunction = mappings("civpro-preliminary-injunctions-tro")
+    assert injunction["authority-frcp-current"].role == "REQUIRED"
+    assert injunction["authority-scotus-pleading-injunction"].role == "CONDITIONAL"
+
+    concurrent = mappings("civpro-concurrent-jurisdiction")
+    assert concurrent["authority-scotus-jurisdiction"].role == "REQUIRED"
+    assert concurrent["authority-scotus-jurisdiction"].proposition_types == [
+        "CONCURRENT_JURISDICTION_CONTROLLING_HOLDING"
+    ]
+    assert concurrent["authority-28-usc-jurisdiction-removal"].role == "CONDITIONAL"
+
+    federal_question = mappings("civpro-federal-question")
+    assert federal_question["authority-28-usc-jurisdiction-removal"].role == "REQUIRED"
+    assert federal_question["authority-scotus-jurisdiction"].role == "REQUIRED"
+    assert federal_question["authority-scotus-jurisdiction"].proposition_types == [
+        "WELL_PLEADED_COMPLAINT_CONTROLLING_HOLDING"
+    ]
+    assert federal_question["authority-us-constitution-article-iii"].role == "CONDITIONAL"
+
+    assert (
+        not RequirementAuthorityPlan.objects.filter(
+            requirement__manifest_leaf__manifest=manifest,
+            authority_plan__stable_id="authority-frap-conditional",
+        )
+        .exclude(role="CONDITIONAL")
+        .exists()
+    )
+    erie = ScopeCoverageRequirement.objects.get(
+        manifest_leaf__manifest=manifest, stable_id="civpro-erie-federal-rule-on-point"
+    )
+    assert {
+        mapping.authority_plan.stable_id: mapping.role
+        for mapping in erie.authority_mappings.select_related("authority_plan")
+    } == {
+        "authority-scotus-erie": "REQUIRED",
+        "authority-frcp-current": "CONDITIONAL",
+        "authority-rules-enabling-act": "CONDITIONAL",
+        "authority-rules-of-decision-act": "CONDITIONAL",
+    }
+
+
+def test_v3_rule4_evidence_is_immutable_and_completeness_remains_false():
+    before = hashlib.sha256(PILOT_PATH.read_bytes()).hexdigest()
+    manifest = _import_v3_plan()
+    report = subject_coverage_report(manifest)
+    subset = manifest.manifest_leaves.get(
+        scope_item__stable_id="civil-procedure-service-process-notice"
+    ).certified_subsets.get()
+    assert str(subset.coverage_snapshot_id) == "8ffc025a-ddac-5765-b7b2-130c84282c83"
+    assert subset.coverage_snapshot.compile_version.canonical_sha256 == (
+        "0148dea24c906e2e257265681044ae57ad4b60b9a1e290f291e95dc2315825ec"
+    )
+    assert subset.coverage_snapshot.certification_sha256 == (
+        "60e160e3c1a458e4c5b98569fcf3f04d409086d328496f2ed41a020a5b591ae0"
+    )
+    assert subset.perimeter_attribution["timing_content_required_for_subject_completion"] is False
+    assert hashlib.sha256(PILOT_PATH.read_bytes()).hexdigest() == before
+    assert report["certified_slot_count"] == 0
+    assert report["unresolved_candidate_slot_count"] == 149
+    assert report["human_review_status"] == "PENDING"
+    assert report["subject_certified"] is False
+    assert report["subject_complete"] is False
+    assert report["national_complete"] is False
+    assert not SubjectPlanHumanReview.objects.filter(manifest=manifest).exists()
+    assert not RuleObligation.objects.exists()
     with pytest.raises(ValidationError, match="subject_certification_blocked"):
         assert_subject_certification_ready(manifest)
 

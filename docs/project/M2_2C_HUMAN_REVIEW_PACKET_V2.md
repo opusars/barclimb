@@ -1,8 +1,8 @@
-# M2.2c Civil Procedure Coverage-Plan Human Review Packet — V3
+# M2.2c Civil Procedure Coverage-Plan Human Review Packet — V2
 
-Status: **THIRD REVIEW PENDING — NOT APPROVED — NOT SUBJECT CERTIFIED**
+Status: **SECOND REVIEW PENDING — NOT APPROVED — NOT SUBJECT CERTIFIED**
 
-This packet asks a qualified human reviewer to assess the narrowly corrected Civil Procedure typed completeness requirements and proposition-sensitive authority plan. It does not ask for approval of substantive Rule Obligation statements. M2.2c V3 creates none.
+This packet asks a qualified human reviewer to assess the corrected Civil Procedure official-topic normalization, curriculum decomposition, treatment fidelity, typed completeness requirements, and requirement-level authority plan. It does not ask for approval of substantive Rule Obligation statements. M2.2c V2 creates none.
 
 Official source bytes remain transient and are not reproduced. The short factual topic labels, hierarchy identifiers, locators, and star classifications below were normalized from the accepted hash-identified NCBE source.
 
@@ -13,16 +13,13 @@ Official source bytes remain transient and are not reproduced. The short factual
 - Official source artifact: `NCBE_NEXTGEN_CONTENT_SCOPE@2025-08_JUL2026-FEB2027`
 - Official source PDF SHA-256: `22aa277048c04fdd887db66284c28bade9989b9f8a654fab05781bafa5b19b1a`
 - Administration period: July 2026 through February 2027
-- Active subject manifest: `BARCLIMB_CIVPRO_CURRICULUM_MANIFEST@2026_V3`
-- Active subject-manifest SHA-256: `b706b7182ab165377a9e60520b083cdaf87562b256dfb0c371f9aa38d948c0c3`
-- Coverage policy: `BARCLIMB_CIVPRO_COVERAGE_POLICY@2026_V3`
-- Certification gate: `BARCLIMB_SUBJECT_CERTIFICATION_GATE_V3`
+- Active subject manifest: `BARCLIMB_CIVPRO_CURRICULUM_MANIFEST@2026_V2`
+- Active subject-manifest SHA-256: `ff98c996ac55135b6e7c0dc6410cac4be965a1c7f482a9c8cc6aff7a9b7cba20`
+- Coverage policy: `BARCLIMB_CIVPRO_COVERAGE_POLICY@2026_V2`
+- Certification gate: `BARCLIMB_SUBJECT_CERTIFICATION_GATE_V2`
 - V1 packet: `M2_2C_HUMAN_REVIEW_PACKET_V1.md`, SHA-256 `153746608c27abad008dbfa5cd858113c746696ed05fc410a1b6242e558b1f6c`
 - V1 disposition: **REJECT — REVISION REQUIRED**
 - V1 reviewer identity/qualification: not supplied in repository-controlled input; no formal workflow attestation was fabricated.
-- V2 packet: `M2_2C_HUMAN_REVIEW_PACKET_V2.md`, SHA-256 `9f7b27c1270f60dbf71a5c2baf15c7c5183a484e6e381737442ee29999b1047a`
-- V2 disposition: **REVISE — NARROW V3 CORRECTION REQUIRED**
-- V2 reviewer identity/qualification: not supplied in repository-controlled input; no formal workflow attestation was fabricated.
 - Existing Rule 4 compile: `BARCLIMB_PILOT_FRCP_RULE4_2025_V2`
 - Existing Rule 4 snapshot: `8ffc025a-ddac-5765-b7b2-130c84282c83` (`PILOT_ONLY`)
 - Existing compile SHA-256: `0148dea24c906e2e257265681044ae57ad4b60b9a1e290f291e95dc2315825ec`
@@ -41,25 +38,12 @@ Official source bytes remain transient and are not reproduced. The short factual
 9. Jury preservation is separate from JMOL. Default/default judgment and claim/issue preclusion are explicit. Rule 59/60-style posttrial relief is not required.
 10. Appeals are limited to final judgment, interlocutory review, and standards of review. FRAP is conditional, not a blanket completeness dependency.
 
-## Narrow V3 changes from V2
-
-1. Forum non conveniens now requires controlling Supreme Court/common-law authority; Title 28 is conditional only for propositions contrasting FNC with statutory transfer or otherwise depending on §§ 1404/1406.
-2. TRO/preliminary-injunction mandatory completeness is narrowed from `RULE`, `FACTOR`, `PROCEDURAL_STEP`, `LIMITATION`, `REMEDY` to `RULE`, `DISTINCTION`. Additional Rule 65 depth remains permissible supplemental content. FRCP remains required; Supreme Court authority is conditional when a required proposition genuinely needs case-driven support.
-3. Severance mandatory completeness is narrowed from `RULE`, `FACTOR`, `REMEDY` to `RULE`, `REMEDY`.
-4. Claim preclusion removes mandatory `EXCEPTION`, retaining `RULE`, `ELEMENT`, `LIMITATION`; issue preclusion removes mandatory `EXCEPTION`, retaining `RULE`, `ELEMENT`, `DISTINCTION`, `LIMITATION`.
-5. Final judgment removes mandatory `EXCEPTION` and proves the ordinary finality rule/boundary; authorized pre-final-review routes remain under interlocutory review.
-6. Standards of review removes mandatory `LIMITATION`, retaining `RULE`, `DISTINCTION`.
-7. Concurrent jurisdiction now requires proposition-level controlling Supreme Court authority; Title 28 is conditional for an actual statutory jurisdiction/removal distinction.
-8. Federal question retains required Title 28 support and now requires proposition-level controlling Supreme Court authority for the well-pleaded-complaint doctrine; Article III remains conditional.
-
-These are the only substantive V3 plan corrections. The 27 terminal topics, 14-starred/13-unstarred treatment, six planning aggregates, 43 requirements, Erie/Hanna architecture, Rule 4 evidence, and all other V2 planning truth remain unchanged.
-
 ## Operative treatment interpretation
 
 - `STARRED` / `RECALLED_REQUIRED`: the topic requires recalled knowledge and understanding without supplied legal resources.
 - `UNSTARRED` / `RECOGNITION_WITH_OR_WITHOUT_RESOURCES`: the topic may be tested with or without resources; without resources, recalled understanding must be sufficient to recognize that the topic is at issue.
 - Aggregate `MIXED_OFFICIAL_MARKERS` is display metadata only. It cannot govern candidate treatment or establish completeness.
-- V3 contains 14 starred terminal topics and 13 unstarred terminal topics.
+- V2 contains 14 starred terminal topics and 13 unstarred terminal topics.
 
 ## Six BarClimb planning aggregates — not official terminal leaves
 
@@ -131,7 +115,7 @@ Every terminal topic has at least one required planning state. Required slots st
   - `civpro-federal-question-limitation` — `LIMITATION`; minimum `1`; relationships: `civpro-federal-question-rule` → `HAS_LIMITATION`
 - Authority mappings:
   - `REQUIRED` → `authority-28-usc-jurisdiction-removal` (Title 28 jurisdiction, removal, and remand provisions); propositions: `GOVERNING_STATUTORY_TEXT`.
-  - `REQUIRED` → `authority-scotus-jurisdiction` (U.S. Supreme Court jurisdiction authority); propositions: `WELL_PLEADED_COMPLAINT_CONTROLLING_HOLDING`.
+  - `CONDITIONAL` → `authority-scotus-jurisdiction` (U.S. Supreme Court jurisdiction authority); propositions: `CONTROLLING_HOLDING`. Condition: A candidate states a proposition not responsibly established by statutory text alone.
   - `CONDITIONAL` → `authority-us-constitution-article-iii` (U.S. Constitution, Article III); propositions: `CONSTITUTIONAL_BOUNDARY`. Condition: A candidate distinguishes constitutional judicial power from statutory jurisdiction.
 
 ### `civpro-topic-diversity-jurisdiction` — Diversity jurisdiction
@@ -201,8 +185,7 @@ Every terminal topic has at least one required planning state. Required slots st
   - `civpro-concurrent-jurisdiction-rule` — `RULE`; minimum `1`
   - `civpro-concurrent-jurisdiction-distinction` — `DISTINCTION`; minimum `1`; relationships: `civpro-concurrent-jurisdiction-rule` → `HAS_DISTINCTION`
 - Authority mappings:
-  - `CONDITIONAL` → `authority-28-usc-jurisdiction-removal` (Title 28 jurisdiction, removal, and remand provisions); propositions: `GOVERNING_STATUTORY_TEXT`. Condition: The candidate states a statutory jurisdiction proposition or a statutory distinction from removal or remand.
-  - `REQUIRED` → `authority-scotus-jurisdiction` (U.S. Supreme Court jurisdiction authority); propositions: `CONCURRENT_JURISDICTION_CONTROLLING_HOLDING`.
+  - `REQUIRED` → `authority-28-usc-jurisdiction-removal` (Title 28 jurisdiction, removal, and remand provisions); propositions: `GOVERNING_STATUTORY_TEXT`.
 
 #### `civpro-removal-remand`
 
@@ -398,7 +381,7 @@ Every terminal topic has at least one required planning state. Required slots st
   - `civpro-forum-non-conveniens-remedy` — `REMEDY`; minimum `1`; relationships: `civpro-forum-non-conveniens-rule` → `HAS_REMEDY`
   - `civpro-forum-non-conveniens-distinction` — `DISTINCTION`; minimum `1`; relationships: `civpro-forum-non-conveniens-rule` → `HAS_DISTINCTION`
 - Authority mappings:
-  - `CONDITIONAL` → `authority-28-usc-venue-transfer` (Title 28 venue and transfer provisions); propositions: `GOVERNING_STATUTORY_TEXT`. Condition: The candidate contrasts common-law forum non conveniens with statutory transfer, depends on 28 U.S.C. § 1404 or § 1406, or otherwise states a statutory venue or transfer distinction.
+  - `REQUIRED` → `authority-28-usc-venue-transfer` (Title 28 venue and transfer provisions); propositions: `GOVERNING_STATUTORY_TEXT`.
   - `REQUIRED` → `authority-scotus-venue` (U.S. Supreme Court venue and forum non conveniens authority); propositions: `CONTROLLING_HOLDING`.
 
 ### `civpro-topic-state-law-federal-court` — II. State law in federal court
@@ -471,17 +454,20 @@ Every terminal topic has at least one required planning state. Required slots st
 #### `civpro-preliminary-injunctions-tro`
 
 - Description: Temporary restraining orders and preliminary injunctions as status-quo devices, including the preliminary-to-permanent relationship.
-- Requirement type: `DISTINCTIONS_DEFINITIONS`
+- Requirement type: `PROCEDURAL_BRANCHING`
 - Treatment inherited from terminal topic: `RECOGNITION_WITH_OR_WITHOUT_RESOURCES`
 - Required for subject completeness: `true`
-- Required Rule Obligation kinds: `RULE`, `DISTINCTION`
-- Allowed Rule Obligation kinds: `RULE`, `DISTINCTION`, `FACTOR`, `PROCEDURAL_STEP`, `LIMITATION`, `REMEDY`
+- Required Rule Obligation kinds: `RULE`, `FACTOR`, `PROCEDURAL_STEP`, `LIMITATION`, `REMEDY`
+- Allowed Rule Obligation kinds: `RULE`, `FACTOR`, `PROCEDURAL_STEP`, `LIMITATION`, `REMEDY`
 - Typed slots:
   - `civpro-preliminary-injunctions-tro-rule` — `RULE`; minimum `1`
-  - `civpro-preliminary-injunctions-tro-distinction` — `DISTINCTION`; minimum `1`; relationships: `civpro-preliminary-injunctions-tro-rule` → `HAS_DISTINCTION`
+  - `civpro-preliminary-injunctions-tro-factor` — `FACTOR`; minimum `1`; relationships: `civpro-preliminary-injunctions-tro-rule` → `HAS_FACTOR`
+  - `civpro-preliminary-injunctions-tro-procedural-step` — `PROCEDURAL_STEP`; minimum `1`; relationships: `civpro-preliminary-injunctions-tro-rule` → `HAS_PROCEDURAL_STEP`
+  - `civpro-preliminary-injunctions-tro-limitation` — `LIMITATION`; minimum `1`; relationships: `civpro-preliminary-injunctions-tro-rule` → `HAS_LIMITATION`
+  - `civpro-preliminary-injunctions-tro-remedy` — `REMEDY`; minimum `1`; relationships: `civpro-preliminary-injunctions-tro-rule` → `HAS_REMEDY`
 - Authority mappings:
   - `REQUIRED` → `authority-frcp-current` (Federal Rules of Civil Procedure); propositions: `CONTROLLING_RULE_TEXT`.
-  - `CONDITIONAL` → `authority-scotus-pleading-injunction` (U.S. Supreme Court pleading and preliminary-injunction authority); propositions: `CONTROLLING_HOLDING`. Condition: A required perimeter proposition genuinely depends on controlling case authority rather than Rule 65 text alone.
+  - `REQUIRED` → `authority-scotus-pleading-injunction` (U.S. Supreme Court pleading and preliminary-injunction authority); propositions: `CONTROLLING_HOLDING`.
 
 ### `civpro-topic-pleadings-amended-pleadings` — Pleadings and amended pleadings
 
@@ -623,10 +609,11 @@ Every terminal topic has at least one required planning state. Required slots st
 - Requirement type: `CONSEQUENCES_REMEDIES`
 - Treatment inherited from terminal topic: `RECALL`
 - Required for subject completeness: `true`
-- Required Rule Obligation kinds: `RULE`, `REMEDY`
+- Required Rule Obligation kinds: `RULE`, `FACTOR`, `REMEDY`
 - Allowed Rule Obligation kinds: `RULE`, `FACTOR`, `REMEDY`
 - Typed slots:
   - `civpro-severance-rule` — `RULE`; minimum `1`
+  - `civpro-severance-factor` — `FACTOR`; minimum `1`; relationships: `civpro-severance-rule` → `HAS_FACTOR`
   - `civpro-severance-remedy` — `REMEDY`; minimum `1`; relationships: `civpro-severance-rule` → `HAS_REMEDY`
 - Authority mappings:
   - `REQUIRED` → `authority-frcp-current` (Federal Rules of Civil Procedure); propositions: `CONTROLLING_RULE_TEXT`.
@@ -901,11 +888,12 @@ Every terminal topic has at least one required planning state. Required slots st
 - Requirement type: `ELEMENTS_FACTORS`
 - Treatment inherited from terminal topic: `RECALL`
 - Required for subject completeness: `true`
-- Required Rule Obligation kinds: `RULE`, `ELEMENT`, `LIMITATION`
+- Required Rule Obligation kinds: `RULE`, `ELEMENT`, `EXCEPTION`, `LIMITATION`
 - Allowed Rule Obligation kinds: `RULE`, `ELEMENT`, `EXCEPTION`, `LIMITATION`
 - Typed slots:
   - `civpro-claim-preclusion-rule` — `RULE`; minimum `1`
   - `civpro-claim-preclusion-element` — `ELEMENT`; minimum `1`; relationships: `civpro-claim-preclusion-rule` → `HAS_ELEMENT`
+  - `civpro-claim-preclusion-exception` — `EXCEPTION`; minimum `1`; relationships: `civpro-claim-preclusion-rule` → `HAS_EXCEPTION`
   - `civpro-claim-preclusion-limitation` — `LIMITATION`; minimum `1`; relationships: `civpro-claim-preclusion-rule` → `HAS_LIMITATION`
 - Authority mappings:
   - `REQUIRED` → `authority-scotus-preclusion` (U.S. Supreme Court preclusion authority); propositions: `CONTROLLING_HOLDING`.
@@ -917,11 +905,12 @@ Every terminal topic has at least one required planning state. Required slots st
 - Requirement type: `DISTINCTIONS_DEFINITIONS`
 - Treatment inherited from terminal topic: `RECALL`
 - Required for subject completeness: `true`
-- Required Rule Obligation kinds: `RULE`, `ELEMENT`, `DISTINCTION`, `LIMITATION`
+- Required Rule Obligation kinds: `RULE`, `ELEMENT`, `EXCEPTION`, `DISTINCTION`, `LIMITATION`
 - Allowed Rule Obligation kinds: `RULE`, `ELEMENT`, `EXCEPTION`, `DISTINCTION`, `LIMITATION`
 - Typed slots:
   - `civpro-issue-preclusion-rule` — `RULE`; minimum `1`
   - `civpro-issue-preclusion-element` — `ELEMENT`; minimum `1`; relationships: `civpro-issue-preclusion-rule` → `HAS_ELEMENT`
+  - `civpro-issue-preclusion-exception` — `EXCEPTION`; minimum `1`; relationships: `civpro-issue-preclusion-rule` → `HAS_EXCEPTION`
   - `civpro-issue-preclusion-distinction` — `DISTINCTION`; minimum `1`; relationships: `civpro-issue-preclusion-rule` → `HAS_DISTINCTION`
   - `civpro-issue-preclusion-limitation` — `LIMITATION`; minimum `1`; relationships: `civpro-issue-preclusion-rule` → `HAS_LIMITATION`
 - Authority mappings:
@@ -937,15 +926,16 @@ Every terminal topic has at least one required planning state. Required slots st
 
 #### `civpro-final-judgment-rule`
 
-- Description: Final-judgment appealability rule and finality boundary, distinct from interlocutory-review routes.
-- Requirement type: `GOVERNING_RULE`
+- Description: Final-judgment appealability rule and supported exceptions.
+- Requirement type: `EXCEPTIONS_LIMITATIONS`
 - Treatment inherited from terminal topic: `RECOGNITION_WITH_OR_WITHOUT_RESOURCES`
 - Required for subject completeness: `true`
-- Required Rule Obligation kinds: `RULE`, `ELEMENT`
+- Required Rule Obligation kinds: `RULE`, `ELEMENT`, `EXCEPTION`
 - Allowed Rule Obligation kinds: `RULE`, `ELEMENT`, `EXCEPTION`
 - Typed slots:
   - `civpro-final-judgment-rule-rule` — `RULE`; minimum `1`
   - `civpro-final-judgment-rule-element` — `ELEMENT`; minimum `1`; relationships: `civpro-final-judgment-rule-rule` → `HAS_ELEMENT`
+  - `civpro-final-judgment-rule-exception` — `EXCEPTION`; minimum `1`; relationships: `civpro-final-judgment-rule-rule` → `HAS_EXCEPTION`
 - Authority mappings:
   - `REQUIRED` → `authority-28-usc-appellate` (Title 28 appellate-jurisdiction provisions); propositions: `GOVERNING_STATUTORY_TEXT`.
   - `CONDITIONAL` → `authority-scotus-appellate` (U.S. Supreme Court appealability and review authority); propositions: `CONTROLLING_HOLDING`. Condition: A candidate states a case-driven appealability or review proposition not established by statute alone.
@@ -989,11 +979,12 @@ Every terminal topic has at least one required planning state. Required slots st
 - Requirement type: `DISTINCTIONS_DEFINITIONS`
 - Treatment inherited from terminal topic: `RECOGNITION_WITH_OR_WITHOUT_RESOURCES`
 - Required for subject completeness: `true`
-- Required Rule Obligation kinds: `RULE`, `DISTINCTION`
+- Required Rule Obligation kinds: `RULE`, `DISTINCTION`, `LIMITATION`
 - Allowed Rule Obligation kinds: `RULE`, `DISTINCTION`, `LIMITATION`
 - Typed slots:
   - `civpro-standards-review-rule` — `RULE`; minimum `1`
   - `civpro-standards-review-distinction` — `DISTINCTION`; minimum `1`; relationships: `civpro-standards-review-rule` → `HAS_DISTINCTION`
+  - `civpro-standards-review-limitation` — `LIMITATION`; minimum `1`; relationships: `civpro-standards-review-rule` → `HAS_LIMITATION`
 - Authority mappings:
   - `REQUIRED` → `authority-scotus-appellate` (U.S. Supreme Court appealability and review authority); propositions: `CONTROLLING_HOLDING`.
   - `CONDITIONAL` → `authority-frap-conditional` (Federal Rules of Appellate Procedure); propositions: `CONTROLLING_RULE_TEXT`. Condition: The exact candidate proposition genuinely depends on an appellate procedural rule.
@@ -1057,10 +1048,10 @@ Federal doctrine directing incorporation or comparison of state law remains nati
 - Official terminal topics: `27`
 - Planning aggregates: `6`
 - Coverage requirements: `43`
-- Required typed slots: `149` (V2 required `157`; V3 removes eight artificial mandatory slots and adds no replacements)
+- Required typed slots: `157`
 - Authority plans: `22` (`1` acquired; `21` planned)
-- Certified V3 requirement slots: `0`
-- V3 human-review status: `PENDING`
+- Certified V2 requirement slots: `0`
+- V2 human-review status: `PENDING`
 - `subject_complete: false`
 - `subject_certified: false`
 - `national_complete: false`
@@ -1073,7 +1064,7 @@ For each terminal topic and requirement, record `APPROVE`, `REJECT`, or a precis
 
 1. Whether the 27-topic identities, exact parent hierarchy, locators, and 14-starred/13-unstarred classifications faithfully normalize the accepted NCBE source.
 2. Whether each planning aggregate is useful without being mistaken for official terminal truth.
-3. Whether the 43 requirements and 149 slots achieve complete structural coverage without artificial uniformity or doctrinal excess.
+3. Whether the 43 requirements and 157 slots achieve complete structural coverage without artificial uniformity or doctrinal excess.
 4. Whether federal question, diversity, supplemental, concurrent/removal, and personal jurisdiction are separated at the correct level; whether concurrent jurisdiction is explicit enough.
 5. Whether personal-jurisdiction planning appropriately covers specific/general jurisdiction, long-arm authority, consent, waiver, and constitutional limits without exceeding the source.
 6. Whether service methods, waiver, and constitutional notice match the exact perimeter; whether the required-versus-supplemental Rule 4 evidence classifications are correct.
@@ -1087,8 +1078,7 @@ For each terminal topic and requirement, record `APPROVE`, `REJECT`, or a precis
 14. Whether final judgment, interlocutory review, and standards of review exhaust the official appellate perimeter without broad procedure, preservation, or generic remedies.
 15. Whether FRAP is correctly conditional and whether every case-law family is required, conditional, or unnecessary at the correct requirement level.
 16. Whether any requirement should be split, combined, renamed, narrowed, or removed before substantive candidate compilation begins.
-17. Whether the eight narrow V3 corrections resolve the V2 review disposition without changing any accepted perimeter, treatment, decomposition, or historical-evidence truth.
 
 ## Attestation boundary
 
-A future V3 review record must identify the reviewer and qualification, the exact V3 packet SHA-256, resolution, rationale, attestation, and review time through `record_subject_plan_review`. Approval would cover this narrowly corrected planning structure only. It would not approve substantive candidate statements, complete Civil Procedure doctrine, another subject, assessment inventory, learner mastery/readiness, or national NextGen curriculum completeness.
+A future V2 review record must identify the reviewer and qualification, the exact V2 packet SHA-256, resolution, rationale, attestation, and review time through `record_subject_plan_review`. Approval would cover this corrected planning structure only. It would not approve substantive candidate statements, complete Civil Procedure doctrine, another subject, assessment inventory, learner mastery/readiness, or national NextGen curriculum completeness.

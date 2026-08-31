@@ -1,0 +1,30 @@
+{
+  "schema": "BARCLIMB_SUBJECT_PLAN_REVIEW_DISPOSITION_V1",
+  "subject_manifest": {
+    "stable_id": "BARCLIMB_CIVPRO_CURRICULUM_MANIFEST",
+    "manifest_version": "2026_V2",
+    "canonical_sha256": "ff98c996ac55135b6e7c0dc6410cac4be965a1c7f482a9c8cc6aff7a9b7cba20"
+  },
+  "review_packet": {
+    "path": "docs/project/M2_2C_HUMAN_REVIEW_PACKET_V2.md",
+    "sha256": "9f7b27c1270f60dbf71a5c2baf15c7c5183a484e6e381737442ee29999b1047a"
+  },
+  "disposition": "REVISE",
+  "resolution_detail": "NARROW_V3_CORRECTION_REQUIRED",
+  "received_date": "2026-08-30",
+  "reviewer_identity_status": "NOT_SUPPLIED_IN_REPOSITORY_CONTROLLED_INPUT",
+  "formal_subject_plan_review_recorded": false,
+  "rationale_categories": [
+    "FORUM_NON_CONVENIENS_AUTHORITY",
+    "TRO_PRELIMINARY_INJUNCTION_COMPLETENESS_DEPTH",
+    "SEVERANCE_SLOT_DEPTH",
+    "PRECLUSION_SLOT_DEPTH",
+    "FINALITY_INTERLOCUTORY_TOPIC_BOUNDARY",
+    "STANDARDS_OF_REVIEW_SLOT_DEPTH",
+    "CONCURRENT_JURISDICTION_AUTHORITY",
+    "WELL_PLEADED_COMPLAINT_AUTHORITY"
+  ],
+  "rationale": "The V2 perimeter and decomposition were accepted except for eight narrow corrections: proposition-sensitive authority for forum non conveniens, concurrent jurisdiction, and the well-pleaded-complaint rule; narrower TRO/preliminary-injunction completeness depth and case-authority conditionality; and removal of artificial mandatory factor, exception, or limitation slots for severance, preclusion, final judgment, and standards of review.",
+  "recording_boundary": "This file preserves the supplied revision disposition without inventing reviewer identity, qualification, attestation wording, or approval. No SubjectPlanHumanReview workflow record is created from incomplete reviewer metadata.",
+  "next_state": "Revise the immutable plan as 2026_V3 and return it for a third qualified human review."
+}

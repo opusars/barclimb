@@ -4,10 +4,10 @@
   "product_phase": "MILESTONE_2_IN_PROGRESS",
   "active_launch_train": "B_COMPLETE_LEARNER_LOOP",
   "active_milestone": 2,
-  "status": "M2_2C_INTEGRATED_LOCAL_GREEN_CI_PENDING_SECOND_REVIEW",
+  "status": "M2_2C_V3_THIRD_REVIEW_PENDING",
   "latest_known_good_commit": "1a264422dcf692e867b1f3642111f41494023c7f",
   "active_branch": "m2-2c-civpro-subject-foundation",
-  "database_migration_summary": "M1.3a retains identity/outbox models. M2.1/M2.2a immutable source, scope, Rule Obligation, reconciliation, and snapshot truth is accepted. M2.2b's real current NCBE perimeter and eight reviewed Rule 4 V2 obligations remain accepted with immutable PILOT_ONLY snapshot 8ffc025a-ddac-5765-b7b2-130c84282c83 and national_complete false. M2.2c V1's six-leaf/18-requirement/75-slot plan was rejected for structural revision and remains immutable history. V2 adds checksum-bound SubjectOfficialTopic hierarchy, 27 official terminal completeness topics, six explicitly non-authoritative planning aggregates, 43 terminal-linked requirements, 157 typed slots, 22 requirement-sensitive authority plans, conditional authority expressions, supplemental pilot attribution, and PostgreSQL immutability. Accepted main's Expo SDK 57 patch maintenance changes dependencies only. V2 remains second-human-review pending and creates no new Rule Obligations, subject certification, assessment, learner evidence, entitlement, billing, or AI model.",
+  "database_migration_summary": "M1.3a retains identity/outbox models. M2.1/M2.2a immutable source, scope, Rule Obligation, reconciliation, and snapshot truth is accepted. M2.2b's real current NCBE perimeter and eight reviewed Rule 4 V2 obligations remain accepted with immutable PILOT_ONLY snapshot 8ffc025a-ddac-5765-b7b2-130c84282c83 and national_complete false. M2.2c V1's rejected six-leaf/18-requirement/75-slot plan and V2's revised 27-topic/43-requirement/157-slot plan remain immutable history. Active V3 preserves the checksum-bound SubjectOfficialTopic hierarchy, 27 official terminal completeness topics, six explicitly non-authoritative planning aggregates, 43 terminal-linked requirements, 22 requirement-sensitive authority plans, supplemental Rule 4 attribution, and PostgreSQL immutability while narrowing eight reviewed slot/authority boundaries to 149 required slots. V3 is third-human-review pending and creates no new Rule Obligations, subject certification, assessment, learner evidence, entitlement, billing, or AI model.",
   "enabled_material_feature_flags": [],
   "clients": {
     "web": "PARTIAL",
@@ -27,14 +27,14 @@
     "adsense": "NOT_VERIFIED",
     "admob": "NOT_VERIFIED"
   },
-  "latest_test_summary": "Integrated M2.2c passes Ruff/Django/migration checks, 116 SQLite tests with 11 PostgreSQL-only skips, all 127 PostgreSQL 14/Redis tests, live Celery smoke, and focused coverage at 18 passed/2 skips. Exact Node 24.19.0/npm 11.17.0 clean npm ci, nine typechecks, 14 Web/20 native/8 schema tests, Web build, seven-package portability, live Expo compatibility, Doctor 20/20, and iOS/Android exports at 863/858 modules pass. Invariants remain 27 topics/14 starred/13 unstarred, six-group non-substitution, 43 requirements/157 slots, immutable Rule 4 supplemental attribution, zero certified V2 slots, and false subject/national completeness. Accepted main 1a264422 contributes expo 57.0.18, expo-linking 57.0.8, expo-secure-store 57.0.2, and React Native 0.86.3; audit is 10 moderate nodes in the documented uuid toolchain family only. Exact Python 3.13.15 and exact-branch CI remain hosted gates.",
+  "latest_test_summary": "M2.2c V3 passes Ruff/Django/migration checks, 120 SQLite tests with 11 PostgreSQL-only skips, all 131 PostgreSQL 14/Redis tests, live Celery smoke, and focused coverage at 22 passed/2 skips. Exact Node 24.19.0/npm 11.17.0 clean npm ci, nine typechecks, 14 Web/20 native/8 schema tests, Web build, seven-package portability, live Expo compatibility, Doctor 20/20, and iOS/Android exports at 863/858 modules pass. Invariants remain 27 topics/14 starred/13 unstarred, six-group non-substitution, 43 requirements/149 slots, immutable Rule 4 supplemental attribution, zero certified V3 slots, and false subject/certified/national completeness. Expo remains 57.0.18 with Linking 57.0.8, SecureStore 57.0.2, and React Native 0.86.3; audit remains 10 moderate nodes in the documented uuid toolchain family only. Exact Python 3.13.15 and exact-final-branch CI are hosted gates.",
   "known_blockers": [
     "Apple Developer Program team access, final iOS signing/provisioning/build, physical-device iOS/Android authentication and SecureStore lifecycle, live AASA/assetlinks routing, Google Play ownership/recovery, store approvals, and native production purchase/restore remain mandatory platform-specific Native GA blockers even though they do not block the clarified M1.4 foundation gate.",
     "The bounded M2.2b certification covers only one official-scope leaf and must never be interpreted as complete Rule 4, Civil Procedure, or national NextGen curriculum truth.",
     "M2.2c V1 was REJECTED — REVISION REQUIRED. Its packet and disposition remain immutable history; no reviewer identity or approval was fabricated from incomplete metadata.",
-    "M2.2c V2 is SECOND_REVIEW_PENDING. A qualified human must review the 27-topic hierarchy, 43 requirements, 157 typed slots, treatment markers, supplemental Rule 4 attribution, and conditional authority map before approval or candidate compilation.",
-    "Civil Procedure has zero certified V2 requirement slots, 21 planned authority families, subject_complete false, and national_complete false. Six planning aggregates, percentages, or the Rule 4 pilot cannot establish completeness.",
-    "Accepted main has been merged normally into M2.2c and full local integrated validation passes, but exact-branch Foundation CI must pass before the second human-review gate is declared ready."
+    "M2.2c V2 received REVISE — NARROW V3 CORRECTION REQUIRED. Its exact packet and identity-honest disposition remain immutable; no reviewer identity or approval was fabricated from incomplete metadata.",
+    "M2.2c V3 is THIRD_REVIEW_PENDING. A qualified human must review the 27-topic hierarchy, 43 requirements, 149 typed slots, treatment markers, supplemental Rule 4 attribution, and corrected proposition-sensitive authority map before approval or candidate compilation.",
+    "Civil Procedure has zero certified V3 requirement slots, 21 planned authority families, subject_complete false, subject_certified false, and national_complete false. Six planning aggregates, percentages, or the Rule 4 pilot cannot establish completeness."
   ],
   "high_risk_items": [
     "Execution breadth across web, iOS, Android, AI assessment quality, community moderation, and cross-platform commerce.",
@@ -42,6 +42,6 @@
     "Cross-scenario projections, anonymous claim security, private public-page overlays, entitlement transitions, and cross-device orchestration require explicit integration/security tests before GA.",
     "Official NCBE scope/source changes must pass source-drift and revalidation workflow; future exam scopes remain provisional until governing materials exist."
   ],
-  "exact_next_task": "Complete the final diff/continuity review, commit and push the normal merge, and require exact-branch Foundation CI green. Then stop at the qualified second human-review gate. Do not record approval, compile candidates, merge M2.2c, or begin the next slice.",
-  "last_verified_at": "2026-08-30T14:45:00-07:00"
+  "exact_next_task": "Present the exact active M2_2C_HUMAN_REVIEW_PACKET.md for a third qualified human review. Do not record approval without complete supplied reviewer identity, qualification, decision, rationale, attestation, and timestamp; do not compile candidates, certify, merge M2.2c, or begin the next slice.",
+  "last_verified_at": "2026-08-31T09:50:00-07:00"
 }

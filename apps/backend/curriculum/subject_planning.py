@@ -28,10 +28,12 @@ SUBJECT_PLAN_SCHEMA = "BARCLIMB_SUBJECT_COVERAGE_PLAN_V1"
 SUBJECT_PLAN_SCHEMA_V2 = "BARCLIMB_SUBJECT_COVERAGE_PLAN_V2"
 SUBJECT_CERTIFICATION_GATE = "BARCLIMB_SUBJECT_CERTIFICATION_GATE_V1"
 SUBJECT_CERTIFICATION_GATE_V2 = "BARCLIMB_SUBJECT_CERTIFICATION_GATE_V2"
+SUBJECT_CERTIFICATION_GATE_V3 = "BARCLIMB_SUBJECT_CERTIFICATION_GATE_V3"
 CIVPRO_V2_TERMINAL_INVENTORY_SHA256 = (
     "368082c4e5abc005055fc37dc62514880400ab873ccb42d29de85834c5418434"
 )
 CIVPRO_V2_MANIFEST_SHA256 = "ff98c996ac55135b6e7c0dc6410cac4be965a1c7f482a9c8cc6aff7a9b7cba20"
+CIVPRO_V3_MANIFEST_SHA256 = "b706b7182ab165377a9e60520b083cdaf87562b256dfb0c371f9aa38d948c0c3"
 RELATIONSHIP_TARGET_KINDS = {
     "HAS_ELEMENT": "ELEMENT",
     "HAS_FACTOR": "FACTOR",
@@ -87,6 +89,12 @@ def import_subject_plan(payload):
         and calculated_checksum != CIVPRO_V2_MANIFEST_SHA256
     ):
         raise ValidationError("M2.2c V2 subject plan differs from its accepted canonical manifest.")
+    if (
+        schema == SUBJECT_PLAN_SCHEMA_V2
+        and definition.get("manifest_version") == "2026_V3"
+        and calculated_checksum != CIVPRO_V3_MANIFEST_SHA256
+    ):
+        raise ValidationError("M2.2c V3 subject plan differs from its accepted canonical manifest.")
     _require_keys(
         definition,
         {
@@ -145,11 +153,13 @@ def import_subject_plan(payload):
         )
 
     policy_entry = payload["coverage_policy"]
-    expected_gate = (
-        SUBJECT_CERTIFICATION_GATE
-        if schema == SUBJECT_PLAN_SCHEMA
-        else SUBJECT_CERTIFICATION_GATE_V2
-    )
+    expected_gate = SUBJECT_CERTIFICATION_GATE
+    if schema == SUBJECT_PLAN_SCHEMA_V2:
+        expected_gate = (
+            SUBJECT_CERTIFICATION_GATE_V3
+            if definition["manifest_version"] == "2026_V3"
+            else SUBJECT_CERTIFICATION_GATE_V2
+        )
     if policy_entry.get("certification_gate_version") != expected_gate:
         raise ValidationError("Unknown subject certification gate version.")
     policy_supersedes = None

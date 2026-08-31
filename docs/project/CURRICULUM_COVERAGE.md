@@ -19,7 +19,7 @@ This ledger is cold-recovery state, not a release certification.
 - V3 manifest SHA-256: `b706b7182ab165377a9e60520b083cdaf87562b256dfb0c371f9aa38d948c0c3`
 - Coverage policy: `BARCLIMB_CIVPRO_COVERAGE_POLICY@2026_V3`
 - Human review: `THIRD_REVIEW_PENDING`
-- Active V3 review-packet SHA-256: `f331436461903f25448d946399147acbc0f78b493a44f23b6c48b20abbc7f9af`
+- Active V3 review-packet SHA-256: `5a0b02efe178e2c8996a95cd19a5e1b0122ac242ad8505dad2b079e94dd9646b`
 - Official terminal topics: 27 (`STARRED`: 14; `UNSTARRED`: 13)
 - BarClimb planning aggregates: 6; never completeness units
 - Coverage requirements: 43

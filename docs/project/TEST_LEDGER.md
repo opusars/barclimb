@@ -247,3 +247,7 @@
 - `CI=1 npx expo install --check` passed with only the controlling TypeScript exclusion; Expo Doctor passed 20/20. iOS and Android production exports passed at 863 and 858 modules. No dependency or lockfile change occurred.
 - `npm audit --omit=dev` remains 10 moderate/0 high/0 critical aggregate nodes in the documented `uuid` native-configuration toolchain family. The only offered force fix would downgrade to incompatible Expo 46; no fix ran and the advisory graph did not materially change.
 - `npm audit --omit=dev` remains 10 moderate, 0 high, 0 critical, rooted only in the documented `uuid` native-configuration toolchain family. No audit fix ran. Continuity, canonical manifest/hash, 32 tracked JSON files, ten-milestone order, diff, packet/curriculum immutability, secret/generated-junk/raw-source scans PASSED. Exact-merge GitHub CI remains required after push.
+
+## 2026-08-31 — M2.2c V3 packet presentation cleanup
+- Packet-only invariants verify one active V3 title/status/introduction, one operative V3 manifest/policy/gate, explicitly archived V1/V2 review history, and no operative V2 residue. The active packet SHA-256 is `5a0b02efe178e2c8996a95cd19a5e1b0122ac242ad8505dad2b079e94dd9646b`; archived V1/V2 hashes remain unchanged.
+- Focused manifest/packet tests, continuity, canonical manifest/hash checks, JSON parsing, invariant counts, `git diff --check`, and secret/raw-source/generated-junk scans are the required documentation-only gate. No substantive runtime or dependency change requires a full client/Expo rerun.

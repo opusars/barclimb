@@ -6,7 +6,7 @@ This packet asks a qualified human reviewer to assess the narrowly corrected Civ
 
 Official source bytes remain transient and are not reproduced. The short factual topic labels, hierarchy identifiers, locators, and star classifications below were normalized from the accepted hash-identified NCBE source.
 
-## Immutable inputs and review history
+## Active V3 identity and immutable inputs
 
 - Official scope: `NCBE_NEXTGEN_SCOPE_2026_07_2027_02`
 - Official scope SHA-256: `2d8a1052ada18b413f24b7d0eef1c855a76d8a9a31688130757d5dd6511ca56f`
@@ -17,16 +17,19 @@ Official source bytes remain transient and are not reproduced. The short factual
 - Active subject-manifest SHA-256: `b706b7182ab165377a9e60520b083cdaf87562b256dfb0c371f9aa38d948c0c3`
 - Coverage policy: `BARCLIMB_CIVPRO_COVERAGE_POLICY@2026_V3`
 - Certification gate: `BARCLIMB_SUBJECT_CERTIFICATION_GATE_V3`
-- V1 packet: `M2_2C_HUMAN_REVIEW_PACKET_V1.md`, SHA-256 `153746608c27abad008dbfa5cd858113c746696ed05fc410a1b6242e558b1f6c`
-- V1 disposition: **REJECT — REVISION REQUIRED**
-- V1 reviewer identity/qualification: not supplied in repository-controlled input; no formal workflow attestation was fabricated.
-- V2 packet: `M2_2C_HUMAN_REVIEW_PACKET_V2.md`, SHA-256 `9f7b27c1270f60dbf71a5c2baf15c7c5183a484e6e381737442ee29999b1047a`
-- V2 disposition: **REVISE — NARROW V3 CORRECTION REQUIRED**
-- V2 reviewer identity/qualification: not supplied in repository-controlled input; no formal workflow attestation was fabricated.
 - Existing Rule 4 compile: `BARCLIMB_PILOT_FRCP_RULE4_2025_V2`
 - Existing Rule 4 snapshot: `8ffc025a-ddac-5765-b7b2-130c84282c83` (`PILOT_ONLY`)
 - Existing compile SHA-256: `0148dea24c906e2e257265681044ae57ad4b60b9a1e290f291e95dc2315825ec`
 - Existing certification SHA-256: `60e160e3c1a458e4c5b98569fcf3f04d409086d328496f2ed41a020a5b591ae0`
+
+## Historical review record — not operative V3 identity
+
+- Archived V1 packet: `M2_2C_HUMAN_REVIEW_PACKET_V1.md`, SHA-256 `153746608c27abad008dbfa5cd858113c746696ed05fc410a1b6242e558b1f6c`
+- Historical V1 disposition: **REJECT — REVISION REQUIRED**
+- Historical V1 reviewer identity/qualification: not supplied in repository-controlled input; no formal workflow attestation was fabricated.
+- Archived V2 packet: `M2_2C_HUMAN_REVIEW_PACKET_V2.md`, SHA-256 `9f7b27c1270f60dbf71a5c2baf15c7c5183a484e6e381737442ee29999b1047a`
+- Historical V2 disposition: **REVISE — NARROW V3 CORRECTION REQUIRED**
+- Historical V2 reviewer identity/qualification: not supplied in repository-controlled input; no formal workflow attestation was fabricated.
 
 ## Changes from rejected V1
 

@@ -4,9 +4,9 @@
   "product_phase": "MILESTONE_2_IN_PROGRESS",
   "active_launch_train": "B_COMPLETE_LEARNER_LOOP",
   "active_milestone": 2,
-  "status": "M2_2C_V3_PLAN_APPROVED",
-  "latest_known_good_commit": "1a264422dcf692e867b1f3642111f41494023c7f",
-  "active_branch": "m2-2c-civpro-subject-foundation",
+  "status": "M2_2C_ACCEPTED_MAINTENANCE_VALIDATED",
+  "latest_known_good_commit": "d06f37e4f0312c0e00391107f55a163c39ecac4b",
+  "active_branch": "main",
   "database_migration_summary": "M1.3a retains identity/outbox models. M2.1/M2.2a immutable source, scope, Rule Obligation, reconciliation, and snapshot truth is accepted. M2.2b's real current NCBE perimeter and eight reviewed Rule 4 V2 obligations remain accepted with immutable PILOT_ONLY snapshot 8ffc025a-ddac-5765-b7b2-130c84282c83 and national_complete false. M2.2c V1's rejected six-leaf/18-requirement/75-slot plan and V2's revised 27-topic/43-requirement/157-slot plan remain immutable history. Active V3 preserves the checksum-bound SubjectOfficialTopic hierarchy, 27 official terminal completeness topics, six explicitly non-authoritative planning aggregates, 43 terminal-linked requirements, 22 requirement-sensitive authority plans, supplemental Rule 4 attribution, and PostgreSQL immutability while narrowing eight reviewed slot/authority boundaries to 149 required slots. Leo Rayos's exact V3 coverage-plan approval is recorded through the immutable operator workflow and authorizes controlled curriculum compilation only; it creates no Rule Obligations, subject certification, assessment, learner evidence, entitlement, billing, or AI model.",
   "enabled_material_feature_flags": [],
   "clients": {
@@ -27,7 +27,7 @@
     "adsense": "NOT_VERIFIED",
     "admob": "NOT_VERIFIED"
   },
-  "latest_test_summary": "M2.2c V3 plan approval passes Ruff/Django/migration checks, 121 SQLite tests with 11 PostgreSQL-only skips, all 132 PostgreSQL 14/Redis tests, and focused coverage at 23 passed/2 skips. Exact operator-review replay is idempotent; changed evidence/packet bindings are rejected. Existing Node 24.19.0/npm 11.17.0 validation covers nine typechecks, 14 Web/20 native/8 schema tests, Web build, seven-package portability, live Expo compatibility, Doctor 20/20, and iOS/Android exports at 863/858 modules. Invariants remain 27 topics/14 starred/13 unstarred, six-group non-substitution, 43 requirements/149 slots, immutable Rule 4 supplemental attribution, zero certified V3 slots, and false subject/certified/national completeness. Expo remains 57.0.18 with Linking 57.0.8, SecureStore 57.0.2, and React Native 0.86.3; audit remains 10 moderate nodes in the documented uuid toolchain family only. Exact Python 3.13.15 and exact-final-branch CI are hosted gates.",
+  "latest_test_summary": "M2.2c is accepted on main with 27 topics/14 starred/13 unstarred, six non-authoritative aggregates, 43 requirements/149 slots, 22 authority plans (one acquired/21 planned), immutable Rule 4 evidence, zero certified V3 slots, and false subject/certified/national completeness. Expo maintenance commit d06f37e passed exact-branch Foundation CI run 33687348735 under Node 24.19.0/npm 11.17.0: nine typechecks, 14 Web/20 native/8 schema tests, Web build, seven-package portability, live Expo compatibility, Doctor 20/20, iOS/Android exports, Python 3.13.15/PostgreSQL/Redis backend tests, Celery smoke, and continuity. Expo is 57.0.19 with Linking 57.0.9, SecureStore 57.0.3, React Native 0.86.3, and React 19.2.3. Current npm advisory metadata reports 17 moderate, zero high/critical across the documented uuid and decode-uri-component families; no force fix ran.",
   "known_blockers": [
     "Apple Developer Program team access, final iOS signing/provisioning/build, physical-device iOS/Android authentication and SecureStore lifecycle, live AASA/assetlinks routing, Google Play ownership/recovery, store approvals, and native production purchase/restore remain mandatory platform-specific Native GA blockers even though they do not block the clarified M1.4 foundation gate.",
     "The bounded M2.2b certification covers only one official-scope leaf and must never be interpreted as complete Rule 4, Civil Procedure, or national NextGen curriculum truth.",
@@ -42,6 +42,6 @@
     "Cross-scenario projections, anonymous claim security, private public-page overlays, entitlement transitions, and cross-device orchestration require explicit integration/security tests before GA.",
     "Official NCBE scope/source changes must pass source-drift and revalidation workflow; future exam scopes remain provisional until governing materials exist."
   ],
-  "exact_next_task": "Perform the post-plan-approval M2.2c acceptance review only. Verify the exact immutable V3 human-review evidence and unchanged false subject/certified/national completeness; do not compile candidates, certify, merge M2.2c, or begin the next slice without a separate explicit instruction.",
-  "last_verified_at": "2026-08-31T11:50:00-07:00"
+  "exact_next_task": "Begin only the next separately authorized bounded Milestone 2 slice after exact-final-main Foundation CI is green. Do not acquire authority, compile candidates, certify Civil Procedure, or infer the next slice without explicit scope.",
+  "last_verified_at": "2026-09-02T15:00:00-07:00"
 }

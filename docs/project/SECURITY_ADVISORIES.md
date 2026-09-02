@@ -1,6 +1,6 @@
 # BarClimb Security Advisory Ledger
 
-Review date: 2026-08-30. Re-review on each Expo SDK or React Native patch upgrade and before a native release candidate. This ledger records `npm audit` reachability; it is not a claim that scanner findings are false.
+Review date: 2026-09-02. Re-review on each Expo SDK or React Native patch upgrade and before a native release candidate. This ledger records `npm audit` reachability; it is not a claim that scanner findings are false.
 
 ## Patched in M1.1a
 
@@ -11,11 +11,12 @@ Review date: 2026-08-30. Re-review on each Expo SDK or React Native patch upgrad
 
 | Advisory/package | Resolved path | Reachability and exploit relevance | Mitigation/upstream status |
 |---|---|---|---|
-| `uuid` `GHSA-w5hq-g745-h8pq` (moderate) | `expo@57.0.18` -> `@expo/config-plugins@57.0.9` -> `xcode@3.0.1` -> `uuid@7.0.3` | Native configuration/Xcode project tooling. The vulnerable buffer-supplied v3/v5/v6 API is not called by BarClimb application runtime code and is not a server endpoint. | Keep native config inputs trusted. No compatible stable SDK 57 fix is exposed by current Expo validation; npm's suggested Expo 46 downgrade violates the approved foundation. Recheck upstream patches before release. |
+| `uuid` `GHSA-w5hq-g745-h8pq` (moderate) | `expo@57.0.19` -> `@expo/config-plugins@57.0.9` -> `xcode@3.0.1` -> `uuid@7.0.3` | Native configuration/Xcode project tooling. The vulnerable buffer-supplied v3/v5/v6 API is not called by BarClimb application runtime code and is not a server endpoint. | Keep native config inputs trusted. No compatible stable SDK 57 fix is exposed by current Expo validation; npm's suggested Expo 46 downgrade violates the approved foundation. Recheck upstream patches before release. |
+| `decode-uri-component` `GHSA-vcc3-ghjq-m6fr` (moderate) | React Navigation 7 -> `@react-navigation/core@7.16.0` -> `query-string@7.1.3` -> `decode-uri-component@0.2.2` | Malformed percent-encoded input can cause excessive decoding work. BarClimb does not pass arbitrary external query strings through this library in its current fixed-route foundation, but future deep-link and navigation-input work must treat all external route parameters as untrusted. | The advisory appeared in the npm feed without a package-version change during the Expo 57.0.19 review. npm exposes no compatible fix for the accepted React Navigation line. Retain fixed route parsing, bound external navigation inputs, and recheck before deep-link enablement or native release. |
 
-`npm audit --omit=dev` reports 10 moderate aggregate nodes because the remaining `uuid` advisory propagates through `xcode`, Expo config plugins, Expo CLI/config/prebuild packages, and the direct Expo node. Those aggregate nodes share one concrete advisory source; they do not represent 10 separately exploitable BarClimb code paths. `npm audit fix --force` was not run. The current repository has no released application and the affected native configuration tooling does not process untrusted runtime requests.
+`npm audit --omit=dev` reports 17 moderate aggregate nodes, 0 high, and 0 critical. Ten nodes remain the `uuid` native-configuration family propagated through `xcode`, Expo config plugins, Expo CLI/config/prebuild packages, and the direct Expo node. Seven nodes are the newly reported `decode-uri-component` family propagated through `query-string`, React Navigation core/elements, and the three direct React Navigation packages. The aggregate count does not represent 17 separately exploitable BarClimb code paths. `npm audit fix --force` was not run; npm exposes no compatible fix for the navigation family and suggests an incompatible Expo 46 downgrade for the Expo family.
 
-The Expo 57.0.18/React Native 0.86.3 compatibility correction updates Metro from 0.84.4 to 0.84.5 and removes `image-size` from the installed production graph. The two high-severity `image-size` advisories and their five high aggregate nodes therefore close. Aggregate findings improve from 15 (10 moderate/5 high) to 10 moderate, leaving only the existing `uuid` family. No compatible non-breaking fix for that remaining family is available.
+The Expo 57.0.18/React Native 0.86.3 compatibility correction updated Metro from 0.84.4 to 0.84.5 and removed `image-size` from the installed production graph. The two high-severity `image-size` advisories and their five high aggregate nodes therefore remain closed. The Expo 57.0.19 patch-metadata correction leaves React Navigation package versions unchanged; the increase from 10 to 17 moderate aggregate nodes reflects current npm advisory metadata, not a newly introduced navigation dependency. No compatible non-breaking fix for either remaining family is available.
 
 ## M1.3 authentication review
 

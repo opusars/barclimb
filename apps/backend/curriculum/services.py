@@ -14,6 +14,7 @@ from official_scope.services import canonical_sha256, sha256_bytes
 from .models import (
     AuthorityEvidence,
     AuthoritySource,
+    CandidateRequirementMapping,
     CoveragePolicy,
     CoverageReleaseSnapshot,
     CurriculumCompileVersion,
@@ -21,8 +22,12 @@ from .models import (
     ObligationRelationship,
     ObligationScopeMapping,
     ReconciliationIssue,
+    RequirementAuthorityPlan,
     ReviewResolution,
     RuleObligation,
+    ScopeCoverageRequirement,
+    SubjectAuthorityAcquisition,
+    SubjectCurriculumManifest,
 )
 
 RELATIONSHIP_TARGET_KIND = {
@@ -72,6 +77,11 @@ def _issue(compile_version, stable_id, category, severity, message, **links):
 
 
 def register_authority(*, content, **metadata):
+    for field_name in ("publication_date", "effective_date", "retrieved_at"):
+        if metadata.get(field_name) is not None:
+            metadata[field_name] = AuthoritySource._meta.get_field(field_name).to_python(
+                metadata[field_name]
+            )
     checksum = sha256_bytes(content)
     identity = {
         "stable_id": metadata["stable_id"],
@@ -157,6 +167,7 @@ def _compile_canonical(compile_version):
                             evidence.authority.source_version,
                             evidence.role,
                             evidence.locator,
+                            evidence.proposition_type,
                             evidence.proposition_sha256,
                             evidence.supports,
                         ]
@@ -173,6 +184,20 @@ def _compile_canonical(compile_version):
             ).select_related("source", "target")
         ]
     )
+    candidate_mappings = sorted(
+        [
+            [
+                mapping.obligation.stable_id,
+                mapping.slot.stable_id,
+                mapping.official_topic.stable_id,
+                mapping.inherited_treatment,
+                mapping.canonical_sha256,
+            ]
+            for mapping in CandidateRequirementMapping.objects.filter(
+                obligation__compile_version=compile_version
+            ).select_related("obligation", "slot", "official_topic")
+        ]
+    )
     return {
         "scope_sha256": compile_version.official_scope_version.normalized_sha256,
         "compiler_schema_version": compile_version.compiler_schema_version,
@@ -180,6 +205,7 @@ def _compile_canonical(compile_version):
         "source_class": compile_version.source_class,
         "obligations": obligations,
         "relationships": relationships,
+        "candidate_mappings": candidate_mappings,
     }
 
 
@@ -285,6 +311,71 @@ def compile_manifest(payload, *, authority_contents=None):
             raise ValidationError("Authority and compile source classifications must match.")
         authority_map[entry["stable_id"]] = authority
 
+    subject_cluster = payload.get("subject_candidate_cluster")
+    subject_manifest = None
+    subject_topic = None
+    subject_requirement = None
+    subject_slots = {}
+    if subject_cluster:
+        subject_manifest = SubjectCurriculumManifest.objects.get(
+            stable_id=subject_cluster["subject_manifest_stable_id"],
+            manifest_version=subject_cluster["subject_manifest_version"],
+        )
+        plan_review = getattr(subject_manifest, "human_review", None)
+        if plan_review is None or plan_review.resolution != "APPROVE":
+            raise ValidationError("Subject candidates require an approved subject manifest.")
+        if subject_manifest.official_scope_version_id != scope.pk:
+            raise ValidationError("Subject candidate cluster must use the compile's scope truth.")
+        subject_topic = subject_manifest.official_topics.get(
+            stable_id=subject_cluster["official_topic_id"], is_terminal=True
+        )
+        subject_requirement = ScopeCoverageRequirement.objects.get(
+            stable_id=subject_cluster["requirement_id"],
+            manifest_leaf__manifest=subject_manifest,
+            official_topic=subject_topic,
+        )
+        subject_slots = {slot.stable_id: slot for slot in subject_requirement.slots.all()}
+        if set(subject_cluster.get("target_slot_ids", [])) != set(subject_slots):
+            raise ValidationError("Subject candidate cluster must target the exact approved slots.")
+
+    for acquisition_entry in payload.get("subject_authority_acquisitions", []):
+        if subject_manifest is None:
+            raise ValidationError("Subject authority acquisitions require a subject cluster.")
+        requirement = ScopeCoverageRequirement.objects.get(
+            stable_id=acquisition_entry["requirement_id"],
+            manifest_leaf__manifest=subject_manifest,
+        )
+        if requirement.pk != subject_requirement.pk:
+            raise ValidationError(
+                "Subject authority acquisition must remain inside the bounded requirement."
+            )
+        plan = subject_manifest.authority_plans.get(
+            stable_id=acquisition_entry["authority_plan_id"]
+        )
+        authority = authority_map[acquisition_entry["authority_id"]]
+        canonical = canonical_sha256(
+            {
+                "authority_plan_id": plan.stable_id,
+                "requirement_id": requirement.stable_id,
+                "authority_id": authority.stable_id,
+                "authority_version": authority.source_version,
+                "proposition_types": sorted(acquisition_entry["proposition_types"]),
+                "locators": acquisition_entry["locators"],
+            }
+        )
+        acquisition, created = SubjectAuthorityAcquisition.objects.get_or_create(
+            authority_plan=plan,
+            requirement=requirement,
+            authority=authority,
+            defaults={
+                "proposition_types": sorted(acquisition_entry["proposition_types"]),
+                "locators": acquisition_entry["locators"],
+                "canonical_sha256": canonical,
+            },
+        )
+        if not created and acquisition.canonical_sha256 != canonical:
+            raise ValidationError("Authority acquisition identity changed immutable input.")
+
     scope_items = {
         item.stable_id: item
         for item in scope.items.filter(is_leaf=True).select_related("scope_version")
@@ -360,6 +451,42 @@ def compile_manifest(payload, *, authority_contents=None):
                     "mapping_rationale", "TEST_FIXTURE exact official-leaf mapping"
                 ),
             )
+        if subject_cluster:
+            slot = subject_slots.get(candidate.get("requirement_slot_id"))
+            if slot is None:
+                _issue(
+                    compile_version,
+                    f"candidate-slot:{stable_id}",
+                    "INVALID_STRUCTURE",
+                    "BLOCKING",
+                    "Candidate does not target an approved slot in the bounded cluster.",
+                    obligation=obligation,
+                )
+            elif obligation.kind != slot.obligation_kind:
+                _issue(
+                    compile_version,
+                    f"candidate-kind:{stable_id}",
+                    "INVALID_STRUCTURE",
+                    "BLOCKING",
+                    "Candidate kind does not match its approved typed slot.",
+                    obligation=obligation,
+                )
+            else:
+                mapping_input = {
+                    "obligation_id": stable_id,
+                    "slot_id": slot.stable_id,
+                    "official_topic_id": subject_topic.stable_id,
+                    "inherited_treatment": subject_topic.knowledge_treatment,
+                    "mapping_rationale": candidate.get("requirement_mapping_rationale", ""),
+                }
+                CandidateRequirementMapping.objects.create(
+                    obligation=obligation,
+                    slot=slot,
+                    official_topic=subject_topic,
+                    inherited_treatment=subject_topic.knowledge_treatment,
+                    mapping_rationale=mapping_input["mapping_rationale"],
+                    canonical_sha256=canonical_sha256(mapping_input),
+                )
         primary_count = 0
         for evidence in candidate.get("evidence", []):
             authority = authority_map.get(evidence["authority_id"])
@@ -373,6 +500,7 @@ def compile_manifest(payload, *, authority_contents=None):
                 authority=authority,
                 role=role,
                 locator=evidence["locator"],
+                proposition_type=evidence.get("proposition_type", ""),
                 proposition_sha256=canonical_sha256(evidence.get("proposition", statement)),
                 supports=evidence.get("supports", True),
             )
@@ -546,8 +674,150 @@ def reconcile_curriculum(compile_id):
                 "sufficient": meets,
             }
         )
+
+    candidate_mappings = list(
+        CandidateRequirementMapping.objects.filter(
+            obligation__compile_version=compile_version
+        ).select_related(
+            "obligation",
+            "slot__requirement",
+            "official_topic",
+        )
+    )
+    candidate_slot_results = []
+    if candidate_mappings:
+        requirements = {mapping.slot.requirement for mapping in candidate_mappings}
+        topics = {mapping.official_topic for mapping in candidate_mappings}
+        if len(requirements) != 1 or len(topics) != 1:
+            _issue(
+                compile_version,
+                "subject-cluster:boundary",
+                "INVALID_STRUCTURE",
+                "BLOCKING",
+                "A bounded subject candidate compile must target one requirement and topic.",
+            )
+        for requirement in requirements:
+            mappings_by_slot = defaultdict(list)
+            for mapping in candidate_mappings:
+                if mapping.slot.requirement_id == requirement.pk:
+                    mappings_by_slot[mapping.slot_id].append(mapping)
+            for slot in requirement.slots.all().order_by("stable_id"):
+                mapped_candidates = mappings_by_slot[slot.pk]
+                sufficient_candidates = [
+                    mapping
+                    for mapping in mapped_candidates
+                    if mapping.obligation.compiler_status == "INCLUDED"
+                    and mapping.obligation.kind == slot.obligation_kind
+                ]
+                slot_sufficient = len(sufficient_candidates) >= slot.minimum_count
+                if not slot_sufficient:
+                    _issue(
+                        compile_version,
+                        f"subject-slot-omission:{slot.stable_id}",
+                        "OMISSION",
+                        "BLOCKING",
+                        "Approved subject requirement slot lacks a qualifying candidate.",
+                    )
+                for expectation in slot.relationship_expectations:
+                    source_slot = requirement.slots.get(stable_id=expectation["source_slot_id"])
+                    source_candidates = mappings_by_slot[source_slot.pk]
+                    for target_mapping in sufficient_candidates:
+                        if not ObligationRelationship.objects.filter(
+                            source__in=[item.obligation for item in source_candidates],
+                            target=target_mapping.obligation,
+                            kind=expectation["relationship_kind"],
+                        ).exists():
+                            _issue(
+                                compile_version,
+                                f"subject-slot-relationship:{slot.stable_id}",
+                                "INVALID_STRUCTURE",
+                                "BLOCKING",
+                                "Candidate does not satisfy the approved slot relationship.",
+                                obligation=target_mapping.obligation,
+                            )
+                candidate_slot_results.append(
+                    {
+                        "slot_id": slot.stable_id,
+                        "obligation_kind": slot.obligation_kind,
+                        "candidate_count": len(mapped_candidates),
+                        "sufficient": slot_sufficient,
+                    }
+                )
+
+            candidate_obligation_ids = [
+                mapping.obligation_id
+                for mapping in candidate_mappings
+                if mapping.slot.requirement_id == requirement.pk
+            ]
+            for authority_mapping in requirement.authority_mappings.select_related(
+                "authority_plan"
+            ):
+                proposition_types = authority_mapping.proposition_types
+                conditional_used = AuthorityEvidence.objects.filter(
+                    obligation_id__in=candidate_obligation_ids,
+                    proposition_type__in=proposition_types,
+                    supports=True,
+                ).exists()
+                if (
+                    authority_mapping.role == RequirementAuthorityPlan.Role.CONDITIONAL
+                    and not conditional_used
+                ):
+                    continue
+                acquisitions = list(
+                    SubjectAuthorityAcquisition.objects.filter(
+                        requirement=requirement,
+                        authority_plan=authority_mapping.authority_plan,
+                    )
+                )
+                for proposition_type in proposition_types:
+                    authority_ids = [
+                        acquisition.authority_id
+                        for acquisition in acquisitions
+                        if proposition_type in acquisition.proposition_types
+                    ]
+                    supported = AuthorityEvidence.objects.filter(
+                        obligation_id__in=candidate_obligation_ids,
+                        authority_id__in=authority_ids,
+                        role="SUBSTANTIVE_SUPPORT",
+                        proposition_type=proposition_type,
+                        supports=True,
+                    ).exists()
+                    if not supported:
+                        _issue(
+                            compile_version,
+                            (
+                                f"subject-authority:{requirement.stable_id}:"
+                                f"{authority_mapping.authority_plan.stable_id}:"
+                                f"{proposition_type}"
+                            ),
+                            "UNSUPPORTED_PROVENANCE",
+                            "BLOCKING",
+                            "Candidate cluster lacks the approved proposition-specific authority.",
+                        )
     open_issues = compile_version.issues.filter(status="OPEN")
+    blocking_obligation_ids = set(
+        open_issues.filter(severity="BLOCKING", obligation__isnull=False).values_list(
+            "obligation_id", flat=True
+        )
+    )
+    for obligation in compile_version.obligations.all():
+        if obligation.pk not in blocking_obligation_ids:
+            obligation.reconciliation_status = "RECONCILED"
+            obligation.save(update_fields=("reconciliation_status",))
     counts = Counter(open_issues.values_list("category", flat=True))
+    candidate_obligation_ids = {mapping.obligation_id for mapping in candidate_mappings}
+    candidate_reviews = ObligationHumanReview.objects.filter(
+        obligation_id__in=candidate_obligation_ids
+    )
+    if candidate_reviews.filter(resolution=ObligationHumanReview.Resolution.REJECT).exists():
+        candidate_human_review_status = "REJECTED"
+    elif candidate_obligation_ids and candidate_reviews.filter(
+        resolution=ObligationHumanReview.Resolution.APPROVE,
+        authority_reviewed=True,
+    ).count() == len(candidate_obligation_ids):
+        candidate_human_review_status = "APPROVED"
+    else:
+        candidate_human_review_status = "PENDING"
     report = {
         "coverage_class": policy.coverage_class,
         "national_complete": False,
@@ -567,6 +837,15 @@ def reconcile_curriculum(compile_id):
         "warning_issue_count": open_issues.filter(severity="WARNING").count(),
         "informational_issue_count": open_issues.filter(severity="INFO").count(),
         "leaf_results": leaf_results,
+        "subject_candidate_topic_ids": sorted(
+            {mapping.official_topic.stable_id for mapping in candidate_mappings}
+        ),
+        "subject_candidate_requirement_ids": sorted(
+            {mapping.slot.requirement.stable_id for mapping in candidate_mappings}
+        ),
+        "candidate_slot_results": candidate_slot_results,
+        "candidate_human_review_status": candidate_human_review_status,
+        "subject_certified": False,
     }
     compile_version.reconciliation_report = report
     compile_version.status = CurriculumCompileVersion.Status.RECONCILED
@@ -831,6 +1110,16 @@ def compare_scope_drift(old_scope, new_scope, *, old_compile=None):
 def compile_result(compile_version):
     issues = compile_version.issues.filter(status="OPEN")
     counts = Counter(issues.values_list("category", flat=True))
+    pending_human_reviews = 0
+    if compile_version.coverage_policy.requires_human_review:
+        pending_human_reviews = (
+            compile_version.obligations.filter(compiler_status="INCLUDED")
+            .exclude(
+                human_review__resolution=ObligationHumanReview.Resolution.APPROVE,
+                human_review__authority_reviewed=True,
+            )
+            .count()
+        )
     return {
         "scope_version": compile_version.official_scope_version.version_identifier,
         "compiler_version": compile_version.compiler_schema_version,
@@ -841,6 +1130,9 @@ def compile_result(compile_version):
         "excess_count": counts["EXCESS"],
         "conflict_count": counts["CONFLICT"],
         "ambiguity_count": counts["AMBIGUITY"],
-        "certification_eligible": not issues.filter(severity="BLOCKING").exists(),
+        "human_review_pending_count": pending_human_reviews,
+        "certification_eligible": (
+            not issues.filter(severity="BLOCKING").exists() and pending_human_reviews == 0
+        ),
         "canonical_sha256": compile_version.canonical_sha256,
     }

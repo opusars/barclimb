@@ -28,7 +28,11 @@ This ledger is cold-recovery state, not a release certification.
 - Coverage requirements: 43
 - Required typed slots: 149 (V2: 157)
 - Certified V3 slots: 0
-- Authority plans: 22 (`ACQUIRED`: 1, `PLANNED`: 21)
+- Authority plans before M2.2d: 22 (`ACQUIRED`: 1, `PLANNED`: 21)
+- Effective authority state after bounded federal-question acquisition: 22 (`ACQUIRED`: 1,
+  `PARTIALLY_ACQUIRED`: 2, `PLANNED`: 19). The two partial shared plans are
+  `authority-28-usc-jurisdiction-removal` and `authority-scotus-jurisdiction`; no unrelated plan is
+  treated as acquired.
 - Current status: service/process/notice retains a bounded historical partial subset; all terminal
   topics remain incomplete for V3 subject certification.
 - `subject_complete`: `false`
@@ -47,6 +51,26 @@ The plan-review gate is satisfied by Leo Rayos's exact supplied approval, record
 `record_subject_plan_review`. The reviewed packet bytes remain at
 `M2_2C_HUMAN_REVIEW_PACKET_V3_REVIEWED.md`; the operator input and immutable bindings remain at
 `M2_2C_V3_HUMAN_REVIEW_RECORD.json`. The V1 and V2 packet/disposition history is unchanged. Approval
-permits a later separately authorized controlled curriculum-compilation slice; it does not acquire
-authority, approve candidate statements, satisfy any slot, or mass-certify Civil Procedure. The next
-gate is post-plan-approval acceptance review only.
+permitted the separately authorized bounded M2.2d compilation; it did not itself acquire authority,
+approve candidate statements, satisfy any slot, or mass-certify Civil Procedure. The current gate is
+qualified review of the three exact federal-question candidates only.
+
+## Civil Procedure — M2.2d federal-question candidate state
+
+- Topic: `civpro-topic-federal-question-jurisdiction` (`STARRED` / `RECALLED_REQUIRED`)
+- Requirement: `civpro-federal-question`
+- Candidate slots: `RULE`, `ELEMENT`, `LIMITATION`; all three have one reconciled candidate
+- Candidate compile SHA-256: `a46fbd51a441ec54fa74f2826a50241ff94e4fd3eefa49e24e568174d15b606d`
+- Human candidate review: `PENDING` for all three
+- Certification eligibility: `false`
+- Certified V3 slots: 0 of 149; the other 146 slots received no candidate in this slice
+- Review packet: `M2_2D_CIVPRO_FEDERAL_QUESTION_HUMAN_REVIEW_PACKET.md`; SHA-256
+  `4fdf1c70c1a4228537880c500856198809ef368d53abbc465027bb5389696eda`
+- `subject_complete`: `false`
+- `subject_certified`: `false`
+- `national_complete`: `false`
+
+The §1331 and Mottley sources are registered by exact hash and proposition locator; raw bytes remain
+transient. The cluster neither mutates the Rule 4 pilot nor covers removal, diversity, supplemental
+jurisdiction, personal jurisdiction, Erie, venue, complete preemption, Article III boundaries, or
+embedded-federal-question doctrine.

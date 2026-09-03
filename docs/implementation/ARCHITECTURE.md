@@ -121,13 +121,27 @@ The existing Rule 4 snapshot links through `SubjectCertifiedSubset` as historica
 `PARTIAL_LEAF_COVERAGE`; neither its obligations nor snapshot are rewritten. Its attribution separates
 perimeter-relevant service/waiver evidence from supplemental Rule 4(m) timing and other content. A
 machine-readable report shows 27 official terminal topics, six planning aggregates, 43 requirements,
-157 required slots, applicable authority/acquisition gaps, candidate gaps, review status, and the
-partial snapshot. The report always returns
+149 active V3 required slots, applicable authority/acquisition gaps, candidate gaps, review status,
+and the partial snapshot. The report always returns
 `subject_complete: false` and `national_complete: false` in this planning slice. A separate future
 explicit subject-certification operation remains mandatory even after structural eligibility.
 
 V1 is `REJECTED — REVISION REQUIRED`; its exact packet and an identity-honest disposition record are
-preserved. V2 is `SECOND_REVIEW_PENDING`. The active `M2_2C_HUMAN_REVIEW_PACKET.md` requests qualified
-human review of all topic identities, decomposition, treatment, authority conditionality, Rule 4
-attribution, and remaining judgments. No V2 approval is inferred, no subject-wide substantive
-candidates are authored, and no AI/provider integration is introduced.
+preserved. V2's `REVISE — NARROW V3 CORRECTION REQUIRED` disposition is also immutable history.
+Leo Rayos's exact V3 approval satisfies only the coverage-plan review gate. It does not approve a
+future Rule Obligation, create a certified slot, or establish subject/national completeness.
+
+## M2.2d bounded federal-question candidate boundary
+
+The first separately authorized post-plan slice adds an immutable requirement-specific acquisition
+bridge and candidate-to-slot bridge without changing official scope or the V3 plan. Only official
+House 28 U.S.C. § 1331 and official U.S. Reports Mottley authority are registered, with transient
+source bytes and durable hashes/locators. Three candidates map exactly to the approved
+federal-question `RULE`, `ELEMENT`, and `LIMITATION` slots and inherit `RECALLED_REQUIRED` treatment.
+
+Deterministic reconciliation checks exact topic/requirement/slot identity, approved relationships,
+and proposition-specific acquired authority. Its clean result does not cross the human gate: all
+three candidates remain `REVIEW_REQUIRED`, certification eligibility is false, and no satisfaction
+or snapshot exists. Shared authority plans report partial—not complete—acquisition when other mapped
+requirements remain unsupported. All subject/national completeness flags remain false, and no other
+Civil Procedure doctrine or AI/provider/client behavior enters the slice.

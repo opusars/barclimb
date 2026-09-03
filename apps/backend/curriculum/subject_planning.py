@@ -642,9 +642,29 @@ def subject_coverage_report(manifest):
                 ],
             }
         )
-    authority_counts = Counter(
-        manifest.authority_plans.values_list("acquisition_status", flat=True)
-    )
+    authority_counts = Counter()
+    effective_authority_statuses = {}
+    for authority_plan in manifest.authority_plans.prefetch_related(
+        "acquisitions", "requirement_mappings"
+    ):
+        status = authority_plan.acquisition_status
+        acquisitions = list(authority_plan.acquisitions.all())
+        if status != "ACQUIRED" and acquisitions:
+            required_mappings = list(authority_plan.requirement_mappings.filter(role="REQUIRED"))
+            all_required_acquired = bool(required_mappings) and all(
+                all(
+                    any(
+                        acquisition.requirement_id == mapping.requirement_id
+                        and proposition_type in acquisition.proposition_types
+                        for acquisition in acquisitions
+                    )
+                    for proposition_type in mapping.proposition_types
+                )
+                for mapping in required_mappings
+            )
+            status = "ACQUIRED" if all_required_acquired else "PARTIALLY_ACQUIRED"
+        authority_counts[status] += 1
+        effective_authority_statuses[authority_plan.pk] = status
     human_review = getattr(manifest, "human_review", None)
     human_review_status = human_review.resolution if human_review else "PENDING"
     operative_results = topic_results if is_terminal_topic_plan else group_results
@@ -654,10 +674,11 @@ def subject_coverage_report(manifest):
     required_authority_plans = manifest.authority_plans.filter(
         requirement_mappings__role="REQUIRED"
     ).distinct()
-    unresolved_required_authority_gaps = (
-        required_authority_plans.exclude(acquisition_status="ACQUIRED").count()
-        if is_terminal_topic_plan
-        else manifest.authority_plans.exclude(acquisition_status="ACQUIRED").count()
+    unresolved_required_authority_gaps = sum(
+        effective_authority_statuses[plan.pk] != "ACQUIRED"
+        for plan in (
+            required_authority_plans if is_terminal_topic_plan else manifest.authority_plans.all()
+        )
     )
     all_groups_certified = all(
         result["coverage_status"] == SubjectManifestLeaf.CoverageStatus.LEAF_CERTIFIED

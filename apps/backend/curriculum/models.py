@@ -353,6 +353,7 @@ class AuthorityEvidence(models.Model):
     authority = models.ForeignKey(AuthoritySource, on_delete=models.PROTECT)
     role = models.CharField(max_length=32, choices=Role.choices)
     locator = models.CharField(max_length=300)
+    proposition_type = models.CharField(max_length=120, blank=True)
     proposition_sha256 = models.CharField(max_length=64)
     supports = models.BooleanField(default=True)
 
@@ -1144,6 +1145,71 @@ class RequirementAuthorityPlan(models.Model):
             raise ValidationError("Only conditional authority mappings may carry a condition.")
 
 
+class SubjectAuthorityAcquisition(models.Model):
+    """Immutable requirement-specific evidence that a subject authority plan was acquired."""
+
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    authority_plan = models.ForeignKey(
+        SubjectAuthorityPlan, on_delete=models.PROTECT, related_name="acquisitions"
+    )
+    requirement = models.ForeignKey(
+        ScopeCoverageRequirement,
+        on_delete=models.PROTECT,
+        related_name="authority_acquisitions",
+    )
+    authority = models.ForeignKey(
+        AuthoritySource, on_delete=models.PROTECT, related_name="subject_plan_acquisitions"
+    )
+    proposition_types = models.JSONField(default=list)
+    locators = models.JSONField(default=list)
+    canonical_sha256 = models.CharField(max_length=64)
+    acquired_at = models.DateTimeField(default=timezone.now)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=("authority_plan", "requirement", "authority"),
+                name="subject_authority_acquisition_unique",
+            ),
+            models.CheckConstraint(
+                condition=Q(canonical_sha256__regex=r"^[0-9a-f]{64}$"),
+                name="subject_authority_acquisition_sha256_format",
+            ),
+        ]
+
+    def __str__(self):
+        return f"{self.requirement}:{self.authority_plan}:{self.authority}"
+
+    def save(self, *args, **kwargs):
+        if self.pk and type(self).objects.filter(pk=self.pk).exists():
+            raise ValidationError("Subject authority acquisitions are immutable.")
+        self.full_clean()
+        super().save(*args, **kwargs)
+
+    def delete(self, *args, **kwargs):
+        raise ValidationError("Subject authority acquisitions cannot be deleted.")
+
+    def clean(self):
+        mapping = RequirementAuthorityPlan.objects.filter(
+            requirement=self.requirement, authority_plan=self.authority_plan
+        ).first()
+        if mapping is None:
+            raise ValidationError("Acquisition must satisfy an approved authority mapping.")
+        if not isinstance(self.proposition_types, list) or not self.proposition_types:
+            raise ValidationError("Authority acquisition requires proposition types.")
+        if not set(self.proposition_types).issubset(set(mapping.proposition_types)):
+            raise ValidationError("Acquisition proposition is outside the approved mapping.")
+        if not isinstance(self.locators, list) or not self.locators:
+            raise ValidationError("Authority acquisition requires proposition locators.")
+        if (
+            self.authority.authority_class != AuthoritySource.AuthorityClass.SUBSTANTIVE_PRIMARY
+            or self.authority.source_class != self.authority_plan.manifest.source_class
+            or not self.authority.is_national
+            or self.authority.jurisdiction
+        ):
+            raise ValidationError("Acquired subject authority must be national primary truth.")
+
+
 class CaseAuthorityRequirement(models.Model):
     authority_plan = models.ForeignKey(
         SubjectAuthorityPlan, on_delete=models.PROTECT, related_name="case_requirements"
@@ -1261,6 +1327,68 @@ class CoverageRequirementSatisfaction(models.Model):
                 raise ValidationError(
                     "Coverage requirement satisfaction needs approved human review."
                 )
+
+
+class CandidateRequirementMapping(models.Model):
+    """Immutable pre-review mapping from one candidate to one approved typed slot."""
+
+    obligation = models.OneToOneField(
+        RuleObligation, on_delete=models.PROTECT, related_name="candidate_requirement_mapping"
+    )
+    slot = models.ForeignKey(
+        CoverageRequirementSlot,
+        on_delete=models.PROTECT,
+        related_name="candidate_mappings",
+    )
+    official_topic = models.ForeignKey(
+        SubjectOfficialTopic,
+        on_delete=models.PROTECT,
+        related_name="candidate_mappings",
+    )
+    inherited_treatment = models.CharField(max_length=48)
+    mapping_rationale = models.TextField()
+    canonical_sha256 = models.CharField(max_length=64)
+
+    class Meta:
+        constraints = [
+            models.CheckConstraint(
+                condition=Q(canonical_sha256__regex=r"^[0-9a-f]{64}$"),
+                name="candidate_requirement_mapping_sha256_format",
+            )
+        ]
+
+    def __str__(self):
+        return f"{self.slot} <- candidate {self.obligation}"
+
+    def save(self, *args, **kwargs):
+        if self.pk and type(self).objects.filter(pk=self.pk).exists():
+            raise ValidationError("Candidate requirement mappings are immutable.")
+        self.full_clean()
+        super().save(*args, **kwargs)
+
+    def delete(self, *args, **kwargs):
+        raise ValidationError("Candidate requirement mappings cannot be deleted.")
+
+    def clean(self):
+        requirement = self.slot.requirement
+        manifest = requirement.manifest_leaf.manifest
+        if requirement.official_topic_id != self.official_topic_id:
+            raise ValidationError("Candidate slot and official topic must match.")
+        if self.official_topic.manifest_id != manifest.pk:
+            raise ValidationError("Candidate topic must belong to the approved subject manifest.")
+        if (
+            self.obligation.compile_version.official_scope_version_id
+            != manifest.official_scope_version_id
+        ):
+            raise ValidationError("Candidate mapping must use the manifest's scope truth.")
+        if self.obligation.kind != self.slot.obligation_kind:
+            raise ValidationError("Candidate kind must match the approved typed slot.")
+        if self.inherited_treatment != self.official_topic.knowledge_treatment:
+            raise ValidationError("Candidate treatment must inherit the official topic treatment.")
+        if not self.obligation.scope_items.filter(
+            pk=requirement.manifest_leaf.scope_item_id
+        ).exists():
+            raise ValidationError("Candidate must map to the topic's planning scope leaf.")
 
 
 class SubjectCertifiedSubset(models.Model):

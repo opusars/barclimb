@@ -1,0 +1,163 @@
+{
+  "schema": "BARCLIMB_RULE_COMPILER_V2",
+  "compile": {
+    "version_identifier": "BARCLIMB_CIVPRO_FEDERAL_QUESTION_2026_V1",
+    "official_scope_version": "NCBE_NEXTGEN_SCOPE_2026_07_2027_02",
+    "compiler_schema_version": "BARCLIMB_RULE_COMPILER_V2",
+    "source_class": "PRODUCTION"
+  },
+  "coverage_policy": {
+    "stable_id": "BARCLIMB_CIVPRO_FEDERAL_QUESTION_CANDIDATE_CLUSTER",
+    "policy_version": "2026_V1",
+    "coverage_class": "PILOT_ONLY",
+    "target_scope_item_ids": ["civil-procedure-jurisdiction"],
+    "minimum_obligations_per_leaf": 3,
+    "requires_primary_authority": true,
+    "requires_human_review": true,
+    "allowed_obligation_kinds": ["RULE", "ELEMENT", "LIMITATION"]
+  },
+  "subject_candidate_cluster": {
+    "subject_manifest_stable_id": "BARCLIMB_CIVPRO_CURRICULUM_MANIFEST",
+    "subject_manifest_version": "2026_V3",
+    "official_topic_id": "civpro-topic-federal-question-jurisdiction",
+    "requirement_id": "civpro-federal-question",
+    "target_slot_ids": [
+      "civpro-federal-question-rule",
+      "civpro-federal-question-element",
+      "civpro-federal-question-limitation"
+    ]
+  },
+  "authorities": [
+    {
+      "stable_id": "USCODE_28_USC_1331",
+      "source_version": "PRELIM_LAWS_IN_EFFECT_2026-09-01",
+      "authority_class": "SUBSTANTIVE_PRIMARY",
+      "authority_type": "UNITED_STATES_CODE",
+      "title": "28 U.S.C. § 1331 — Federal question",
+      "canonical_citation": "28 U.S.C. § 1331",
+      "source_uri": "https://uscode.house.gov/view.xhtml?edition=prelim&num=0&req=granuleid%3AUSC-prelim-title28-section1331",
+      "expected_sha256": "f1a418156a2be3117aa698c83788ff6b544d68c602bb4559d06cc2daa2129ac7",
+      "source_class": "PRODUCTION",
+      "is_national": true,
+      "jurisdiction": "",
+      "issuing_authority": "Office of the Law Revision Counsel, U.S. House of Representatives",
+      "effective_date": "1980-12-01",
+      "retrieved_at": "2026-09-02T22:10:00Z",
+      "media_type": "application/xhtml+xml",
+      "storage_disposition": "TRANSIENT_HASH_ONLY",
+      "rights_basis": "Official U.S. government statutory material; exact downloaded bytes remain transient because provenance, currency, and proposition locators are sufficient."
+    },
+    {
+      "stable_id": "SCOTUS_US_REPORTS_MOTTLEY_211_US_149",
+      "source_version": "1908-11-16",
+      "authority_class": "SUBSTANTIVE_PRIMARY",
+      "authority_type": "UNITED_STATES_SUPREME_COURT_OPINION",
+      "title": "Louisville & Nashville Railroad Co. v. Mottley",
+      "canonical_citation": "211 U.S. 149 (1908)",
+      "source_uri": "https://tile.loc.gov/storage-services/service/ll/usrep/usrep211/usrep211149/usrep211149.pdf",
+      "expected_sha256": "73c4f2d4ada6a12b94106e045533c9b835a492cba9475f09de4da267341978ec",
+      "source_class": "PRODUCTION",
+      "is_national": true,
+      "jurisdiction": "",
+      "issuing_authority": "Supreme Court of the United States; official U.S. Reports scan provided by the Library of Congress",
+      "publication_date": "1908-11-16",
+      "effective_date": "1908-11-16",
+      "retrieved_at": "2026-09-02T22:10:00Z",
+      "media_type": "application/pdf",
+      "storage_disposition": "TRANSIENT_HASH_ONLY",
+      "rights_basis": "Official U.S. government judicial opinion; exact downloaded bytes remain transient because provenance and pinpoint locators are sufficient."
+    }
+  ],
+  "subject_authority_acquisitions": [
+    {
+      "authority_plan_id": "authority-28-usc-jurisdiction-removal",
+      "requirement_id": "civpro-federal-question",
+      "authority_id": "USCODE_28_USC_1331",
+      "proposition_types": ["GOVERNING_STATUTORY_TEXT"],
+      "locators": ["28 U.S.C. § 1331; official House preliminary text in effect September 1, 2026"]
+    },
+    {
+      "authority_plan_id": "authority-scotus-jurisdiction",
+      "requirement_id": "civpro-federal-question",
+      "authority_id": "SCOTUS_US_REPORTS_MOTTLEY_211_US_149",
+      "proposition_types": ["WELL_PLEADED_COMPLAINT_CONTROLLING_HOLDING"],
+      "locators": ["211 U.S. 149, 152–53 (1908); official U.S. Reports PDF pp. 4–5"]
+    }
+  ],
+  "obligations": [
+    {
+      "stable_id": "civpro-fq-statutory-original-jurisdiction",
+      "kind": "RULE",
+      "statement": "Under 28 U.S.C. § 1331, federal district courts have original jurisdiction over civil actions arising under the Constitution, laws, or treaties of the United States.",
+      "scope_item_ids": ["civil-procedure-jurisdiction"],
+      "requirement_slot_id": "civpro-federal-question-rule",
+      "review_required": true,
+      "inclusion_rationale": "The approved federal-question governing-rule slot requires the current statutory grant of original jurisdiction.",
+      "mapping_rationale": "The candidate belongs only to the Civil Procedure jurisdiction planning aggregate and the approved federal-question terminal topic.",
+      "requirement_mapping_rationale": "Exact candidate for the approved RULE slot; it states only § 1331's governing jurisdictional grant.",
+      "evidence": [
+        {
+          "authority_id": "USCODE_28_USC_1331",
+          "role": "SUBSTANTIVE_SUPPORT",
+          "locator": "28 U.S.C. § 1331; official House preliminary text in effect September 1, 2026",
+          "proposition_type": "GOVERNING_STATUTORY_TEXT",
+          "proposition": "Federal district courts have original jurisdiction over civil actions arising under the Constitution, laws, or treaties of the United States."
+        }
+      ]
+    },
+    {
+      "stable_id": "civpro-fq-plaintiff-claim-arising-under",
+      "kind": "ELEMENT",
+      "statement": "For a civil action to arise under federal law, the plaintiff’s properly pleaded statement of the plaintiff’s own cause of action must show that the cause is based on federal law.",
+      "scope_item_ids": ["civil-procedure-jurisdiction"],
+      "requirement_slot_id": "civpro-federal-question-element",
+      "review_required": true,
+      "inclusion_rationale": "The approved federal-question element slot requires the plaintiff-claim side of the well-pleaded-complaint boundary.",
+      "mapping_rationale": "The proposition is limited to federal-question jurisdiction and does not state removal doctrine.",
+      "requirement_mapping_rationale": "Exact candidate for the approved ELEMENT slot and the controlling well-pleaded-complaint proposition.",
+      "evidence": [
+        {
+          "authority_id": "SCOTUS_US_REPORTS_MOTTLEY_211_US_149",
+          "role": "SUBSTANTIVE_SUPPORT",
+          "locator": "211 U.S. 149, 152 (1908); official U.S. Reports PDF p. 4",
+          "proposition_type": "WELL_PLEADED_COMPLAINT_CONTROLLING_HOLDING",
+          "proposition": "The plaintiff’s statement of the plaintiff’s own cause of action must show that the cause is based on federal law."
+        }
+      ]
+    },
+    {
+      "stable_id": "civpro-fq-federal-defense-limitation",
+      "kind": "LIMITATION",
+      "statement": "Federal-question jurisdiction cannot rest solely on a federal defense, including a defense anticipated in the plaintiff’s complaint.",
+      "scope_item_ids": ["civil-procedure-jurisdiction"],
+      "requirement_slot_id": "civpro-federal-question-limitation",
+      "review_required": true,
+      "inclusion_rationale": "The approved limitation slot requires the defense-side consequence of the well-pleaded-complaint rule.",
+      "mapping_rationale": "The proposition defines a federal-question limitation without adding removal or complete-preemption doctrine.",
+      "requirement_mapping_rationale": "Exact candidate for the approved LIMITATION slot and the controlling federal-defense boundary.",
+      "evidence": [
+        {
+          "authority_id": "SCOTUS_US_REPORTS_MOTTLEY_211_US_149",
+          "role": "SUBSTANTIVE_SUPPORT",
+          "locator": "211 U.S. 149, 152–53 (1908); official U.S. Reports PDF pp. 4–5",
+          "proposition_type": "WELL_PLEADED_COMPLAINT_CONTROLLING_HOLDING",
+          "proposition": "Federal-question jurisdiction cannot be based on an anticipated federal defense."
+        }
+      ]
+    }
+  ],
+  "relationships": [
+    {
+      "source_id": "civpro-fq-statutory-original-jurisdiction",
+      "target_id": "civpro-fq-plaintiff-claim-arising-under",
+      "kind": "HAS_ELEMENT",
+      "ordering": 1
+    },
+    {
+      "source_id": "civpro-fq-statutory-original-jurisdiction",
+      "target_id": "civpro-fq-federal-defense-limitation",
+      "kind": "HAS_LIMITATION",
+      "ordering": 2
+    }
+  ]
+}

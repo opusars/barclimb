@@ -63,8 +63,10 @@ the same accepted scope to `BARCLIMB_CIVPRO_COVERAGE_POLICY@2026_V2` and
 
 V2 contains 27 operative official terminal topics, six non-authoritative planning aggregates, 43
 terminal-linked requirements, 157 required typed slots, 22 authority plans, 76 requirement-authority
-mappings, and nine requirement-specific case-proposition plans. Every terminal topic maps to one or
-more requirements; completeness never runs over only the six aggregates.
+mappings, and nine requirement-specific case-proposition plans. Approved V3 preserves the 27 topics,
+six aggregates, 43 requirements, and 22 authority plans while narrowing eight reviewed structural or
+authority boundaries to 149 required typed slots. Every terminal topic maps to one or more
+requirements; completeness never runs over only the six aggregates.
 
 The slots make completeness noncircular. A future obligation must match the slot kind, map to the same
 official terminal topic, pass ordinary compiler/reconciliation/authority/jurisdiction review, and link through a
@@ -95,9 +97,9 @@ Operator workflows:
 
 ```bash
 python apps/backend/manage.py import_subject_plan \
-  apps/backend/curriculum/manifests/civil-procedure-subject-plan-2026-v2.json
+  apps/backend/curriculum/manifests/civil-procedure-subject-plan-2026-v3.json
 python apps/backend/manage.py report_subject_coverage \
-  BARCLIMB_CIVPRO_CURRICULUM_MANIFEST@2026_V2
+  BARCLIMB_CIVPRO_CURRICULUM_MANIFEST@2026_V3
 python apps/backend/manage.py record_subject_plan_review /controlled/review.json
 ```
 
@@ -113,3 +115,34 @@ against imported immutable truth before creating the one-per-manifest review. Ex
 idempotent; changed evidence or packet bytes are rejected. Leo Rayos's V3 approval is preserved in
 `docs/project/M2_2C_V3_HUMAN_REVIEW_RECORD.json` and satisfies only the plan-review gate. It creates no
 Rule Obligation, certified slot, subject certification, or national-completeness claim.
+
+## M2.2d bounded federal-question candidate cluster
+
+`SubjectAuthorityAcquisition` records immutable requirement-specific evidence linking an approved
+authority plan, one exact requirement, one versioned `AuthoritySource`, proposition classifications,
+and locators. A shared plan is effectively `PARTIALLY_ACQUIRED` until all of its required
+requirement/proposition mappings have evidence; individual artifacts are not counted as separate
+plans. `CandidateRequirementMapping` immutably binds a candidate Rule Obligation to its approved V3
+terminal topic, requirement slot, and inherited treatment. Model guards and PostgreSQL triggers
+protect both records from mutation and deletion.
+
+The first cluster targets only `civpro-topic-federal-question-jurisdiction` and requirement
+`civpro-federal-question`. Its body-free V2 compiler manifest accepts official authority bytes only
+through the existing `--authority STABLE_ID=PATH` operator boundary. Official House 28 U.S.C. § 1331
+supports `GOVERNING_STATUTORY_TEXT`; the official U.S. Reports Mottley opinion supports
+`WELL_PLEADED_COMPLAINT_CONTROLLING_HOLDING`. Article III remains conditional and unacquired because
+no candidate distinguishes constitutional judicial power from statutory jurisdiction.
+
+The `RULE`, `ELEMENT`, and `LIMITATION` candidates map one-to-one to the three approved slots and use
+the approved `HAS_ELEMENT`/`HAS_LIMITATION` edges. Reconciliation additionally checks exact slot
+coverage, relationship structure, and requirement-specific proposition provenance. Clean
+reconciliation changes their structural state to `RECONCILED`, but all remain `REVIEW_REQUIRED`.
+`compile_result` counts missing/non-authority-reviewed approvals and reports certification eligibility
+false while any required human review is pending. No `CoverageRequirementSatisfaction`, topic/subject
+certification, or release snapshot is created by compilation.
+
+The exact-byte compile is `a46fbd51a441ec54fa74f2826a50241ff94e4fd3eefa49e24e568174d15b606d`.
+All three reviews remain pending; the bounded packet is
+`docs/project/M2_2D_CIVPRO_FEDERAL_QUESTION_HUMAN_REVIEW_PACKET.md`. Removal, diversity,
+supplemental jurisdiction, complete preemption, embedded-federal-question doctrine, and every other
+topic remain outside this compile.

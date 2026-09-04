@@ -4,9 +4,9 @@
   "product_phase": "MILESTONE_2_IN_PROGRESS",
   "active_launch_train": "B_COMPLETE_LEARNER_LOOP",
   "active_milestone": 2,
-  "status": "M2_2D_FEDERAL_QUESTION_CANDIDATE_REVIEW_APPROVED_UNCERTIFIED",
-  "latest_known_good_commit": "8463d68ce2e82d1b105646181da06ef8cf788583",
-  "active_branch": "m2-2d-civpro-federal-question",
+  "status": "M2_2D_ACCEPTED_MERGED_UNCERTIFIED",
+  "latest_known_good_commit": "6e4e798afb8f27667f3af70e2ee17395463ec350",
+  "active_branch": "main",
   "database_migration_summary": "M1.3a retains identity/outbox models. M2.1/M2.2a immutable source, scope, Rule Obligation, reconciliation, and snapshot truth is accepted. M2.2b's real current NCBE perimeter and eight reviewed Rule 4 V2 obligations remain accepted with immutable PILOT_ONLY snapshot 8ffc025a-ddac-5765-b7b2-130c84282c83 and national_complete false. M2.2c V3 preserves the checksum-bound 27-topic/43-requirement/149-slot Civil Procedure plan and its immutable human plan approval. M2.2d adds requirement-specific immutable authority acquisition and exact candidate-to-topic/requirement/slot mappings for only civpro-topic-federal-question-jurisdiction. Three §1331/Mottley-grounded candidates reconcile with zero findings and now have exact immutable human approvals bound to compile/input/packet/candidate/authority/relationship evidence. The review prerequisite passes, but no certification snapshot, subject certification, or national completeness is created.",
   "enabled_material_feature_flags": [],
   "clients": {
@@ -27,7 +27,7 @@
     "adsense": "NOT_VERIFIED",
     "admob": "NOT_VERIFIED"
   },
-  "latest_test_summary": "Accepted Expo maintenance 8463d68 passed exact-maintenance CI 33891560476 and exact-main CI 33891769482 with Expo 57.0.20, Linking 57.0.9, SecureStore 57.0.3, React Native 0.86.3, React 19.2.3, and TypeScript 5.9.3. M2.2d exact-byte review proof remains unchanged: compile a46fbd51a441ec54fa74f2826a50241ff94e4fd3eefa49e24e568174d15b606d, three approvals, zero reconciliation findings, zero pending reviews, and prerequisite eligibility true. Its pre-maintenance validation passed 144 SQLite tests with 12 skips and all 156 PostgreSQL/Redis tests; integrated continuity and focused invariants pass. Audit remains 17 moderate and zero high/critical. Exact-feature CI remains required.",
+  "latest_test_summary": "M2.2d accepted feature SHA 6e4e798 passed Foundation CI 33892450083, then fast-forwarded to main and passed exact-main Foundation CI 33893722478. Compile a46fbd51a441ec54fa74f2826a50241ff94e4fd3eefa49e24e568174d15b606d retains three approvals, zero reconciliation findings, zero pending reviews, and certification-prerequisite eligibility true. Topic certification remains false; subject_complete, subject_certified, and national_complete remain false. M2.2c 27/14/13/43/149 and Rule 4 evidence remain unchanged. A final exact-main CI run is required for this continuity-only acceptance record.",
   "known_blockers": [
     "Apple Developer Program team access, final iOS signing/provisioning/build, physical-device iOS/Android authentication and SecureStore lifecycle, live AASA/assetlinks routing, Google Play ownership/recovery, store approvals, and native production purchase/restore remain mandatory platform-specific Native GA blockers even though they do not block the clarified M1.4 foundation gate.",
     "The bounded M2.2b certification covers only one official-scope leaf and must never be interpreted as complete Rule 4, Civil Procedure, or national NextGen curriculum truth.",
@@ -43,6 +43,6 @@
     "Cross-scenario projections, anonymous claim security, private public-page overlays, entitlement transitions, and cross-device orchestration require explicit integration/security tests before GA.",
     "Official NCBE scope/source changes must pass source-drift and revalidation workflow; future exam scopes remain provisional until governing materials exist."
   ],
-  "exact_next_task": "Complete post-candidate-approval acceptance review only after exact-branch Foundation CI is green. Do not certify the topic or subject, acquire another authority family, compile another topic, merge, or begin another slice without separate authorization.",
-  "last_verified_at": "2026-09-04T09:00:00-07:00"
+  "exact_next_task": "Begin only the next separately authorized bounded Milestone 2 step after exact-final-main Foundation CI is green. Do not certify federal question, create a topic snapshot, acquire authority, compile another topic, or infer the next slice without explicit authorization.",
+  "last_verified_at": "2026-09-04T09:16:00-07:00"
 }

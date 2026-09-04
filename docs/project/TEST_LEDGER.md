@@ -292,3 +292,7 @@
 ## 2026-09-04 — Expo maintenance merged into published M2.2d
 - Maintenance Foundation CI `33891560476` and exact-main Foundation CI `33891769482` PASSED on `8463d68ce2e82d1b105646181da06ef8cf788583`. Accepted main was then normally merged into M2.2d without rewriting its published history.
 - Post-merge continuity, JSON, diff, dependency, and immutable M2.2d hash/state checks PASSED locally. Exact-feature Foundation CI remains the final gate.
+
+## 2026-09-04 — M2.2d acceptance merge
+- Accepted feature Foundation CI `33892450083` PASSED on `6e4e798afb8f27667f3af70e2ee17395463ec350`. Main fast-forwarded to that exact SHA and exact-main Foundation CI `33893722478` PASSED continuity, Python 3.13.15/PostgreSQL/Redis/Celery backend gates, and all TypeScript/Expo/export gates.
+- Post-merge immutable evidence verification PASSED for all compile/input/packet/review/authority hashes, three approvals, reconciled/eligible gate, false certification/completeness flags, M2.2c 27/14/13/43/149, and Rule 4 evidence. Final continuity validation and exact-main CI remain for this acceptance-only record.

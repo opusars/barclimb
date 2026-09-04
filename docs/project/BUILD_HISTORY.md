@@ -237,3 +237,8 @@
 ## 2026-09-04 — Accepted maintenance integrated into M2.2d
 - After maintenance CI run `33891560476` and exact-main CI run `33891769482` passed on `8463d68ce2e82d1b105646181da06ef8cf788583`, normally merged accepted main into published M2.2d without rebase or history rewrite. Only continuity conflicts were reconciled.
 - Preserved all M2.2d compile/input/packet/review hashes, three approvals, authority hashes, relationships, and false certification/completeness state. No curriculum, candidate, authority, certification, application, provider, dependency, or specification change was introduced by the integration.
+
+## 2026-09-04 — M2.2d accepted and merged
+- Fast-forwarded `main` from `8463d68ce2e82d1b105646181da06ef8cf788583` to accepted M2.2d SHA `6e4e798afb8f27667f3af70e2ee17395463ec350`; no merge commit, rebase, squash, amend, force push, or history rewrite was used.
+- Exact feature Foundation CI `33892450083` and exact-main Foundation CI `33893722478` passed. The three approvals, compile/input/packet/review hashes, §1331/Mottley provenance, reconciled gate, eligible prerequisite, false topic certification, false subject/national flags, M2.2c invariants, and Rule 4 evidence remain unchanged.
+- No certification, snapshot, additional authority acquisition, candidate/topic compilation, application change, or subsequent slice began.

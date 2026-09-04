@@ -1,7 +1,7 @@
 # BarClimb Project Handoff
 
 ## Current state
-M2.2c is accepted and merged into `main`. Maintenance commit `d06f37e4f0312c0e00391107f55a163c39ecac4b` passed Foundation CI run `33687348735` and refreshes only Expo SDK 57 patch metadata to Expo 57.0.19, Linking 57.0.9, and SecureStore 57.0.3. React Native 0.86.3, React 19.2.3, application behavior, providers, controlling specifications, and all M2.2c substantive truth are unchanged. Accepted V3 preserves 27 official terminal topics (14 starred/13 unstarred), six non-authoritative planning aggregates, 43 requirements, 149 typed slots, and 22 authority plans (one acquired/21 planned); V1/V2 remain immutable history. Leo Rayos's approval remains bound to reviewed commit `d4908c78cf185ce4bb5342802dfa79d7866af2d1` and review-manifest SHA-256 `6ceea17f91c7523c993a25a702b6e7ab923117d8a918baa7ed916d57bac87c97`; it authorizes only later controlled compilation. The Rule 4 snapshot remains unchanged as `PARTIAL_LEAF_COVERAGE`; zero V3 slots are certified, and `subject_complete`, `subject_certified`, and `national_complete` are false. Accepted M1 platform evidence and deferred Native GA blockers remain unchanged.
+M2.2c is accepted on `main`, whose current accepted tip is `e7b1517dc0a048ecf4b102306dd0e9e86f2401f8`. Bounded branch `maintenance/expo-sdk57-patch-3` refreshes only Expo SDK 57 patch metadata from 57.0.19 to 57.0.20 plus Expo-required transitive patches; Linking 57.0.9, SecureStore 57.0.3, React Native 0.86.3, React 19.2.3, application behavior, providers, controlling specifications, and substantive truth remain unchanged. Published M2.2d remains immutable at `c3e71259c6839ec3ae46d57e92e1da402b04a370`; after maintenance and exact-main CI are green, merge updated main normally into that branch and stop at post-candidate-approval acceptance review. Do not certify the federal-question topic or expand authority/curriculum.
 
 The controlling release sequence remains **Web GA → iOS Native GA → Android Native GA**, with one first-class multi-client architecture and no Web-only shortcuts. Apple enrollment/signing, physical-device authentication/SecureStore, live OS association routing, store ownership/approval, and native production purchase/restore remain mandatory at the applicable Native GA and are not marked verified. M1.5 changes none of those provider/device statuses.
 
@@ -22,7 +22,7 @@ See `../specs/SPEC_MANIFEST.json`. Four Markdown specs control the build.
 - npm-workspace monorepo boundaries for `apps/backend`, `apps/web`, `apps/native`, and seven shared TypeScript packages.
 - Django 5.2.17/DRF 3.16 environment-separated settings with PostgreSQL as the real-environment contract, a PostgreSQL CI/test setting, and SQLite isolated to foundation tests.
 - Versioned `/api/v1/health/` and database-backed `/api/v1/ready/` endpoints with automated tests.
-- One deduped React/ReactDOM 19.2.3 web runtime with a real root-shell mount test, and accepted Expo SDK 57.0.18/React Native 0.86.3 native foundation. M1.4 replaces simulated destination state with React Navigation.
+- One deduped React/ReactDOM 19.2.3 web runtime with a real root-shell mount test, and accepted Expo SDK 57.0.20/React Native 0.86.3 native foundation. M1.4 replaces simulated destination state with React Navigation.
 - TypeScript remains on the controlling 5.x line at 5.9.3 through Expo's supported dependency-validation exclusion.
 - Hash-verified pip-tools production/development locks, npm 11 lock/install-script policy, per-surface lint environments, ES2022-only shared-package type environments, and an explicit portability gate.
 - Node 24.19.0/npm 11.17.0 and Python 3.13.15 are aligned in version files, package metadata, CI, and setup documentation.
@@ -52,7 +52,7 @@ See `../specs/SPEC_MANIFEST.json`. Four Markdown specs control the build.
 
 ## Accepted-main dependency continuity corrections
 - Expo's current SDK 57 compatibility metadata moved the recommended `expo` patch from 57.0.12 to 57.0.13 after M1.3a reached `main`, causing the CI-mode dependency gate to fail without an application-code change.
-- Earlier corrections used `~57.0.13`, `~57.0.15`, and `~57.0.18`. Live Expo SDK 57 tooling on 2026-09-02 requires `expo@~57.0.19`, `expo-linking@~57.0.9`, `expo-secure-store@~57.0.3`, and React Native `0.86.3`; accepted main applies exactly that direct compatibility set.
+- Earlier corrections used `~57.0.13`, `~57.0.15`, `~57.0.18`, and `~57.0.19`. Live Expo SDK 57 tooling on 2026-09-04 requires `expo@~57.0.20`; Linking `57.0.9`, SecureStore `57.0.3`, and React Native `0.86.3` remain compatible and unchanged.
 - React/ReactDOM remain 19.2.3, TypeScript remains 5.9.3 and intentionally excluded from Expo dependency validation, and Node/npm remain 24.19.0/11.17.0. No SDK 58, prerelease, architecture, app-ID, EAS identity, signing, provider, product, or curriculum change is included.
 
 ## Completed in M1.4 repository/deployed proof

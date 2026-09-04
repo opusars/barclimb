@@ -265,3 +265,9 @@
 - Local backend Ruff lint/format, Django system/migration-drift checks, and SQLite regression passed (121 passed/11 PostgreSQL-only skipped). Hosted maintenance CI run `33687348735` passed exact Python 3.13.15, PostgreSQL 17, Redis 7.2, all 132 backend tests, migrations, and Celery smoke.
 - Continuity, JSON/spec hashes, ten-milestone structure, `git diff --check`, scope isolation, and secret/generated-junk/raw-source review passed. M2.2c remains 27 topics/14 starred/13 unstarred, 43 requirements/149 slots, 22 authority plans (one acquired/21 planned), approved review manifest `6ceea17f91c7523c993a25a702b6e7ab923117d8a918baa7ed916d57bac87c97`, and false subject/certified/national completeness.
 - `npm audit --omit=dev` reports 17 moderate, zero high, zero critical: the existing `uuid` family plus a newly published `decode-uri-component`/React Navigation family against unchanged navigation versions. No compatible fix or force fix was applied.
+
+## 2026-09-04 — Expo SDK 57.0.20 patch-metadata maintenance
+- Clean Node 24.19.0/npm 11.17.0 `npm ci`: PASSED, 716 packages from the regenerated npm lock. Live `CI=1 npx expo install --check`: PASSED. Expo Doctor: PASSED 20/20.
+- `npm run check`: PASSED nine workspace typechecks, 14 Web tests, 20 native tests, eight assessment-schema tests, lint/format, and Web production build. Seven-package portability PASSED.
+- iOS/Android production JS exports PASSED at 863/858 modules. Ruff lint/format, Django check/migration consistency, 121 SQLite tests with 11 PostgreSQL-only skips, all 132 PostgreSQL 14/Redis 7.2 tests, and live Celery `infrastructure.smoke` PASSED.
+- `npm audit --omit=dev`: unchanged 17 moderate, zero high, zero critical across the documented `uuid` and `decode-uri-component` families. No audit fix ran. Continuity, canonical hashes/JSON/ten-milestone validation, `git diff --check`, specification-isolation, secret/raw-source, and generated-junk scans PASSED.

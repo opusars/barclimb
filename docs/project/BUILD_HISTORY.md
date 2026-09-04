@@ -215,3 +215,9 @@
 - Exact maintenance Foundation CI run `33687348735` passed continuity, Python 3.13.15/PostgreSQL/Redis/Celery backend gates, all client checks, live Expo compatibility, Doctor 20/20, and iOS/Android exports. The maintenance commit then fast-forwarded to main without a merge commit.
 - Current npm metadata reports 17 moderate and zero high/critical aggregate nodes across the documented `uuid` and newly reported `decode-uri-component` families. React Navigation versions did not change; no audit fix ran.
 - No application, backend, curriculum, candidate, authority, provider, native configuration, or controlling-specification change occurred. The next bounded Milestone 2 slice requires separate authorization after exact-final-main CI.
+
+## 2026-09-04 — Expo SDK 57 patch-metadata maintenance 3
+- Began from exact accepted main `e7b1517dc0a048ecf4b102306dd0e9e86f2401f8` on `maintenance/expo-sdk57-patch-3`; published M2.2d remained untouched at `c3e71259c6839ec3ae46d57e92e1da402b04a370` during maintenance.
+- Live Expo SDK 57 tooling required only `expo@~57.0.20`. The npm lock consequently refreshes Expo 57.0.19 → 57.0.20, its nested CLI 57.0.21 → 57.0.22, modules-core 57.0.15 → 57.0.16, and modules-jsi 57.0.7 → 57.0.8. Linking 57.0.9, SecureStore 57.0.3, React Native 0.86.3, React/ReactDOM 19.2.3, and TypeScript 5.9.3/exclusion remain unchanged.
+- Clean npm install, client checks, live Expo validation, Doctor 20/20, both exports, Ruff/Django/migrations, SQLite and PostgreSQL/Redis backend suites passed locally. Audit remains 17 moderate and zero high/critical across the existing `uuid` and `decode-uri-component` families. No audit fix ran.
+- No application, backend behavior, curriculum, candidate, review, authority, certification, provider, app identity, EAS/signing, or controlling-specification change occurred. Exact maintenance, exact main, and integrated M2.2d CI remain required in that order.

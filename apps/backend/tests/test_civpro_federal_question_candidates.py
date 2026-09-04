@@ -7,6 +7,7 @@ from pathlib import Path
 import pytest
 from django.core.exceptions import ValidationError
 from django.core.management import call_command
+from django.core.management.base import CommandError
 from django.db import DatabaseError, connection, transaction
 from test_civil_procedure_subject_plan import (
     EXPECTED_TERMINAL_TOPIC_IDS,
@@ -31,6 +32,15 @@ pytestmark = pytest.mark.django_db
 BACKEND_ROOT = Path(__file__).resolve().parents[1]
 CANDIDATE_PATH = (
     BACKEND_ROOT / "curriculum" / "manifests" / "civpro-federal-question-candidates-2026-v1.json"
+)
+REVIEW_PATH = (
+    BACKEND_ROOT / "curriculum" / "manifests" / "civpro-federal-question-review-2026-v1.json"
+)
+REVIEW_PACKET_PATH = (
+    BACKEND_ROOT.parent.parent
+    / "docs"
+    / "project"
+    / "M2_2D_CIVPRO_FEDERAL_QUESTION_HUMAN_REVIEW_PACKET_REVIEWED.md"
 )
 TOPIC_ID = "civpro-topic-federal-question-jurisdiction"
 REQUIREMENT_ID = "civpro-federal-question"
@@ -78,6 +88,27 @@ def _compile(payload=None):
     compile_version, created = compile_manifest(payload, authority_contents=contents)
     compile_version, report = reconcile_curriculum(compile_version.pk)
     return compile_version, report, created, payload, contents
+
+
+def _review_payload(compile_version):
+    review = _json(REVIEW_PATH)
+    review["input_checksum"] = compile_version.input_sha256
+    review["scope_checksum"] = compile_version.official_scope_version.normalized_sha256
+    authorities = {
+        authority.stable_id: authority
+        for authority in AuthoritySource.objects.filter(
+            authorityevidence__obligation__compile_version=compile_version
+        ).distinct()
+    }
+    for authority in review["authorities"]:
+        authority["sha256"] = authorities[authority["stable_id"]].content_sha256
+    for candidate in review["candidates"]:
+        obligation = compile_version.obligations.get(stable_id=candidate["stable_id"])
+        candidate["candidate_canonical_sha256"] = obligation.canonical_sha256
+        candidate["mapping_sha256"] = obligation.candidate_requirement_mapping.canonical_sha256
+        for evidence in candidate["authority_evidence"]:
+            evidence["source_sha256"] = authorities[evidence["authority_id"]].content_sha256
+    return review
 
 
 def test_committed_descriptor_is_hash_only_and_bounded_to_federal_question():
@@ -145,6 +176,101 @@ def test_compile_maps_three_review_pending_candidates_to_exact_approved_slots():
         obligation__compile_version=compile_version
     ).exists()
     assert not CoverageReleaseSnapshot.objects.filter(compile_version=compile_version).exists()
+
+
+def test_exact_human_reviews_bind_all_candidate_evidence_and_replay_idempotently(tmp_path):
+    compile_version, _, _, _, _ = _compile()
+    review = _review_payload(compile_version)
+    review_path = tmp_path / "review.json"
+    review_path.write_text(json.dumps(review))
+    first_stdout = StringIO()
+    call_command(
+        "apply_obligation_reviews",
+        review_path,
+        "--packet",
+        REVIEW_PACKET_PATH,
+        stdout=first_stdout,
+    )
+    first = json.loads(first_stdout.getvalue())
+    second_stdout = StringIO()
+    call_command(
+        "apply_obligation_reviews",
+        review_path,
+        "--packet",
+        REVIEW_PACKET_PATH,
+        stdout=second_stdout,
+    )
+    second = json.loads(second_stdout.getvalue())
+
+    assert first["reviews_created"] == 3 and second["reviews_created"] == 0
+    assert first["review_manifest_sha256"] == second["review_manifest_sha256"]
+    assert [entry["record_sha256"] for entry in first["review_records"]] == [
+        entry["record_sha256"] for entry in second["review_records"]
+    ]
+    assert {entry["created"] for entry in second["review_records"]} == {False}
+    reviews = ObligationHumanReview.objects.filter(
+        obligation__compile_version=compile_version
+    ).select_related("obligation")
+    assert reviews.count() == 3
+    assert {review.reviewer_name for review in reviews} == {"Leo Rayos"}
+    assert {review.reviewer_role_qualification for review in reviews} == {
+        "JD; California bar exam passer; reviewer for BarClimb curriculum quality control."
+    }
+    assert {review.resolution for review in reviews} == {"APPROVE"}
+    assert compile_result(compile_version)["human_review_pending_count"] == 0
+    assert compile_result(compile_version)["certification_eligible"] is True
+    compile_version.refresh_from_db()
+    assert compile_version.reconciliation_report["candidate_human_review_status"] == "APPROVED"
+    assert compile_version.reconciliation_report["subject_certified"] is False
+    assert compile_version.reconciliation_report["national_complete"] is False
+    assert not CoverageReleaseSnapshot.objects.filter(compile_version=compile_version).exists()
+
+    subject_report = subject_coverage_report(
+        compile_version.obligations.first().candidate_requirement_mapping.official_topic.manifest
+    )
+    assert subject_report["subject_complete"] is False
+    assert subject_report["subject_certified"] is False
+    assert subject_report["national_complete"] is False
+
+
+@pytest.mark.parametrize(
+    ("mutation", "expected"),
+    [
+        ("statement", "candidate statements or evidence bindings differ"),
+        ("authority", "candidate statements or evidence bindings differ"),
+        ("relationship", "obligation relationships differ"),
+        ("compile", "compile_checksum"),
+        ("input", "input_checksum"),
+        ("packet", "reviewed_packet"),
+    ],
+)
+def test_human_review_rejects_changed_exact_evidence(tmp_path, mutation, expected):
+    compile_version, _, _, _, _ = _compile()
+    review = _review_payload(compile_version)
+    packet_path = REVIEW_PACKET_PATH
+    if mutation == "statement":
+        review["candidates"][0]["statement"] += " Changed."
+    elif mutation == "authority":
+        review["candidates"][0]["authority_evidence"][0]["source_sha256"] = "0" * 64
+    elif mutation == "compile":
+        review["compile_checksum"] = "0" * 64
+    elif mutation == "input":
+        review["input_checksum"] = "0" * 64
+    elif mutation == "relationship":
+        review["relationships"][0]["kind"] = "HAS_LIMITATION"
+    else:
+        packet_path = tmp_path / "changed-packet.md"
+        packet_path.write_text("changed packet")
+    review_path = tmp_path / "review.json"
+    review_path.write_text(json.dumps(review))
+    with pytest.raises(CommandError, match=expected):
+        call_command(
+            "apply_obligation_reviews",
+            review_path,
+            "--packet",
+            packet_path,
+            stdout=StringIO(),
+        )
 
 
 def test_statute_and_controlling_case_provenance_are_proposition_specific():

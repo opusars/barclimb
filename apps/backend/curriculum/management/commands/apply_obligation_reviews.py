@@ -1,3 +1,4 @@
+import hashlib
 import json
 from pathlib import Path
 
@@ -11,6 +12,7 @@ from curriculum.models import (
     CoverageReleaseSnapshot,
     CurriculumCompileVersion,
     ObligationHumanReview,
+    ObligationRelationship,
 )
 from curriculum.services import (
     certify_curriculum,
@@ -25,6 +27,7 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
         parser.add_argument("input", type=Path)
+        parser.add_argument("--packet", type=Path)
         parser.add_argument("--certify", action="store_true")
         parser.add_argument("--dry-run", action="store_true")
 
@@ -32,7 +35,11 @@ class Command(BaseCommand):
         try:
             payload = json.loads(options["input"].read_text())
             with transaction.atomic():
-                result = self._apply(payload, certify=options["certify"])
+                result = self._apply(
+                    payload,
+                    packet_path=options["packet"],
+                    certify=options["certify"],
+                )
                 if options["dry_run"]:
                     transaction.set_rollback(True)
         except Exception as error:
@@ -40,8 +47,12 @@ class Command(BaseCommand):
         result["dry_run"] = options["dry_run"]
         self.stdout.write(json.dumps(result, sort_keys=True))
 
-    def _apply(self, payload, *, certify):
-        if payload.get("schema") != "BARCLIMB_OBLIGATION_REVIEW_V1":
+    def _apply(self, payload, *, packet_path, certify):
+        schema = payload.get("schema")
+        if schema not in {
+            "BARCLIMB_OBLIGATION_REVIEW_V1",
+            "BARCLIMB_OBLIGATION_REVIEW_V2",
+        }:
             raise ValidationError("Unsupported obligation review schema.")
         manifest_sha256 = canonical_sha256(payload)
         compile_version = CurriculumCompileVersion.objects.select_for_update().get(
@@ -62,15 +73,21 @@ class Command(BaseCommand):
                 "The reviewed pilot must remain explicitly non-national-complete."
             )
 
-        authority = payload["authority"]
-        if not AuthoritySource.objects.filter(
-            stable_id=authority["stable_id"],
-            source_version=authority["source_version"],
-            content_sha256=authority["sha256"],
-            authority_class=AuthoritySource.AuthorityClass.SUBSTANTIVE_PRIMARY,
-            source_class=AuthoritySource.SourceClass.PRODUCTION,
-        ).exists():
-            raise ValidationError("The reviewed primary-authority provenance is not registered.")
+        if schema == "BARCLIMB_OBLIGATION_REVIEW_V2":
+            self._validate_exact_review_bindings(payload, compile_version, packet_path)
+
+        authorities = payload.get("authorities") or [payload["authority"]]
+        for authority in authorities:
+            if not AuthoritySource.objects.filter(
+                stable_id=authority["stable_id"],
+                source_version=authority["source_version"],
+                content_sha256=authority["sha256"],
+                authority_class=AuthoritySource.AuthorityClass.SUBSTANTIVE_PRIMARY,
+                source_class=AuthoritySource.SourceClass.PRODUCTION,
+            ).exists():
+                raise ValidationError(
+                    "The reviewed primary-authority provenance is not registered."
+                )
 
         obligations = {
             obligation.stable_id: obligation
@@ -88,12 +105,13 @@ class Command(BaseCommand):
         if reviewed_at is None or reviewed_at.tzinfo is None:
             raise ValidationError("reviewed_at must be an explicit timezone-aware timestamp.")
         created_count = 0
+        review_records = []
         for decision in decisions:
             if decision.get("resolution") not in ObligationHumanReview.Resolution.values:
                 raise ValidationError("Review manifest contains an unsupported resolution.")
             if decision.get("authority_reviewed") is not True:
                 raise ValidationError("Every production approval must attest authority review.")
-            _, created = record_obligation_review(
+            review, created = record_obligation_review(
                 obligations[decision["obligation"]].pk,
                 reviewer=None,
                 reviewer_name=reviewer["name"],
@@ -107,6 +125,26 @@ class Command(BaseCommand):
                 operator_manifest=True,
             )
             created_count += int(created)
+            record_payload = {
+                "obligation": review.obligation.stable_id,
+                "candidate_canonical_sha256": review.obligation.canonical_sha256,
+                "reviewer_name": review.reviewer_name,
+                "reviewer_role_qualification": review.reviewer_role_qualification,
+                "resolution": review.resolution,
+                "rationale": review.rationale,
+                "attestation": review.attestation,
+                "authority_reviewed": review.authority_reviewed,
+                "review_manifest_sha256": review.review_manifest_sha256,
+                "reviewed_at": review.reviewed_at.isoformat(),
+            }
+            review_records.append(
+                {
+                    "obligation": review.obligation.stable_id,
+                    "database_id": review.pk,
+                    "record_sha256": canonical_sha256(record_payload),
+                    "created": created,
+                }
+            )
 
         if compile_version.status == CurriculumCompileVersion.Status.CERTIFIED:
             snapshot = compile_version.coverage_snapshot
@@ -117,7 +155,10 @@ class Command(BaseCommand):
                 or report["warning_issue_count"]
                 or report["national_complete"]
                 or report["coverage_class"] != "PILOT_ONLY"
-                or report["leaves_sufficiently_covered"] != report["total_official_leaves"]
+                or (
+                    schema == "BARCLIMB_OBLIGATION_REVIEW_V1"
+                    and report["leaves_sufficiently_covered"] != report["total_official_leaves"]
+                )
             ):
                 raise ValidationError("Reviewed pilot failed its bounded certification gates.")
             snapshot = certify_curriculum(compile_version.pk) if certify else None
@@ -137,6 +178,7 @@ class Command(BaseCommand):
             "reviewer_name": reviewer["name"],
             "reviewer_role_qualification": reviewer["role_qualification"],
             "resolutions": {review.obligation.stable_id: review.resolution for review in reviews},
+            "review_records": sorted(review_records, key=lambda value: value["obligation"]),
             "certified": snapshot is not None,
         }
         if snapshot:
@@ -157,3 +199,114 @@ class Command(BaseCommand):
         elif CoverageReleaseSnapshot.objects.filter(compile_version=compile_version).exists():
             raise ValidationError("Unexpected certification snapshot state.")
         return result
+
+    def _validate_exact_review_bindings(self, payload, compile_version, packet_path):
+        if payload.get("input_checksum") != compile_version.input_sha256:
+            raise ValidationError(
+                {
+                    "input_checksum": (
+                        f"Expected {compile_version.input_sha256}; "
+                        f"received {payload.get('input_checksum')}"
+                    )
+                }
+            )
+        packet = payload.get("reviewed_packet", {})
+        if packet_path is None:
+            raise ValidationError("V2 obligation review requires the exact reviewed packet.")
+        packet_sha256 = hashlib.sha256(packet_path.read_bytes()).hexdigest()
+        if packet.get("sha256") != packet_sha256:
+            raise ValidationError(
+                {"reviewed_packet": f"Expected {packet.get('sha256')}; received {packet_sha256}"}
+            )
+        if packet.get("path") and not packet_path.as_posix().endswith(packet["path"]):
+            raise ValidationError("Reviewed packet path does not match the bound packet identity.")
+
+        obligations = list(
+            compile_version.obligations.filter(compiler_status="INCLUDED")
+            .prefetch_related(
+                "scope_items",
+                "authority_evidence__authority",
+            )
+            .select_related(
+                "candidate_requirement_mapping__slot__requirement",
+                "candidate_requirement_mapping__official_topic",
+            )
+            .order_by("stable_id")
+        )
+        actual_candidates = []
+        for obligation in obligations:
+            mapping = obligation.candidate_requirement_mapping
+            actual_candidates.append(
+                {
+                    "stable_id": obligation.stable_id,
+                    "kind": obligation.kind,
+                    "statement": obligation.statement,
+                    "normalized_statement": obligation.normalized_statement,
+                    "candidate_canonical_sha256": obligation.canonical_sha256,
+                    "scope_item_ids": sorted(
+                        obligation.scope_items.values_list("stable_id", flat=True)
+                    ),
+                    "topic_id": mapping.official_topic.stable_id,
+                    "requirement_id": mapping.slot.requirement.stable_id,
+                    "slot_id": mapping.slot.stable_id,
+                    "inherited_treatment": mapping.inherited_treatment,
+                    "mapping_sha256": mapping.canonical_sha256,
+                    "authority_evidence": sorted(
+                        [
+                            {
+                                "authority_id": evidence.authority.stable_id,
+                                "source_version": evidence.authority.source_version,
+                                "source_sha256": evidence.authority.content_sha256,
+                                "role": evidence.role,
+                                "locator": evidence.locator,
+                                "proposition_type": evidence.proposition_type,
+                                "proposition_sha256": evidence.proposition_sha256,
+                                "supports": evidence.supports,
+                            }
+                            for evidence in obligation.authority_evidence.all()
+                        ],
+                        key=lambda value: (
+                            value["authority_id"],
+                            value["source_version"],
+                            value["role"],
+                            value["locator"],
+                        ),
+                    ),
+                }
+            )
+        expected_candidates = sorted(
+            payload.get("candidates", []), key=lambda value: value["stable_id"]
+        )
+        if expected_candidates != actual_candidates:
+            raise ValidationError("Reviewed candidate statements or evidence bindings differ.")
+
+        actual_relationships = sorted(
+            [
+                {
+                    "source_id": edge.source.stable_id,
+                    "kind": edge.kind,
+                    "target_id": edge.target.stable_id,
+                    "ordering": edge.ordering,
+                }
+                for edge in ObligationRelationship.objects.filter(
+                    source__compile_version=compile_version
+                ).select_related("source", "target")
+            ],
+            key=lambda value: (
+                value["source_id"],
+                value["kind"],
+                value["target_id"],
+                value["ordering"],
+            ),
+        )
+        expected_relationships = sorted(
+            payload.get("relationships", []),
+            key=lambda value: (
+                value["source_id"],
+                value["kind"],
+                value["target_id"],
+                value["ordering"],
+            ),
+        )
+        if expected_relationships != actual_relationships:
+            raise ValidationError("Reviewed obligation relationships differ.")

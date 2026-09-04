@@ -1,0 +1,89 @@
+{
+  "schema": "BARCLIMB_OBLIGATION_REVIEW_EXECUTION_RECORD_V1",
+  "status": "CANDIDATE_REVIEW_GATE_SATISFIED",
+  "review_id": "BARCLIMB_CIVPRO_FEDERAL_QUESTION_2026_V1_LEO_RAYOS_2026_09_03",
+  "reviewed_at": "2026-09-03T21:59:38+00:00",
+  "reviewer_name": "Leo Rayos",
+  "reviewer_role_qualification": "JD; California bar exam passer; reviewer for BarClimb curriculum quality control.",
+  "cluster_disposition": "APPROVE — FEDERAL-QUESTION CANDIDATE SET ACCEPTED FOR WORKFLOW RECORDING",
+  "compile_version": "BARCLIMB_CIVPRO_FEDERAL_QUESTION_2026_V1",
+  "compile_checksum": "a46fbd51a441ec54fa74f2826a50241ff94e4fd3eefa49e24e568174d15b606d",
+  "input_checksum": "238b15e7b5bfc492ebb5dde77a88c09b09a4bafd463f772c3cbe24277fb03f4f",
+  "review_manifest_sha256": "9bc7dd30872b6b36126f2c1a1771bdde2d33ac58a029c8fdfe5d5e6092c355d7",
+  "reviewed_packet": {
+    "path": "docs/project/M2_2D_CIVPRO_FEDERAL_QUESTION_HUMAN_REVIEW_PACKET_REVIEWED.md",
+    "sha256": "4fdf1c70c1a4228537880c500856198809ef368d53abbc465027bb5389696eda"
+  },
+  "records": [
+    {
+      "stable_record_id": "BARCLIMB_CIVPRO_FEDERAL_QUESTION_2026_V1_LEO_RAYOS_2026_09_03:civpro-fq-statutory-original-jurisdiction",
+      "workflow_database_id": 1,
+      "candidate_id": "civpro-fq-statutory-original-jurisdiction",
+      "kind": "RULE",
+      "resolution": "APPROVE",
+      "authority_reviewed": true,
+      "record_sha256": "a68868e497c7b6b820c240d82ef7dad1bc0a95150700abf8ffbd76ac501c0bc2"
+    },
+    {
+      "stable_record_id": "BARCLIMB_CIVPRO_FEDERAL_QUESTION_2026_V1_LEO_RAYOS_2026_09_03:civpro-fq-plaintiff-claim-arising-under",
+      "workflow_database_id": 2,
+      "candidate_id": "civpro-fq-plaintiff-claim-arising-under",
+      "kind": "ELEMENT",
+      "resolution": "APPROVE",
+      "authority_reviewed": true,
+      "record_sha256": "0bf915c546c9af1f7e2ee02adeb0a0ed87a118d4a5776bb20f25ddded598e473"
+    },
+    {
+      "stable_record_id": "BARCLIMB_CIVPRO_FEDERAL_QUESTION_2026_V1_LEO_RAYOS_2026_09_03:civpro-fq-federal-defense-limitation",
+      "workflow_database_id": 3,
+      "candidate_id": "civpro-fq-federal-defense-limitation",
+      "kind": "LIMITATION",
+      "resolution": "APPROVE",
+      "authority_reviewed": true,
+      "record_sha256": "038f37e86f190ce8377fe1b248ed0f91fadede32b60adfb26a3b8f0055dcb06b"
+    }
+  ],
+  "authority_bindings": [
+    {
+      "candidate_id": "civpro-fq-statutory-original-jurisdiction",
+      "authority_id": "USCODE_28_USC_1331",
+      "authority_sha256": "f1a418156a2be3117aa698c83788ff6b544d68c602bb4559d06cc2daa2129ac7",
+      "proposition_type": "GOVERNING_STATUTORY_TEXT"
+    },
+    {
+      "candidate_id": "civpro-fq-plaintiff-claim-arising-under",
+      "authority_id": "SCOTUS_US_REPORTS_MOTTLEY_211_US_149",
+      "authority_sha256": "73c4f2d4ada6a12b94106e045533c9b835a492cba9475f09de4da267341978ec",
+      "proposition_type": "WELL_PLEADED_COMPLAINT_CONTROLLING_HOLDING"
+    },
+    {
+      "candidate_id": "civpro-fq-federal-defense-limitation",
+      "authority_id": "SCOTUS_US_REPORTS_MOTTLEY_211_US_149",
+      "authority_sha256": "73c4f2d4ada6a12b94106e045533c9b835a492cba9475f09de4da267341978ec",
+      "proposition_type": "WELL_PLEADED_COMPLAINT_CONTROLLING_HOLDING"
+    }
+  ],
+  "execution": {
+    "workflow": "apply_obligation_reviews -> record_obligation_review",
+    "database": "Disposable isolated SQLite exact-byte operator proof",
+    "exact_acquired_bytes": true,
+    "raw_source_bytes_committed": false,
+    "records_created_first_run": 3,
+    "records_created_exact_replay": 0,
+    "idempotent_replay_confirmed": true
+  },
+  "post_review_state": {
+    "candidate_count": 3,
+    "candidate_human_review_status": "APPROVED",
+    "human_review_pending_count": 0,
+    "reconciliation_status": "RECONCILED",
+    "reconciliation_blocking_issue_count": 0,
+    "certification_prerequisite_eligible": true,
+    "topic_certified": false,
+    "subject_complete": false,
+    "subject_certified": false,
+    "national_complete": false,
+    "certification_snapshot_created": false
+  },
+  "boundary": "These records approve only the exact three federal-question candidates and their checksum-bound statements, mappings, relationships, compile identity, packet, and authority evidence. They do not certify the federal-question topic or Civil Procedure, establish national completeness, or authorize another authority family or topic."
+}

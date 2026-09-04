@@ -61,11 +61,12 @@ qualified review of the three exact federal-question candidates only.
 - Requirement: `civpro-federal-question`
 - Candidate slots: `RULE`, `ELEMENT`, `LIMITATION`; all three have one reconciled candidate
 - Candidate compile SHA-256: `a46fbd51a441ec54fa74f2826a50241ff94e4fd3eefa49e24e568174d15b606d`
-- Human candidate review: `PENDING` for all three
-- Certification eligibility: `false`
+- Human candidate review: `APPROVE` for all three; candidate-review prerequisite satisfied
+- Review manifest canonical SHA-256: `9bc7dd30872b6b36126f2c1a1771bdde2d33ac58a029c8fdfe5d5e6092c355d7`
+- Certification prerequisite eligibility: `true`; no certification action or snapshot exists
 - Certified V3 slots: 0 of 149; the other 146 slots received no candidate in this slice
-- Review packet: `M2_2D_CIVPRO_FEDERAL_QUESTION_HUMAN_REVIEW_PACKET.md`; SHA-256
-  `4fdf1c70c1a4228537880c500856198809ef368d53abbc465027bb5389696eda`
+- Exact reviewed packet archive: `M2_2D_CIVPRO_FEDERAL_QUESTION_HUMAN_REVIEW_PACKET_REVIEWED.md`;
+  SHA-256 `4fdf1c70c1a4228537880c500856198809ef368d53abbc465027bb5389696eda`
 - `subject_complete`: `false`
 - `subject_certified`: `false`
 - `national_complete`: `false`

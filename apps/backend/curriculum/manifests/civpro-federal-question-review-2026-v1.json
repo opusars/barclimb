@@ -1,0 +1,143 @@
+{
+  "schema": "BARCLIMB_OBLIGATION_REVIEW_V2",
+  "review_id": "BARCLIMB_CIVPRO_FEDERAL_QUESTION_2026_V1_LEO_RAYOS_2026_09_03",
+  "reviewed_at": "2026-09-03T21:59:38Z",
+  "reviewer": {
+    "name": "Leo Rayos",
+    "role_qualification": "JD; California bar exam passer; reviewer for BarClimb curriculum quality control."
+  },
+  "compile_version": "BARCLIMB_CIVPRO_FEDERAL_QUESTION_2026_V1",
+  "compile_checksum": "a46fbd51a441ec54fa74f2826a50241ff94e4fd3eefa49e24e568174d15b606d",
+  "input_checksum": "238b15e7b5bfc492ebb5dde77a88c09b09a4bafd463f772c3cbe24277fb03f4f",
+  "scope_version": "NCBE_NEXTGEN_SCOPE_2026_07_2027_02",
+  "scope_checksum": "2d8a1052ada18b413f24b7d0eef1c855a76d8a9a31688130757d5dd6511ca56f",
+  "coverage_class": "PILOT_ONLY",
+  "national_complete": false,
+  "reviewed_packet": {
+    "path": "docs/project/M2_2D_CIVPRO_FEDERAL_QUESTION_HUMAN_REVIEW_PACKET_REVIEWED.md",
+    "sha256": "4fdf1c70c1a4228537880c500856198809ef368d53abbc465027bb5389696eda"
+  },
+  "cluster_disposition": "APPROVE — FEDERAL-QUESTION CANDIDATE SET ACCEPTED FOR WORKFLOW RECORDING",
+  "rationale": "This approval applies only to these exact three candidates, their exact statements, relationships, compile identity, and authority evidence.",
+  "attestation": "APPROVE — FEDERAL-QUESTION CANDIDATE SET ACCEPTED FOR WORKFLOW RECORDING. This approval applies only to these exact three candidates, their exact statements, relationships, compile identity, and authority evidence. It does not certify the federal-question topic. It does not certify Civil Procedure. It does not establish national completeness. It does not authorize another authority family or topic.",
+  "authorities": [
+    {
+      "stable_id": "SCOTUS_US_REPORTS_MOTTLEY_211_US_149",
+      "source_version": "1908-11-16",
+      "sha256": "73c4f2d4ada6a12b94106e045533c9b835a492cba9475f09de4da267341978ec"
+    },
+    {
+      "stable_id": "USCODE_28_USC_1331",
+      "source_version": "PRELIM_LAWS_IN_EFFECT_2026-09-01",
+      "sha256": "f1a418156a2be3117aa698c83788ff6b544d68c602bb4559d06cc2daa2129ac7"
+    }
+  ],
+  "candidates": [
+    {
+      "stable_id": "civpro-fq-federal-defense-limitation",
+      "kind": "LIMITATION",
+      "statement": "Federal-question jurisdiction cannot rest solely on a federal defense, including a defense anticipated in the plaintiff’s complaint.",
+      "normalized_statement": "federal-question jurisdiction cannot rest solely on a federal defense, including a defense anticipated in the plaintiff’s complaint.",
+      "candidate_canonical_sha256": "f897545af42b883153f8e9eba27c80e0c3869345e75dc882ea81649f79a57f58",
+      "scope_item_ids": ["civil-procedure-jurisdiction"],
+      "topic_id": "civpro-topic-federal-question-jurisdiction",
+      "requirement_id": "civpro-federal-question",
+      "slot_id": "civpro-federal-question-limitation",
+      "inherited_treatment": "RECALLED_REQUIRED",
+      "mapping_sha256": "ec6101e66c1c4171780bba57fe1a790ab4ef788f53cab8da7ebc5fadf9e98f4f",
+      "authority_evidence": [
+        {
+          "authority_id": "SCOTUS_US_REPORTS_MOTTLEY_211_US_149",
+          "source_version": "1908-11-16",
+          "source_sha256": "73c4f2d4ada6a12b94106e045533c9b835a492cba9475f09de4da267341978ec",
+          "role": "SUBSTANTIVE_SUPPORT",
+          "locator": "211 U.S. 149, 152–53 (1908); official U.S. Reports PDF pp. 4–5",
+          "proposition_type": "WELL_PLEADED_COMPLAINT_CONTROLLING_HOLDING",
+          "proposition_sha256": "7112ab207f5a7aa10c9f632ff422d29b8287392f40b24dad954f987e2e677b7b",
+          "supports": true
+        }
+      ]
+    },
+    {
+      "stable_id": "civpro-fq-plaintiff-claim-arising-under",
+      "kind": "ELEMENT",
+      "statement": "For a civil action to arise under federal law, the plaintiff’s properly pleaded statement of the plaintiff’s own cause of action must show that the cause is based on federal law.",
+      "normalized_statement": "for a civil action to arise under federal law, the plaintiff’s properly pleaded statement of the plaintiff’s own cause of action must show that the cause is based on federal law.",
+      "candidate_canonical_sha256": "9270d500740d360d6aa2829701264d3e84a4e99034eb232857f6666ec6c606db",
+      "scope_item_ids": ["civil-procedure-jurisdiction"],
+      "topic_id": "civpro-topic-federal-question-jurisdiction",
+      "requirement_id": "civpro-federal-question",
+      "slot_id": "civpro-federal-question-element",
+      "inherited_treatment": "RECALLED_REQUIRED",
+      "mapping_sha256": "2e177a3f49068dc570985bc1619b64cd77cd7e4d291f025bf287a5a3278ebf45",
+      "authority_evidence": [
+        {
+          "authority_id": "SCOTUS_US_REPORTS_MOTTLEY_211_US_149",
+          "source_version": "1908-11-16",
+          "source_sha256": "73c4f2d4ada6a12b94106e045533c9b835a492cba9475f09de4da267341978ec",
+          "role": "SUBSTANTIVE_SUPPORT",
+          "locator": "211 U.S. 149, 152 (1908); official U.S. Reports PDF p. 4",
+          "proposition_type": "WELL_PLEADED_COMPLAINT_CONTROLLING_HOLDING",
+          "proposition_sha256": "923f6bb2e0603b3f9de6cf04a90e84698c534c1ccdea3f6ff5688ec3ff342851",
+          "supports": true
+        }
+      ]
+    },
+    {
+      "stable_id": "civpro-fq-statutory-original-jurisdiction",
+      "kind": "RULE",
+      "statement": "Under 28 U.S.C. § 1331, federal district courts have original jurisdiction over civil actions arising under the Constitution, laws, or treaties of the United States.",
+      "normalized_statement": "under 28 u.s.c. § 1331, federal district courts have original jurisdiction over civil actions arising under the constitution, laws, or treaties of the united states.",
+      "candidate_canonical_sha256": "b7af518b17b2eaf911fd7b9252928c8203e32734ec4ce5127f7cc14419dae3ea",
+      "scope_item_ids": ["civil-procedure-jurisdiction"],
+      "topic_id": "civpro-topic-federal-question-jurisdiction",
+      "requirement_id": "civpro-federal-question",
+      "slot_id": "civpro-federal-question-rule",
+      "inherited_treatment": "RECALLED_REQUIRED",
+      "mapping_sha256": "d81f77a1e62ca2a67163ec6334180cac1d825f5ec5cec1ccc43e814457e1ab60",
+      "authority_evidence": [
+        {
+          "authority_id": "USCODE_28_USC_1331",
+          "source_version": "PRELIM_LAWS_IN_EFFECT_2026-09-01",
+          "source_sha256": "f1a418156a2be3117aa698c83788ff6b544d68c602bb4559d06cc2daa2129ac7",
+          "role": "SUBSTANTIVE_SUPPORT",
+          "locator": "28 U.S.C. § 1331; official House preliminary text in effect September 1, 2026",
+          "proposition_type": "GOVERNING_STATUTORY_TEXT",
+          "proposition_sha256": "cfdce3ecb7df1556e7ea1478807e51faf6d183ad2e052f1560de3c0ada926af0",
+          "supports": true
+        }
+      ]
+    }
+  ],
+  "relationships": [
+    {
+      "source_id": "civpro-fq-statutory-original-jurisdiction",
+      "kind": "HAS_ELEMENT",
+      "target_id": "civpro-fq-plaintiff-claim-arising-under",
+      "ordering": 1
+    },
+    {
+      "source_id": "civpro-fq-statutory-original-jurisdiction",
+      "kind": "HAS_LIMITATION",
+      "target_id": "civpro-fq-federal-defense-limitation",
+      "ordering": 2
+    }
+  ],
+  "decisions": [
+    {
+      "obligation": "civpro-fq-statutory-original-jurisdiction",
+      "resolution": "APPROVE",
+      "authority_reviewed": true
+    },
+    {
+      "obligation": "civpro-fq-plaintiff-claim-arising-under",
+      "resolution": "APPROVE",
+      "authority_reviewed": true
+    },
+    {
+      "obligation": "civpro-fq-federal-defense-limitation",
+      "resolution": "APPROVE",
+      "authority_reviewed": true
+    }
+  ]
+}

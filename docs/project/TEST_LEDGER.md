@@ -282,3 +282,13 @@
 - Exact Node 24.19.0/npm 11.17.0 clean `npm ci` installed 716 packages. `npm run check` passed nine workspace typechecks, 14 Web tests, 20 native tests, eight assessment-schema tests, and the 52-module Web build; seven-package portability passed. Live Expo compatibility passed, Doctor passed 20/20, and iOS/Android exports passed at 863/858 modules.
 - Reconciliation remains zero findings with candidate review status `APPROVED`, zero pending reviews, and prerequisite eligibility true. No topic/subject certification or snapshot exists; `subject_complete`, `subject_certified`, and `national_complete` remain false. Authority-plan state remains one acquired, two partially acquired, and 19 planned; Rule 4 evidence is unchanged.
 - `npm audit --omit=dev` ultimately returned the unchanged accepted graph: 17 moderate, zero high, zero critical across the documented `uuid` and `decode-uri-component` families. No fix ran; dependencies and lockfile are unchanged. Exact-branch CI remains required before final acceptance.
+
+## 2026-09-04 — Expo SDK 57.0.20 patch-metadata maintenance
+- Clean Node 24.19.0/npm 11.17.0 `npm ci`: PASSED, 716 packages from the regenerated npm lock. Live `CI=1 npx expo install --check`: PASSED. Expo Doctor: PASSED 20/20.
+- `npm run check`: PASSED nine workspace typechecks, 14 Web tests, 20 native tests, eight assessment-schema tests, lint/format, and Web production build. Seven-package portability PASSED.
+- iOS/Android production JS exports PASSED at 863/858 modules. Ruff lint/format, Django check/migration consistency, 121 SQLite tests with 11 PostgreSQL-only skips, all 132 PostgreSQL 14/Redis 7.2 tests, and live Celery `infrastructure.smoke` PASSED.
+- `npm audit --omit=dev`: unchanged 17 moderate, zero high, zero critical across the documented `uuid` and `decode-uri-component` families. No audit fix ran. Continuity, canonical hashes/JSON/ten-milestone validation, `git diff --check`, specification-isolation, secret/raw-source, and generated-junk scans PASSED.
+
+## 2026-09-04 — Expo maintenance merged into published M2.2d
+- Maintenance Foundation CI `33891560476` and exact-main Foundation CI `33891769482` PASSED on `8463d68ce2e82d1b105646181da06ef8cf788583`. Accepted main was then normally merged into M2.2d without rewriting its published history.
+- Post-merge continuity, JSON, diff, dependency, and immutable M2.2d hash/state checks PASSED locally. Exact-feature Foundation CI remains the final gate.

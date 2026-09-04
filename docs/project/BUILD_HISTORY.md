@@ -227,3 +227,13 @@
 - Recorded Leo Rayos's supplied `APPROVE` decisions for the exact federal-question `RULE`, `ELEMENT`, and `LIMITATION` through the existing `apply_obligation_reviews` → `record_obligation_review` workflow.
 - Extended that workflow's manifest envelope to bind the exact compile/input/reviewed-packet checksums plus candidate statement/canonical hash, topic/requirement/slot/treatment mapping, authority source hash and proposition evidence, and relationship edges. Exact replay created zero records; altered statement, authority hash, compile checksum, or packet is rejected.
 - Preserved the pre-review packet byte-for-byte at SHA-256 `4fdf1c70c1a4228537880c500856198809ef368d53abbc465027bb5389696eda`. Candidate-review status is `APPROVED` and the prerequisite is eligible, but topic/subject certification remain false, no snapshot exists, and subject/national completeness remain false.
+
+## 2026-09-04 — Expo SDK 57 patch-metadata maintenance 3
+- Began from exact accepted main `e7b1517dc0a048ecf4b102306dd0e9e86f2401f8` on `maintenance/expo-sdk57-patch-3`; published M2.2d remained untouched at `c3e71259c6839ec3ae46d57e92e1da402b04a370` during maintenance.
+- Live Expo SDK 57 tooling required only `expo@~57.0.20`. The npm lock consequently refreshes Expo 57.0.19 → 57.0.20, its nested CLI 57.0.21 → 57.0.22, modules-core 57.0.15 → 57.0.16, and modules-jsi 57.0.7 → 57.0.8. Linking 57.0.9, SecureStore 57.0.3, React Native 0.86.3, React/ReactDOM 19.2.3, and TypeScript 5.9.3/exclusion remain unchanged.
+- Clean npm install, client checks, live Expo validation, Doctor 20/20, both exports, Ruff/Django/migrations, SQLite and PostgreSQL/Redis backend suites passed locally. Audit remains 17 moderate and zero high/critical across the existing `uuid` and `decode-uri-component` families. No audit fix ran.
+- No application, backend behavior, curriculum, candidate, review, authority, certification, provider, app identity, EAS/signing, or controlling-specification change occurred. Exact maintenance, exact main, and integrated M2.2d CI remain required in that order.
+
+## 2026-09-04 — Accepted maintenance integrated into M2.2d
+- After maintenance CI run `33891560476` and exact-main CI run `33891769482` passed on `8463d68ce2e82d1b105646181da06ef8cf788583`, normally merged accepted main into published M2.2d without rebase or history rewrite. Only continuity conflicts were reconciled.
+- Preserved all M2.2d compile/input/packet/review hashes, three approvals, authority hashes, relationships, and false certification/completeness state. No curriculum, candidate, authority, certification, application, provider, dependency, or specification change was introduced by the integration.

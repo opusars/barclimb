@@ -27,14 +27,15 @@ This ledger is cold-recovery state, not a release certification.
 - BarClimb planning aggregates: 6; never completeness units
 - Coverage requirements: 43
 - Required typed slots: 149 (V2: 157)
-- Certified V3 slots: 0
+- Certified V3 slots: 3; unresolved V3 slots: 146
 - Authority plans before M2.2d: 22 (`ACQUIRED`: 1, `PLANNED`: 21)
 - Effective authority state after bounded federal-question acquisition: 22 (`ACQUIRED`: 1,
   `PARTIALLY_ACQUIRED`: 2, `PLANNED`: 19). The two partial shared plans are
   `authority-28-usc-jurisdiction-removal` and `authority-scotus-jurisdiction`; no unrelated plan is
   treated as acquired.
-- Current status: service/process/notice retains a bounded historical partial subset; all terminal
-  topics remain incomplete for V3 subject certification.
+- Current status: federal-question jurisdiction is the only V3 terminal topic certified. The
+  service/process/notice aggregate retains a bounded historical partial subset; the other 26
+  terminal topics remain incomplete for V3 subject certification.
 - `subject_complete`: `false`
 - `subject_certified`: `false`
 - `national_complete`: `false`
@@ -63,10 +64,15 @@ qualified review of the three exact federal-question candidates only.
 - Candidate compile SHA-256: `a46fbd51a441ec54fa74f2826a50241ff94e4fd3eefa49e24e568174d15b606d`
 - Human candidate review: `APPROVE` for all three; candidate-review prerequisite satisfied
 - Review manifest canonical SHA-256: `9bc7dd30872b6b36126f2c1a1771bdde2d33ac58a029c8fdfe5d5e6092c355d7`
-- Certification prerequisite eligibility: `true`; no certification action or snapshot exists
-- Certified V3 slots: 0 of 149; the other 146 slots received no candidate in this slice
+- Certification prerequisite eligibility before M2.2e: `true`
 - Exact reviewed packet archive: `M2_2D_CIVPRO_FEDERAL_QUESTION_HUMAN_REVIEW_PACKET_REVIEWED.md`;
   SHA-256 `4fdf1c70c1a4228537880c500856198809ef368d53abbc465027bb5389696eda`
+
+## Civil Procedure — M2.2e federal-question certification
+
+The canonical certification transaction validates `BARCLIMB_TOPIC_CERTIFICATION_V1` evidence and certifies only `civpro-topic-federal-question-jurisdiction` / `civpro-federal-question`. Snapshot `e3afd28e-f846-5e1a-b318-d4d6b58ec40c` and certification SHA-256 `b94770c91dd3666ff37365fdd583bc1c173f2ad3a677b71581525c1a3fe211b7` bind the exact approved three-candidate compile, review, § 1331/*Mottley* provenance, typed slots, reconciliation result, and timestamp.
+
+Exactly three V3 slots are certified and 146 remain unresolved. Effective authority plans remain one acquired, two partially acquired, and 19 planned. `subject_complete`, `subject_certified`, and `national_complete` remain false. The conditional Article III path is not invoked because the certified candidate set states no constitutional-versus-statutory boundary proposition. Rule 4 snapshot/certification evidence is unchanged.
 - `subject_complete`: `false`
 - `subject_certified`: `false`
 - `national_complete`: `false`

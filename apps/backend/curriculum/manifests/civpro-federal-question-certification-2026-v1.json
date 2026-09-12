@@ -1,0 +1,97 @@
+{
+  "schema": "BARCLIMB_TOPIC_CERTIFICATION_V1",
+  "certification_id": "BARCLIMB_CIVPRO_FEDERAL_QUESTION_TOPIC_2026_V1",
+  "certified_at": "2026-09-04T16:40:23Z",
+  "compile_version": "BARCLIMB_CIVPRO_FEDERAL_QUESTION_2026_V1",
+  "compile_sha256": "a46fbd51a441ec54fa74f2826a50241ff94e4fd3eefa49e24e568174d15b606d",
+  "compile_input_sha256": "238b15e7b5bfc492ebb5dde77a88c09b09a4bafd463f772c3cbe24277fb03f4f",
+  "coverage_policy_sha256": "01cb9c206cb45a62ae1b4f0e04e7e71241fcc2557ef135fa2fa5d81a66f54a18",
+  "official_scope_version": "NCBE_NEXTGEN_SCOPE_2026_07_2027_02",
+  "official_scope_sha256": "2d8a1052ada18b413f24b7d0eef1c855a76d8a9a31688130757d5dd6511ca56f",
+  "subject_manifest_id": "BARCLIMB_CIVPRO_CURRICULUM_MANIFEST@2026_V3",
+  "subject_manifest_sha256": "b706b7182ab165377a9e60520b083cdaf87562b256dfb0c371f9aa38d948c0c3",
+  "subject_policy_sha256": "0b40a043ee0e84297904202e3634a06cb2f371e6f70ac8db8f8f472693f5adb4",
+  "subject_plan_review_manifest_sha256": "6ceea17f91c7523c993a25a702b6e7ab923117d8a918baa7ed916d57bac87c97",
+  "subject_plan_review_packet_sha256": "5a0b02efe178e2c8996a95cd19a5e1b0122ac242ad8505dad2b079e94dd9646b",
+  "topic_id": "civpro-topic-federal-question-jurisdiction",
+  "topic_sha256": "3772ff0ee2006ef9becaf3a9599a97ddb01439ee5c906f5fcf57e1fa625f5c4c",
+  "requirement_id": "civpro-federal-question",
+  "requirement_sha256": "7ef996de885c9a6b89dcf3e99a5808ea2e8310a20fbfe778642a0d109d7691ee",
+  "national_complete": false,
+  "slots": [
+    {
+      "slot_id": "civpro-federal-question-element",
+      "slot_sha256": "f88b4a7561cf46c040b86e93c856e5956663b250f4e31ef66a1e3767b3a2075e",
+      "obligation_kind": "ELEMENT",
+      "minimum_count": 1
+    },
+    {
+      "slot_id": "civpro-federal-question-limitation",
+      "slot_sha256": "110ee56fe5b20b5b49c32d7f291ec44dc093912ce276947465782161dc88e5d3",
+      "obligation_kind": "LIMITATION",
+      "minimum_count": 1
+    },
+    {
+      "slot_id": "civpro-federal-question-rule",
+      "slot_sha256": "29b15ab56db94c2de633c02ede705b8b368ff90fa5a954ea8cb3076f49ed8a6f",
+      "obligation_kind": "RULE",
+      "minimum_count": 1
+    }
+  ],
+  "candidates": [
+    {
+      "stable_id": "civpro-fq-federal-defense-limitation",
+      "candidate_sha256": "f897545af42b883153f8e9eba27c80e0c3869345e75dc882ea81649f79a57f58",
+      "mapping_sha256": "ec6101e66c1c4171780bba57fe1a790ab4ef788f53cab8da7ebc5fadf9e98f4f",
+      "slot_id": "civpro-federal-question-limitation",
+      "review_manifest_sha256": "9bc7dd30872b6b36126f2c1a1771bdde2d33ac58a029c8fdfe5d5e6092c355d7",
+      "reviewed_at": "2026-09-03T21:59:38+00:00",
+      "authority_evidence": [
+        {
+          "authority_id": "SCOTUS_US_REPORTS_MOTTLEY_211_US_149",
+          "source_version": "1908-11-16",
+          "source_sha256": "73c4f2d4ada6a12b94106e045533c9b835a492cba9475f09de4da267341978ec",
+          "proposition_type": "WELL_PLEADED_COMPLAINT_CONTROLLING_HOLDING",
+          "proposition_sha256": "7112ab207f5a7aa10c9f632ff422d29b8287392f40b24dad954f987e2e677b7b",
+          "locator": "211 U.S. 149, 152–53 (1908); official U.S. Reports PDF pp. 4–5"
+        }
+      ]
+    },
+    {
+      "stable_id": "civpro-fq-plaintiff-claim-arising-under",
+      "candidate_sha256": "9270d500740d360d6aa2829701264d3e84a4e99034eb232857f6666ec6c606db",
+      "mapping_sha256": "2e177a3f49068dc570985bc1619b64cd77cd7e4d291f025bf287a5a3278ebf45",
+      "slot_id": "civpro-federal-question-element",
+      "review_manifest_sha256": "9bc7dd30872b6b36126f2c1a1771bdde2d33ac58a029c8fdfe5d5e6092c355d7",
+      "reviewed_at": "2026-09-03T21:59:38+00:00",
+      "authority_evidence": [
+        {
+          "authority_id": "SCOTUS_US_REPORTS_MOTTLEY_211_US_149",
+          "source_version": "1908-11-16",
+          "source_sha256": "73c4f2d4ada6a12b94106e045533c9b835a492cba9475f09de4da267341978ec",
+          "proposition_type": "WELL_PLEADED_COMPLAINT_CONTROLLING_HOLDING",
+          "proposition_sha256": "923f6bb2e0603b3f9de6cf04a90e84698c534c1ccdea3f6ff5688ec3ff342851",
+          "locator": "211 U.S. 149, 152 (1908); official U.S. Reports PDF p. 4"
+        }
+      ]
+    },
+    {
+      "stable_id": "civpro-fq-statutory-original-jurisdiction",
+      "candidate_sha256": "b7af518b17b2eaf911fd7b9252928c8203e32734ec4ce5127f7cc14419dae3ea",
+      "mapping_sha256": "d81f77a1e62ca2a67163ec6334180cac1d825f5ec5cec1ccc43e814457e1ab60",
+      "slot_id": "civpro-federal-question-rule",
+      "review_manifest_sha256": "9bc7dd30872b6b36126f2c1a1771bdde2d33ac58a029c8fdfe5d5e6092c355d7",
+      "reviewed_at": "2026-09-03T21:59:38+00:00",
+      "authority_evidence": [
+        {
+          "authority_id": "USCODE_28_USC_1331",
+          "source_version": "PRELIM_LAWS_IN_EFFECT_2026-09-01",
+          "source_sha256": "f1a418156a2be3117aa698c83788ff6b544d68c602bb4559d06cc2daa2129ac7",
+          "proposition_type": "GOVERNING_STATUTORY_TEXT",
+          "proposition_sha256": "cfdce3ecb7df1556e7ea1478807e51faf6d183ad2e052f1560de3c0ada926af0",
+          "locator": "28 U.S.C. § 1331; official House preliminary text in effect September 1, 2026"
+        }
+      ]
+    }
+  ]
+}

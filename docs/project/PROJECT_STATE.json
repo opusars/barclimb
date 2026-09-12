@@ -4,10 +4,10 @@
   "product_phase": "MILESTONE_2_IN_PROGRESS",
   "active_launch_train": "B_COMPLETE_LEARNER_LOOP",
   "active_milestone": 2,
-  "status": "EXPO_SDK57_PATCH_4_MAINTENANCE_PENDING_ACCEPTANCE",
-  "latest_known_good_commit": "77b142e77210266098cd3754b309e3a631f6d477",
-  "active_branch": "maintenance/expo-sdk57-patch-4",
-  "database_migration_summary": "M1.3a retains identity/outbox models. M2.1/M2.2a immutable source, scope, Rule Obligation, reconciliation, and snapshot truth is accepted. M2.2b's real current NCBE perimeter and eight reviewed Rule 4 V2 obligations remain accepted with immutable PILOT_ONLY snapshot 8ffc025a-ddac-5765-b7b2-130c84282c83 and national_complete false. M2.2c V3 preserves the checksum-bound 27-topic/43-requirement/149-slot Civil Procedure plan and its immutable human plan approval. M2.2d adds requirement-specific immutable authority acquisition and exact candidate-to-topic/requirement/slot mappings for only civpro-topic-federal-question-jurisdiction. Three §1331/Mottley-grounded candidates reconcile with zero findings and now have exact immutable human approvals bound to compile/input/packet/candidate/authority/relationship evidence. The review prerequisite passes, but no certification snapshot, subject certification, or national completeness is created.",
+  "status": "M2_2E_FEDERAL_QUESTION_TOPIC_CERTIFIED_PENDING_ACCEPTANCE",
+  "latest_known_good_commit": "c0871fb9a8be29d5544948042f7fd971bf9dd8ae",
+  "active_branch": "m2-2e-civpro-federal-question-certification",
+  "database_migration_summary": "M1.3a retains identity/outbox models. M2.1/M2.2a immutable source, scope, Rule Obligation, reconciliation, and snapshot truth is accepted. M2.2b's Rule 4 PILOT_ONLY snapshot remains immutable. M2.2c V3 preserves the checksum-bound 27-topic/43-requirement/149-slot Civil Procedure plan and its immutable human plan approval. M2.2d preserves three exact §1331/Mottley-grounded federal-question candidates, reconciled with zero findings and bound to immutable approvals. M2.2e extends the canonical CoverageReleaseSnapshot transaction with an exact topic-certification evidence envelope, permits multiple PILOT_ONLY certifications while preserving one NATIONAL certification per scope, and creates three immutable CoverageRequirementSatisfaction records for only civpro-topic-federal-question-jurisdiction. Topic snapshot e3afd28e-f846-5e1a-b318-d4d6b58ec40c has certification SHA-256 b94770c91dd3666ff37365fdd583bc1c173f2ad3a677b71581525c1a3fe211b7. Civil Procedure and national completeness remain false.",
   "enabled_material_feature_flags": [],
   "clients": {
     "web": "PARTIAL",
@@ -27,15 +27,15 @@
     "adsense": "NOT_VERIFIED",
     "admob": "NOT_VERIFIED"
   },
-  "latest_test_summary": "Expo SDK 57 patch maintenance updates Expo/Linking/SecureStore to 57.0.22/57.0.10/57.0.4. Clean Node 24.19.0/npm 11.17.0 install, nine typechecks, 14 Web tests, 20 native tests, eight schema tests, Web build, portability, live Expo compatibility, Doctor 20/20, both exports, Ruff/Django/migration checks, 144 SQLite tests with 12 intended PostgreSQL-only skips, 156 PostgreSQL/Redis tests, and the Celery smoke pass. Continuity and exact-commit CI remain required. Current npm audit metadata is 17 moderate, one high, zero critical; the new high js-yaml advisory is recorded without an unrelated fix.",
+  "latest_test_summary": "Accepted Expo SDK 57 maintenance main c0871fb passed exact-main Foundation CI 34723222225 with Expo/Linking/SecureStore 57.0.22/57.0.10/57.0.4. Integrated M2.2e validation passes: nine focused topic-certification tests; 153 SQLite tests with 12 intended PostgreSQL-only skips; all 165 PostgreSQL/Redis tests; Ruff, Django and migration checks; Celery smoke; clean npm install; nine typechecks; 14 Web, 20 native, and eight schema tests; Web build; portability; Expo compatibility; Doctor 20/20; both exports; continuity; JSON/scope/diff/secret/source/junk checks. Audit is 17 moderate, one high, zero critical. Exact-feature CI remains required.",
   "known_blockers": [
     "Apple Developer Program team access, final iOS signing/provisioning/build, physical-device iOS/Android authentication and SecureStore lifecycle, live AASA/assetlinks routing, Google Play ownership/recovery, store approvals, and native production purchase/restore remain mandatory platform-specific Native GA blockers even though they do not block the clarified M1.4 foundation gate.",
     "The bounded M2.2b certification covers only one official-scope leaf and must never be interpreted as complete Rule 4, Civil Procedure, or national NextGen curriculum truth.",
     "M2.2c V1 was REJECTED — REVISION REQUIRED. Its packet and disposition remain immutable history; no reviewer identity or approval was fabricated from incomplete metadata.",
     "M2.2c V2 received REVISE — NARROW V3 CORRECTION REQUIRED. Its exact packet and identity-honest disposition remain immutable; no reviewer identity or approval was fabricated from incomplete metadata.",
     "M2.2c V3 plan review is APPROVED — COVERAGE PLAN ACCEPTED. This satisfies only the plan-review gate and must not be interpreted as approval of future substantive Rule Obligations, subject certification, or national completeness.",
-    "M2.2d has three reconciled and human-approved federal-question candidates. Approval satisfies only the candidate-review prerequisite; it does not establish typed-slot certification, topic certification, subject certification, or national completeness.",
-    "Civil Procedure has zero certified V3 requirement slots; effective authority state is one acquired, two partially acquired, and 19 planned plans. subject_complete, subject_certified, and national_complete remain false. Six planning aggregates, percentages, candidate counts, or the Rule 4 pilot cannot establish completeness."
+    "M2.2e certifies only the federal-question terminal topic and its three typed slots. It must not be interpreted as diversity, supplemental-jurisdiction, removal, other Civil Procedure, assessment, learner, readiness, or national truth.",
+    "Civil Procedure has 3 certified and 146 unresolved V3 requirement slots; effective authority state is one acquired, two partially acquired, and 19 planned plans. subject_complete, subject_certified, and national_complete remain false. Six planning aggregates, percentages, candidate counts, Rule 4, or one certified topic cannot establish subject completeness."
   ],
   "high_risk_items": [
     "Execution breadth across web, iOS, Android, AI assessment quality, community moderation, and cross-platform commerce.",
@@ -43,6 +43,6 @@
     "Cross-scenario projections, anonymous claim security, private public-page overlays, entitlement transitions, and cross-device orchestration require explicit integration/security tests before GA.",
     "Official NCBE scope/source changes must pass source-drift and revalidation workflow; future exam scopes remain provisional until governing materials exist."
   ],
-  "exact_next_task": "Finish only Expo SDK 57 patch-4 maintenance validation and exact-commit CI, fast-forward accepted main if green, then carefully bring updated main into the preserved M2.2e feature work. Do not add curriculum, authority, topic, provider, or application changes.",
-  "last_verified_at": "2026-09-12T15:20:00-07:00"
+  "exact_next_task": "Complete M2.2e acceptance review only after exact-branch Foundation CI is green. Do not merge, acquire authority, compile or certify another topic, certify Civil Procedure, or infer a subsequent slice without separate authorization.",
+  "last_verified_at": "2026-09-12T15:45:00-07:00"
 }

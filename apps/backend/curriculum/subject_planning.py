@@ -589,6 +589,7 @@ def subject_coverage_report(manifest):
                     "required_slot_count": len(required_slots),
                     "certified_slot_count": len(satisfied_slots),
                     "structurally_complete": structurally_complete,
+                    "topic_certified": structurally_complete,
                 }
             )
     for planning_group in planning_groups:

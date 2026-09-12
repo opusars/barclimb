@@ -142,7 +142,25 @@ false while any required human review is pending. No `CoverageRequirementSatisfa
 certification, or release snapshot is created by compilation.
 
 The exact-byte compile is `a46fbd51a441ec54fa74f2826a50241ff94e4fd3eefa49e24e568174d15b606d`.
-All three reviews remain pending; the bounded packet is
-`docs/project/M2_2D_CIVPRO_FEDERAL_QUESTION_HUMAN_REVIEW_PACKET.md`. Removal, diversity,
-supplemental jurisdiction, complete preemption, embedded-federal-question doctrine, and every other
-topic remain outside this compile.
+All three exact candidate reviews are approved and immutable. Removal, diversity, supplemental
+jurisdiction, complete preemption, embedded-federal-question doctrine, and every other topic remain
+outside this compile.
+
+## M2.2e bounded topic certification
+
+`certify_topic_coverage` is the operator entry point for one exact reviewed terminal topic. It
+validates a body-free `BARCLIMB_TOPIC_CERTIFICATION_V1` envelope against immutable database truth and
+a hash-identified subject-plan review record, then calls the existing transactional
+`certify_curriculum` service. The service rechecks canonical compile integrity, zero open blocking
+reconciliation issues, all required human approvals, exact topic/requirement/slot identity,
+candidate mappings, relationship-compatible typed slots, and proposition-specific acquired
+authority.
+
+On success, the transaction creates the canonical immutable `CoverageReleaseSnapshot` and exactly
+one immutable `CoverageRequirementSatisfaction` per qualifying candidate-slot mapping. Replay with
+the same envelope returns the same UUIDv5 snapshot; any changed envelope is rejected. `PILOT_ONLY`
+topic snapshots may coexist under one official scope, while the database still permits only one
+certified `NATIONAL` production compile per scope.
+
+The first use certifies only `civpro-topic-federal-question-jurisdiction`. It does not certify its
+planning aggregate, another topic, Civil Procedure, or national completeness.

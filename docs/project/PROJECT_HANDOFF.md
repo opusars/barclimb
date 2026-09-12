@@ -1,7 +1,7 @@
 # BarClimb Project Handoff
 
 ## Current state
-M2.2d remains accepted on main with its federal-question candidate-review prerequisite eligible and all topic/subject/national certification flags false. Bounded `maintenance/expo-sdk57-patch-4` updates only the live SDK 57 patch baseline to Expo 57.0.22, Linking 57.0.10, and SecureStore 57.0.4 plus Expo-required lockfile transitives. React Native 0.86.3, React/ReactDOM 19.2.3, TypeScript 5.9.3/exclusion, Node 24.19.0, all application/curriculum/provider behavior, and controlling specifications are unchanged. The dirty M2.2e feature work is preserved in its original worktree and must be brought forward only after maintenance and exact-main CI pass.
+M2.2e is implemented only on `m2-2e-civpro-federal-question-certification`, brought forward onto accepted maintenance main `c0871fb9a8be29d5544948042f7fd971bf9dd8ae`, and pending integrated validation, exact-branch CI, and acceptance. The canonical certification transaction validates an exact topic evidence envelope, creates immutable snapshot `e3afd28e-f846-5e1a-b318-d4d6b58ec40c` / certification `b94770c91dd3666ff37365fdd583bc1c173f2ad3a677b71581525c1a3fe211b7`, and records exactly three typed slot satisfactions for `civpro-topic-federal-question-jurisdiction`. This is `PILOT_ONLY`; the other 146 V3 slots remain unresolved, effective authority-plan state remains one acquired/two partially acquired/19 planned, and `subject_complete`, `subject_certified`, and `national_complete` remain false. Expo/Linking/SecureStore are now 57.0.22/57.0.10/57.0.4 without application or curriculum changes. Rule 4 evidence is unchanged. Do not merge or begin another topic/slice without separate authorization.
 
 The controlling release sequence remains **Web GA → iOS Native GA → Android Native GA**, with one first-class multi-client architecture and no Web-only shortcuts. Apple enrollment/signing, physical-device authentication/SecureStore, live OS association routing, store ownership/approval, and native production purchase/restore remain mandatory at the applicable Native GA and are not marked verified. M1.5 changes none of those provider/device statuses.
 
@@ -188,7 +188,7 @@ Heroku app runtime, Essential-0 PostgreSQL, and Mini KVS remain `VERIFIED_NONPRO
 Execution breadth remains the principal engineering risk. Curriculum completeness depends on automated official-scope/rule compilation, authority provenance, lawful multi-source reconciliation, subject certification, and strict inventory gates. NCBE Sourcebooks are optional enhanced reconciliation when lawfully available; do not make purchase/access a build or launch dependency.
 
 ## Exact next task
-Begin only the next separately authorized bounded Milestone 2 step after exact-final-main Foundation CI is green. The three exact candidate approvals are already recorded and must not be repeated or altered. Do not certify the topic or subject, create a topic snapshot, acquire another authority family, compile another topic, or begin another slice without separate authorization.
+Complete M2.2e acceptance review only after exact-feature Foundation CI is green. The three exact candidate approvals and bounded federal-question topic snapshot are already recorded and must not be repeated, altered, or regenerated. Do not merge, certify Civil Procedure, acquire another authority family, compile or certify another topic, or begin another slice without separate authorization.
 
 ## Resume commands
 ```bash
@@ -203,4 +203,4 @@ Use Python 3.13.15, Node 24.19.0, and npm 11.17.0 for baseline parity. Install P
 For backend acceptance, also run PostgreSQL and Redis/Valkey where available, select `config.settings.postgres_test`, and execute the PostgreSQL concurrency and worker paths documented in `../implementation/ENVIRONMENT.md`. Staging is real and persistent; do not expose config values or test production there. Native GA still requires the deferred platform-specific signed-build, actual-runtime, association, store, and purchase evidence.
 
 ## Final integration note
-This branch stops at post-candidate-approval acceptance review. Later product-domain work remains governed by the canonical provider-agnostic billing, server-projection, orchestration, and client-capability requirements; nothing in this curriculum slice implements or changes those domains.
+This branch stops at post-topic-certification acceptance review. Later product-domain work remains governed by the canonical provider-agnostic billing, server-projection, orchestration, and client-capability requirements; nothing in this curriculum slice implements or changes those domains.

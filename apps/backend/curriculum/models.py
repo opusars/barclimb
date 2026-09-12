@@ -163,7 +163,11 @@ class CurriculumCompileVersion(models.Model):
         constraints = [
             models.UniqueConstraint(
                 fields=("official_scope_version",),
-                condition=Q(status="CERTIFIED", source_class="PRODUCTION"),
+                condition=Q(
+                    status="CERTIFIED",
+                    source_class="PRODUCTION",
+                    coverage_class="NATIONAL",
+                ),
                 name="one_certified_curriculum_per_scope",
             )
         ]

@@ -243,8 +243,17 @@
 - Exact feature Foundation CI `33892450083` and exact-main Foundation CI `33893722478` passed. The three approvals, compile/input/packet/review hashes, §1331/Mottley provenance, reconciled gate, eligible prerequisite, false topic certification, false subject/national flags, M2.2c invariants, and Rule 4 evidence remain unchanged.
 - No certification, snapshot, additional authority acquisition, candidate/topic compilation, application change, or subsequent slice began.
 
+## 2026-09-04 — M2.2e federal-question topic certification
+- Began from clean accepted main `77b142e77210266098cd3754b309e3a631f6d477` after exact-main Foundation CI `33894182499` passed, on `m2-2e-civpro-federal-question-certification`.
+- Extended the canonical `certify_curriculum` transaction with an exact topic evidence envelope. The gate binds the approved M2.2c plan, official scope, policy, compile/input, exact topic/requirement/slots, three candidate mappings and approvals, proposition-specific § 1331/*Mottley* authority, reconciliation result, and fixed certification time.
+- Narrowed the existing certified-compile uniqueness constraint to one `NATIONAL` production certification per official scope. This preserves national exclusivity while permitting multiple immutable `PILOT_ONLY` topic snapshots under one scope.
+- Certified only `civpro-topic-federal-question-jurisdiction`: snapshot `e3afd28e-f846-5e1a-b318-d4d6b58ec40c`, certification SHA-256 `b94770c91dd3666ff37365fdd583bc1c173f2ad3a677b71581525c1a3fe211b7`, and exactly three immutable typed-slot satisfactions. Exact replay is idempotent; changed evidence and blockers fail closed.
+- Civil Procedure remains 3/149 certified slots with 146 unresolved; `subject_complete`, `subject_certified`, and `national_complete` remain false. Authority state remains one acquired, two partially acquired, and 19 planned. Rule 4 evidence, all other topics, clients, providers, dependencies, and controlling specifications remain unchanged.
+- After Expo maintenance was accepted on main, the preserved M2.2e implementation was restored byte-for-byte over `c0871fb9a8be29d5544948042f7fd971bf9dd8ae`; only overlapping continuity prose required reconciliation. Integrated validation and exact-feature CI gate acceptance.
+
 ## 2026-09-12 — Expo SDK 57 patch-metadata maintenance 4
 - Created isolated `maintenance/expo-sdk57-patch-4` from exact accepted main `77b142e77210266098cd3754b309e3a631f6d477`, leaving uncommitted M2.2e work untouched in its original worktree.
 - Updated only Expo 57.0.20 → 57.0.22, Linking 57.0.9 → 57.0.10, SecureStore 57.0.3 → 57.0.4, and Expo-required transitive lockfile packages. Expo compatibility and Doctor 20/20 pass; React Native 0.86.3, React/ReactDOM 19.2.3, TypeScript 5.9.3/exclusion, and Node/npm 24.19.0/11.17.0 remain fixed.
 - Current `npm audit --omit=dev` reports 17 moderate, one high, zero critical. The moderate `uuid` and `decode-uri-component` families remain; a newly published high `js-yaml` CPU-denial advisory is transitive and separately recorded. No audit fix ran.
 - No application, curriculum, authority, candidate, certification, provider, EAS/signing, app-identity, or controlling-specification change is included.
+- Maintenance commit `c0871fb9a8be29d5544948042f7fd971bf9dd8ae` passed branch Foundation CI `34723031698`, fast-forwarded accepted main, and passed exact-main Foundation CI `34723222225`. Updated main was then fast-forwarded into the preserved M2.2e branch before its work was restored; only continuity conflicts required reconciliation.

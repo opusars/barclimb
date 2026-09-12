@@ -17,6 +17,7 @@ from .models import (
     CandidateRequirementMapping,
     CoveragePolicy,
     CoverageReleaseSnapshot,
+    CoverageRequirementSatisfaction,
     CurriculumCompileVersion,
     ObligationHumanReview,
     ObligationRelationship,
@@ -28,6 +29,7 @@ from .models import (
     ScopeCoverageRequirement,
     SubjectAuthorityAcquisition,
     SubjectCurriculumManifest,
+    SubjectPlanHumanReview,
 )
 
 RELATIONSHIP_TARGET_KIND = {
@@ -935,9 +937,148 @@ def record_obligation_review(
     return review, True
 
 
+def _topic_certification_truth(compile_version, evidence):
+    """Validate and return the exact approved topic/slot evidence for certification."""
+    if evidence.get("schema") != "BARCLIMB_TOPIC_CERTIFICATION_V1":
+        raise ValidationError("Unsupported topic-certification evidence schema.")
+    checks = {
+        "compile_version": compile_version.version_identifier,
+        "compile_sha256": compile_version.canonical_sha256,
+        "compile_input_sha256": compile_version.input_sha256,
+        "coverage_policy_sha256": compile_version.coverage_policy.canonical_sha256,
+        "official_scope_version": compile_version.official_scope_version.version_identifier,
+        "official_scope_sha256": compile_version.official_scope_version.normalized_sha256,
+    }
+    for field, actual in checks.items():
+        if evidence.get(field) != actual:
+            raise ValidationError({field: f"Expected {actual}; received {evidence.get(field)}"})
+    if evidence.get("national_complete") is not False:
+        raise ValidationError("A topic certification cannot establish national completeness.")
+
+    mappings = list(
+        CandidateRequirementMapping.objects.filter(obligation__compile_version=compile_version)
+        .select_related(
+            "obligation",
+            "slot__requirement__manifest_leaf__manifest__coverage_policy",
+            "official_topic",
+        )
+        .prefetch_related("obligation__authority_evidence__authority")
+        .order_by("obligation__stable_id")
+    )
+    if not mappings:
+        raise ValidationError("Topic certification requires typed candidate mappings.")
+    topics = {mapping.official_topic_id for mapping in mappings}
+    requirements = {mapping.slot.requirement_id for mapping in mappings}
+    if len(topics) != 1 or len(requirements) != 1:
+        raise ValidationError("Topic certification must target exactly one topic and requirement.")
+    topic = mappings[0].official_topic
+    requirement = mappings[0].slot.requirement
+    manifest = requirement.manifest_leaf.manifest
+    plan_review = getattr(manifest, "human_review", None)
+    if plan_review is None or plan_review.resolution != SubjectPlanHumanReview.Resolution.APPROVE:
+        raise ValidationError("Topic certification requires the approved subject plan.")
+
+    subject_checks = {
+        "subject_manifest_id": f"{manifest.stable_id}@{manifest.manifest_version}",
+        "subject_manifest_sha256": manifest.canonical_sha256,
+        "subject_policy_sha256": manifest.coverage_policy.canonical_sha256,
+        "subject_plan_review_packet_sha256": plan_review.review_packet_sha256,
+        "topic_id": topic.stable_id,
+        "topic_sha256": topic.canonical_sha256,
+        "requirement_id": requirement.stable_id,
+        "requirement_sha256": requirement.canonical_sha256,
+    }
+    for field, actual in subject_checks.items():
+        if evidence.get(field) != actual:
+            raise ValidationError({field: f"Expected {actual}; received {evidence.get(field)}"})
+
+    slots = list(requirement.slots.all().order_by("stable_id"))
+    expected_slots = [
+        {
+            "slot_id": slot.stable_id,
+            "slot_sha256": slot.canonical_sha256,
+            "obligation_kind": slot.obligation_kind,
+            "minimum_count": slot.minimum_count,
+        }
+        for slot in slots
+    ]
+    if evidence.get("slots") != expected_slots:
+        raise ValidationError("Topic-certification requirement-slot truth changed.")
+
+    actual_candidates = []
+    for mapping in mappings:
+        obligation = mapping.obligation
+        review = getattr(obligation, "human_review", None)
+        if (
+            obligation.compiler_status != RuleObligation.CompilerStatus.INCLUDED
+            or obligation.reconciliation_status != "RECONCILED"
+            or review is None
+            or review.resolution != ObligationHumanReview.Resolution.APPROVE
+            or not review.authority_reviewed
+        ):
+            raise ValidationError(
+                f"Candidate {obligation.stable_id} lacks clean reconciliation and approval."
+            )
+        actual_candidates.append(
+            {
+                "stable_id": obligation.stable_id,
+                "candidate_sha256": obligation.canonical_sha256,
+                "mapping_sha256": mapping.canonical_sha256,
+                "slot_id": mapping.slot.stable_id,
+                "review_manifest_sha256": review.review_manifest_sha256,
+                "reviewed_at": review.reviewed_at.isoformat(),
+                "authority_evidence": sorted(
+                    [
+                        {
+                            "authority_id": item.authority.stable_id,
+                            "source_version": item.authority.source_version,
+                            "source_sha256": item.authority.content_sha256,
+                            "proposition_type": item.proposition_type,
+                            "proposition_sha256": item.proposition_sha256,
+                            "locator": item.locator,
+                        }
+                        for item in obligation.authority_evidence.filter(
+                            role=AuthorityEvidence.Role.SUBSTANTIVE_SUPPORT, supports=True
+                        )
+                    ],
+                    key=lambda item: (item["authority_id"], item["locator"]),
+                ),
+            }
+        )
+    if evidence.get("candidates") != actual_candidates:
+        raise ValidationError("Topic-certification candidate/review/authority truth changed.")
+
+    slot_ids = {slot.stable_id for slot in slots}
+    mapped_slot_ids = {mapping.slot.stable_id for mapping in mappings}
+    if slot_ids != mapped_slot_ids or len(mappings) != sum(slot.minimum_count for slot in slots):
+        raise ValidationError("Topic certification does not exactly satisfy its approved slots.")
+    if compile_version.reconciliation_report.get("subject_candidate_topic_ids") != [
+        topic.stable_id
+    ]:
+        raise ValidationError("Reconciliation is not bounded to the requested topic.")
+    if compile_version.reconciliation_report.get("subject_candidate_requirement_ids") != [
+        requirement.stable_id
+    ]:
+        raise ValidationError("Reconciliation is not bounded to the requested requirement.")
+    if compile_version.reconciliation_report.get("candidate_human_review_status") != "APPROVED":
+        raise ValidationError("Reconcile after recording all candidate approvals.")
+    return topic, requirement, mappings
+
+
 @transaction.atomic
-def certify_curriculum(compile_id, *, allow_test_fixture=False):
+def certify_curriculum(
+    compile_id, *, allow_test_fixture=False, topic_certification=None, certified_at=None
+):
     compile_version = CurriculumCompileVersion.objects.select_for_update().get(pk=compile_id)
+    topic_input_sha256 = (
+        canonical_sha256(topic_certification) if topic_certification is not None else ""
+    )
+    if compile_version.status == CurriculumCompileVersion.Status.CERTIFIED:
+        snapshot = compile_version.coverage_snapshot
+        recorded = snapshot.coverage_results.get("topic_certification_input_sha256", "")
+        if topic_input_sha256 and recorded != topic_input_sha256:
+            raise ValidationError("Existing topic certification differs from immutable input.")
+        return snapshot
     if (
         compile_version.source_class == AuthoritySource.SourceClass.TEST_FIXTURE
         and not allow_test_fixture
@@ -953,8 +1094,15 @@ def certify_curriculum(compile_id, *, allow_test_fixture=False):
         raise ValidationError(
             {"blocking_issues": list(blocking.values_list("stable_id", flat=True))}
         )
-    now = timezone.now()
-    coverage = compile_version.reconciliation_report
+    now = certified_at or timezone.now()
+    coverage = dict(compile_version.reconciliation_report)
+    topic_truth = None
+    if topic_certification is not None:
+        topic_truth = _topic_certification_truth(compile_version, topic_certification)
+        coverage["topic_certification_input_sha256"] = topic_input_sha256
+        coverage["certified_topic_id"] = topic_truth[0].stable_id
+        coverage["certified_requirement_id"] = topic_truth[1].stable_id
+        coverage["topic_certified"] = True
     if coverage.get("blocking_issue_count") != 0:
         raise ValidationError("Reconcile again after review resolutions before certification.")
     if compile_version.coverage_policy.requires_human_review:
@@ -1030,9 +1178,17 @@ def certify_curriculum(compile_id, *, allow_test_fixture=False):
         "human_review_sha256": human_review_sha256,
         "obligation_reviews": obligation_reviews,
     }
+    if topic_input_sha256:
+        snapshot_payload["topic_certification_input_sha256"] = topic_input_sha256
+        snapshot_payload["certified_at"] = now.isoformat()
     snapshot_id = uuid.uuid5(
         uuid.NAMESPACE_URL,
-        f"barclimb:coverage:{compile_version.canonical_sha256}:{human_review_sha256}",
+        (
+            f"barclimb:coverage:{compile_version.canonical_sha256}:"
+            f"{human_review_sha256}:{topic_input_sha256}"
+            if topic_input_sha256
+            else f"barclimb:coverage:{compile_version.canonical_sha256}:{human_review_sha256}"
+        ),
     )
     snapshot = CoverageReleaseSnapshot.objects.create(
         id=snapshot_id,
@@ -1057,6 +1213,25 @@ def certify_curriculum(compile_id, *, allow_test_fixture=False):
         certification_sha256=canonical_sha256(snapshot_payload),
         certified_at=now,
     )
+    if topic_truth is not None:
+        _topic, _requirement, mappings = topic_truth
+        for mapping in mappings:
+            satisfaction_payload = {
+                "snapshot_id": str(snapshot.pk),
+                "topic_id": mapping.official_topic.stable_id,
+                "requirement_id": mapping.slot.requirement.stable_id,
+                "slot_id": mapping.slot.stable_id,
+                "slot_sha256": mapping.slot.canonical_sha256,
+                "obligation_id": mapping.obligation.stable_id,
+                "obligation_sha256": mapping.obligation.canonical_sha256,
+            }
+            CoverageRequirementSatisfaction.objects.create(
+                slot=mapping.slot,
+                obligation=mapping.obligation,
+                coverage_snapshot=snapshot,
+                status=CoverageRequirementSatisfaction.Status.CERTIFIED,
+                canonical_sha256=canonical_sha256(satisfaction_payload),
+            )
     previous = compile_version.supersedes
     if previous:
         if previous.status != CurriculumCompileVersion.Status.CERTIFIED:

@@ -296,3 +296,9 @@
 ## 2026-09-04 — M2.2d acceptance merge
 - Accepted feature Foundation CI `33892450083` PASSED on `6e4e798afb8f27667f3af70e2ee17395463ec350`. Main fast-forwarded to that exact SHA and exact-main Foundation CI `33893722478` PASSED continuity, Python 3.13.15/PostgreSQL/Redis/Celery backend gates, and all TypeScript/Expo/export gates.
 - Post-merge immutable evidence verification PASSED for all compile/input/packet/review/authority hashes, three approvals, reconciled/eligible gate, false certification/completeness flags, M2.2c 27/14/13/43/149, and Rule 4 evidence. Final continuity validation and exact-main CI remain for this acceptance-only record.
+
+## 2026-09-12 — Expo SDK 57 patch-metadata maintenance 4
+- Exact Node 24.19.0/npm 11.17.0 clean install passed with 716 packages. Nine workspace typechecks, 14 Web tests, 20 native tests, eight assessment-schema tests, Web production build, and seven-package portability passed.
+- Live `CI=1 npx expo install --check` passed; Expo Doctor passed 20/20. iOS and Android production exports passed at 863 and 858 modules.
+- Ruff lint/format, Django system/migration-drift checks, and SQLite passed 144 tests with 12 intended PostgreSQL-only skips. The complete PostgreSQL/Redis suite passed 156 tests, and the Celery worker ping/`infrastructure.smoke` dispatch succeeded.
+- `npm audit --omit=dev` reports 17 moderate, one high, zero critical; no audit fix ran. Continuity validation, tracked JSON parsing, unchanged controlling-spec check, and `git diff --check` pass. Hosted exact-commit CI remains to be recorded after push.

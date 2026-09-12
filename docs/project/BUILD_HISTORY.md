@@ -242,3 +242,9 @@
 - Fast-forwarded `main` from `8463d68ce2e82d1b105646181da06ef8cf788583` to accepted M2.2d SHA `6e4e798afb8f27667f3af70e2ee17395463ec350`; no merge commit, rebase, squash, amend, force push, or history rewrite was used.
 - Exact feature Foundation CI `33892450083` and exact-main Foundation CI `33893722478` passed. The three approvals, compile/input/packet/review hashes, §1331/Mottley provenance, reconciled gate, eligible prerequisite, false topic certification, false subject/national flags, M2.2c invariants, and Rule 4 evidence remain unchanged.
 - No certification, snapshot, additional authority acquisition, candidate/topic compilation, application change, or subsequent slice began.
+
+## 2026-09-12 — Expo SDK 57 patch-metadata maintenance 4
+- Created isolated `maintenance/expo-sdk57-patch-4` from exact accepted main `77b142e77210266098cd3754b309e3a631f6d477`, leaving uncommitted M2.2e work untouched in its original worktree.
+- Updated only Expo 57.0.20 → 57.0.22, Linking 57.0.9 → 57.0.10, SecureStore 57.0.3 → 57.0.4, and Expo-required transitive lockfile packages. Expo compatibility and Doctor 20/20 pass; React Native 0.86.3, React/ReactDOM 19.2.3, TypeScript 5.9.3/exclusion, and Node/npm 24.19.0/11.17.0 remain fixed.
+- Current `npm audit --omit=dev` reports 17 moderate, one high, zero critical. The moderate `uuid` and `decode-uri-component` families remain; a newly published high `js-yaml` CPU-denial advisory is transitive and separately recorded. No audit fix ran.
+- No application, curriculum, authority, candidate, certification, provider, EAS/signing, app-identity, or controlling-specification change is included.

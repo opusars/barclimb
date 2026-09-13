@@ -12,6 +12,6 @@ Controlling release sequence: **Web GA → iOS Native GA → Android Native GA**
 6. Follow `docs/project/RECOVERY_PLAYBOOK.md`.
 7. Continue from **Exact next task** in the handoff.
 
-M2.2d remains accepted and unchanged. Bounded maintenance on `maintenance/expo-sdk57-patch-4` updates only the live Expo SDK 57 compatible patch set to Expo 57.0.22, Linking 57.0.10, and SecureStore 57.0.4 plus required lockfile transitives; React Native 0.86.3, React 19.2.3, TypeScript 5.9.3, application behavior, providers, curriculum, and controlling specifications are unchanged. After maintenance reaches green main, resume only the separately preserved M2.2e federal-question certification work; do not infer another topic or slice.
+Accepted main remains functionally unchanged while `maintenance/js-yaml-high-advisory` applies a lockfile-only `js-yaml` 4.3.1 → 4.3.2 security patch. The patched legacy release satisfies both existing parent ranges and removes `GHSA-2883-xcg3-v3hh` without an override, Expo/React/React Native/TypeScript change, or application/curriculum/provider/specification change. M2.2e remains separately accepted and published at `bd1f3903f7f981c60fea60619ac11dba2d334662`; after green maintenance and exact-main CI, merge updated main normally into M2.2e and stop at its acceptance-review gate.
 
 If prose conflicts with repository reality, investigate and correct the continuity docs before new architecture work. Never reconstruct missing history from guesses.

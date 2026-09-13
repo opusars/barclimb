@@ -302,3 +302,9 @@
 - Live `CI=1 npx expo install --check` passed; Expo Doctor passed 20/20. iOS and Android production exports passed at 863 and 858 modules.
 - Ruff lint/format, Django system/migration-drift checks, and SQLite passed 144 tests with 12 intended PostgreSQL-only skips. The complete PostgreSQL/Redis suite passed 156 tests, and the Celery worker ping/`infrastructure.smoke` dispatch succeeded.
 - `npm audit --omit=dev` reports 17 moderate, one high, zero critical; no audit fix ran. Continuity validation, tracked JSON parsing, unchanged controlling-spec check, and `git diff --check` pass. Hosted exact-commit CI remains to be recorded after push.
+
+## 2026-09-13 — js-yaml high-advisory remediation
+- Pre-remediation `npm audit --omit=dev` reproduced 17 moderate, one high, zero critical. `npm ls`/`npm explain` showed deduplicated `js-yaml@4.3.1` under Expo 57.0.22 → CLI 57.0.24 → XCPretty 4.4.5 and dev ESLint 9.35.0 → eslintrc 3.3.6.
+- A clean install after the lockfile-only 4.3.2 refresh passed with 716 packages. Post-remediation production audit reports 17 moderate, zero high, zero critical; full audit reports 19 moderate, zero high, zero critical, including the documented dev-only Vitest mocker family. No audit fix or override ran.
+- Nine typechecks, 14 Web tests, 20 native tests, eight schema tests, Web build, seven-package portability, live Expo compatibility, Doctor 20/20, and iOS/Android exports at 863/858 modules passed.
+- Ruff lint/format, Django system/migration checks, 144 SQLite tests with 12 intended PostgreSQL-only skips, all 156 PostgreSQL/Redis tests, and live Celery `infrastructure.smoke` passed. Continuity, tracked JSON, canonical/ten-milestone structure, specification isolation, diff, secret/raw-source/generated-junk checks passed. Exact-commit CI remains to be recorded before acceptance.

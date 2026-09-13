@@ -4,9 +4,9 @@
   "product_phase": "MILESTONE_2_IN_PROGRESS",
   "active_launch_train": "B_COMPLETE_LEARNER_LOOP",
   "active_milestone": 2,
-  "status": "EXPO_SDK57_PATCH_4_MAINTENANCE_PENDING_ACCEPTANCE",
-  "latest_known_good_commit": "77b142e77210266098cd3754b309e3a631f6d477",
-  "active_branch": "maintenance/expo-sdk57-patch-4",
+  "status": "JS_YAML_HIGH_ADVISORY_REMEDIATION_PENDING_ACCEPTANCE",
+  "latest_known_good_commit": "c0871fb9a8be29d5544948042f7fd971bf9dd8ae",
+  "active_branch": "maintenance/js-yaml-high-advisory",
   "database_migration_summary": "M1.3a retains identity/outbox models. M2.1/M2.2a immutable source, scope, Rule Obligation, reconciliation, and snapshot truth is accepted. M2.2b's real current NCBE perimeter and eight reviewed Rule 4 V2 obligations remain accepted with immutable PILOT_ONLY snapshot 8ffc025a-ddac-5765-b7b2-130c84282c83 and national_complete false. M2.2c V3 preserves the checksum-bound 27-topic/43-requirement/149-slot Civil Procedure plan and its immutable human plan approval. M2.2d adds requirement-specific immutable authority acquisition and exact candidate-to-topic/requirement/slot mappings for only civpro-topic-federal-question-jurisdiction. Three §1331/Mottley-grounded candidates reconcile with zero findings and now have exact immutable human approvals bound to compile/input/packet/candidate/authority/relationship evidence. The review prerequisite passes, but no certification snapshot, subject certification, or national completeness is created.",
   "enabled_material_feature_flags": [],
   "clients": {
@@ -27,7 +27,7 @@
     "adsense": "NOT_VERIFIED",
     "admob": "NOT_VERIFIED"
   },
-  "latest_test_summary": "Expo SDK 57 patch maintenance updates Expo/Linking/SecureStore to 57.0.22/57.0.10/57.0.4. Clean Node 24.19.0/npm 11.17.0 install, nine typechecks, 14 Web tests, 20 native tests, eight schema tests, Web build, portability, live Expo compatibility, Doctor 20/20, both exports, Ruff/Django/migration checks, 144 SQLite tests with 12 intended PostgreSQL-only skips, 156 PostgreSQL/Redis tests, and the Celery smoke pass. Continuity and exact-commit CI remain required. Current npm audit metadata is 17 moderate, one high, zero critical; the new high js-yaml advisory is recorded without an unrelated fix.",
+  "latest_test_summary": "Security triage reproduces 17 moderate, one high, zero critical before remediation. A natural lockfile refresh moves js-yaml 4.3.1 to compatible patched 4.3.2 without an override. Clean install, nine typechecks, 14 Web tests, 20 native tests, eight schema tests, Web build, portability, Expo compatibility, Doctor 20/20, both exports, Ruff/Django/migration checks, 144 SQLite tests with 12 intended skips, 156 PostgreSQL/Redis tests, and Celery smoke pass. Production audit is 17 moderate/zero high/zero critical; full audit is 19 moderate/zero high/zero critical including the dev-only Vitest mocker family. Continuity and exact-commit CI remain required.",
   "known_blockers": [
     "Apple Developer Program team access, final iOS signing/provisioning/build, physical-device iOS/Android authentication and SecureStore lifecycle, live AASA/assetlinks routing, Google Play ownership/recovery, store approvals, and native production purchase/restore remain mandatory platform-specific Native GA blockers even though they do not block the clarified M1.4 foundation gate.",
     "The bounded M2.2b certification covers only one official-scope leaf and must never be interpreted as complete Rule 4, Civil Procedure, or national NextGen curriculum truth.",
@@ -43,6 +43,6 @@
     "Cross-scenario projections, anonymous claim security, private public-page overlays, entitlement transitions, and cross-device orchestration require explicit integration/security tests before GA.",
     "Official NCBE scope/source changes must pass source-drift and revalidation workflow; future exam scopes remain provisional until governing materials exist."
   ],
-  "exact_next_task": "Finish only Expo SDK 57 patch-4 maintenance validation and exact-commit CI, fast-forward accepted main if green, then carefully bring updated main into the preserved M2.2e feature work. Do not add curriculum, authority, topic, provider, or application changes.",
-  "last_verified_at": "2026-09-12T15:20:00-07:00"
+  "exact_next_task": "Finish only js-yaml security-maintenance validation and exact-commit CI, fast-forward accepted main if green, then normally merge updated main into published M2.2e and revalidate it. Do not alter M2.2e evidence or add curriculum, authority, candidate, topic, provider, specification, or application work.",
+  "last_verified_at": "2026-09-13T14:00:00-07:00"
 }

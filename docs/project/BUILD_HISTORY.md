@@ -248,3 +248,8 @@
 - Updated only Expo 57.0.20 → 57.0.22, Linking 57.0.9 → 57.0.10, SecureStore 57.0.3 → 57.0.4, and Expo-required transitive lockfile packages. Expo compatibility and Doctor 20/20 pass; React Native 0.86.3, React/ReactDOM 19.2.3, TypeScript 5.9.3/exclusion, and Node/npm 24.19.0/11.17.0 remain fixed.
 - Current `npm audit --omit=dev` reports 17 moderate, one high, zero critical. The moderate `uuid` and `decode-uri-component` families remain; a newly published high `js-yaml` CPU-denial advisory is transitive and separately recorded. No audit fix ran.
 - No application, curriculum, authority, candidate, certification, provider, EAS/signing, app-identity, or controlling-specification change is included.
+
+## 2026-09-13 — js-yaml high-advisory remediation
+- Reproduced `GHSA-2883-xcg3-v3hh` against `js-yaml@4.3.1` through both Expo → CLI → XCPretty and dev ESLint → eslintrc paths. The Expo path remains in `--omit=dev` because Expo is a direct production dependency, although inspection confirms YAML parsing is limited to Node-side iOS Podfile/build tooling and no BarClimb runtime parses YAML.
+- A natural lockfile-only refresh selects compatible patched `js-yaml@4.3.2` under both existing semver ranges. No override, direct dependency, parent-package, SDK, architecture, application, backend, curriculum, provider, or controlling-specification change is included.
+- Clean installation resolves one deduplicated 4.3.2 node. Production audit improves from 17 moderate/one high/zero critical to 17 moderate/zero high/zero critical; full audit is 19 moderate/zero high/zero critical because the current feed separately reports the dev-only Vitest mocker family.
